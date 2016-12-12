@@ -1,0 +1,120 @@
+#include "messagemodel.h"
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QDebug>
+#include "friend.h"
+
+namespace JTOX {
+
+    MessageModel::MessageModel(ToxCore& toxCore, const FriendModel& friendModel) : QAbstractListModel(0),
+                    fToxCore(toxCore), fFriendModel(friendModel), fDB(QSqlDatabase::addDatabase("QSQLITE"))
+    {
+        fDB.setDatabaseName(":memory:");
+        fDB.open();
+
+        QSqlQuery createTableQuery(fDB);
+        if ( !createTableQuery.exec("CREATE TABLE IF NOT EXISTS events("
+                                        "id INTEGER PRIMARY KEY,"
+                                        "friend_id INTEGER NOT NULL,"
+                                        "event_type INTEGER NOT NULL,"
+                                        "created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+                                        "message TEXT)") ) {
+            throw QString("unable to create messages table: " + createTableQuery.lastError().text());
+        }
+        fDB.commit();
+
+        fSelectQuery = QSqlQuery(fDB);
+        if ( !fSelectQuery.prepare("SELECT id, event_type, created_at, message "
+                                   "FROM ("
+                                        "SELECT id, event_type, created_at, message "
+                                        "FROM events "
+                                        "WHERE friend_id = :friend_id "
+                                        "ORDER BY id DESC "
+                                        "LIMIT 100"
+                                   ") tmp ORDER BY tmp.id ASC") ) {
+            qDebug() << fSelectQuery.lastError().text() << "\n";
+            throw QString("Unable to prepare events query");
+        }
+        fSelectQuery.setForwardOnly(true);
+
+        fInsertQuery = QSqlQuery(fDB);
+        if ( !fInsertQuery.prepare("INSERT INTO events(friend_id, event_type, message) VALUES(:friend_id, :event_type, :message)") ) {
+            qDebug() << fInsertQuery.lastError().text() << "\n";
+            throw QString("Unable to prepare events insert");
+        }
+
+
+        // DEBUG: TODO remove
+        for ( int i = 100; i < 105; i++ ) {
+            int maxj = i == 100 ? 1 : 20;
+            for ( int j = 0; j < maxj; j++ ) {
+                if ( j % 2 == 0 ) {
+                    addEvent(i, mtMessageIn, "Lorem ipsum atakdale k tomu pridam pana krale");
+                } else {
+                    addEvent(i, mtMessageOut, "Krala pridaj mne je jedno, ale potom prislo jedlo");
+                }
+            }
+        }
+        fDB.commit();
+    }
+
+    MessageModel::~MessageModel() {
+        fDB.close();
+    }
+
+    QHash<int, QByteArray> MessageModel::roleNames() const {
+        QHash<int, QByteArray> result;
+        result[mrID] = "id";
+        result[mrEventType] = "event_type";
+        result[mrCreated] = "created_at";
+        result[mrMessage] = "message";
+
+        return result;
+    }
+
+    int MessageModel::rowCount(const QModelIndex &parent) const {
+        return fSelectQuery.size();
+    }
+
+    QVariant MessageModel::data(const QModelIndex &index, int role) const {
+        fSelectQuery.seek(index.row(), false);
+        int columnIdx = role - Qt::UserRole - 1;
+        const QVariant value = fSelectQuery.value(columnIdx);
+        return value;
+    }
+
+    void MessageModel::setFriend(quint32 friendID, const QString& friendName) {
+        fFriendID = friendID;
+        fFriendName = friendName;
+        fSelectQuery.bindValue(":friend_id", friendID);
+        beginResetModel();
+        fSelectQuery.exec();
+        while ( fSelectQuery.next() ) {
+            
+        }
+        endResetModel();
+
+        emit friendNameChanged(fFriendName);
+    }
+
+    void MessageModel::sendMessage(const QString& message) {
+        addEvent(fFriendID, mtMessageOutPending, message);
+    }
+
+    void MessageModel::addEvent(quint32 friendID, MessageTypes eventType, const QString& message) {
+        fInsertQuery.bindValue(":friend_id", friendID);
+        fInsertQuery.bindValue(":event_type", eventType);
+        fInsertQuery.bindValue(":message", message);
+
+        int count = rowCount();
+        if ( !fInsertQuery.exec() ) {
+            qDebug() << fInsertQuery.lastError().text() << "\n";
+            throw QString("Error on insert query execution");
+        }
+        // TODO: call toxcore send
+
+        beginInsertRows(QModelIndex(), count, count);
+        fSelectQuery.exec();
+        endInsertColumns();
+    }
+}
