@@ -47,7 +47,7 @@ Item {
             right: parent.right
         }
 
-        placeholderText: qsTr("Type your message here")
+        placeholderText: toxcore.status > 0 && eventmodel.friendStatus > 0 ? qsTr("Type your message here") : (eventmodel.friendName + " " + qsTr("is offline"))
         EnterKey.onClicked: {
             sendMessage(text)
             text = ''

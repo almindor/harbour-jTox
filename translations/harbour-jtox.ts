@@ -291,6 +291,11 @@
         <source>Type your message here</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../qml/components/InputItem.qml" line="50"/>
+        <source>is offline</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>JTOX::ToxCore</name>
