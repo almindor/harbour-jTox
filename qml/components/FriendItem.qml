@@ -47,7 +47,7 @@ ListItem {
 
     Text {
         id: smText
-        color: Theme.highlightBackgroundColor
+        color: Theme.highlightColor
         anchors {
             left: parent.left
             bottom: parent.bottom

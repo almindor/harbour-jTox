@@ -88,16 +88,45 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("QRID.qml"))
             }
 
-            TextArea {
+            BackgroundItem {
                 anchors {
                     left: parent.left
                     right: parent.right
                 }
-                label: qsTr("Tox ID touch for QR code")
-                readOnly: true
-                color: Theme.highlightBackgroundColor
-                font.pixelSize: Theme.fontSizeTiny
-                text: toxcore.toxID
+
+                onClicked: console.log("clip text set to: " + toxidLabel.text)
+
+                Column {
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
+
+                    Label {
+                        id: toxidLabel
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            margins: Theme.paddingLarge
+                        }
+                        wrapMode: TextInput.WrapAnywhere
+                        color: Theme.highlightColor
+                        font.pixelSize: Theme.fontSizeTiny
+                        text: toxcore.toxID
+                    }
+
+                    Text {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            margins: Theme.paddingLarge
+                        }
+
+                        color: Theme.secondaryColor
+                        font.pixelSize: Theme.fontSizeSmall
+                        text: qsTr("Tox ID: touch to copy to clipboard")
+                    }
+                }
             }
 
             TextField {

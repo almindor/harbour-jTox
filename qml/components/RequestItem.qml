@@ -56,7 +56,7 @@ Item {
     TextArea {
         id: smText
         readOnly: true
-        color: Theme.highlightBackgroundColor
+        color: Theme.highlightColor
         anchors {
             left: parent.left
             top: nameLabel.bottom

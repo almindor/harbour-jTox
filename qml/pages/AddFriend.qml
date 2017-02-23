@@ -58,14 +58,18 @@ Dialog {
         placeholderText: qsTr("Address or handle@") + toxme.domain
         errorHighlight: true
 
-        EnterKey.onClicked: {
+        onTextChanged: {
             var address_pat = /^[0-9a-fA-F]{76}$/;
-            if ( address_pat.test(text) ) { // address is valid format
+            if ( text.length === 76 && address_pat.test(text) ) { // address is valid format
                 idField.errorHighlight = false
                 idField.text = text
                 friendInputField.errorHighlight = false
                 messageField.focus = true
-            } else if ( text.length ) {
+            }
+        }
+
+        EnterKey.onClicked: {
+            if ( text.length ) {
                 var fqdn = text
                 if ( text.indexOf('@') < 0 ) {
                     fqdn = text + '@' + toxme.domain
