@@ -29,8 +29,8 @@ Page {
         x: page.width / 2.0 - width / 2.0
         y: page.height / 2.0 - height / 2.0
         z: 99
-        visible: toxcore.busy
-        running: toxcore.busy
+        visible: toxcore.busy && appWindow.applicationActive
+        running: toxcore.busy && appWindow.applicationActive
     }
 
     AddFriend {

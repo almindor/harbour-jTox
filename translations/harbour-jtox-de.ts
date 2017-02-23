@@ -287,12 +287,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/InputItem.qml" line="50"/>
+        <location filename="../qml/components/InputItem.qml" line="58"/>
         <source>Type your message here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/InputItem.qml" line="50"/>
+        <location filename="../qml/components/InputItem.qml" line="58"/>
         <source>is offline</source>
         <translation type="unfinished"></translation>
     </message>
@@ -300,27 +300,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="489"/>
+        <location filename="../src/toxcore.cpp" line="494"/>
         <source>Offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="490"/>
+        <location filename="../src/toxcore.cpp" line="495"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="491"/>
+        <location filename="../src/toxcore.cpp" line="496"/>
         <source>Away</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="492"/>
+        <location filename="../src/toxcore.cpp" line="497"/>
         <source>Busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="495"/>
+        <location filename="../src/toxcore.cpp" line="500"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>

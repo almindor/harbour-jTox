@@ -83,6 +83,7 @@ namespace JTOX {
             fList.append(Friend(fToxCore, friendID));
             endInsertRows();
 
+            fToxCore.save();
             emit friendAdded();
         } else {
             emit friendAddError(errorStr);
@@ -103,6 +104,7 @@ namespace JTOX {
             beginInsertRows(QModelIndex(), fList.size(), fList.size());
             fList.append(Friend(fToxCore, friendID));
             endInsertRows();
+            fToxCore.save();
         } else {
             emit friendAddError(errorStr);
         }

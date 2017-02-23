@@ -108,11 +108,11 @@ namespace JTOX {
         void onMessageReceived(quint32 friend_id, TOX_MESSAGE_TYPE type, const QString& message);
         void onMessageDelivered(quint32 friend_id, quint32 message_id);
 
-        void onFriendStatusChanged(quint32 friend_id, int status) const;
-        void onFriendConStatusChanged(quint32 friend_id, int status) const;
-        void onFriendStatusMsgChanged(quint32 friend_id, const QString& statusMessage) const;
-        void onFriendNameChanged(quint32 friend_id, const QString& name) const;
-        void onFriendTypingChanged(quint32 friend_id, bool typing) const;
+        void onFriendStatusChanged(quint32 friend_id, int status);
+        void onFriendConStatusChanged(quint32 friend_id, int status);
+        void onFriendStatusMsgChanged(quint32 friend_id, const QString& statusMessage);
+        void onFriendNameChanged(quint32 friend_id, const QString& name);
+        void onFriendTypingChanged(quint32 friend_id, bool typing);
 
         bool getBusy() const;
         bool getInitialized() const;
@@ -121,6 +121,7 @@ namespace JTOX {
         const QByteArray encryptPayload(const QByteArray& payload, const QByteArray& pk, const QByteArray& nonce) const;
         const QString getHexPublicKey() const;
         const QString getHexToxID() const;
+        void save();
 
         Q_INVOKABLE void init(const QString& password);
         Q_INVOKABLE bool setNoSpam(const QString& hexVal); // we need to knox if the value is ok
@@ -185,7 +186,6 @@ namespace JTOX {
         void setStatusMessage(const QString& sm);
         const QString getUserName() const;
         void setUserName(const QString& uname);
-        void save();
         bool getKeepLogs() const;
         void setKeepLogs(bool keep);
         void killTox();

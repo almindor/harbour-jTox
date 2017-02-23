@@ -47,7 +47,15 @@ Item {
             right: parent.right
         }
 
-        placeholderText: toxcore.status > 0 && eventmodel.friendStatus > 0 ? qsTr("Type your message here") : (eventmodel.friendName + " " + qsTr("is offline"))
+        function shortened(name) {
+            if ( name.length > 15 ) {
+                return name.substring(0, 15) + '...';
+            }
+
+            return name;
+        }
+
+        placeholderText: toxcore.status > 0 && eventmodel.friendStatus > 0 ? qsTr("Type your message here") : (shortened(eventmodel.friendName) + " " + qsTr("is offline"))
         EnterKey.onClicked: {
             sendMessage(text)
             text = ''

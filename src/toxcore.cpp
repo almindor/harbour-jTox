@@ -227,27 +227,31 @@ namespace JTOX {
         emit messageDelivered(friend_id, message_id);
     }
 
-    void ToxCore::onFriendStatusChanged(quint32 friend_id, int status) const
+    void ToxCore::onFriendStatusChanged(quint32 friend_id, int status)
     {
+        save();
         emit friendStatusChanged(friend_id, status);
     }
 
-    void ToxCore::onFriendConStatusChanged(quint32 friend_id, int status) const
+    void ToxCore::onFriendConStatusChanged(quint32 friend_id, int status)
     {
+        save();
         emit friendConStatusChanged(friend_id, status);
     }
 
-    void ToxCore::onFriendStatusMsgChanged(quint32 friend_id, const QString& statusMessage) const
+    void ToxCore::onFriendStatusMsgChanged(quint32 friend_id, const QString& statusMessage)
     {
+        save();
         emit friendStatusMsgChanged(friend_id, statusMessage);
     }
 
-    void ToxCore::onFriendNameChanged(quint32 friend_id, const QString& name) const
+    void ToxCore::onFriendNameChanged(quint32 friend_id, const QString& name)
     {
+        save();
         emit friendNameChanged(friend_id, name);
     }
 
-    void ToxCore::onFriendTypingChanged(quint32 friend_id, bool typing) const
+    void ToxCore::onFriendTypingChanged(quint32 friend_id, bool typing)
     {
         emit friendTypingChanged(friend_id, typing);
     }
@@ -385,6 +389,7 @@ namespace JTOX {
         }
 
         tox_self_set_nospam(fTox, noSpamInt);
+        save();
         emit accountChanged();
         return true;
     }
@@ -508,6 +513,7 @@ namespace JTOX {
         }
 
         tox_self_set_status(fTox, userStatus);
+        save();
         emit statusChanged(status);
     }
 
@@ -537,6 +543,7 @@ namespace JTOX {
             Utils::bail("Error setting status message: " + QString::number(error, 10));
         }
 
+        save();
         emit statusMessageChanged(sm);
     }
 
@@ -566,6 +573,7 @@ namespace JTOX {
             Utils::bail("Error setting user name: " + QString::number(error, 10));
         }
 
+        save();
         emit userNameChanged(uname);
     }
 
