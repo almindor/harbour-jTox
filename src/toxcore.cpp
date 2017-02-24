@@ -113,8 +113,16 @@ namespace JTOX {
 
         if ( !fInitialUse ) {
             const QByteArray encryptedData = settings.value("tox/savedata", QByteArray()).toByteArray();
-            fEncryptSave.setPassword(fPassword, encryptedData);
-            saveData = fEncryptSave.isEncrypted(encryptedData) ? fEncryptSave.decryptRaw(encryptedData) : encryptedData;
+
+            // if out profile is not encrypted we just set the password and it gets saved with it right after init
+            if ( !fEncryptSave.isEncrypted(encryptedData) ) {
+                fEncryptSave.setPassword(fPassword);
+                saveData = encryptedData;
+            } else { // otherwise set password with salt from encrypted data
+                fEncryptSave.setPassword(fPassword, encryptedData);
+                saveData = fEncryptSave.decryptRaw(encryptedData);
+            }
+
             options.savedata_type = TOX_SAVEDATA_TYPE_TOX_SAVE;
             options.savedata_data = (uint8_t*) saveData.data();
             options.savedata_length = saveData.size();
@@ -445,11 +453,6 @@ namespace JTOX {
 
         const QByteArray encryptedData = impFile.readAll();
         impFile.close();
-
-        if ( !fEncryptSave.isEncrypted(encryptedData) ) {
-            emit errorOccurred("Import error: file not valid");
-            return false;
-        }
 
         QSettings settings;
         settings.setValue("tox/savedata", encryptedData);
