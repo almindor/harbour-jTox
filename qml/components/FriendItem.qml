@@ -8,7 +8,7 @@ ListItem {
         right: parent.right
         margins: Theme.paddingLarge
     }
-    height: Math.max(nameLabel.height + smText.height, 64)
+    contentHeight: Math.max(nameLabel.height + smText.height, 64)
 
     onClicked: {
         appWindow.activeFriendID = friend_id

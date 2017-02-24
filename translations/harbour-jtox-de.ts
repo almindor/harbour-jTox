@@ -334,6 +334,14 @@
     </message>
 </context>
 <context>
+    <name>MessageItem</name>
+    <message>
+        <location filename="../qml/components/MessageItem.qml" line="17"/>
+        <source>Copy to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Password</name>
     <message>
         <location filename="../qml/pages/Password.qml" line="47"/>

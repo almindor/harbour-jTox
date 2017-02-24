@@ -3,6 +3,7 @@
 #include "friend.h"
 #include <QDateTime>
 #include <QDebug>
+#include <QRegularExpression>
 
 namespace JTOX {
 

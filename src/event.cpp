@@ -16,7 +16,7 @@ namespace JTOX {
             case erID: return fID;
             case erCreated: return fCreated;
             case erEventType: return fEventType;
-            case erMessage: return fMessage;
+            case erMessage: return hyperLink(fMessage);
         }
 
         return QVariant("invalid_role");
@@ -34,6 +34,27 @@ namespace JTOX {
     EventType Event::type() const
     {
         return fEventType;
+    }
+
+    const QString Event::hyperLink(const QString& message) const
+    {
+        int n = message.indexOf("http://");
+        if ( n < 0 ) n = message.indexOf("https://");
+
+        if ( n < 0 ) return message;
+
+        if ( n > 0 && !message.at(n - 1).isSpace() ) return message; // probably wrapped already
+
+        QString link = "";
+        for ( int i = n; i < message.length(); i++ ) {
+            if ( message.at(i).isSpace() ) {
+                break;
+            }
+            link += message.at(i);
+        }
+
+        QString newMsg = message;
+        return hyperLink(newMsg.replace(link, "<a href=\"" + link + "\">" + link + "</a>"));
     }
 
     void Event::delivered() {

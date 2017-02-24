@@ -49,6 +49,8 @@ namespace JTOX {
         QString fMessage;
         qint64 fSendID;
         QDateTime fCreated;
+
+        const QString hyperLink(const QString& message) const;
     };
 
     typedef QList<Event> EventList;
