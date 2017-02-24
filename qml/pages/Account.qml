@@ -67,7 +67,6 @@ Page {
             }
         }
 
-
         Column {
             id: col
 

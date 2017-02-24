@@ -48,6 +48,7 @@ ApplicationWindow
         onFriendRequest: banner("x-nemo.messaging.authorizationrequest", qsTr("New friend request"), "friend", appWindow.applicationActive)
         onAccountImported: banner("im", qsTr("Account Imported"), undefined, undefined, true)
         onAccountExported: banner("im", qsTr("Account Exported: ") + fileName, undefined, undefined, true)
+        onAccountCreated: banner('im', qsTr("New account created"), undefined, undefined, true)
         onLogsWiped: banner("im", qsTr("Chat history wiped"), undefined, undefined, true)
         onErrorOccurred: banner("x-nemo.messaging.error", error, "error", [error], appWindow.applicationActive)
     }

@@ -26,46 +26,63 @@ Page {
         }
     }
 
-    BusyIndicator {
-        size: BusyIndicatorSize.Large
-        x: page.width / 2.0 - width / 2.0
-        y: page.height / 2.0 - height / 2.0
-        z: 99
-        visible: toxcore.busy
-        running: toxcore.busy
-    }
+    SilicaFlickable {
+        anchors.fill: parent
 
-    TextField {
-        id: passField
-        enabled: !toxcore.busy
-        anchors {
-            left: parent.left
-            right: parent.right
-            verticalCenter: parent.verticalCenter
+        BusyIndicator {
+            size: BusyIndicatorSize.Large
+            x: page.width / 2.0 - width / 2.0
+            y: page.height / 2.0 - height / 2.0
+            z: 99
+            visible: toxcore.busy
+            running: toxcore.busy
         }
 
-        label: text.length < 8 ? qsTr("Password too short") : ""
-        placeholderText: toxcore.initialUse ? qsTr("New account password") : qsTr("Account password")
-        errorHighlight: false
-        echoMode: TextInput.Password
+        RemorsePopup {
+            id: remorseNA
+        }
 
-        EnterKey.onClicked: {
-            if ( text.length >= 8 ) {
-                toxcore.validatePassword(text)
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("New Account")
+                onClicked: remorseNA.execute(qsTr("Creating Account"), function() {
+                    toxcore.newAccount()
+                } )
             }
         }
 
-        Connections {
-            target: toxcore
-            onPasswordValidChanged: {
-                if ( valid ) {
-                    passField.errorHighlight = false
-                    passField.focus = false
-                    toxcore.init(passField.text)
-                    pageStack.replaceAbove(null, Qt.resolvedUrl("Friends.qml"))
-                } else {
-                    passField.errorHighlight = true
-                    passField.label = qsTr("Invalid password")
+        TextField {
+            id: passField
+            enabled: !toxcore.busy
+            anchors {
+                left: parent.left
+                right: parent.right
+                verticalCenter: parent.verticalCenter
+            }
+
+            label: text.length < 8 ? qsTr("Password too short") : ""
+            placeholderText: toxcore.initialUse ? qsTr("New account password") : qsTr("Account password")
+            errorHighlight: false
+            echoMode: TextInput.Password
+
+            EnterKey.onClicked: {
+                if ( text.length >= 8 ) {
+                    toxcore.validatePassword(text)
+                }
+            }
+
+            Connections {
+                target: toxcore
+                onPasswordValidChanged: {
+                    if ( valid ) {
+                        passField.errorHighlight = false
+                        passField.focus = false
+                        toxcore.init(passField.text)
+                        pageStack.replaceAbove(null, Qt.resolvedUrl("Friends.qml"))
+                    } else {
+                        passField.errorHighlight = true
+                        passField.label = qsTr("Invalid password")
+                    }
                 }
             }
         }

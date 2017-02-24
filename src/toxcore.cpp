@@ -418,6 +418,21 @@ namespace JTOX {
         fTimer.setInterval(active ? ACTIVE_ITERATION_DELAY : PASSIVE_ITERATION_DELAY);
     }
 
+    void ToxCore::newAccount()
+    {
+        QSettings settings;
+        settings.remove("tox/savedata");
+        settings.sync();
+        fDBData.wipe(-1);
+
+        if ( fInitialized ) {
+            killTox();
+        }
+
+        emit initialUseChanged(true);
+        emit accountCreated();
+    }
+
     bool ToxCore::importAccount(const QString& fileName)
     {
         const QDir dir(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
@@ -591,6 +606,7 @@ namespace JTOX {
         QSettings settings;
         settings.setValue("tox/savedata", encryptedData);
         settings.sync();
+        emit initialUseChanged(false);
     }
 
     void ToxCore::killTox()

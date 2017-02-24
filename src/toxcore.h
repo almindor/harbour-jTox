@@ -95,7 +95,7 @@ namespace JTOX {
         Q_PROPERTY(QString statusMessage READ getStatusMessage WRITE setStatusMessage NOTIFY statusMessageChanged)
         Q_PROPERTY(int status READ getStatus WRITE setStatus NOTIFY statusChanged)
         Q_PROPERTY(QString statusText READ getStatusText NOTIFY statusChanged)
-        Q_PROPERTY(bool initialUse READ getInitialUse NOTIFY clientReset)
+        Q_PROPERTY(bool initialUse READ getInitialUse NOTIFY initialUseChanged)
         Q_PROPERTY(bool passwordValid READ getPasswordValid NOTIFY passwordValidChanged)
         Q_PROPERTY(bool initialized READ getInitialized NOTIFY clientReset)
     public:
@@ -127,11 +127,13 @@ namespace JTOX {
         Q_INVOKABLE bool setNoSpam(const QString& hexVal); // we need to knox if the value is ok
         Q_INVOKABLE void validatePassword(const QString& password);
         Q_INVOKABLE void setApplicationActive(bool active);
+        Q_INVOKABLE void newAccount();
         Q_INVOKABLE bool importAccount(const QString& fileName);
         Q_INVOKABLE void exportAccount() const;
-        Q_INVOKABLE void wipeLogs(); // used for various debugging reasons
+        Q_INVOKABLE void wipeLogs();
     signals:
         void clientReset();
+        void initialUseChanged(bool initial);
         void versionChanged();
         void connectionStatusChanged(const QString& status);
         void statusChanged(int status);
@@ -152,6 +154,7 @@ namespace JTOX {
         void passwordValidChanged(bool valid);
         void accountExported(const QString& fileName) const;
         void accountImported() const;
+        void accountCreated() const;
         void errorOccurred(const QString& error) const;
         void logsWiped() const;
     private slots:
