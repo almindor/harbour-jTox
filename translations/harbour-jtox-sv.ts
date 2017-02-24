@@ -67,69 +67,74 @@
         <translation>Visa QR-kod</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="96"/>
-        <source>Tox ID touch for QR code</source>
-        <translation>Tox-ID. Tryck för QR-kod</translation>
+        <location filename="../qml/pages/Account.qml" line="99"/>
+        <source>ToxID copied to clipboard</source>
+        <translation>Tox-ID kopierat till urklipp</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="110"/>
-        <location filename="../qml/pages/Account.qml" line="112"/>
+        <location filename="../qml/pages/Account.qml" line="130"/>
+        <source>Tox ID: touch to copy to clipboard</source>
+        <translation>Tox-ID: Tryck för att kopiera till urklipp</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Account.qml" line="142"/>
+        <location filename="../qml/pages/Account.qml" line="144"/>
         <source>Nospam</source>
         <translation>Nospam</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="123"/>
-        <location filename="../qml/pages/Account.qml" line="125"/>
+        <location filename="../qml/pages/Account.qml" line="155"/>
+        <location filename="../qml/pages/Account.qml" line="157"/>
         <source>User name</source>
         <translation>Användarnamn</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="136"/>
+        <location filename="../qml/pages/Account.qml" line="168"/>
         <source>Status message</source>
         <translation>Statusmeddelande</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="137"/>
+        <location filename="../qml/pages/Account.qml" line="169"/>
         <source>Hi from jTox on Sailfish</source>
         <translation>Hej från jTox på Sailfish</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="142"/>
+        <location filename="../qml/pages/Account.qml" line="174"/>
         <source>Chat history</source>
         <translation>Chatthistorik</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="147"/>
+        <location filename="../qml/pages/Account.qml" line="179"/>
         <source>Wipe history</source>
         <translation>Rensa historiken</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="148"/>
+        <location filename="../qml/pages/Account.qml" line="180"/>
         <source>Wiping chat history</source>
         <translation>Rensar chatthistoriken</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="164"/>
+        <location filename="../qml/pages/Account.qml" line="196"/>
         <source>password</source>
         <translation>lösenord</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="170"/>
+        <location filename="../qml/pages/Account.qml" line="202"/>
         <source>Private</source>
         <translation>Privat</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="187"/>
+        <location filename="../qml/pages/Account.qml" line="219"/>
         <source>Update</source>
         <translation>Uppdatera</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="187"/>
+        <location filename="../qml/pages/Account.qml" line="219"/>
         <source>Register</source>
         <translation>Registrera</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="199"/>
+        <location filename="../qml/pages/Account.qml" line="231"/>
         <source>Delete</source>
         <translation>Ta bort</translation>
     </message>
@@ -152,32 +157,32 @@
         <translation>Adress eller hanterare@</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="92"/>
+        <location filename="../qml/pages/AddFriend.qml" line="96"/>
         <source>Message</source>
         <translation>Meddelande</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="93"/>
+        <location filename="../qml/pages/AddFriend.qml" line="97"/>
         <source>Please add me to friends</source>
         <translation>Lägg till mig i dina kontakter</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="105"/>
+        <location filename="../qml/pages/AddFriend.qml" line="109"/>
         <source>Address</source>
         <translation>Adress</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="106"/>
+        <location filename="../qml/pages/AddFriend.qml" line="110"/>
         <source>Address not resolved</source>
         <translation>Adressen inte uppslagen</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="116"/>
+        <location filename="../qml/pages/AddFriend.qml" line="120"/>
         <source>Resolved Address</source>
         <translation>Adressen uppslagen</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="128"/>
+        <location filename="../qml/pages/AddFriend.qml" line="132"/>
         <source>Resolve Error</source>
         <translation>Uppslagningsfel</translation>
     </message>
@@ -287,35 +292,40 @@
         <translation>skriver</translation>
     </message>
     <message>
-        <location filename="../qml/components/InputItem.qml" line="50"/>
+        <location filename="../qml/components/InputItem.qml" line="58"/>
         <source>Type your message here</source>
         <translation>Skriv ditt meddelande här</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/InputItem.qml" line="58"/>
+        <source>is offline</source>
+        <translation>är offline</translation>
     </message>
 </context>
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="489"/>
+        <location filename="../src/toxcore.cpp" line="494"/>
         <source>Offline</source>
-        <translation>Nerkopplad</translation>
+        <translation>Offline</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="490"/>
+        <location filename="../src/toxcore.cpp" line="495"/>
         <source>Ready</source>
-        <translation>Klar</translation>
+        <translation>Tillgänglig</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="491"/>
+        <location filename="../src/toxcore.cpp" line="496"/>
         <source>Away</source>
         <translation>Borta</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="492"/>
+        <location filename="../src/toxcore.cpp" line="497"/>
         <source>Busy</source>
         <translation>Upptagen</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="495"/>
+        <location filename="../src/toxcore.cpp" line="500"/>
         <source>Unknown</source>
         <translation>Okänt</translation>
     </message>
@@ -326,6 +336,14 @@
         <location filename="../src/toxcore.cpp" line="133"/>
         <source>Hi from jTox on Sailfish</source>
         <translation>Hej från jTox på Sailfish</translation>
+    </message>
+</context>
+<context>
+    <name>MessageItem</name>
+    <message>
+        <location filename="../qml/components/MessageItem.qml" line="17"/>
+        <source>Copy to clipboard</source>
+        <translation>Kopiera till urklipp</translation>
     </message>
 </context>
 <context>
