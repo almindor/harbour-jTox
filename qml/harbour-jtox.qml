@@ -45,21 +45,21 @@ ApplicationWindow
 
     Connections {
         target: toxcore
-        onFriendRequest: cover_banner("im", qsTr("New friend request"), "friend", appWindow.applicationActive)
+        onFriendRequest: banner("x-nemo.messaging.authorizationrequest", qsTr("New friend request"), "friend", appWindow.applicationActive)
         onAccountImported: banner("im", qsTr("Account Imported"), undefined, undefined, true)
         onAccountExported: banner("im", qsTr("Account Exported: ") + fileName, undefined, undefined, true)
         onLogsWiped: banner("im", qsTr("Chat history wiped"), undefined, undefined, true)
-        onErrorOccurred: banner("im.error", error, "error", [error], appWindow.applicationActive)
+        onErrorOccurred: banner("x-nemo.messaging.error", error, "error", [error], appWindow.applicationActive)
     }
 
     Connections {
         target: friendmodel
-        onFriendAddError: banner("im.error", error, "error", [error], appWindow.applicationActive)
+        onFriendAddError: banner("x-nemo.messaging.error", error, "error", [error], appWindow.applicationActive)
     }
 
     Connections {
         target: eventmodel
-        onMessageReceived: banner("im.received", qsTr("Message from") + " " + friendName, "message", [friendIndex], appWindow.applicationActive)
+        onMessageReceived: banner("x-nemo.messaging.im", qsTr("Message from") + " " + friendName, "message", [friendIndex], appWindow.applicationActive)
     }
 
     Connections {
@@ -76,7 +76,7 @@ ApplicationWindow
         iface: 'net.almindor.jtox'
         path: '/api'
 
-        xml: '  <interface name="com.example.service">\n' +
+        xml: '  <interface name="net.almindor.jtox">\n' +
              '    <method name="error" />\n' +
              '    <method name="friend" />\n' +
              '    <method name="message" />\n' +
@@ -151,14 +151,6 @@ ApplicationWindow
         }
 
         n.publish()
-    }
-
-    function cover_banner(category, message, method, args, preview) {
-        if ( appWindow.applicationActive ) {
-            return
-        }
-
-        banner(category, message, method, args)
     }
 }
 
