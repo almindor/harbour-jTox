@@ -134,7 +134,6 @@ namespace JTOX {
         endRemoveRows();
     }
 
-
     void FriendModel::refresh() {
         if ( !fToxCore.getInitialized() ) {
             Utils::bail("Refreshing friend list with uninitialized tox instance");
