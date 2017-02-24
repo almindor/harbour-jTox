@@ -57,84 +57,84 @@
         <translation>Exporterar konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="82"/>
+        <location filename="../qml/pages/Account.qml" line="81"/>
         <source>Account</source>
         <translation>Konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="86"/>
+        <location filename="../qml/pages/Account.qml" line="85"/>
         <source>Show QR Code</source>
         <translation>Visa QR-kod</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="99"/>
+        <location filename="../qml/pages/Account.qml" line="98"/>
         <source>ToxID copied to clipboard</source>
         <translation>Tox-ID kopierat till urklipp</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="130"/>
+        <location filename="../qml/pages/Account.qml" line="129"/>
         <source>Tox ID: touch to copy to clipboard</source>
         <translation>Tox-ID: Tryck för att kopiera till urklipp</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="142"/>
-        <location filename="../qml/pages/Account.qml" line="144"/>
+        <location filename="../qml/pages/Account.qml" line="141"/>
+        <location filename="../qml/pages/Account.qml" line="143"/>
         <source>Nospam</source>
         <translation>Nospam</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="155"/>
-        <location filename="../qml/pages/Account.qml" line="157"/>
+        <location filename="../qml/pages/Account.qml" line="154"/>
+        <location filename="../qml/pages/Account.qml" line="156"/>
         <source>User name</source>
         <translation>Användarnamn</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="168"/>
+        <location filename="../qml/pages/Account.qml" line="167"/>
         <source>Status message</source>
         <translation>Statusmeddelande</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="169"/>
+        <location filename="../qml/pages/Account.qml" line="168"/>
         <source>Hi from jTox on Sailfish</source>
         <translation>Hej från jTox på Sailfish</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="174"/>
+        <location filename="../qml/pages/Account.qml" line="173"/>
         <source>Chat history</source>
         <translation>Chatthistorik</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="179"/>
+        <location filename="../qml/pages/Account.qml" line="178"/>
         <source>Wipe history</source>
         <translation>Rensa historiken</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="180"/>
+        <location filename="../qml/pages/Account.qml" line="179"/>
         <source>Wiping chat history</source>
         <translation>Rensar chatthistoriken</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="196"/>
+        <location filename="../qml/pages/Account.qml" line="195"/>
         <source>password</source>
         <translation>lösenord</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="202"/>
+        <location filename="../qml/pages/Account.qml" line="201"/>
         <source>Private</source>
         <translation>Privat</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="219"/>
+        <location filename="../qml/pages/Account.qml" line="218"/>
         <source>Update</source>
         <translation>Uppdatera</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="219"/>
+        <location filename="../qml/pages/Account.qml" line="218"/>
         <source>Register</source>
         <translation>Registrera</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="231"/>
+        <location filename="../qml/pages/Account.qml" line="230"/>
         <source>Delete</source>
         <translation>Ta bort</translation>
     </message>
@@ -305,27 +305,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="494"/>
+        <location filename="../src/toxcore.cpp" line="512"/>
         <source>Offline</source>
         <translation>Offline</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="495"/>
+        <location filename="../src/toxcore.cpp" line="513"/>
         <source>Ready</source>
         <translation>Tillgänglig</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="496"/>
+        <location filename="../src/toxcore.cpp" line="514"/>
         <source>Away</source>
         <translation>Borta</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="497"/>
+        <location filename="../src/toxcore.cpp" line="515"/>
         <source>Busy</source>
         <translation>Upptagen</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="500"/>
+        <location filename="../src/toxcore.cpp" line="518"/>
         <source>Unknown</source>
         <translation>Okänt</translation>
     </message>
@@ -333,7 +333,7 @@
 <context>
     <name>JTOX::ToxInitializer</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="133"/>
+        <location filename="../src/toxcore.cpp" line="141"/>
         <source>Hi from jTox on Sailfish</source>
         <translation>Hej från jTox på Sailfish</translation>
     </message>
@@ -355,21 +355,31 @@
     <name>Password</name>
     <message>
         <location filename="../qml/pages/Password.qml" line="47"/>
+        <source>New Account</source>
+        <translation>Nytt konto</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Password.qml" line="48"/>
+        <source>Creating Account</source>
+        <translation>Skapar konto</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Password.qml" line="63"/>
         <source>Password too short</source>
         <translation>Lösenordet är för kort</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="48"/>
+        <location filename="../qml/pages/Password.qml" line="64"/>
         <source>New account password</source>
         <translation>Nytt kontolösenord</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="48"/>
+        <location filename="../qml/pages/Password.qml" line="64"/>
         <source>Account password</source>
         <translation>Kontolösenord</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="68"/>
+        <location filename="../qml/pages/Password.qml" line="84"/>
         <source>Invalid password</source>
         <translation>Ogiltigt lösenord</translation>
     </message>
@@ -424,21 +434,26 @@
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="51"/>
+        <source>New account created</source>
+        <translation>Nytt konto skapat</translation>
+    </message>
+    <message>
+        <location filename="../qml/harbour-jtox.qml" line="52"/>
         <source>Chat history wiped</source>
         <translation>Chatthistoriken rensad</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="62"/>
+        <location filename="../qml/harbour-jtox.qml" line="63"/>
         <source>Message from</source>
         <translation>Meddelande från</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="69"/>
+        <location filename="../qml/harbour-jtox.qml" line="70"/>
         <source>Registered on </source>
         <translation>Registrerat på </translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="70"/>
+        <location filename="../qml/harbour-jtox.qml" line="71"/>
         <source>Removed from </source>
         <translation>Borttaget från </translation>
     </message>
