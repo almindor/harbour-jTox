@@ -67,69 +67,74 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="127"/>
+        <location filename="../qml/pages/Account.qml" line="99"/>
+        <source>ToxID copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Account.qml" line="130"/>
         <source>Tox ID: touch to copy to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="139"/>
-        <location filename="../qml/pages/Account.qml" line="141"/>
+        <location filename="../qml/pages/Account.qml" line="142"/>
+        <location filename="../qml/pages/Account.qml" line="144"/>
         <source>Nospam</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="152"/>
-        <location filename="../qml/pages/Account.qml" line="154"/>
+        <location filename="../qml/pages/Account.qml" line="155"/>
+        <location filename="../qml/pages/Account.qml" line="157"/>
         <source>User name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="165"/>
+        <location filename="../qml/pages/Account.qml" line="168"/>
         <source>Status message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="166"/>
+        <location filename="../qml/pages/Account.qml" line="169"/>
         <source>Hi from jTox on Sailfish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="171"/>
+        <location filename="../qml/pages/Account.qml" line="174"/>
         <source>Chat history</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="176"/>
+        <location filename="../qml/pages/Account.qml" line="179"/>
         <source>Wipe history</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="177"/>
+        <location filename="../qml/pages/Account.qml" line="180"/>
         <source>Wiping chat history</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="193"/>
+        <location filename="../qml/pages/Account.qml" line="196"/>
         <source>password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="199"/>
+        <location filename="../qml/pages/Account.qml" line="202"/>
         <source>Private</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="216"/>
+        <location filename="../qml/pages/Account.qml" line="219"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="216"/>
+        <location filename="../qml/pages/Account.qml" line="219"/>
         <source>Register</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="228"/>
+        <location filename="../qml/pages/Account.qml" line="231"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>

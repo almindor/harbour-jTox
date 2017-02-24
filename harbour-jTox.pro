@@ -37,8 +37,7 @@ SOURCES += \
     src/friendrequest.cpp \
     src/dbdata.cpp \
     src/harbour-jtox.cpp \
-    src/dirmodel.cpp \
-    src/clipboardadapter.cpp
+    src/dirmodel.cpp
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \
@@ -87,8 +86,7 @@ HEADERS += \
     src/requestmodel.h \
     src/friendrequest.h \
     src/dbdata.h \
-    src/dirmodel.h \
-    src/clipboardadapter.h
+    src/dirmodel.h
 
 DISTFILES += \
     qml/pages/About.qml \

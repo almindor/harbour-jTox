@@ -94,7 +94,10 @@ Page {
                     right: parent.right
                 }
 
-                onClicked: console.log("clip text set to: " + toxidLabel.text)
+                onClicked: {
+                    Clipboard.text = toxcore.toxID
+                    banner("im", qsTr("ToxID copied to clipboard"), undefined, undefined, true)
+                }
 
                 Column {
                     anchors {

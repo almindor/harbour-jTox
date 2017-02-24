@@ -33,7 +33,6 @@
 #include "requestmodel.h"
 #include "dbdata.h"
 #include "dirmodel.h"
-#include "clipboardadapter.h"
 #include "utils.h"
 
 using namespace JTOX;
@@ -51,7 +50,6 @@ int main(int argc, char *argv[])
     QGuiApplication *app = SailfishApp::application(argc, argv);
     QQuickView *view = SailfishApp::createView();
 
-    ClipboardAdapter clipboard;
     DirModel dirModel;
     EncryptSave encryptSave;
     DBData dbData(encryptSave);
@@ -68,7 +66,6 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty("toxme", &toxme);
     view->rootContext()->setContextProperty("requestmodel", &requestModel);
     view->rootContext()->setContextProperty("dirmodel", &dirModel);
-    view->rootContext()->setContextProperty("clipboard", &clipboard);
 
     view->setSource(SailfishApp::pathTo(qml));
     view->show();

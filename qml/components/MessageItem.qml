@@ -16,10 +16,8 @@ ListItem {
         MenuItem {
             text: qsTr("Copy to clipboard")
             onClicked: {
-                console.log("LIH: " + listItem.height)
-                console.log("col: " + col.height)
-                console.log("MT: " + messageText.height)
-                clipboard.setText(messageText.text)
+                Clipboard.text = messageText.text
+                banner("im", qsTr("Message copied to clipboard"), undefined, undefined, true)
             }
         }
     }
