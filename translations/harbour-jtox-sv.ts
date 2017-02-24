@@ -345,6 +345,11 @@
         <source>Copy to clipboard</source>
         <translation>Kopiera till urklipp</translation>
     </message>
+    <message>
+        <location filename="../qml/components/MessageItem.qml" line="20"/>
+        <source>Message copied to clipboard</source>
+        <translation>Meddelande kopierat till urklipp</translation>
+    </message>
 </context>
 <context>
     <name>Password</name>
