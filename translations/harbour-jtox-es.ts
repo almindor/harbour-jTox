@@ -31,7 +31,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="90"/>
         <source>The Tox protocol is EXPERIMENTAL! The protocol has not been audited for security and can contain vulnerabilities. Use at your own risk.</source>
-        <translation>El protocolo Tox es EXPERIMENTAL! El protocolo no ha sido auditado por seguridad y puede contener vulnerabilidades. Úselo bajo su propio riesgo.</translation>
+        <translation>El protocolo Tox es EXPERIMENTAL! y no ha sido auditado por seguridad y puede contener vulnerabilidades. Úselo bajo su propio riesgo.</translation>
     </message>
 </context>
 <context>
