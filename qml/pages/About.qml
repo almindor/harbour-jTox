@@ -59,7 +59,7 @@ Page {
                     margins: Theme.paddingLarge
                 }
                 wrapMode: Text.WordWrap
-                color: Theme.primaryColor
+                color: Theme.secondaryColor
                 text: qsTr("Toxcore version") + " " + toxcore.majorVersion + "." + toxcore.minorVersion + "." + toxcore.patchVersion
             }
 
@@ -70,7 +70,7 @@ Page {
                     margins: Theme.paddingLarge
                 }
                 color: Theme.secondaryColor
-                font.pointSize: 16
+                font.pointSize: Theme.fontSizeExtraSmall
                 wrapMode: Text.WordWrap
                 text: qsTr("jTox is free software licensed under the GPL v3 available at <a href='https://github.com/almindor/harbour-jTox'>github</a>.")
                 linkColor: Theme.secondaryHighlightColor
@@ -79,15 +79,28 @@ Page {
                 }
             }
 
-            TextArea {
+            Text {
                 anchors {
                     left: parent.left
                     right: parent.right
                     margins: Theme.paddingLarge
                 }
-                color: Theme.secondaryHighlightColor
-                readOnly: true
-                text: qsTr("The Tox protocol is EXPERIMENTAL! The protocol has not been audited for security and can contain vulnerabilities. Use at your own risk.")
+                color: Theme.secondaryColor
+                font.pointSize: Theme.fontSizeExtraSmall
+                wrapMode: Text.WordWrap
+                text: qsTr("Translators") + "\n" + qsTr("Swedish: Åke Engelbrektson") + "\n" + qsTr("Spanish: caballlero")
+            }
+
+            Text {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
+                }
+                color: Theme.highlightColor
+                font.pointSize: Theme.fontSizeMedium
+                wrapMode: Text.WordWrap
+                text: qsTr("The Tox protocol is <b>EXPERIMENTAL!</b> The protocol has not been audited for security and can contain vulnerabilities. Use at your own risk.")
             }
         }
     }

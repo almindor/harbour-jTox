@@ -29,8 +29,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="90"/>
-        <source>The Tox protocol is EXPERIMENTAL! The protocol has not been audited for security and can contain vulnerabilities. Use at your own risk.</source>
+        <location filename="../qml/pages/About.qml" line="91"/>
+        <source>Translators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/About.qml" line="91"/>
+        <source>Swedish: Åke Engelbrektson</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/About.qml" line="91"/>
+        <source>Spanish: caballlero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/About.qml" line="103"/>
+        <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Use at your own risk.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
