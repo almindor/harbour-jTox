@@ -29,9 +29,24 @@
         <translation>jTox är fri mjukvara, licensierad under GPL v3 tillgänglig på &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;GitHub&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="90"/>
-        <source>The Tox protocol is EXPERIMENTAL! The protocol has not been audited for security and can contain vulnerabilities. Use at your own risk.</source>
-        <translation>Tox-protokollet är EXPERIMENTELLT! Protokollet har inte granskats gällande säkerhet och kan innehålla sårbarheter. Använd det på egen risk.</translation>
+        <location filename="../qml/pages/About.qml" line="91"/>
+        <source>Translators</source>
+        <translation>Översättare</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/About.qml" line="91"/>
+        <source>Swedish: Åke Engelbrektson</source>
+        <translation>Svenska: Åke Engelbrektson</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/About.qml" line="91"/>
+        <source>Spanish: caballlero</source>
+        <translation>Spanska: caballlero</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/About.qml" line="103"/>
+        <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Use at your own risk.</source>
+        <translation>Tox-protokollet är &lt;b&gt;EXPERIMENTELLT!&lt;/b&gt; Protokollet har inte granskats gällande säkerhet och kan innehålla sårbarheter. Använd det på egen risk.</translation>
     </message>
 </context>
 <context>
@@ -305,27 +320,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="512"/>
+        <location filename="../src/toxcore.cpp" line="578"/>
         <source>Offline</source>
         <translation>Offline</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="513"/>
+        <location filename="../src/toxcore.cpp" line="579"/>
         <source>Ready</source>
         <translation>Tillgänglig</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="514"/>
+        <location filename="../src/toxcore.cpp" line="580"/>
         <source>Away</source>
         <translation>Borta</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="515"/>
+        <location filename="../src/toxcore.cpp" line="581"/>
         <source>Busy</source>
         <translation>Upptagen</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="518"/>
+        <location filename="../src/toxcore.cpp" line="584"/>
         <source>Unknown</source>
         <translation>Okänt</translation>
     </message>
@@ -333,7 +348,7 @@
 <context>
     <name>JTOX::ToxInitializer</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="141"/>
+        <location filename="../src/toxcore.cpp" line="178"/>
         <source>Hi from jTox on Sailfish</source>
         <translation>Hej från jTox på Sailfish</translation>
     </message>
