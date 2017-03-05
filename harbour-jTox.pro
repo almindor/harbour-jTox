@@ -41,7 +41,11 @@ SOURCES += \
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \
-    translations/*.ts
+    translations/*.ts \
+    extra/nodes.json
+
+nodes.files += extra/nodes.json
+nodes.path = /usr/share/$${TARGET}/nodes
 
 # register libraries to variable lib
 lib.files += $$TOX_PATH/lib/libsodium.a \
@@ -58,8 +62,8 @@ LIBS += \
 -lsodium
 
 # set install path and register the variable to INSTALLS
-lib.path = /usr/share/harbour-jtox/lib
-INSTALLS += lib
+lib.path = /usr/share/$${TARGET}/lib
+INSTALLS += lib nodes
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 
@@ -71,7 +75,10 @@ CONFIG += sailfishapp_i18n
 # planning to localize your app, remember to comment out the
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
-TRANSLATIONS += translations/harbour-jtox-de.ts
+TRANSLATIONS += \
+    translations/harbour-jtox-de.ts
+    translations/harbour-jtox-es.ts
+    translations/harbour-jtox-sv.ts
 
 HEADERS += \
     src/c_callbacks.h \
