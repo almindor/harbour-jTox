@@ -164,6 +164,7 @@ namespace JTOX {
         void passwordValidationDone(bool valid);
         void toxInitDone(void* tox, const QString& error);
         void iterate();
+        void awayTimeout();
     private:
         EncryptSave& fEncryptSave;
         DBData& fDBData;
@@ -173,7 +174,9 @@ namespace JTOX {
         PasswordValidator fPasswordValidator;
         QNetworkAccessManager fNetManager;
         QNetworkReply* fNodesRequest;
-        QTimer fTimer;
+        QTimer fIterationTimer;
+        QTimer fAwayTimer;
+        int fAwayStatus;
         bool fPasswordValid;
         bool fInitialized;
         bool fApplicationActive;
@@ -193,6 +196,8 @@ namespace JTOX {
         bool getKeepLogs() const;
         void setKeepLogs(bool keep);
         const QByteArray getDefaultNodes() const;
+        void awayRestore();
+        void awayStart();
         void killTox();
     };
 

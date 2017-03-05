@@ -224,19 +224,23 @@ namespace JTOX {
 
     const int ACTIVE_ITERATION_DELAY = 250;
     const int PASSIVE_ITERATION_DELAY = 2000;
+    const int AWAY_DELAY = 300000; // 5m for away
 
     ToxCore::ToxCore(EncryptSave& encryptSave, DBData& dbData) : QObject(0),
         fEncryptSave(encryptSave), fDBData(dbData),
         fTox(NULL), fBootstrapper(), fInitializer(encryptSave), fPasswordValidator(encryptSave),
-        fNodesRequest(NULL), fTimer(), fPasswordValid(false), fInitialized(false)
+        fNodesRequest(NULL), fIterationTimer(), fPasswordValid(false), fInitialized(false)
     {
         connect(&fNetManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpRequestDone(QNetworkReply*)));
         connect(&fBootstrapper, &Bootstrapper::resultReady, this, &ToxCore::bootstrappingDone);
         connect(&fInitializer, &ToxInitializer::resultReady, this, &ToxCore::toxInitDone);
         connect(&fPasswordValidator, &PasswordValidator::resultReady, this, &ToxCore::passwordValidationDone);
-        connect(&fTimer, &QTimer::timeout, this, &ToxCore::iterate);
+        connect(&fIterationTimer, &QTimer::timeout, this, &ToxCore::iterate);
+        connect(&fAwayTimer, &QTimer::timeout, this, &ToxCore::awayTimeout);
 
-        fTimer.setInterval(ACTIVE_ITERATION_DELAY);
+        fIterationTimer.setInterval(ACTIVE_ITERATION_DELAY);
+        fAwayTimer.setInterval(AWAY_DELAY);
+        fAwayStatus = 0; // offline
 
         // If we're running first time (or updated from 1.0.1-) we need to "store"
         // the nodes from our defaults
@@ -263,6 +267,9 @@ namespace JTOX {
     }
 
     void ToxCore::setConnectionStatus() {
+        if ( getStatus() > 0 ) {
+            awayStart(); // if we went back online but we're minimized start away timer
+        }
         emit accountChanged();
         emit statusChanged(getStatus());
     }
@@ -376,6 +383,15 @@ namespace JTOX {
         tox_iterate(fTox, this);
     }
 
+    void ToxCore::awayTimeout()
+    {
+        // set us to away if we're connected and not away yet
+        int status = getStatus();
+        if ( status > 0 && status != 2 ) {
+            setStatus(2);
+        }
+    }
+
     quint32 ToxCore::getMajorVersion() const {
         return tox_version_major();
     }
@@ -467,7 +483,13 @@ namespace JTOX {
     void ToxCore::setApplicationActive(bool active)
     {
         fApplicationActive = active;
-        fTimer.setInterval(active ? ACTIVE_ITERATION_DELAY : PASSIVE_ITERATION_DELAY);
+        fIterationTimer.setInterval(active ? ACTIVE_ITERATION_DELAY : PASSIVE_ITERATION_DELAY);
+
+        if ( active ) {
+            awayRestore(); // if we restored, stop away timer and restore old status
+        } else {
+            awayStart(); // if we minimized, start away timer
+        }
     }
 
     void ToxCore::newAccount()
@@ -502,7 +524,7 @@ namespace JTOX {
         settings.setValue("tox/savedata", encryptedData);
         settings.sync();
 
-        fTimer.stop();
+        fIterationTimer.stop();
         fDBData.wipe(-1); // wipe logs without emit
         if ( fInitialized ) {
             killTox();
@@ -572,11 +594,17 @@ namespace JTOX {
             case 1: userStatus = TOX_USER_STATUS_NONE; break;
             case 2: userStatus = TOX_USER_STATUS_AWAY; break;
             case 3: userStatus = TOX_USER_STATUS_BUSY; break;
+            default: Utils::bail("Invalid status update"); break;
         }
 
         tox_self_set_status(fTox, userStatus);
         save();
         emit statusChanged(status);
+
+        // if we changed status from cover restart away timer, unless set to away already
+        if ( status != 2 ) {
+            awayStart();
+        }
     }
 
     const QString ToxCore::getStatusMessage() const {
@@ -648,6 +676,26 @@ namespace JTOX {
         }
 
         return file.readAll();
+    }
+
+    void ToxCore::awayRestore()
+    {
+        fAwayTimer.stop();
+        if ( fAwayStatus > 0 ) {
+            setStatus(fAwayStatus);
+        }
+    }
+
+    void ToxCore::awayStart()
+    {
+        if ( fApplicationActive ) {
+            return;
+        }
+
+        fAwayStatus = getStatus();
+        if ( fAwayStatus > 0 && fAwayStatus != 2 ) { // start timer only if we're not offline or away already
+            fAwayTimer.start();
+        }
     }
 
     void ToxCore::save()
@@ -749,7 +797,7 @@ namespace JTOX {
         }
 
         save();
-        fTimer.start();
+        fIterationTimer.start();
         emit busyChanged(false);
         emit clientReset();
         emit accountChanged();
