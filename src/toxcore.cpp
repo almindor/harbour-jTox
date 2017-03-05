@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <sailfishapp.h>
 #include "toxcore.h"
 #include "utils.h"
 #include "c_callbacks.h"
@@ -200,6 +201,13 @@ namespace JTOX {
         connect(&fTimer, &QTimer::timeout, this, &ToxCore::iterate);
 
         fTimer.setInterval(ACTIVE_ITERATION_DELAY);
+
+        // If we're running first time (or updated from 1.0.1-) we need to "store"
+        // the nodes from our defaults
+        QSettings settings;
+        if ( !settings.contains("tox/nodes") ) {
+            settings.setValue("tox/nodes", getDefaultNodes());
+        }
     }
 
     ToxCore::~ToxCore() {
@@ -595,6 +603,17 @@ namespace JTOX {
         emit userNameChanged(uname);
     }
 
+    const QByteArray ToxCore::getDefaultNodes() const
+    {
+        const QUrl path = SailfishApp::pathTo("nodes/nodes.json");
+        QFile file(path.toLocalFile());
+        if ( !file.open(QFile::ReadOnly) ) {
+            Utils::bail("Error opening default nodes file");
+        }
+
+        return file.readAll();
+    }
+
     void ToxCore::save()
     {
         if ( !fInitialized ) {
@@ -625,31 +644,27 @@ namespace JTOX {
 
     void ToxCore::httpRequestDone(QNetworkReply *reply) {       
         if ( reply == NULL ) {
-            qDebug() << "Undefined reply\n";
+            emit errorOccurred("Undefined reply");
             return;
         }
 
         const QByteArray data = reply->readAll();
         QJsonParseError parseError;
-        const QJsonDocument resDoc = QJsonDocument::fromJson(data, &parseError);
+        QJsonDocument::fromJson(data, &parseError);
 
         if ( parseError.error != QJsonParseError::NoError ) {
-            qDebug() << "HTTP Response parse error: " << parseError.errorString() << "\n";
+            emit errorOccurred("HTTP Response parse error: " + parseError.errorString());
             return;
         }
 
-        if ( !fInitialized ) {
-            Utils::bail("Attempting to start bootstrapper with unintialized tox");
-        }
-
+        qint64 currentSeconds = QDateTime::currentMSecsSinceEpoch() / 1000;
+        QSettings settings;
+        settings.setValue("tox/nodes", data);
+        settings.setValue("app/lastnodesrequest", currentSeconds);
         fNodesRequest = NULL;
-        const QJsonObject replyObject = resDoc.object();
-        const QJsonArray nodes = replyObject.value("nodes").toArray();
-        fBootstrapper.start(fTox, nodes);
     }
 
     void ToxCore::bootstrappingDone(int count) {
-        qDebug() << "Bootstrapped to: " << count << " nodes\n";
         if ( count == 0 ) {
             emit errorOccurred("Bootstrap failed");
         }
@@ -673,8 +688,30 @@ namespace JTOX {
 
         fTox = (Tox*) tox;
         fInitialized = true;
-        QNetworkRequest request(QUrl("https://nodes.tox.chat/json"));
-        fNodesRequest = fNetManager.get(request);
+
+        const QSettings settings;
+        QJsonParseError parseError;
+        const QJsonDocument nodesDoc = QJsonDocument::fromJson(settings.value("tox/nodes", "invalid").toByteArray(), &parseError);
+        if ( parseError.error != QJsonParseError::NoError ) {
+            Utils::bail("Nodes parse error: " + parseError.errorString());
+        }
+        const QJsonObject nodesObject = nodesDoc.object();
+        const QJsonArray nodes = nodesObject.value("nodes").toArray();
+        fBootstrapper.start(fTox, nodes);
+
+        // we check for new json once a week
+        bool ok = false;
+        const QVariant lnr = settings.value("app/lastnodesrequest", 0);
+        qint64 lastRequest = lnr.toLongLong(&ok);
+        if ( !ok ) {
+            Utils::bail("Invalid last nodes request time value: " + lnr.toString());
+        }
+        qint64 currentSeconds = QDateTime::currentMSecsSinceEpoch() / 1000;
+        if ( currentSeconds - lastRequest > 604800 ) {
+            QNetworkRequest request(QUrl("https://nodes.tox.chat/json"));
+            fNodesRequest = fNetManager.get(request);
+        }
+
         save();
         fTimer.start();
         emit busyChanged(false);

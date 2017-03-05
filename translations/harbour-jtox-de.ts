@@ -305,27 +305,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="512"/>
+        <location filename="../src/toxcore.cpp" line="520"/>
         <source>Offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="513"/>
+        <location filename="../src/toxcore.cpp" line="521"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="514"/>
+        <location filename="../src/toxcore.cpp" line="522"/>
         <source>Away</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="515"/>
+        <location filename="../src/toxcore.cpp" line="523"/>
         <source>Busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="518"/>
+        <location filename="../src/toxcore.cpp" line="526"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -333,7 +333,7 @@
 <context>
     <name>JTOX::ToxInitializer</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="141"/>
+        <location filename="../src/toxcore.cpp" line="142"/>
         <source>Hi from jTox on Sailfish</source>
         <translation type="unfinished"></translation>
     </message>

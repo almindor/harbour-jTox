@@ -191,6 +191,7 @@ namespace JTOX {
         void setUserName(const QString& uname);
         bool getKeepLogs() const;
         void setKeepLogs(bool keep);
+        const QByteArray getDefaultNodes() const;
         void killTox();
     };
 
