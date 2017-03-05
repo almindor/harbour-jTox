@@ -1,3 +1,4 @@
 # User profile settings
 *.pro.user*
-extra
+extra/armv7hl
+extra/i486
