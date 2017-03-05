@@ -47,6 +47,7 @@ namespace JTOX {
     private:
         Tox* fTox;
         QJsonArray fNodes;
+        int bootstrapNodes(int maxNodes);
     };
 
     class PasswordValidator : public QThread

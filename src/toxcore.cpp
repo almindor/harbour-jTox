@@ -21,6 +21,7 @@
 #include "c_callbacks.h"
 #include <sodium/utils.h>
 #include <sodium/crypto_box.h>
+#include <sodium/randombytes.h>
 #include <QtDebug>
 #include <QJsonParseError>
 #include <QJsonDocument>
@@ -42,22 +43,7 @@ namespace JTOX {
 
     void Bootstrapper::run() {
         fWorking = true;
-        int count = 0;
-        foreach ( const QJsonValue val, fNodes ) {
-            TOX_ERR_BOOTSTRAP error = TOX_ERR_BOOTSTRAP_NULL;
-            // TODO: figure out if we can use ipv6 here
-            const QJsonObject node = val.toObject();
-            const QString address = node.value("ipv4").toString();
-            const uint16_t port = (uint16_t) node.value("port").toInt();
-            const QString hexKey = node.value("public_key").toString();
-            uint8_t public_key[TOX_PUBLIC_KEY_SIZE];
-            Utils::hex_to_key(hexKey, public_key);
-
-            tox_bootstrap(fTox, address.toUtf8().data(), port, public_key, &error);
-            if ( error == TOX_ERR_BOOTSTRAP_OK ) {
-                count++;
-            }
-        }
+        int count = bootstrapNodes(4);
 
         fWorking = false;
         emit resultReady(count);
@@ -67,6 +53,56 @@ namespace JTOX {
         fTox = tox;
         fNodes = nodes;
         QThread::start();
+    }
+
+    int Bootstrapper::bootstrapNodes(int maxNodes)
+    {
+        QJsonArray nodes;
+        // we only consider those nodes that have both TCP and UDP enabled
+        foreach ( const QJsonValue& nodeVal, fNodes ) {
+            const QJsonObject node = nodeVal.toObject(); // pick a random node from the list
+            bool status_udp = node.value("status_udp").toBool();
+            bool status_tcp = node.value("status_tcp").toBool();
+            if ( status_udp && status_tcp ) {
+                nodes.append(node);
+            }
+        }
+
+        TOX_ERR_BOOTSTRAP error = TOX_ERR_BOOTSTRAP_NULL;
+        QMap<QString, bool> addedNodes;
+        bool ok = false;
+
+        for ( int i = 0; i < 100; i++ ) { // max tries since random can give us same index in a row
+            int random_n = (int) randombytes_uniform(nodes.size());
+            const QJsonObject node = nodes.at(random_n).toObject(); // pick a random node from the list
+            const QString hexKey = node.value("public_key").toString();
+            if ( addedNodes.contains(hexKey) ) continue; // already got this one
+
+            const QString ipv4 = node.value("ipv4").toString();
+            const QString ipv6 = node.value("ipv6").toString();
+            const QString address = ipv6.length() > 1 ? ipv6 : ipv4; // prefer ipv6
+            const uint16_t port = (uint16_t) node.value("port").toInt();
+            uint8_t public_key[TOX_PUBLIC_KEY_SIZE];
+            Utils::hex_to_key(hexKey, public_key);
+
+            ok = tox_bootstrap(fTox, address.toUtf8().data(), port, public_key, &error);
+            if ( !ok || error != TOX_ERR_BOOTSTRAP_OK ) {
+                continue;
+            }
+
+            // this shouldn't be needed as tox_bootstrap should do the relay as well
+            /*ok = tox_add_tcp_relay(fTox, address.toUtf8().data(), port, public_key, &error);
+            if ( !ok || error != TOX_ERR_BOOTSTRAP_OK ) {
+                continue;
+            }*/
+
+            addedNodes[hexKey] = true;
+            if ( addedNodes.size() >= maxNodes ) {
+                break; // we found our max nodes count, done
+            }
+        }
+
+        return addedNodes.size();
     }
 
     //******************************PasswordValidator*********************//
