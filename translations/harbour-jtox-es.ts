@@ -29,6 +29,22 @@
         <translation>jTox es un software libre con licencia GPL v3 disponible en &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</translation>
     </message>
     <message>
+          <location filename="../qml/pages/About.qml" line="91"/>
++        <source>Translators</source>
++        <translation>Traductores</translation>
++    </message>
++    <message>
++        <location filename="../qml/pages/About.qml" line="91"/>
++        <source>Swedish: Åke Engelbrektson</source>
++        <translation>Sueco: Åke Engelbrektson</translation>
++    </message>
++    <message>
++        <location filename="../qml/pages/About.qml" line="91"/>
++        <source>Spanish: caballlero</source>
++        <translation>Español: caballlero</translation>
++    </message>
++    <message>
++        <location filename="../qml/pages/About.qml" line="103"/>
         <location filename="../qml/pages/About.qml" line="90"/>
         <source>The Tox protocol is EXPERIMENTAL! The protocol has not been audited for security and can contain vulnerabilities. Use at your own risk.</source>
         <translation>El protocolo Tox es EXPERIMENTAL! y no ha sido auditado por seguridad y puede contener vulnerabilidades. Úselo bajo su propio riesgo.</translation>
