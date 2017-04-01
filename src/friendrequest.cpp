@@ -6,16 +6,9 @@
 namespace JTOX {
 
     FriendRequest::FriendRequest(const QString& address, const QString& message, const QString& name) :
-        fAddress(address), fMessage(message), fName(name)
+        fAddress(address), fMessage(message), fName(name), fID(-1)
     {
 
-    }
-
-    FriendRequest::FriendRequest(const QString& address) : fAddress(address)
-    {
-        QSettings settings;
-        fMessage = settings.value("app/friends/requests/" + address + "/message").toString();
-        fName = settings.value("app/friends/requests/" + address + "/name").toString();
     }
 
     const QVariant FriendRequest::value(int role) const {
@@ -31,20 +24,35 @@ namespace JTOX {
 
     void FriendRequest::setName(const QString& name) {
         fName = name;
-        save();
     }
 
-    void FriendRequest::save() {
-        QSettings settings;
-        settings.setValue("app/friends/requests/" + fAddress + "/address", fAddress);
-        settings.setValue("app/friends/requests/" + fAddress + "/name", fName);
-        settings.setValue("app/friends/requests/" + fAddress + "/message", fMessage);
-    }
-
-    void FriendRequest::remove()
+    const QString FriendRequest::getName() const
     {
-        QSettings settings;
-        settings.remove("app/friends/requests/" + fAddress);
+        return fName;
+    }
+
+    const QString FriendRequest::getAddress() const
+    {
+        return fAddress;
+    }
+
+    const QString FriendRequest::getMessage() const
+    {
+        return fMessage;
+    }
+
+    void FriendRequest::setID(int id)
+    {
+        if ( fID >= 0 ) {
+            Utils::bail("Attempted to set request ID twice");
+        }
+
+        fID = id;
+    }
+
+    int FriendRequest::getID() const
+    {
+        return fID;
     }
 
 }

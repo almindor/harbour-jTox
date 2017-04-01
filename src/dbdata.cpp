@@ -122,6 +122,69 @@ namespace JTOX {
         }
     }
 
+    void DBData::insertRequest(FriendRequest& request)
+    {
+        fRequestInsertQuery.bindValue(":address", request.getAddress());
+        fRequestInsertQuery.bindValue(":message", request.getMessage());
+        fRequestInsertQuery.bindValue(":name", request.getName());
+
+        if ( !fRequestInsertQuery.exec() ) {
+            Utils::bail("Unable to insert request: " + fRequestInsertQuery.lastError().text());
+        }
+
+        if ( !fLastRequestSelectQuery.exec() ) {
+            Utils::bail("Error on last request query execution: " + fLastRequestSelectQuery.lastError().text());
+        }
+
+        if ( !fLastRequestSelectQuery.first() ) {
+            Utils::bail("Error on last request query fetch: " + fLastRequestSelectQuery.lastError().text());
+        }
+
+        bool ok = false;
+        const QVariant val = fLastRequestSelectQuery.value(0);
+        int id = val.toInt(&ok);
+        if ( !ok ) {
+            Utils::bail("Error on last request query int cast: " + val.toString());
+        }
+
+        request.setID(id);
+    }
+
+    void DBData::updateRequest(const FriendRequest& request)
+    {
+        fRequestUpdateQuery.bindValue(":id", request.getID());
+        fRequestUpdateQuery.bindValue(":name", request.getName());
+
+        if ( !fRequestUpdateQuery.exec() ) {
+            Utils::bail("Unable to update request: " + fRequestUpdateQuery.lastError().text());
+        }
+    }
+
+    void DBData::deleteRequest(const FriendRequest& request)
+    {
+        fRequestDeleteQuery.bindValue(":id", request.getID());
+        fRequestDeleteQuery.bindValue(":id2", request.getID()); // double bind trick
+
+        if ( !fRequestDeleteQuery.exec() ) {
+            Utils::bail("Unable to delete request: " + fRequestDeleteQuery.lastError().text());
+        }
+    }
+
+    void DBData::getRequests(RequestList& list)
+    {
+        if ( !fRequestSelectQuery.exec() ) {
+            Utils::bail("Error on request select query exec: " + fEventSelectQuery.lastError().text());
+        }
+
+        while ( fRequestSelectQuery.next() ) {
+            const QString address = fRequestSelectQuery.value("address").toString();
+            const QString message = fRequestSelectQuery.value("message").toString();
+            const QString name = fRequestSelectQuery.value("name").toString();
+
+            list.append(FriendRequest(address, message, name));
+        }
+    }
+
     void DBData::wipe(qint64 friendID)
     {
         fWipeQuery.bindValue(":friend_id", friendID);
@@ -144,6 +207,7 @@ namespace JTOX {
 
     void DBData::createTables() {
         QSqlQuery createTableQuery(fDB);
+        // events
         if ( !createTableQuery.exec("CREATE TABLE IF NOT EXISTS events("
                                      "id INTEGER PRIMARY KEY,"
                                      "send_id INTEGER,"
@@ -151,7 +215,15 @@ namespace JTOX {
                                      "event_type INTEGER NOT NULL,"
                                      "created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
                                      "message BLOB)") ) {
-            Utils::bail("unable to create messages table: " + createTableQuery.lastError().text());
+            Utils::bail("unable to create events table: " + createTableQuery.lastError().text());
+        }
+        // requests
+        if ( !createTableQuery.exec("CREATE TABLE IF NOT EXISTS requests("
+                                     "id INTEGER PRIMARY KEY,"
+                                     "address TEXT NOT NULL,"
+                                     "message TEXT NOT NULL,"
+                                     "name TEXT NOT NULL)") ) {
+            Utils::bail("unable to create requests table: " + createTableQuery.lastError().text());
         }
         fDB.commit();
     }
@@ -177,6 +249,13 @@ namespace JTOX {
         fEventInsertQuery = prepareQuery("INSERT INTO events(send_id, friend_id, event_type, message) VALUES(:send_id, :friend_id, :event_type, :message)");
         fEventUpdateQuery = prepareQuery("UPDATE events SET event_type = :event_type WHERE id = :id");
         fEventDeliveredQuery = prepareQuery("UPDATE events SET event_type = 1 WHERE send_id = :send_id AND friend_id = :friend_id");
+
+        fRequestSelectQuery = prepareQuery("SELECT id, address, message, name FROM requests");
+        fRequestInsertQuery = prepareQuery("INSERT INTO requests(address, message, name) VALUES(:address, :message, :name)");
+        fRequestUpdateQuery = prepareQuery("UPDATE requests SET name = :name WHERE id = :id");
+        fRequestDeleteQuery = prepareQuery("DELETE FROM requests WHERE id = :id OR :id2 < 0");
+        fLastRequestSelectQuery = prepareQuery("SELECT max(id) from requests");
+
         fWipeQuery = prepareQuery("DELETE FROM events WHERE (friend_id = :friend_id OR :friend_id2 < 0)");
     }
 

@@ -17,15 +17,18 @@ namespace JTOX {
     {
     public:
         FriendRequest(const QString& address, const QString& message, const QString& name);
-        FriendRequest(const QString& address);
         const QVariant value(int role) const;
         void setName(const QString& name);
-        void save();
-        void remove();
+        const QString getName() const;
+        const QString getAddress() const;
+        const QString getMessage() const;
+        void setID(int id);
+        int getID() const;
     private:
         QString fAddress;
         QString fMessage;
         QString fName;
+        int fID;
     };
 
     typedef QList<FriendRequest> RequestList;

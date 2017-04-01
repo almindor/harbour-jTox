@@ -7,8 +7,9 @@
 
 namespace JTOX {
 
-    RequestModel::RequestModel(const ToxCore& toxcore, Toxme& toxme, FriendModel& friendModel) :
-            QAbstractListModel(0), fList(), fToxme(toxme), fFriendModel(friendModel), fLookupID(-1)
+    RequestModel::RequestModel(const ToxCore& toxcore, Toxme& toxme, FriendModel& friendModel, DBData& dbData) :
+            QAbstractListModel(0), fList(), fToxme(toxme), fFriendModel(friendModel), fDBData(dbData),
+            fLookupID(-1)
     {
         connect(&toxcore, &ToxCore::clientReset, this, &RequestModel::refresh);
         connect(&toxcore, &ToxCore::friendRequest, this, &RequestModel::onFriendRequest);
@@ -52,7 +53,7 @@ namespace JTOX {
         }
 
         beginRemoveRows(QModelIndex(), index, index);
-        fList[index].remove();
+        fDBData.deleteRequest(fList.at(index));
         fList.removeAt(index);
         endRemoveRows();
         emit sizeChanged(fList.size());
@@ -74,7 +75,7 @@ namespace JTOX {
 
         beginInsertRows(QModelIndex(), fList.size(), fList.size());
         fList.append(FriendRequest(publicKey, message, ""));
-        fList.last().save();
+        fDBData.insertRequest(fList.last());
         endInsertRows();
         emit sizeChanged(fList.size());
     }
@@ -88,6 +89,8 @@ namespace JTOX {
         foreach ( const FriendRequest& request, fList ) {
             if ( request.value(rrPublicKey).toString() == publicKey ) {
                 fList[i].setName(name);
+                fDBData.updateRequest(fList.at(i));
+
                 emit dataChanged(createIndex(i, 0), createIndex(i, 0), QVector<int>(1, rrName));
 
                 return;
@@ -110,15 +113,28 @@ namespace JTOX {
 
     void RequestModel::refresh()
     {
-        QSettings settings;
+        beginResetModel();
 
+        // check old request storage and migrate to DB
+        QSettings settings;
         settings.beginGroup("app/friends/requests");
         const QStringList addresses = settings.childGroups();
 
         foreach ( const QString& address, addresses ) {
-            fList.append(FriendRequest(address));
+            const QString message = settings.value(address + "/message").toString();
+            const QString name = settings.value(address + "/name").toString();
+
+            FriendRequest request(address, message, name);
+            fDBData.insertRequest(request);
         }
         settings.endGroup();
+        settings.remove("app/friends/requests"); // wipe old storage after migration
+
+        // get requests from DB
+        fDBData.getRequests(fList);
+
+        endResetModel();
+        emit sizeChanged(fList.size());
     }
 
     int RequestModel::getSize() const

@@ -8,6 +8,7 @@
 #include "toxme.h"
 #include "friendrequest.h"
 #include "friendmodel.h"
+#include "dbdata.h"
 
 namespace JTOX {
 
@@ -16,7 +17,7 @@ namespace JTOX {
         Q_OBJECT
         Q_PROPERTY(int size READ getSize NOTIFY sizeChanged)
     public:
-        RequestModel(const ToxCore& toxcore, Toxme& toxme, FriendModel& friendModel);
+        RequestModel(const ToxCore& toxcore, Toxme& toxme, FriendModel& friendModel, DBData& dbData);
 
         QHash<int, QByteArray> roleNames() const;
         int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -34,6 +35,7 @@ namespace JTOX {
         RequestList fList;
         Toxme& fToxme;
         FriendModel& fFriendModel;
+        DBData& fDBData;
         int fLookupID;
 
         int getSize() const;

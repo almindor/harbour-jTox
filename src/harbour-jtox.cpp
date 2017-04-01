@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     Toxme toxme(toxCore, encryptSave);
     FriendModel friendModel(toxCore, dbData);
     EventModel eventModel(toxCore, friendModel, dbData);
-    RequestModel requestModel(toxCore, toxme, friendModel);
+    RequestModel requestModel(toxCore, toxme, friendModel, dbData);
 
     QString qml = QString("qml/%1.qml").arg("harbour-jtox");
     view->rootContext()->setContextProperty("toxcore", &toxCore);
