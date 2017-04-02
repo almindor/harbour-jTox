@@ -87,14 +87,26 @@ namespace JTOX {
     {
         if ( !fName.isEmpty() ) {
             return fName;
+        } else if ( !fOfflineName.isEmpty() ) {
+            return fOfflineName;
         }
 
+        return fPublicKey;
+    }
+
+    const QString Friend::address() const
+    {
         return fPublicKey;
     }
 
     void Friend::setName(const QString& name)
     {
         fName = name;
+    }
+
+    void Friend::setOfflineName(const QString& name)
+    {
+        fOfflineName = name;
     }
 
     int Friend::status() const {

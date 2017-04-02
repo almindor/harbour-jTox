@@ -37,6 +37,10 @@ Page {
         id: addFriendDialog
     }
 
+    Details {
+        id: detailsDialog
+    }
+
     SilicaListView {
         id: listView
         header: PageHeader {

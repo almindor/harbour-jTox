@@ -43,7 +43,9 @@ namespace JTOX {
             return;
         }
 
-        fFriendModel.addFriendNoRequest(fList.at(index).value(rrPublicKey).toString());
+        const QString address = fList.at(index).value(rrPublicKey).toString();
+        const QString name = fList.at(index).value(rrName).toString();
+        fFriendModel.addFriendNoRequest(address, name);
         reject(index); // removes from list
     }
 

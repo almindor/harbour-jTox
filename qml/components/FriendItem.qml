@@ -25,6 +25,14 @@ ListItem {
                 friendmodel.removeFriend(friend_id)
             })
         }
+
+        MenuItem {
+            text: qsTr("Details")
+            onClicked: {
+                friendmodel.setActiveFriendID(friend_id)
+                pageStack.push(detailsDialog)
+            }
+        }
     }
 
     RemorseItem {

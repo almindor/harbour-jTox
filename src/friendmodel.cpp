@@ -90,7 +90,7 @@ namespace JTOX {
         }
     }
 
-    void FriendModel::addFriendNoRequest(const QString& publicKey) {
+    void FriendModel::addFriendNoRequest(const QString& publicKey, const QString& name) {
         if ( !fToxCore.getInitialized() ) {
             Utils::bail("Friend add (nor) called when toxcore not initialized!");
         }
@@ -103,6 +103,8 @@ namespace JTOX {
         if ( handleFriendRequestError(error, errorStr) ) {
             beginInsertRows(QModelIndex(), fList.size(), fList.size());
             fList.append(Friend(fToxCore, friendID));
+            fList.last().setOfflineName(name);
+            fDBData.setFriendOfflineName(fList.last().address(), fList.last().friendID(), name);
             endInsertRows();
             fToxCore.save();
         } else {
@@ -134,6 +136,12 @@ namespace JTOX {
         endRemoveRows();
     }
 
+    void FriendModel::setActiveFriendID(quint32 friendID)
+    {
+        fActiveFriendIndex = getListIndexForFriendID(friendID);
+        emit activeFriendChanged(fActiveFriendIndex);
+    }
+
     void FriendModel::refresh() {
         if ( !fToxCore.getInitialized() ) {
             Utils::bail("Refreshing friend list with uninitialized tox instance");
@@ -151,6 +159,8 @@ namespace JTOX {
             if ( fDBData.getUnviewedEventCount(raw_list[i]) > 0 ) {
                 fList[i].setUnviewed();
             }
+
+            fList[i].setOfflineName(fDBData.getFriendOfflineName(fList.at(i).address()));
         }
 
         fUnviewedMessages = fDBData.getUnviewedEventCount(-1);
@@ -243,6 +253,37 @@ namespace JTOX {
         }
 
         checkUnviewedTotals();
+    }
+
+    const QString FriendModel::getAddress() const
+    {
+        if (fActiveFriendIndex < 0 || fActiveFriendIndex >= fList.size()) {
+            return QString();
+        }
+
+        return fList.at(fActiveFriendIndex).address();
+    }
+
+    const QString FriendModel::getName() const
+    {
+        if (fActiveFriendIndex < 0 || fActiveFriendIndex >= fList.size()) {
+            return QString();
+        }
+
+        return fList.at(fActiveFriendIndex).name();
+    }
+
+    void FriendModel::setOfflineName(const QString& name)
+    {
+        if (fActiveFriendIndex < 0 || fActiveFriendIndex >= fList.size()) {
+            Utils::bail("Active friend index out of bounds: " + fActiveFriendIndex);
+        }
+
+        fList[fActiveFriendIndex].setOfflineName(name);
+        const Friend& fr = fList.at(fActiveFriendIndex);
+        fDBData.setFriendOfflineName(fr.address(), fr.friendID(), name);
+
+        emit dataChanged(createIndex(fActiveFriendIndex, 0), createIndex(fActiveFriendIndex, 0), QVector<int>());
     }
 
     bool FriendModel::handleFriendRequestError(TOX_ERR_FRIEND_ADD error, QString& errorOut) const

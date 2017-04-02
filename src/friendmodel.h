@@ -34,6 +34,8 @@ namespace JTOX {
     {
         Q_OBJECT
         Q_PROPERTY(int unviewedMessages READ getUnviewedMessages NOTIFY unviewedMessagesChanged)
+        Q_PROPERTY(QString address READ getAddress NOTIFY activeFriendChanged)
+        Q_PROPERTY(QString name READ getName NOTIFY activeFriendChanged)
     public:
         explicit FriendModel(ToxCore& toxcore, DBData& dbData);
 
@@ -45,14 +47,19 @@ namespace JTOX {
         quint32 getFriendIDByIndex(int index) const;
         void unviewedMessageReceived(quint32 friend_id);
         void messagesViewed(quint32 friend_id);
+        const QString getAddress() const;
+        const QString getName() const;
+        Q_INVOKABLE void setOfflineName(const QString& name);
         Q_INVOKABLE void addFriend(const QString& address, const QString& message);
-        Q_INVOKABLE void addFriendNoRequest(const QString& publicKey);
+        Q_INVOKABLE void addFriendNoRequest(const QString& publicKey, const QString& name);
         Q_INVOKABLE void removeFriend(quint32 friendID);
+        Q_INVOKABLE void setActiveFriendID(quint32 friendID);
     signals:
         void friendUpdated(quint32 friend_id) const;
         void friendAdded() const;
         void friendAddError(const QString& error) const;
         void unviewedMessagesChanged(int count) const;
+        void activeFriendChanged(int friendIndex) const;
     public slots:
         void refresh();
         void onFriendStatusChanged(quint32 friend_id, int status);
@@ -66,6 +73,7 @@ namespace JTOX {
         FriendList fList;
         QString fFriendMessage;
         int fUnviewedMessages;
+        int fActiveFriendIndex;
 
         bool handleFriendRequestError(TOX_ERR_FRIEND_ADD error, QString& errorOut) const;
         bool handleFriendDeleteError(TOX_ERR_FRIEND_DELETE error) const;

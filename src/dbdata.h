@@ -24,7 +24,10 @@ namespace JTOX {
         void updateRequest(const FriendRequest& request);
         void deleteRequest(const FriendRequest& request);
         void getRequests(RequestList& list);
+        void setFriendOfflineName(const QString& address, quint32 friendID, const QString& name);
+        const QString getFriendOfflineName(const QString& address);
         void wipe(qint64 friendID);
+        void wipeLogs();
     private:
         EncryptSave& fEncryptSave;
         QSqlDatabase fDB;
@@ -39,7 +42,11 @@ namespace JTOX {
         QSqlQuery fRequestUpdateQuery;
         QSqlQuery fRequestDeleteQuery;
         QSqlQuery fLastRequestSelectQuery;
-        QSqlQuery fWipeQuery;
+        QSqlQuery fFriendOfflineNameSelectQuery;
+        QSqlQuery fFriendOfflineNameUpdateQuery;
+        QSqlQuery fWipeEventsQuery;
+        QSqlQuery fWipeRequestsQuery;
+        QSqlQuery fWipeFriendsQuery;
         void createTables();
         void prepareQueries();
         const QSqlQuery prepareQuery(const QString& sql);

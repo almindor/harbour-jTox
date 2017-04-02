@@ -27,7 +27,9 @@ namespace JTOX {
         QVariant value(int role) const;
         quint32 friendID() const;
         const QString name() const;
+        const QString address() const;
         void setName(const QString& name);
+        void setOfflineName(const QString& name);
         int status() const;
         void setStatus(int status);
         void setConStatus(int conStatus);
@@ -48,6 +50,7 @@ namespace JTOX {
         bool fTyping;
         QString fPublicKey;
         bool fUnviewed;
+        QString fOfflineName;
     };
 
     typedef QList<Friend> FriendList;

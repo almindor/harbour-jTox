@@ -118,4 +118,5 @@ DISTFILES += \
     rpm/harbour-jtox.spec \
     rpm/harbour-jtox.yaml \
     harbour-jtox.desktop \
-    qml/harbour-jtox.qml
+    qml/harbour-jtox.qml \
+    qml/pages/Details.qml

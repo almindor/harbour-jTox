@@ -211,6 +211,24 @@
     </message>
 </context>
 <context>
+    <name>Details</name>
+    <message>
+        <location filename="../qml/pages/Details.qml" line="28"/>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Details.qml" line="65"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Details.qml" line="68"/>
+        <source>Friend offline name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FriendItem</name>
     <message>
         <location filename="../qml/components/FriendItem.qml" line="23"/>
@@ -222,46 +240,51 @@
         <source>Removing</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../qml/components/FriendItem.qml" line="30"/>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Friends</name>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="43"/>
+        <location filename="../qml/pages/Friends.qml" line="47"/>
         <source>Friends</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="70"/>
+        <location filename="../qml/pages/Friends.qml" line="74"/>
         <source>Pending friend requests: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="79"/>
+        <location filename="../qml/pages/Friends.qml" line="83"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="84"/>
+        <location filename="../qml/pages/Friends.qml" line="88"/>
         <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="89"/>
+        <location filename="../qml/pages/Friends.qml" line="93"/>
         <source>Add Friend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="97"/>
+        <location filename="../qml/pages/Friends.qml" line="101"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="109"/>
+        <location filename="../qml/pages/Friends.qml" line="113"/>
         <source>Away</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="121"/>
+        <location filename="../qml/pages/Friends.qml" line="125"/>
         <source>Busy</source>
         <translation type="unfinished"></translation>
     </message>

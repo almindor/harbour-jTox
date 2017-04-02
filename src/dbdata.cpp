@@ -185,13 +185,61 @@ namespace JTOX {
         }
     }
 
+    void DBData::setFriendOfflineName(const QString& address, quint32 friendID, const QString& name)
+    {
+        fFriendOfflineNameUpdateQuery.bindValue(":address", address);
+        fFriendOfflineNameUpdateQuery.bindValue(":friend_id", friendID);
+        fFriendOfflineNameUpdateQuery.bindValue(":name", name);
+
+        if ( !fFriendOfflineNameUpdateQuery.exec() ) {
+            Utils::bail("Unable to update friend: " + fFriendOfflineNameUpdateQuery.lastError().text());
+        }
+    }
+
+    const QString DBData::getFriendOfflineName(const QString& address)
+    {
+        fFriendOfflineNameSelectQuery.bindValue(":address", address);
+
+        if ( !fFriendOfflineNameSelectQuery.exec() ) {
+            Utils::bail("Unable to select friend: " + fFriendOfflineNameSelectQuery.lastError().text());
+        }
+
+        if ( !fFriendOfflineNameSelectQuery.first() ) {
+            return QString();
+        }
+
+        const QString offlineName = fFriendOfflineNameSelectQuery.value("name").toString();
+        return offlineName;
+    }
+
     void DBData::wipe(qint64 friendID)
     {
-        fWipeQuery.bindValue(":friend_id", friendID);
-        fWipeQuery.bindValue(":friend_id2", friendID);
+        fWipeEventsQuery.bindValue(":friend_id", friendID);
+        fWipeEventsQuery.bindValue(":friend_id2", friendID);
+        fWipeFriendsQuery.bindValue(":friend_id", friendID);
+        fWipeFriendsQuery.bindValue(":friend_id2", friendID);
 
-        if ( !fWipeQuery.exec() ) {
-            Utils::bail("Unable to wipe events: " + fWipeQuery.lastError().text());
+        if ( !fWipeEventsQuery.exec() ) {
+            Utils::bail("Unable to wipe events: " + fWipeEventsQuery.lastError().text());
+        }
+
+        if ( !fWipeFriendsQuery.exec() ) {
+            Utils::bail("Unable to wipe friends: " + fWipeFriendsQuery.lastError().text());
+        }
+
+        // only wipe requests if we're doing a full wipe
+        if ( friendID < 0 && !fWipeRequestsQuery.exec() ) {
+            Utils::bail("Unable to wipe requests: " + fWipeRequestsQuery.lastError().text());
+        }
+    }
+
+    void DBData::wipeLogs()
+    {
+        fWipeEventsQuery.bindValue(":friend_id", -1);
+        fWipeEventsQuery.bindValue(":friend_id2", -1);
+
+        if ( !fWipeEventsQuery.exec() ) {
+            Utils::bail("Unable to wipe events: " + fWipeEventsQuery.lastError().text());
         }
     }
 
@@ -225,6 +273,13 @@ namespace JTOX {
                                      "name TEXT NOT NULL)") ) {
             Utils::bail("unable to create requests table: " + createTableQuery.lastError().text());
         }
+        // friends for offline name storage
+        if ( !createTableQuery.exec("CREATE TABLE IF NOT EXISTS friends("
+                                     "address TEXT PRIMARY KEY,"
+                                     "friend_id INTEGER NOT NULL,"
+                                     "name TEXT NOT NULL)") ) {
+            Utils::bail("unable to create friends table: " + createTableQuery.lastError().text());
+        }
         fDB.commit();
     }
 
@@ -256,7 +311,12 @@ namespace JTOX {
         fRequestDeleteQuery = prepareQuery("DELETE FROM requests WHERE id = :id OR :id2 < 0");
         fLastRequestSelectQuery = prepareQuery("SELECT max(id) from requests");
 
-        fWipeQuery = prepareQuery("DELETE FROM events WHERE (friend_id = :friend_id OR :friend_id2 < 0)");
+        fFriendOfflineNameSelectQuery = prepareQuery("SELECT name FROM friends WHERE address = :address");
+        fFriendOfflineNameUpdateQuery = prepareQuery("INSERT OR REPLACE INTO friends(address, friend_id, name) VALUES(:address, :friend_id, :name)");
+
+        fWipeEventsQuery = prepareQuery("DELETE FROM events WHERE (friend_id = :friend_id OR :friend_id2 < 0)");
+        fWipeFriendsQuery = prepareQuery("DELETE FROM friends WHERE (friend_id = :friend_id OR :friend_id2 < 0)");
+        fWipeRequestsQuery = prepareQuery("DELETE FROM requests");
     }
 
     const QSqlQuery DBData::prepareQuery(const QString& sql)

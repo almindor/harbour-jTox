@@ -558,7 +558,7 @@ namespace JTOX {
 
     void ToxCore::wipeLogs()
     {
-        fDBData.wipe(-1);
+        fDBData.wipeLogs();
         emit logsWiped();
     }
 
