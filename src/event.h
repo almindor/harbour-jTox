@@ -13,15 +13,16 @@ namespace JTOX {
 
     enum EventType {
         etEdit = 0,
-        etMessageOut,
-        etMessageInUnread,
-        etMessageOutPending,
-        etMessageIn,
-        etCallOutRejected,
-        etCallOutAccepted,
-        etCallInRejected,
-        etCallInAccepted,
-        etFileTransfer
+        etMessageOut = 1,
+        etMessageInUnread = 2,
+        etMessageOutPending = 3,
+        etMessageIn = 4,
+        etMessageOutOffline = 5, // pending to be sent
+        etCallOutRejected = 6,
+        etCallOutAccepted = 7,
+        etCallInRejected = 8,
+        etCallInAccepted = 9,
+        etFileTransfer = 10
     };
 
     enum EventRole
@@ -39,9 +40,12 @@ namespace JTOX {
         const QVariant value(int role) const;
         void delivered();
         void viewed();
-        quint32 id() const;
+        int id() const;
+        const QString message() const;
         qint64 sendID() const;
         EventType type() const;
+        void setSendID(qint64 sendID);
+        void setEventType(EventType eventType);
     private:
         int fID;
         quint32 fFriendID;

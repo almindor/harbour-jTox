@@ -40,7 +40,7 @@ Item {
 
     TextField {
         id: inputField
-        enabled: toxcore.status > 0 && eventmodel.friendStatus > 0
+        enabled: toxcore.status > 0
         anchors {
             bottom: parent.bottom
             left: parent.left

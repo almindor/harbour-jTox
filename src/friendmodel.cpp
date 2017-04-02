@@ -182,9 +182,13 @@ namespace JTOX {
     void FriendModel::onFriendConStatusChanged(quint32 friend_id, int status)
     {
         int index = getListIndexForFriendID(friend_id);
+        int oldStatus = fList.at(index).status();
         fList[index].setConStatus(status);
         emit dataChanged(createIndex(index, 0), createIndex(index, 0), QVector<int>());
         emit friendUpdated(friend_id);
+        if  ( oldStatus == 0 && fList.at(index).status() > 0 ) {
+            emit friendWentOnline(friend_id); // we attempt sending all offline messages in eventmodel in this case
+        }
     }
 
     void FriendModel::onFriendStatusMsgChanged(quint32 friend_id, const QString& statusMessage)

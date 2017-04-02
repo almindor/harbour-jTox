@@ -14,6 +14,7 @@ namespace JTOX {
         connect(&toxCore, &ToxCore::messageDelivered, this, &EventModel::onMessageDelivered);
         connect(&toxCore, &ToxCore::messageReceived, this, &EventModel::onMessageReceived);
         connect(&friendModel, &FriendModel::friendUpdated, this, &EventModel::onFriendUpdated);
+        connect(&friendModel, &FriendModel::friendWentOnline, this, &EventModel::onFriendWentOnline);
         connect(&fTimer, &QTimer::timeout, this, &EventModel::onMessagesViewed);
 
         fTimer.setInterval(2000); // 2 sec after viewing we consider msgs read TODO: combine with actually viewed msgs from QML
@@ -26,7 +27,7 @@ namespace JTOX {
 
     QHash<int, QByteArray> EventModel::roleNames() const {
         QHash<int, QByteArray> result;
-        result[erID] = "id";
+        result[erID] = "event_id";
         result[erEventType] = "event_type";
         result[erCreated] = "created_at";
         result[erMessage] = "message";
@@ -53,6 +54,21 @@ namespace JTOX {
         return fFriendID;
     }
 
+    qint64 EventModel::sendMessageRaw(const QString& message, qint64 friendID, int id)
+    {
+        qint64 sendID = -1;
+        const QByteArray rawMsg = message.toUtf8();
+        TOX_ERR_FRIEND_SEND_MESSAGE error;
+        sendID = tox_friend_send_message(fToxCore.tox(), friendID, TOX_MESSAGE_TYPE_NORMAL, (uint8_t*) rawMsg.data(),
+                                         rawMsg.size(), &error);
+        if ( !handleSendMessageError(error) ) {
+            return -1;
+        }
+
+        fDBData.updateEventSent(id, etMessageOutPending, sendID);
+        return sendID;
+    }
+
     qint64 EventModel::setFriendIndex(int friendIndex)
     {
         setFriend(fFriendModel.getFriendIDByIndex(friendIndex));
@@ -65,7 +81,6 @@ namespace JTOX {
         }
 
         fFriendID = friendID;
-        //qDebug() << "Set friend_id: " << friendID << "\n";
 
         if ( fFriendID < 0 ) {
             fTimer.stop(); // make sure we don't try to mark someone else's messages by accident
@@ -86,25 +101,37 @@ namespace JTOX {
         }
 
         int count = rowCount();
-        const QByteArray rawMsg = message.toUtf8();
-        TOX_ERR_FRIEND_SEND_MESSAGE error;
-        quint32 sendID = tox_friend_send_message(fToxCore.tox(), fFriendID, TOX_MESSAGE_TYPE_NORMAL, (uint8_t*) rawMsg.data(), rawMsg.size(), &error);
+        EventType eventType = etMessageOutOffline; // default to offline msg
+        qint64 sendID = -1;
+        QDateTime createdAt;
+        int id = fDBData.insertEvent(sendID, fFriendID, eventType, message, createdAt);
 
-        if ( !handleSendMessageError(error) ) {
-            return;
+        if ( getFriendStatus() > 0 ) { // if friend is online, send it and use out pending mt
+            sendID = sendMessageRaw(message, fFriendID, id);
+            eventType = etMessageOutPending; // if we got here the message is out
         }
 
-        QDateTime createdAt;
-        int id = fDBData.insertEvent(sendID, fFriendID, etMessageOutPending, message, createdAt);
-
         beginInsertRows(QModelIndex(), count, count);
-        fList.append(Event(id, fFriendID, createdAt, etMessageOutPending, message, sendID));
+        fList.append(Event(id, fFriendID, createdAt, eventType, message, sendID));
         endInsertRows();
     }
 
     void EventModel::stopTyping(qint64 friendID)
     {
         setTyping(false, friendID);
+    }
+
+    void EventModel::deleteMessage(int eventID)
+    {
+        int index = indexForEvent(eventID);
+        if ( fList.at(index).type() != etMessageOutOffline ) {
+            Utils::bail("Unable to delete online message");
+        }
+
+        beginRemoveRows(QModelIndex(), index, index);
+        fDBData.deleteEvent(fList.at(index).id());
+        fList.removeAt(index);
+        endRemoveRows();
     }
 
     void EventModel::onMessageDelivered(quint32 friendID, quint32 sendID) {
@@ -157,6 +184,36 @@ namespace JTOX {
         }
 
         emit friendUpdated();
+    }
+
+    void EventModel::onFriendWentOnline(quint32 friendID)
+    {
+        EventList offlineMessages;
+        fDBData.getEvents(offlineMessages, friendID, etMessageOutOffline);
+        foreach ( const Event& event, offlineMessages ) {
+            qint64 sendID = sendMessageRaw(event.message(), friendID, event.id());
+
+            if ( fFriendID == friendID ) { // we need to update list entries if we're active on given friend
+                for ( int i = 0; i < fList.size(); i++ ) {
+                    if ( fList.at(i).id() == event.id() ) {
+                        fList[i].setSendID(sendID);
+                        fList[i].setEventType(etMessageOutPending);
+                    }
+                }
+            }
+        }
+    }
+
+    int EventModel::indexForEvent(int eventID) const
+    {
+        for ( int i = 0; i < fList.size(); i++ ) {
+            if ( fList.at(i).id() == eventID) {
+                return i;
+            }
+        }
+
+        Utils::bail("Could not find index for event ID: " + eventID);
+        return -1;
     }
 
     bool EventModel::handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error) const

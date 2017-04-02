@@ -60,6 +60,7 @@ namespace JTOX {
         void friendAddError(const QString& error) const;
         void unviewedMessagesChanged(int count) const;
         void activeFriendChanged(int friendIndex) const;
+        void friendWentOnline(int friendID) const;
     public slots:
         void refresh();
         void onFriendStatusChanged(quint32 friend_id, int status);

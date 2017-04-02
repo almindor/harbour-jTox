@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../js/common.js" as Common
 
 ListItem {
     id: listItem
@@ -20,6 +21,36 @@ ListItem {
                 banner("im", qsTr("Message copied to clipboard"), undefined, undefined, true)
             }
         }
+
+        MenuItem {
+            visible: event_type === Common.EventType.MessageOutOffline
+            text: qsTr("Delete message")
+            onClicked: {
+                eventmodel.deleteMessage(event_id)
+            }
+        }
+    }
+
+    function colorForEventLabel(et) {
+        if (et === Common.EventType.MessageInUnread || et === Common.EventType.MessageIn) {
+            return Theme.secondaryColor
+        }
+        return Theme.secondaryHighlightColor
+    }
+
+    function colorForEventMsg(et) {
+        if (et === Common.EventType.MessageInUnread || et === Common.EventType.MessageIn) {
+            return Theme.primaryColor
+        }
+        return Theme.highlightColor
+    }
+
+    function alignmentForEvent(et) {
+        if (et === Common.EventType.MessageInUnread || et === Common.EventType.MessageIn) {
+            return Text.AlignRight
+        }
+
+        return Text.AlignLeft
     }
 
     Text {
@@ -34,16 +65,16 @@ ListItem {
 
         text: created_at
         font.pixelSize: Theme.fontSizeTiny
-        horizontalAlignment: (event_type == 2 || event_type == 4) ? Text.AlignRight : Text.AlignLeft
-        color: (event_type == 2 || event_type == 4) ? Theme.secondaryColor : Theme.secondaryHighlightColor
+        horizontalAlignment: alignmentForEvent(event_type)
+        color: colorForEventLabel(event_type)
 
         BusyIndicator {
             anchors {
                 right: parent.right
             }
             size: BusyIndicatorSize.ExtraSmall
-            visible: event_type == 3
-            running: event_type == 3
+            visible: Common.isMessagePending(event_type)
+            running: Common.isMessagePending(event_type)
         }
     }
 
@@ -63,16 +94,11 @@ ListItem {
             Qt.openUrlExternally(link)
         }
 
-        // this fugly hack is needed otherwise the listitem height is set wrong
-        /*Component.onCompleted: {
-            listItem.height = col.height
-        }*/
-
         text: message
         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
         font.pixelSize: Theme.fontSizeSmall
         font.bold: event_type == 2
-        horizontalAlignment: (event_type == 2 || event_type == 4) ? Text.AlignRight : Text.AlignLeft
-        color: (event_type == 2 || event_type == 4) ? Theme.primaryColor : Theme.highlightColor
+        horizontalAlignment: alignmentForEvent(event_type)
+        color: colorForEventMsg(event_type)
     }
 }

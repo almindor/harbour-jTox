@@ -25,9 +25,10 @@ namespace JTOX {
         prepareQueries();
     }
 
-    void DBData::getEvents(EventList& list, quint32 friendID)
+    void DBData::getEvents(EventList& list, quint32 friendID, int eventType)
     {
         fEventSelectQuery.bindValue(":friend_id", friendID);
+        fEventSelectQuery.bindValue(":event_type", eventType);
 
         if ( !fEventSelectQuery.exec() ) {
             Utils::bail("Error on event select query exec: " + fEventSelectQuery.lastError().text());
@@ -64,6 +65,7 @@ namespace JTOX {
         // can't use same placeholder in query so we must use 2 placeholders with 1 value
         fEventUnviewedCountQuery.bindValue(":friend_id", friendID);
         fEventUnviewedCountQuery.bindValue(":friend_id2", friendID);
+        fEventUnviewedCountQuery.bindValue(":event_type", 2);
 
         if ( !fEventUnviewedCountQuery.exec() ) {
             qDebug() << fEventUnviewedCountQuery.executedQuery() << "\n";
@@ -119,6 +121,15 @@ namespace JTOX {
 
         if ( !fEventDeliveredQuery.exec() ) {
             Utils::bail("Unable to update event to delivered state: " + fEventDeliveredQuery.lastError().text());
+        }
+    }
+
+    void DBData::deleteEvent(int id)
+    {
+        fEventDeleteQuery.bindValue(":id", id);
+
+        if ( !fEventDeleteQuery.exec() ) {
+            Utils::bail("Unable to delete event: " + fEventDeleteQuery.lastError().text());
         }
     }
 
@@ -253,6 +264,17 @@ namespace JTOX {
         }
     }
 
+    void DBData::updateEventSent(int id, EventType eventType, qint64 sendID)
+    {
+        fEventUpdateSentQuery.bindValue(":id", id);
+        fEventUpdateSentQuery.bindValue(":event_type", eventType);
+        fEventUpdateSentQuery.bindValue(":send_id", sendID);
+
+        if ( !fEventUpdateSentQuery.exec() ) {
+            Utils::bail("unable to update event: " + fEventUpdateSentQuery.lastError().text());
+        }
+    }
+
     void DBData::createTables() {
         QSqlQuery createTableQuery(fDB);
         // events
@@ -290,6 +312,7 @@ namespace JTOX {
                                             "SELECT id, event_type, created_at, message, send_id "
                                             "FROM events "
                                             "WHERE friend_id = :friend_id "
+                                            "AND (event_type = :event_type OR :event_type < 0) "
                                             "ORDER BY id DESC "
                                             "LIMIT 100"
                                          ") tmp ORDER BY tmp.id ASC");
@@ -300,10 +323,12 @@ namespace JTOX {
                                              "ORDER BY id DESC "
                                              "LIMIT 1");
 
-        fEventUnviewedCountQuery = prepareQuery("SELECT count(*) FROM events WHERE event_type = 2 AND (friend_id = :friend_id OR :friend_id2 < 0)");
+        fEventUnviewedCountQuery = prepareQuery("SELECT count(*) FROM events WHERE event_type = :event_type AND (friend_id = :friend_id OR :friend_id2 < 0)");
         fEventInsertQuery = prepareQuery("INSERT INTO events(send_id, friend_id, event_type, message) VALUES(:send_id, :friend_id, :event_type, :message)");
         fEventUpdateQuery = prepareQuery("UPDATE events SET event_type = :event_type WHERE id = :id");
+        fEventUpdateSentQuery = prepareQuery("UPDATE events SET event_type = :event_type, send_id = :send_id WHERE id = :id");
         fEventDeliveredQuery = prepareQuery("UPDATE events SET event_type = 1 WHERE send_id = :send_id AND friend_id = :friend_id");
+        fEventDeleteQuery = prepareQuery("DELETE FROM events WHERE id = :id");
 
         fRequestSelectQuery = prepareQuery("SELECT id, address, message, name FROM requests");
         fRequestInsertQuery = prepareQuery("INSERT INTO requests(address, message, name) VALUES(:address, :message, :name)");

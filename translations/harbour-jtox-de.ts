@@ -379,13 +379,18 @@
 <context>
     <name>MessageItem</name>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="17"/>
+        <location filename="../qml/components/MessageItem.qml" line="18"/>
         <source>Copy to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="20"/>
+        <location filename="../qml/components/MessageItem.qml" line="21"/>
         <source>Message copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/MessageItem.qml" line="27"/>
+        <source>Delete message</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

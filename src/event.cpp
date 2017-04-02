@@ -22,8 +22,13 @@ namespace JTOX {
         return QVariant("invalid_role");
     }
 
-    quint32 Event::id() const {
+    int Event::id() const {
         return fID;
+    }
+
+    const QString Event::message() const
+    {
+        return fMessage;
     }
 
     qint64 Event::sendID() const
@@ -34,6 +39,16 @@ namespace JTOX {
     EventType Event::type() const
     {
         return fEventType;
+    }
+
+    void Event::setSendID(qint64 sendID)
+    {
+        fSendID = sendID;
+    }
+
+    void Event::setEventType(EventType eventType)
+    {
+        fEventType = eventType;
     }
 
     const QString Event::hyperLink(const QString& message) const

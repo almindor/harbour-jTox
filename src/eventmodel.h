@@ -30,11 +30,13 @@ namespace JTOX {
         int rowCount(const QModelIndex &parent = QModelIndex()) const;
         QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
         int getFriendID() const;
+        qint64 sendMessageRaw(const QString& message, qint64 friendID, int id);
 
         Q_INVOKABLE qint64 setFriendIndex(int friendIndex);
         Q_INVOKABLE void setFriend(qint64 friendID);
         Q_INVOKABLE void sendMessage(const QString& message);
         Q_INVOKABLE void stopTyping(qint64 friendID);
+        Q_INVOKABLE void deleteMessage(int eventID);
     signals:
         void friendUpdated() const;
         void typingChanged(bool typing) const;
@@ -43,6 +45,7 @@ namespace JTOX {
         void onMessageDelivered(quint32 friendID, quint32 sendID);
         void onMessageReceived(quint32 friend_id, TOX_MESSAGE_TYPE type, const QString& message);
         void onFriendUpdated(quint32 friend_id);
+        void onFriendWentOnline(quint32 friendID);
     private:
         ToxCore& fToxCore;
         FriendModel& fFriendModel;
@@ -56,6 +59,7 @@ namespace JTOX {
         qint64 fFriendID;
         bool fTyping;
 
+        int indexForEvent(int eventID) const;
         bool handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error) const;
         int getFriendStatus() const;
         bool getFriendTyping() const;
