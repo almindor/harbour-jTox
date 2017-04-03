@@ -211,6 +211,24 @@
     </message>
 </context>
 <context>
+    <name>Details</name>
+    <message>
+        <location filename="../qml/pages/Details.qml" line="28"/>
+        <source>Details</source>
+        <translation>Detaljerat</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Details.qml" line="65"/>
+        <source>Name</source>
+        <translation>Namn</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Details.qml" line="68"/>
+        <source>Friend offline name</source>
+        <translation>Kontaktens offline-namn</translation>
+    </message>
+</context>
+<context>
     <name>FriendItem</name>
     <message>
         <location filename="../qml/components/FriendItem.qml" line="23"/>
@@ -221,6 +239,11 @@
         <location filename="../qml/components/FriendItem.qml" line="24"/>
         <source>Removing</source>
         <translation>Tar bort</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/FriendItem.qml" line="30"/>
+        <source>Details</source>
+        <translation>Detaljerat</translation>
     </message>
 </context>
 <context>
