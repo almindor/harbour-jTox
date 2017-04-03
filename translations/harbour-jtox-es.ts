@@ -259,7 +259,7 @@
     <message>
         <location filename="../qml/pages/Friends.qml" line="109"/>
         <source>Away</source>
-        <translation>Lejos</translation>
+        <translation>Ausente</translation>
     </message>
     <message>
         <location filename="../qml/pages/Friends.qml" line="121"/>
