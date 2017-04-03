@@ -249,42 +249,42 @@
 <context>
     <name>Friends</name>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="43"/>
+        <location filename="../qml/pages/Friends.qml" line="47"/>
         <source>Friends</source>
         <translation>Kontakter</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="70"/>
+        <location filename="../qml/pages/Friends.qml" line="74"/>
         <source>Pending friend requests: </source>
         <translation>Väntande kontaktförfrågningar:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="79"/>
+        <location filename="../qml/pages/Friends.qml" line="83"/>
         <source>About</source>
         <translation>Om</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="84"/>
+        <location filename="../qml/pages/Friends.qml" line="88"/>
         <source>Account</source>
         <translation>Konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="89"/>
+        <location filename="../qml/pages/Friends.qml" line="93"/>
         <source>Add Friend</source>
         <translation>Lägg till kontakt</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="97"/>
+        <location filename="../qml/pages/Friends.qml" line="101"/>
         <source>Ready</source>
         <translation>Klar</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="109"/>
+        <location filename="../qml/pages/Friends.qml" line="113"/>
         <source>Away</source>
         <translation>Borta</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="121"/>
+        <location filename="../qml/pages/Friends.qml" line="125"/>
         <source>Busy</source>
         <translation>Upptagen</translation>
     </message>
