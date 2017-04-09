@@ -22,16 +22,21 @@ import "../components"
 Page {
     id: page
     allowedOrientations: Orientation.Portrait
+    onVisibleChanged: {
+        if ( visible ) {
+            qr.value = toxcore.toxID
+        }
+    }
 
     SilicaFlickable {
         id: flickable
         anchors.fill: parent
 
         QRCode {
+            id: qr
             anchors.centerIn: parent
             width: 297
             height: 297
-            value: toxcore.toxID
 
             Component.onCompleted: requestPaint() // seems we get an empty value initially sometimes
         }
