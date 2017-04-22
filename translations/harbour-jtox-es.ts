@@ -132,7 +132,7 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="195"/>
         <source>password</source>
-        <translation>Contraseñs</translation>
+        <translation>Contraseña</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="201"/>
@@ -142,7 +142,7 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="218"/>
         <source>Update</source>
-        <translation>Refrescar</translation>
+        <translation>Actualizar</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="218"/>
@@ -195,7 +195,7 @@
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="120"/>
         <source>Resolved Address</source>
-        <translation>Resolvida la dirección</translation>
+        <translation>Dirección resolvida</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="132"/>
@@ -208,7 +208,7 @@
     <message>
         <location filename="../qml/cover/CoverPage.qml" line="88"/>
         <source>Messages: </source>
-        <translation>Mensaje</translation>
+        <translation>Mensaje:</translation>
     </message>
 </context>
 <context>
@@ -239,7 +239,7 @@
     <message>
         <location filename="../qml/pages/Friends.qml" line="79"/>
         <source>About</source>
-        <translation>Acercad de</translation>
+        <translation>Acerca de</translation>
     </message>
     <message>
         <location filename="../qml/pages/Friends.qml" line="84"/>
@@ -259,7 +259,7 @@
     <message>
         <location filename="../qml/pages/Friends.qml" line="109"/>
         <source>Away</source>
-        <translation>Lejos</translation>
+        <translation>Ausente</translation>
     </message>
     <message>
         <location filename="../qml/pages/Friends.qml" line="121"/>
@@ -292,7 +292,7 @@
     <message>
         <location filename="../qml/pages/Import.qml" line="64"/>
         <source>No account files found</source>
-        <translation>No se hallaron los archivos de cuenta</translation>
+        <translation>No hay archivos en la cuenta</translation>
     </message>
     <message>
         <location filename="../qml/pages/Import.qml" line="65"/>
