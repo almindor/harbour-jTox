@@ -38,6 +38,8 @@ Dialog {
             idField.text = ''
             messageField.text = ''
             friendInputField.focus = true
+        } else {
+            friendInputField.focus = false
         }
     }
 

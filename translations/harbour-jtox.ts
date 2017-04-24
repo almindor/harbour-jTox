@@ -157,47 +157,47 @@
 <context>
     <name>AddFriend</name>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="46"/>
+        <location filename="../qml/pages/AddFriend.qml" line="48"/>
         <source>Add Friend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="57"/>
+        <location filename="../qml/pages/AddFriend.qml" line="59"/>
         <source>or</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="58"/>
+        <location filename="../qml/pages/AddFriend.qml" line="60"/>
         <source>Address or handle@</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="96"/>
+        <location filename="../qml/pages/AddFriend.qml" line="98"/>
         <source>Message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="97"/>
+        <location filename="../qml/pages/AddFriend.qml" line="99"/>
         <source>Please add me to friends</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="109"/>
+        <location filename="../qml/pages/AddFriend.qml" line="111"/>
         <source>Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="110"/>
+        <location filename="../qml/pages/AddFriend.qml" line="112"/>
         <source>Address not resolved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="120"/>
+        <location filename="../qml/pages/AddFriend.qml" line="122"/>
         <source>Resolved Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="132"/>
+        <location filename="../qml/pages/AddFriend.qml" line="134"/>
         <source>Resolve Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -343,27 +343,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="578"/>
+        <location filename="../src/toxcore.cpp" line="580"/>
         <source>Offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="579"/>
+        <location filename="../src/toxcore.cpp" line="581"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="580"/>
+        <location filename="../src/toxcore.cpp" line="582"/>
         <source>Away</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="581"/>
+        <location filename="../src/toxcore.cpp" line="583"/>
         <source>Busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="584"/>
+        <location filename="../src/toxcore.cpp" line="586"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
