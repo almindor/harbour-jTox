@@ -17,9 +17,9 @@ TARGET="$1"
 TOXDIR=`pwd`
 FAKEDIR="$TOXDIR/$TARGET"
 SODIUMDIR="$TOXDIR/libsodium"
-SODIUMSRC="https://github.com/jedisct1/libsodium/archive/1.0.11.tar.gz"
+SODIUMSRC="https://github.com/jedisct1/libsodium/archive/1.0.12.tar.gz"
 SODIUMLIBSDIR="$SODIUMDIR/src/libsodium/.libs"
-TOXCORESRC="https://github.com/TokTok/c-toxcore/archive/v0.1.7.tar.gz"
+TOXCORESRC="https://github.com/TokTok/c-toxcore/archive/v0.1.8.tar.gz"
 TOXCOREDIR="$TOXDIR/c-toxcore"
 TOXCORELIBSDIR="$TOXCOREDIR/build/.libs"
 
