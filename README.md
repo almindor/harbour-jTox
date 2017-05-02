@@ -2,7 +2,13 @@
 
 jTox is a Jolla/SailfishOS [https://tox.chat](Tox) client.
 
-*WARNING:* Tox is *EXPERIMENTAL* and has never been subject to any security audit. Use at your own risk.
+### ![Danger: Experimental](https://github.com/TokTok/c-toxcore/raw/master/other/tox-warning.png)
+
+jTox uses an **experimental** cryptographic network [library](https://github.com/TokTok/c-toxcore).
+It has not been
+formally audited by an independent third party that specializes in
+cryptography or cryptanalysis. The protocol is not optimized for mobile yet
+and causes significant data traffic. **Use at your own risk.**
 
 ## Building toxcore for Jolla
 
