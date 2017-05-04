@@ -343,27 +343,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="580"/>
+        <location filename="../src/toxcore.cpp" line="579"/>
         <source>Offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="581"/>
+        <location filename="../src/toxcore.cpp" line="580"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="582"/>
+        <location filename="../src/toxcore.cpp" line="581"/>
         <source>Away</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="583"/>
+        <location filename="../src/toxcore.cpp" line="582"/>
         <source>Busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="586"/>
+        <location filename="../src/toxcore.cpp" line="585"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>

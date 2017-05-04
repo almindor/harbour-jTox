@@ -38,7 +38,7 @@ Item {
         }
     }
 
-    TextField {
+    TextArea {
         id: inputField
         enabled: toxcore.status > 0
         anchors {
