@@ -96,7 +96,7 @@
         <location filename="../qml/pages/Account.qml" line="141"/>
         <location filename="../qml/pages/Account.qml" line="143"/>
         <source>Nospam</source>
-        <translation>No correos indeseados</translation>
+        <translation>Sin Correow basura</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="154"/>
@@ -208,7 +208,7 @@
     <message>
         <location filename="../qml/cover/CoverPage.qml" line="88"/>
         <source>Messages: </source>
-        <translation>Mensaje:</translation>
+        <translation>Mensajes:</translation>
     </message>
 </context>
 <context>
@@ -310,7 +310,7 @@
     <message>
         <location filename="../qml/components/InputItem.qml" line="58"/>
         <source>Type your message here</source>
-        <translation>Escribir su mensaje aqui</translation>
+        <translation>Escribir mensaje aqui</translation>
     </message>
     <message>
         <location filename="../qml/components/InputItem.qml" line="58"/>
@@ -333,7 +333,7 @@
     <message>
         <location filename="../src/toxcore.cpp" line="514"/>
         <source>Away</source>
-        <translation>Lejos</translation>
+        <translation>Ausente</translation>
     </message>
     <message>
         <location filename="../src/toxcore.cpp" line="515"/>
@@ -392,7 +392,7 @@
     <message>
         <location filename="../qml/pages/Password.qml" line="64"/>
         <source>Account password</source>
-        <translation>Contraseña de cuenta</translation>
+        <translation>Contraseña de la cuenta</translation>
     </message>
     <message>
         <location filename="../qml/pages/Password.qml" line="84"/>
