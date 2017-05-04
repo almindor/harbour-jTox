@@ -188,7 +188,12 @@ namespace JTOX {
     void EventModel::onFriendWentOnline(quint32 friendID)
     {
         EventList offlineMessages;
+        EventList pendingMessages; // there's a chance we sent it out, it never arrived and got stuck in state pending
         fDBData.getEvents(offlineMessages, friendID, etMessageOutOffline);
+        fDBData.getEvents(pendingMessages, friendID, etMessageOutPending);
+
+        offlineMessages.append(pendingMessages);
+
         foreach ( const Event& event, offlineMessages ) {
             qint64 sendID = sendMessageRaw(event.message(), friendID, event.id());
 
