@@ -45,7 +45,7 @@
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="103"/>
-        <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Use at your own risk.</source>
+        <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

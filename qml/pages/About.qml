@@ -49,7 +49,7 @@ Page {
                 }
                 wrapMode: Text.WordWrap
                 color: Theme.primaryColor
-                text: qsTr("jTox") + " v1.1.0 " + qsTr("by Aleš Katona.")
+                text: qsTr("jTox") + " v1.1.1 " + qsTr("by Aleš Katona.")
             }
 
             Label {
@@ -100,7 +100,7 @@ Page {
                 color: Theme.highlightColor
                 font.pointSize: Theme.fontSizeMedium
                 wrapMode: Text.WordWrap
-                text: qsTr("The Tox protocol is <b>EXPERIMENTAL!</b> The protocol has not been audited for security and can contain vulnerabilities. Use at your own risk.")
+                text: qsTr("The Tox protocol is <b>EXPERIMENTAL!</b> The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. <b>USE AT YOUR OWN RISK</b>.")
             }
         }
     }
