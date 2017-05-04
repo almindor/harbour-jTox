@@ -96,7 +96,7 @@
         <location filename="../qml/pages/Account.qml" line="141"/>
         <location filename="../qml/pages/Account.qml" line="143"/>
         <source>Nospam</source>
-        <translation>Sin Correow basura</translation>
+        <translation>Sin Correos basura</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="154"/>
