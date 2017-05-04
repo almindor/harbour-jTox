@@ -9,16 +9,19 @@ namespace JTOX {
 
     EventModel::EventModel(ToxCore& toxCore, FriendModel& friendModel, DBData& dbData) : QAbstractListModel(0),
                     fToxCore(toxCore), fFriendModel(friendModel), fDBData(dbData),
-                    fList(), fTimer(), fFriendID(-1), fTyping(false)
+                    fList(), fTimerViewed(), fTimerTyping(), fFriendID(-1), fTyping(false)
     {
         connect(&toxCore, &ToxCore::messageDelivered, this, &EventModel::onMessageDelivered);
         connect(&toxCore, &ToxCore::messageReceived, this, &EventModel::onMessageReceived);
         connect(&friendModel, &FriendModel::friendUpdated, this, &EventModel::onFriendUpdated);
         connect(&friendModel, &FriendModel::friendWentOnline, this, &EventModel::onFriendWentOnline);
-        connect(&fTimer, &QTimer::timeout, this, &EventModel::onMessagesViewed);
+        connect(&fTimerViewed, &QTimer::timeout, this, &EventModel::onMessagesViewed);
+        connect(&fTimerTyping, &QTimer::timeout, this, &EventModel::onTypingDone);
 
-        fTimer.setInterval(2000); // 2 sec after viewing we consider msgs read TODO: combine with actually viewed msgs from QML
-        fTimer.setSingleShot(true);
+        fTimerViewed.setInterval(2000); // 2 sec after viewing we consider msgs read TODO: combine with actually viewed msgs from QML
+        fTimerViewed.setSingleShot(true);
+        fTimerTyping.setInterval(2000);
+        fTimerTyping.setSingleShot(true);
     }
 
     EventModel::~EventModel() {
@@ -80,10 +83,11 @@ namespace JTOX {
             return;
         }
 
+        setTyping(false);
         fFriendID = friendID;
 
         if ( fFriendID < 0 ) {
-            fTimer.stop(); // make sure we don't try to mark someone else's messages by accident
+            fTimerViewed.stop(); // make sure we don't try to mark someone else's messages by accident
             return;
         }
 
@@ -92,7 +96,7 @@ namespace JTOX {
         endResetModel();
 
         emit friendUpdated();
-        fTimer.start();
+        fTimerViewed.start();
     }
 
     void EventModel::sendMessage(const QString& message) {
@@ -114,11 +118,6 @@ namespace JTOX {
         beginInsertRows(QModelIndex(), count, count);
         fList.append(Event(id, fFriendID, createdAt, eventType, message, sendID));
         endInsertRows();
-    }
-
-    void EventModel::stopTyping(qint64 friendID)
-    {
-        setTyping(false, friendID);
     }
 
     void EventModel::deleteMessage(int eventID)
@@ -233,15 +232,26 @@ namespace JTOX {
     }
 
     int EventModel::getFriendStatus() const {
-        // TODO: optimize, use index
+        if ( fFriendID < 0 ) {
+            return 0;
+        }
+
         return fFriendModel.getFriendByID(fFriendID).status();
     }
 
     bool EventModel::getFriendTyping() const {
+        if ( fFriendID < 0 ) {
+            return false;
+        }
+
         return fFriendModel.getFriendByID(fFriendID).typing();
     }
 
     const QString EventModel::getFriendName() const {
+        if ( fFriendID < 0 ) {
+            return QString();
+        }
+
         return fFriendModel.getFriendByID(fFriendID).name();
     }
 
@@ -256,7 +266,16 @@ namespace JTOX {
 
     void EventModel::setTyping(qint64 friendID, bool typing)
     {
-        if ( typing == fTyping || friendID < 0 ) {
+        if ( friendID < 0 ) {
+            return;
+        }
+
+        fTimerTyping.stop();
+        if ( typing ) {
+            fTimerTyping.start();
+        }
+
+        if ( typing == fTyping ) {
             return;
         }
 
@@ -287,6 +306,11 @@ namespace JTOX {
         }
         emit dataChanged(createIndex(first, 0), createIndex(last, 0), QVector<int>(1, erEventType));
         fFriendModel.messagesViewed(fFriendID);
+    }
+
+    void EventModel::onTypingDone()
+    {
+        setTyping(fFriendID, false);
     }
 
 }

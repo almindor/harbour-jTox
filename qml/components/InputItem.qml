@@ -60,23 +60,15 @@ Item {
             sendMessage(text)
             text = ''
             eventmodel.typing = false
-            if ( typingTimer.running ) {
-                typingTimer.stop()
-            }
         }
 
         onTextChanged: {
-            if ( typingTimer.running ) {
-                typingTimer.stop()
-            }
-
             if ( text.length === 0 ) {
                 eventmodel.typing = false
                 return
             }
 
             eventmodel.typing = true
-            typingTimer.watchTyping()
         }
     }
 }

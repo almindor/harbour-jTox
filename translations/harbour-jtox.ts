@@ -461,42 +461,42 @@
 <context>
     <name>harbour-jtox</name>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="48"/>
+        <location filename="../qml/harbour-jtox.qml" line="36"/>
         <source>New friend request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="49"/>
+        <location filename="../qml/harbour-jtox.qml" line="37"/>
         <source>Account Imported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="50"/>
+        <location filename="../qml/harbour-jtox.qml" line="38"/>
         <source>Account Exported: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="51"/>
+        <location filename="../qml/harbour-jtox.qml" line="39"/>
         <source>New account created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="52"/>
+        <location filename="../qml/harbour-jtox.qml" line="40"/>
         <source>Chat history wiped</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="63"/>
+        <location filename="../qml/harbour-jtox.qml" line="51"/>
         <source>Message from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="70"/>
+        <location filename="../qml/harbour-jtox.qml" line="58"/>
         <source>Registered on </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="71"/>
+        <location filename="../qml/harbour-jtox.qml" line="59"/>
         <source>Removed from </source>
         <translation type="unfinished"></translation>
     </message>

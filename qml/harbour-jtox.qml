@@ -31,18 +31,6 @@ ApplicationWindow
     _defaultPageOrientations: Orientation.Portrait
     onApplicationActiveChanged: toxcore.setApplicationActive(applicationActive);
 
-    Timer {
-        id: typingTimer
-        property int friendID : -1
-        interval: 2000
-        onTriggered: eventmodel.stopTyping(friendID)
-        running: false
-        function watchTyping() {
-            friendID = eventmodel.friendID
-            start()
-        }
-    }
-
     Connections {
         target: toxcore
         onFriendRequest: banner("x-nemo.messaging.authorizationrequest", qsTr("New friend request"), "friend", appWindow.applicationActive)

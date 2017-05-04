@@ -35,7 +35,6 @@ namespace JTOX {
         Q_INVOKABLE qint64 setFriendIndex(int friendIndex);
         Q_INVOKABLE void setFriend(qint64 friendID);
         Q_INVOKABLE void sendMessage(const QString& message);
-        Q_INVOKABLE void stopTyping(qint64 friendID);
         Q_INVOKABLE void deleteMessage(int eventID);
     signals:
         void friendUpdated() const;
@@ -51,7 +50,8 @@ namespace JTOX {
         FriendModel& fFriendModel;
         DBData fDBData;
         EventList fList;
-        QTimer fTimer;
+        QTimer fTimerViewed;
+        QTimer fTimerTyping;
         QSqlDatabase fDB;
         QSqlQuery fSelectQuery;
         QSqlQuery fInsertQuery;
@@ -69,6 +69,7 @@ namespace JTOX {
         void setTyping(qint64 friendID, bool typing);
     private slots:
         void onMessagesViewed();
+        void onTypingDone();
     };
 
 }
