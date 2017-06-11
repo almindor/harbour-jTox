@@ -72,9 +72,9 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 CONFIG += sailfishapp_i18n
 
 TRANSLATIONS += \
-    translations/harbour-jtox-de.ts
-    translations/harbour-jtox-es.ts
-    translations/harbour-jtox-sv.ts
+    translations/harbour-jtox-de.ts \
+    translations/harbour-jtox-es.ts \
+    translations/harbour-jtox-sv.ts \
 
 HEADERS += \
     src/c_callbacks.h \
