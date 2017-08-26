@@ -29,7 +29,7 @@
         <translation>jTox es un software libre con licencia GPL v3 disponible en &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</translation>
     </message>
     <message>
-          <location filename="../qml/pages/About.qml" line="91"/>
+        <location filename="../qml/pages/About.qml" line="91"/>
         <source>Translators</source>
         <translation>Traductores</translation>
     </message>
@@ -45,9 +45,8 @@
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="103"/>
-        <location filename="../qml/pages/About.qml" line="90"/>
-        <source>The Tox protocol is EXPERIMENTAL! The protocol has not been audited for security and can contain vulnerabilities. Use at your own risk.</source>
-        <translation>El protocolo Tox es EXPERIMENTAL! y no ha sido auditado por seguridad y puede contener vulnerabilidades. Úselo bajo su propio riesgo.</translation>
+        <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -158,47 +157,47 @@
 <context>
     <name>AddFriend</name>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="46"/>
+        <location filename="../qml/pages/AddFriend.qml" line="48"/>
         <source>Add Friend</source>
         <translation>Agregar contacto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="57"/>
+        <location filename="../qml/pages/AddFriend.qml" line="59"/>
         <source>or</source>
         <translation>o</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="58"/>
+        <location filename="../qml/pages/AddFriend.qml" line="60"/>
         <source>Address or handle@</source>
         <translation>Dirección o manejar@</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="96"/>
+        <location filename="../qml/pages/AddFriend.qml" line="98"/>
         <source>Message</source>
         <translation>Mensaje</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="97"/>
+        <location filename="../qml/pages/AddFriend.qml" line="99"/>
         <source>Please add me to friends</source>
         <translation>Por favor agregame a mis contactos</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="109"/>
+        <location filename="../qml/pages/AddFriend.qml" line="111"/>
         <source>Address</source>
         <translation>Dirección</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="110"/>
+        <location filename="../qml/pages/AddFriend.qml" line="112"/>
         <source>Address not resolved</source>
         <translation>Dirección no resolvida</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="120"/>
+        <location filename="../qml/pages/AddFriend.qml" line="122"/>
         <source>Resolved Address</source>
         <translation>Dirección resolvida</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="132"/>
+        <location filename="../qml/pages/AddFriend.qml" line="134"/>
         <source>Resolve Error</source>
         <translation>Resolver error</translation>
     </message>
@@ -209,6 +208,24 @@
         <location filename="../qml/cover/CoverPage.qml" line="88"/>
         <source>Messages: </source>
         <translation>Mensajes:</translation>
+    </message>
+</context>
+<context>
+    <name>Details</name>
+    <message>
+        <location filename="../qml/pages/Details.qml" line="28"/>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Details.qml" line="65"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Details.qml" line="68"/>
+        <source>Friend offline name</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -223,46 +240,51 @@
         <source>Removing</source>
         <translation>Removiendo</translation>
     </message>
+    <message>
+        <location filename="../qml/components/FriendItem.qml" line="30"/>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Friends</name>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="43"/>
+        <location filename="../qml/pages/Friends.qml" line="47"/>
         <source>Friends</source>
         <translation>Contactos</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="70"/>
-        <source>Pending friend requests:</source>
-        <translation>Solicitudes de amistad pendientes:</translation>
+        <location filename="../qml/pages/Friends.qml" line="74"/>
+        <source>Pending friend requests: </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="79"/>
+        <location filename="../qml/pages/Friends.qml" line="83"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="84"/>
+        <location filename="../qml/pages/Friends.qml" line="88"/>
         <source>Account</source>
         <translation>Cuenta</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="89"/>
+        <location filename="../qml/pages/Friends.qml" line="93"/>
         <source>Add Friend</source>
         <translation>Agregar contacto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="97"/>
+        <location filename="../qml/pages/Friends.qml" line="101"/>
         <source>Ready</source>
         <translation>Disponible</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="109"/>
+        <location filename="../qml/pages/Friends.qml" line="113"/>
         <source>Away</source>
         <translation>Ausente</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="121"/>
+        <location filename="../qml/pages/Friends.qml" line="125"/>
         <source>Busy</source>
         <translation>Ocupado</translation>
     </message>
@@ -321,27 +343,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="512"/>
+        <location filename="../src/toxcore.cpp" line="579"/>
         <source>Offline</source>
         <translation>Sin conexion</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="513"/>
+        <location filename="../src/toxcore.cpp" line="580"/>
         <source>Ready</source>
         <translation>Disponible</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="514"/>
+        <location filename="../src/toxcore.cpp" line="581"/>
         <source>Away</source>
         <translation>Ausente</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="515"/>
+        <location filename="../src/toxcore.cpp" line="582"/>
         <source>Busy</source>
         <translation>Ocupado</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="518"/>
+        <location filename="../src/toxcore.cpp" line="585"/>
         <source>Unknown</source>
         <translation>Desconocido</translation>
     </message>
@@ -349,7 +371,7 @@
 <context>
     <name>JTOX::ToxInitializer</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="141"/>
+        <location filename="../src/toxcore.cpp" line="178"/>
         <source>Hi from jTox on Sailfish</source>
         <translation>Hola desde jTox en Sailfish</translation>
     </message>
@@ -357,14 +379,19 @@
 <context>
     <name>MessageItem</name>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="17"/>
+        <location filename="../qml/components/MessageItem.qml" line="18"/>
         <source>Copy to clipboard</source>
         <translation>Copiar al portapapeles</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="20"/>
+        <location filename="../qml/components/MessageItem.qml" line="21"/>
         <source>Message copied to clipboard</source>
         <translation>Mensaje copiado al portapapeles</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/MessageItem.qml" line="27"/>
+        <source>Delete message</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -434,42 +461,42 @@
 <context>
     <name>harbour-jtox</name>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="48"/>
+        <location filename="../qml/harbour-jtox.qml" line="36"/>
         <source>New friend request</source>
         <translation>Nueva solicitud de contacto</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="49"/>
+        <location filename="../qml/harbour-jtox.qml" line="37"/>
         <source>Account Imported</source>
         <translation>Cuenta importada</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="50"/>
+        <location filename="../qml/harbour-jtox.qml" line="38"/>
         <source>Account Exported: </source>
         <translation>Cuenta exportada</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="51"/>
+        <location filename="../qml/harbour-jtox.qml" line="39"/>
         <source>New account created</source>
         <translation>Nueva cuenta creada</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="52"/>
+        <location filename="../qml/harbour-jtox.qml" line="40"/>
         <source>Chat history wiped</source>
         <translation>Limpiar historial de charla</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="63"/>
+        <location filename="../qml/harbour-jtox.qml" line="51"/>
         <source>Message from</source>
         <translation>Mensanje desde</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="70"/>
+        <location filename="../qml/harbour-jtox.qml" line="58"/>
         <source>Registered on </source>
         <translation>Registrado en</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="71"/>
+        <location filename="../qml/harbour-jtox.qml" line="59"/>
         <source>Removed from </source>
         <translation>Removido desde</translation>
     </message>

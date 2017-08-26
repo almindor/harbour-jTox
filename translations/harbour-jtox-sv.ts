@@ -45,8 +45,8 @@
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="103"/>
-        <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Use at your own risk.</source>
-        <translation>Tox-protokollet är &lt;b&gt;EXPERIMENTELLT!&lt;/b&gt; Protokollet har inte granskats gällande säkerhet och kan innehålla sårbarheter. Använd det på egen risk.</translation>
+        <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -157,47 +157,47 @@
 <context>
     <name>AddFriend</name>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="46"/>
+        <location filename="../qml/pages/AddFriend.qml" line="48"/>
         <source>Add Friend</source>
         <translation>Lägg till en kontakt</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="57"/>
+        <location filename="../qml/pages/AddFriend.qml" line="59"/>
         <source>or</source>
         <translation>eller</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="58"/>
+        <location filename="../qml/pages/AddFriend.qml" line="60"/>
         <source>Address or handle@</source>
         <translation>Adress eller hanterare@</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="96"/>
+        <location filename="../qml/pages/AddFriend.qml" line="98"/>
         <source>Message</source>
         <translation>Meddelande</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="97"/>
+        <location filename="../qml/pages/AddFriend.qml" line="99"/>
         <source>Please add me to friends</source>
         <translation>Lägg till mig i dina kontakter</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="109"/>
+        <location filename="../qml/pages/AddFriend.qml" line="111"/>
         <source>Address</source>
         <translation>Adress</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="110"/>
+        <location filename="../qml/pages/AddFriend.qml" line="112"/>
         <source>Address not resolved</source>
         <translation>Adressen inte uppslagen</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="120"/>
+        <location filename="../qml/pages/AddFriend.qml" line="122"/>
         <source>Resolved Address</source>
         <translation>Adressen uppslagen</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AddFriend.qml" line="132"/>
+        <location filename="../qml/pages/AddFriend.qml" line="134"/>
         <source>Resolve Error</source>
         <translation>Uppslagningsfel</translation>
     </message>
@@ -208,6 +208,24 @@
         <location filename="../qml/cover/CoverPage.qml" line="88"/>
         <source>Messages: </source>
         <translation>Meddelanden:</translation>
+    </message>
+</context>
+<context>
+    <name>Details</name>
+    <message>
+        <location filename="../qml/pages/Details.qml" line="28"/>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Details.qml" line="65"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Details.qml" line="68"/>
+        <source>Friend offline name</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -222,46 +240,51 @@
         <source>Removing</source>
         <translation>Tar bort</translation>
     </message>
+    <message>
+        <location filename="../qml/components/FriendItem.qml" line="30"/>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Friends</name>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="43"/>
+        <location filename="../qml/pages/Friends.qml" line="47"/>
         <source>Friends</source>
         <translation>Kontakter</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="70"/>
+        <location filename="../qml/pages/Friends.qml" line="74"/>
         <source>Pending friend requests: </source>
         <translation>Väntande kontaktförfrågningar:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="79"/>
+        <location filename="../qml/pages/Friends.qml" line="83"/>
         <source>About</source>
         <translation>Om</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="84"/>
+        <location filename="../qml/pages/Friends.qml" line="88"/>
         <source>Account</source>
         <translation>Konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="89"/>
+        <location filename="../qml/pages/Friends.qml" line="93"/>
         <source>Add Friend</source>
         <translation>Lägg till kontakt</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="97"/>
+        <location filename="../qml/pages/Friends.qml" line="101"/>
         <source>Ready</source>
         <translation>Klar</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="109"/>
+        <location filename="../qml/pages/Friends.qml" line="113"/>
         <source>Away</source>
         <translation>Borta</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Friends.qml" line="121"/>
+        <location filename="../qml/pages/Friends.qml" line="125"/>
         <source>Busy</source>
         <translation>Upptagen</translation>
     </message>
@@ -320,27 +343,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="578"/>
+        <location filename="../src/toxcore.cpp" line="579"/>
         <source>Offline</source>
         <translation>Offline</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="579"/>
+        <location filename="../src/toxcore.cpp" line="580"/>
         <source>Ready</source>
         <translation>Tillgänglig</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="580"/>
+        <location filename="../src/toxcore.cpp" line="581"/>
         <source>Away</source>
         <translation>Borta</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="581"/>
+        <location filename="../src/toxcore.cpp" line="582"/>
         <source>Busy</source>
         <translation>Upptagen</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="584"/>
+        <location filename="../src/toxcore.cpp" line="585"/>
         <source>Unknown</source>
         <translation>Okänt</translation>
     </message>
@@ -356,14 +379,19 @@
 <context>
     <name>MessageItem</name>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="17"/>
+        <location filename="../qml/components/MessageItem.qml" line="18"/>
         <source>Copy to clipboard</source>
         <translation>Kopiera till urklipp</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="20"/>
+        <location filename="../qml/components/MessageItem.qml" line="21"/>
         <source>Message copied to clipboard</source>
         <translation>Meddelande kopierat till urklipp</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/MessageItem.qml" line="27"/>
+        <source>Delete message</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -433,42 +461,42 @@
 <context>
     <name>harbour-jtox</name>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="48"/>
+        <location filename="../qml/harbour-jtox.qml" line="36"/>
         <source>New friend request</source>
         <translation>Ny kontaktförfrågan</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="49"/>
+        <location filename="../qml/harbour-jtox.qml" line="37"/>
         <source>Account Imported</source>
         <translation>Kontot importerat</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="50"/>
+        <location filename="../qml/harbour-jtox.qml" line="38"/>
         <source>Account Exported: </source>
         <translation>Konto exporterat: </translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="51"/>
+        <location filename="../qml/harbour-jtox.qml" line="39"/>
         <source>New account created</source>
         <translation>Nytt konto skapat</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="52"/>
+        <location filename="../qml/harbour-jtox.qml" line="40"/>
         <source>Chat history wiped</source>
         <translation>Chatthistoriken rensad</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="63"/>
+        <location filename="../qml/harbour-jtox.qml" line="51"/>
         <source>Message from</source>
         <translation>Meddelande från</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="70"/>
+        <location filename="../qml/harbour-jtox.qml" line="58"/>
         <source>Registered on </source>
         <translation>Registrerat på </translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="71"/>
+        <location filename="../qml/harbour-jtox.qml" line="59"/>
         <source>Removed from </source>
         <translation>Borttaget från </translation>
     </message>
