@@ -26,7 +26,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="75"/>
         <source>jTox is free software licensed under the GPL v3 available at &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</source>
-        <translation>jTox es un software libre con licencia GPL v3 disponible en &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</translation>
+        <translation>jTox es un programa libre con licencia GPLv3 disponible en &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="91"/>
@@ -46,7 +46,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="103"/>
         <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>El protocolo Tox es &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; y no ha sido auditado la seguridad y puede contener vulnerabilidades. &lt;b&gt;ÚSELO BAJO SU PROPIO RIESGO&lt;/b&gt;.</translation>
     </message>
 </context>
 <context>
@@ -54,22 +54,22 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="37"/>
         <source>Importing Account</source>
-        <translation>Importando cuenta</translation>
+        <translation>Importando la cuenta</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="57"/>
         <source>Import Account</source>
-        <translation>Importar cuenta</translation>
+        <translation>Importar la cuenta</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="62"/>
         <source>Export Account</source>
-        <translation>Exportar cuenta</translation>
+        <translation>Exportar la cuenta</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="63"/>
         <source>Exporting Account</source>
-        <translation>Exportando cuenta</translation>
+        <translation>Exportando la cuenta</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="81"/>
@@ -215,17 +215,17 @@
     <message>
         <location filename="../qml/pages/Details.qml" line="28"/>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Detalles</translation>
     </message>
     <message>
         <location filename="../qml/pages/Details.qml" line="65"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <location filename="../qml/pages/Details.qml" line="68"/>
         <source>Friend offline name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre del contacto sin conexión</translation>
     </message>
 </context>
 <context>
@@ -243,7 +243,7 @@
     <message>
         <location filename="../qml/components/FriendItem.qml" line="30"/>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Detalles</translation>
     </message>
 </context>
 <context>
@@ -256,7 +256,7 @@
     <message>
         <location filename="../qml/pages/Friends.qml" line="74"/>
         <source>Pending friend requests: </source>
-        <translation type="unfinished"></translation>
+        <translation>Solicitud de amistad pendientes:</translation>
     </message>
     <message>
         <location filename="../qml/pages/Friends.qml" line="83"/>
@@ -327,7 +327,7 @@
     <message>
         <location filename="../qml/components/InputItem.qml" line="24"/>
         <source>is typing</source>
-        <translation>Esta escribiendo</translation>
+        <translation>escribiendo...</translation>
     </message>
     <message>
         <location filename="../qml/components/InputItem.qml" line="58"/>
@@ -337,7 +337,7 @@
     <message>
         <location filename="../qml/components/InputItem.qml" line="58"/>
         <source>is offline</source>
-        <translation>Esta sin conexion</translation>
+        <translation>esta desconectado</translation>
     </message>
 </context>
 <context>
@@ -391,7 +391,7 @@
     <message>
         <location filename="../qml/components/MessageItem.qml" line="27"/>
         <source>Delete message</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar mensaje</translation>
     </message>
 </context>
 <context>
@@ -404,7 +404,7 @@
     <message>
         <location filename="../qml/pages/Password.qml" line="48"/>
         <source>Creating Account</source>
-        <translation>Creando cuenta</translation>
+        <translation>Creando una cuenta</translation>
     </message>
     <message>
         <location filename="../qml/pages/Password.qml" line="63"/>
@@ -455,7 +455,7 @@
     <message>
         <location filename="../qml/pages/Requests.qml" line="32"/>
         <source>Friend Requests</source>
-        <translation>Solicitudes de contacto</translation>
+        <translation>Solicitudes de amistad</translation>
     </message>
 </context>
 <context>
@@ -463,7 +463,7 @@
     <message>
         <location filename="../qml/harbour-jtox.qml" line="36"/>
         <source>New friend request</source>
-        <translation>Nueva solicitud de contacto</translation>
+        <translation>Nueva solicitud de amistad</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="37"/>
