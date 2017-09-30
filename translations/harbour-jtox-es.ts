@@ -79,7 +79,7 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="85"/>
         <source>Show QR Code</source>
-        <translation>Mostrar código QR </translation>
+        <translation>Código QR </translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="98"/>
@@ -106,7 +106,7 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="167"/>
         <source>Status message</source>
-        <translation>Estado del mensaje</translation>
+        <translation>Mensaje de estado</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="168"/>
@@ -116,7 +116,7 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="173"/>
         <source>Chat history</source>
-        <translation>Historial de charla</translation>
+        <translation>Historial de conversación</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="178"/>
@@ -159,7 +159,7 @@
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="48"/>
         <source>Add Friend</source>
-        <translation>Agregar contacto</translation>
+        <translation>Agregar un contacto</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="59"/>
@@ -179,7 +179,7 @@
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="99"/>
         <source>Please add me to friends</source>
-        <translation>Por favor agregame a mis contactos</translation>
+        <translation>Por favor agregame a tus contactos</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="111"/>
@@ -256,7 +256,7 @@
     <message>
         <location filename="../qml/pages/Friends.qml" line="74"/>
         <source>Pending friend requests: </source>
-        <translation>Solicitud de amistad pendientes:</translation>
+        <translation>Solicitud de amistad pendiente:</translation>
     </message>
     <message>
         <location filename="../qml/pages/Friends.qml" line="83"/>
@@ -271,7 +271,7 @@
     <message>
         <location filename="../qml/pages/Friends.qml" line="93"/>
         <source>Add Friend</source>
-        <translation>Agregar contacto</translation>
+        <translation>Agregar un contacto</translation>
     </message>
     <message>
         <location filename="../qml/pages/Friends.qml" line="101"/>
@@ -294,7 +294,7 @@
     <message>
         <location filename="../qml/pages/Import.qml" line="29"/>
         <source>Import Account</source>
-        <translation>Importar cuenta</translation>
+        <translation>Importar la cuenta</translation>
     </message>
     <message>
         <location filename="../qml/pages/Import.qml" line="43"/>
@@ -319,7 +319,7 @@
     <message>
         <location filename="../qml/pages/Import.qml" line="65"/>
         <source>No account *.tox files found in Documents folder. Copy account file to Documents and try again.</source>
-        <translation>No hay archivos de cuenta * .tox en la carpeta Documentos. Copie el archivo de cuenta en Documentos e inténtar de nuevo.</translation>
+        <translation>No hay archivos de cuenta *.tox en la carpeta Documentos. Copiar el archivo de cuenta en Documentos e inténtar de nuevo.</translation>
     </message>
 </context>
 <context>
@@ -332,7 +332,7 @@
     <message>
         <location filename="../qml/components/InputItem.qml" line="58"/>
         <source>Type your message here</source>
-        <translation>Escribir mensaje aqui</translation>
+        <translation>su mensaje</translation>
     </message>
     <message>
         <location filename="../qml/components/InputItem.qml" line="58"/>
@@ -399,7 +399,7 @@
     <message>
         <location filename="../qml/pages/Password.qml" line="47"/>
         <source>New Account</source>
-        <translation>Nueva cuenta</translation>
+        <translation>Una nueva cuenta</translation>
     </message>
     <message>
         <location filename="../qml/pages/Password.qml" line="48"/>
