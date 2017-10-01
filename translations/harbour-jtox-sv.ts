@@ -46,7 +46,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="103"/>
         <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox-protokollet är <b>EXPERIMENTELLT!</b> Protokollet har inte granskats gällande säkerhet och kan innehålla sårbarheter. Stor dataförbrukning kan förväntas. <b>ANVÄND DET PÅ EGEN RISK</b>.</translation>
     </message>
 </context>
 <context>
@@ -215,17 +215,17 @@
     <message>
         <location filename="../qml/pages/Details.qml" line="28"/>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Detaljerat</translation>
     </message>
     <message>
         <location filename="../qml/pages/Details.qml" line="65"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Namn</translation>
     </message>
     <message>
         <location filename="../qml/pages/Details.qml" line="68"/>
         <source>Friend offline name</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktens offline-namn</translation>
     </message>
 </context>
 <context>
@@ -243,7 +243,7 @@
     <message>
         <location filename="../qml/components/FriendItem.qml" line="30"/>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Detaljerat</translation>
     </message>
 </context>
 <context>
@@ -391,7 +391,7 @@
     <message>
         <location filename="../qml/components/MessageItem.qml" line="27"/>
         <source>Delete message</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort meddelande</translation>
     </message>
 </context>
 <context>
