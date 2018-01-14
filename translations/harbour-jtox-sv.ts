@@ -46,7 +46,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="103"/>
         <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
-        <translation>Tox-protokollet är <b>EXPERIMENTELLT!</b> Protokollet har inte granskats gällande säkerhet och kan innehålla sårbarheter. Stor dataförbrukning kan förväntas. <b>ANVÄND DET PÅ EGEN RISK</b>.</translation>
+        <translation>Tox-protokollet är &lt;b&gt;EXPERIMENTELLT!&lt;/b&gt; Protokollet har inte granskats gällande säkerhet och kan innehålla sårbarheter. Stor dataförbrukning kan förväntas. &lt;b&gt;ANVÄND DET PÅ EGEN RISK&lt;/b&gt;.</translation>
     </message>
 </context>
 <context>
@@ -397,32 +397,42 @@
 <context>
     <name>Password</name>
     <message>
-        <location filename="../qml/pages/Password.qml" line="47"/>
+        <location filename="../qml/pages/Password.qml" line="44"/>
+        <source>Importing Account</source>
+        <translation>Importerar konto</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Password.qml" line="71"/>
         <source>New Account</source>
         <translation>Nytt konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="48"/>
+        <location filename="../qml/pages/Password.qml" line="72"/>
         <source>Creating Account</source>
         <translation>Skapar konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="63"/>
+        <location filename="../qml/pages/Password.qml" line="78"/>
+        <source>Import Account</source>
+        <translation>Importera konto</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Password.qml" line="92"/>
         <source>Password too short</source>
         <translation>Lösenordet är för kort</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="64"/>
+        <location filename="../qml/pages/Password.qml" line="93"/>
         <source>New account password</source>
         <translation>Nytt kontolösenord</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="64"/>
+        <location filename="../qml/pages/Password.qml" line="93"/>
         <source>Account password</source>
         <translation>Kontolösenord</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="84"/>
+        <location filename="../qml/pages/Password.qml" line="113"/>
         <source>Invalid password</source>
         <translation>Ogiltigt lösenord</translation>
     </message>
