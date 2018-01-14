@@ -26,6 +26,30 @@ Page {
         }
     }
 
+    RemorsePopup {
+        id: remorseIE
+
+        function maybeExecute(msg, done) {
+            if (toxcore.initialUse) {
+                return done();
+            }
+
+            return remorseIE.execute(msg, done);
+        }
+    }
+
+    Import {
+        id: importDialog
+
+        onAccepted: remorseIE.maybeExecute(qsTr("Importing Account"), function() {
+            // if we import ok, kick off to login
+            if ( toxcore.importAccount(fileName) ) {
+                pageStack.clear()
+                pageStack.push(Qt.resolvedUrl("Password.qml"), null, PageStackAction.Immediate)
+            }
+        } )
+    }
+
     SilicaFlickable {
         anchors.fill: parent
 
@@ -48,6 +72,11 @@ Page {
                 onClicked: remorseNA.execute(qsTr("Creating Account"), function() {
                     toxcore.newAccount()
                 } )
+            }
+
+            MenuItem {
+                text: qsTr("Import Account")
+                onClicked: pageStack.push(importDialog)
             }
         }
 

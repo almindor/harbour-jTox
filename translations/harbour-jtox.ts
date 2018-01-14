@@ -397,32 +397,42 @@
 <context>
     <name>Password</name>
     <message>
-        <location filename="../qml/pages/Password.qml" line="47"/>
+        <location filename="../qml/pages/Password.qml" line="44"/>
+        <source>Importing Account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Password.qml" line="71"/>
         <source>New Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="48"/>
+        <location filename="../qml/pages/Password.qml" line="72"/>
         <source>Creating Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="63"/>
+        <location filename="../qml/pages/Password.qml" line="78"/>
+        <source>Import Account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Password.qml" line="92"/>
         <source>Password too short</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="64"/>
+        <location filename="../qml/pages/Password.qml" line="93"/>
         <source>New account password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="64"/>
+        <location filename="../qml/pages/Password.qml" line="93"/>
         <source>Account password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="84"/>
+        <location filename="../qml/pages/Password.qml" line="113"/>
         <source>Invalid password</source>
         <translation type="unfinished"></translation>
     </message>
