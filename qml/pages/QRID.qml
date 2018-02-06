@@ -35,8 +35,8 @@ Page {
         QRCode {
             id: qr
             anchors.centerIn: parent
-            width: 297
-            height: 297
+            width: Math.min(parent.width, parent.height) * 0.9
+            height: Math.min(parent.width, parent.height) * 0.9
 
             Component.onCompleted: requestPaint() // seems we get an empty value initially sometimes
         }
