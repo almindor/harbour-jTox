@@ -39,6 +39,10 @@
         <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>French: Jerome Hubert</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Account</name>

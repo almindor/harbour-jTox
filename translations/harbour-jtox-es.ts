@@ -44,6 +44,11 @@
         <translation>Español: caballlero</translation>
     </message>
     <message>
+        <location filename="../qml/pages/About.qml" line="91"/>
+        <source>French: Jerome Hubert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../qml/pages/About.qml" line="103"/>
         <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
         <translation>El protocolo Tox es &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; y no ha sido auditado la seguridad y puede contener vulnerabilidades. &lt;b&gt;ÚSELO BAJO SU PROPIO RIESGO&lt;/b&gt;.</translation>

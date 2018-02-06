@@ -49,7 +49,7 @@ Page {
                 }
                 wrapMode: Text.WordWrap
                 color: Theme.primaryColor
-                text: qsTr("jTox") + " v1.1.3 " + qsTr("by Aleš Katona.")
+                text: qsTr("jTox") + " v1.1.4 " + qsTr("by Aleš Katona.")
             }
 
             Label {
@@ -88,7 +88,7 @@ Page {
                 color: Theme.secondaryColor
                 font.pointSize: Theme.fontSizeExtraSmall
                 wrapMode: Text.WordWrap
-                text: qsTr("Translators") + "\n" + qsTr("Swedish: Åke Engelbrektson") + "\n" + qsTr("Spanish: caballlero")
+                text: qsTr("Translators") + "\n" + qsTr("Swedish: Åke Engelbrektson") + "\n" + qsTr("Spanish: caballlero") + "\n" + qsTr("French: Jerome Hubert")
             }
 
             Text {
