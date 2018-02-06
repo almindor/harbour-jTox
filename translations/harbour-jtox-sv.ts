@@ -404,7 +404,11 @@
     <message>
         <location filename="../qml/pages/Password.qml" line="44"/>
         <source>Importing Account</source>
+<<<<<<< HEAD
         <translation type="unfinished">Importerar konto</translation>
+=======
+        <translation>Importerar konto</translation>
+>>>>>>> b262859fb2ef946e2cea0e6faacc02022c6d410d
     </message>
     <message>
         <location filename="../qml/pages/Password.qml" line="71"/>
@@ -419,7 +423,11 @@
     <message>
         <location filename="../qml/pages/Password.qml" line="78"/>
         <source>Import Account</source>
+<<<<<<< HEAD
         <translation type="unfinished">Importera konto</translation>
+=======
+        <translation>Importera konto</translation>
+>>>>>>> b262859fb2ef946e2cea0e6faacc02022c6d410d
     </message>
     <message>
         <location filename="../qml/pages/Password.qml" line="92"/>
