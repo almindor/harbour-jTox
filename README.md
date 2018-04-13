@@ -8,12 +8,14 @@ jTox uses an **experimental** cryptographic network [library](https://github.com
 
 ## Building toxcore for Jolla
 
+Increasing the VM RAM and CPU count inside VirtualBox for the build engine is highly recommended.
+
 ### Requirements
 
 These steps will install all the required packages on mersdk build engine. Be sure to log into the engine as **mersdk** user not as root.
 
 Change this to the SailfishOS version required
-`SFVER=2.1.3.7`
+`SFVER=2.1.4.13`
 
 `sb2 -t SailfishOS-$SFVER-armv7hl -m sdk-install -R zypper install gcc gcc-c++ autoconf automake make libtool`
 

@@ -13,7 +13,7 @@ if [ "$1" != "i486" ] && [ "$1" != "armv7hl" ]; then
 		exit 2
 fi
 
-SFVER="2.1.3.7"
+SFVER="2.1.4.13"
 SODIUMVER="1.0.16"
 TOXCOREVER="0.1.11"
 THREADS="8"
