@@ -50,16 +50,16 @@ nodes.path = /usr/share/$${TARGET}/nodes
 # register libraries to variable lib
 lib.files += $$TOX_PATH/lib/libsodium.a \
 $$TOX_PATH/lib/libtoxcore.a \
-$$TOX_PATH/lib/libtoxencryptsave.a \
-$$TOX_PATH/lib/libtoxdns.a
+$$TOX_PATH/lib/libtoxencryptsave.a
+# $$TOX_PATH/lib/libtoxdns.a
 
 # linking
 LIBS += \
 -L$$PWD/$$TOX_PATH/lib \
--ltoxdns \
 -ltoxencryptsave \
 -ltoxcore \
 -lsodium
+# -ltoxdns \
 
 # set install path and register the variable to INSTALLS
 lib.path = /usr/share/$${TARGET}/lib

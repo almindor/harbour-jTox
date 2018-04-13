@@ -35,8 +35,7 @@ namespace JTOX {
         TOX_ERR_KEY_DERIVATION error;
         size_t passSize = password.toUtf8().size();
         uint8_t* passRaw = (uint8_t*) password.toUtf8().data();
-        fKey = tox_pass_key_new();
-        tox_pass_key_derive_with_salt(fKey, passRaw, passSize, (uint8_t*) salt.data(), &error);
+        fKey = tox_pass_key_derive_with_salt(passRaw, passSize, (uint8_t*) salt.data(), &error);
 
         if ( error != TOX_ERR_KEY_DERIVATION_OK ) {
             qDebug() << "Unable to derive key\n";
