@@ -49,7 +49,7 @@ Page {
                 }
                 wrapMode: Text.WordWrap
                 color: Theme.primaryColor
-                text: qsTr("jTox") + " v1.1.4 " + qsTr("by Aleš Katona.")
+                text: qsTr("jTox") + " v1.2.0 " + qsTr("by Aleš Katona.")
             }
 
             Label {

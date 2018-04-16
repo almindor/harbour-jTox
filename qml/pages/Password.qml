@@ -51,6 +51,10 @@ Page {
     }
 
     SilicaFlickable {
+        PageHeader {
+            title: qsTr("Account login")
+        }
+
         anchors.fill: parent
 
         BusyIndicator {

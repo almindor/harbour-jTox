@@ -402,42 +402,47 @@
 <context>
     <name>Password</name>
     <message>
+        <location filename="../qml/pages/Password.qml" line="55"/>
+        <source>Account login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../qml/pages/Password.qml" line="44"/>
         <source>Importing Account</source>
         <translation>Importerar konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="71"/>
+        <location filename="../qml/pages/Password.qml" line="75"/>
         <source>New Account</source>
         <translation>Nytt konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="72"/>
+        <location filename="../qml/pages/Password.qml" line="76"/>
         <source>Creating Account</source>
         <translation>Skapar konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="78"/>
+        <location filename="../qml/pages/Password.qml" line="82"/>
         <source>Import Account</source>
         <translation>Importera konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="92"/>
+        <location filename="../qml/pages/Password.qml" line="96"/>
         <source>Password too short</source>
         <translation>Lösenordet är för kort</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="93"/>
+        <location filename="../qml/pages/Password.qml" line="97"/>
         <source>New account password</source>
         <translation>Nytt kontolösenord</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="93"/>
+        <location filename="../qml/pages/Password.qml" line="97"/>
         <source>Account password</source>
         <translation>Kontolösenord</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Password.qml" line="113"/>
+        <location filename="../qml/pages/Password.qml" line="117"/>
         <source>Invalid password</source>
         <translation>Ogiltigt lösenord</translation>
     </message>
