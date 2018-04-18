@@ -60,7 +60,7 @@ namespace JTOX {
     qint64 EventModel::sendMessageRaw(const QString& message, qint64 friendID, int id)
     {
         qint64 sendID = -1;
-        const QByteArray rawMsg = message.toUtf8();
+        const QByteArray rawMsg = message.trimmed().toUtf8();
         TOX_ERR_FRIEND_SEND_MESSAGE error;
         sendID = tox_friend_send_message(fToxCore.tox(), friendID, TOX_MESSAGE_TYPE_NORMAL, (uint8_t*) rawMsg.data(),
                                          rawMsg.size(), &error);
