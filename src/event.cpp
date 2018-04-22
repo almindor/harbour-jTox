@@ -1,5 +1,6 @@
 #include "event.h"
 #include "utils.h"
+#include <QLocale>
 #include <QDebug>
 
 namespace JTOX {
@@ -16,7 +17,7 @@ namespace JTOX {
             case erID: return fID;
             case erCreated: return fCreated;
             case erEventType: return fEventType;
-            case erMessage: return hyperLink(fMessage);
+            case erMessage: return wrapMessage();
         }
 
         return QVariant("invalid_role");
@@ -70,6 +71,29 @@ namespace JTOX {
 
         QString newMsg = message;
         return hyperLink(newMsg.replace(link, "<a href=\"" + link + "\">" + link + "</a>"));
+    }
+
+    const QString Event::fileInfo(const QString &message) const
+    {
+        quint64 file_size;
+        QString file_name;
+        Utils::parseFileInfo(message, file_size, file_name);
+        // TODO: pretty print file_size kB/MB etc.
+        return QObject::tr("File reveived:") + " " + file_name + "(" + QString::number(file_size) + ")";
+    }
+
+    const QString Event::wrapMessage() const
+    {
+        switch ( fEventType ) {
+            case etMessageIn:
+            case etMessageInUnread:
+            case etMessageOut:
+            case etMessageOutOffline:
+            case etMessageOutPending: return hyperLink(fMessage);
+            case etFileTransferReceived: return fileInfo(fMessage);
+            // TODO: handle others
+            default: throw QString("Invalid event type");
+        }
     }
 
     void Event::delivered() {

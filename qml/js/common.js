@@ -12,15 +12,16 @@ var EventType = {
     CallOutAccepted: 7,
     CallInRejected: 8,
     CallInAccepted: 9,
-    FileTransfer: 10
+    FileTransferSent: 10,
+    FileTransferReceived: 11
 };
 
 function isMessageIncoming(et) {
-    return [EventType.MessageIn, EventType.MessageInUnread].indexOf(et) >= 0;
+    return [EventType.MessageIn, EventType.MessageInUnread, EventType.FileTransferReceived].indexOf(et) >= 0;
 }
 
 function isMessageOutgoing(et) {
-    return [EventType.MessageOut, EventType.MessageOutPending, EventType.MessageOutOffline].indexOf(et) >= 0;
+    return [EventType.MessageOut, EventType.MessageOutPending, EventType.MessageOutOffline, EventType.FileTransferSent].indexOf(et) >= 0;
 }
 
 function isMessagePending(et) {

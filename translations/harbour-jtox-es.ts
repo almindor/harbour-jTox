@@ -348,27 +348,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="579"/>
+        <location filename="../src/toxcore.cpp" line="591"/>
         <source>Offline</source>
         <translation>Sin conexion</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="580"/>
+        <location filename="../src/toxcore.cpp" line="592"/>
         <source>Ready</source>
         <translation>Disponible</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="581"/>
+        <location filename="../src/toxcore.cpp" line="593"/>
         <source>Away</source>
         <translation>Ausente</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="582"/>
+        <location filename="../src/toxcore.cpp" line="594"/>
         <source>Busy</source>
         <translation>Ocupado</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="585"/>
+        <location filename="../src/toxcore.cpp" line="597"/>
         <source>Unknown</source>
         <translation>Desconocido</translation>
     </message>
@@ -445,6 +445,14 @@
         <location filename="../qml/pages/Password.qml" line="117"/>
         <source>Invalid password</source>
         <translation>Contraseña inválida</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../src/event.cpp" line="82"/>
+        <source>File reveived:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

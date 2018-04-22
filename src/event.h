@@ -22,7 +22,8 @@ namespace JTOX {
         etCallOutAccepted = 7,
         etCallInRejected = 8,
         etCallInAccepted = 9,
-        etFileTransfer = 10
+        etFileTransferSent = 10,
+        etFileTransferReceived = 11
     };
 
     enum EventRole
@@ -55,6 +56,8 @@ namespace JTOX {
         QDateTime fCreated;
 
         const QString hyperLink(const QString& message) const;
+        const QString fileInfo(const QString& message) const;
+        const QString wrapMessage() const;
     };
 
     typedef QList<Event> EventList;

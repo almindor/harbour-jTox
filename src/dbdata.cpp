@@ -65,7 +65,7 @@ namespace JTOX {
         // can't use same placeholder in query so we must use 2 placeholders with 1 value
         fEventUnviewedCountQuery.bindValue(":friend_id", friendID);
         fEventUnviewedCountQuery.bindValue(":friend_id2", friendID);
-        fEventUnviewedCountQuery.bindValue(":event_type", 2);
+        fEventUnviewedCountQuery.bindValue(":event_type", etMessageInUnread);
 
         if ( !fEventUnviewedCountQuery.exec() ) {
             qDebug() << fEventUnviewedCountQuery.executedQuery() << "\n";
@@ -278,6 +278,7 @@ namespace JTOX {
     void DBData::createTables() {
         QSqlQuery createTableQuery(fDB);
         // events
+        // NOTE: integer in sqlite3 is up to 8 bytes
         if ( !createTableQuery.exec("CREATE TABLE IF NOT EXISTS events("
                                      "id INTEGER PRIMARY KEY,"
                                      "send_id INTEGER,"

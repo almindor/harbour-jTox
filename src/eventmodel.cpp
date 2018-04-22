@@ -13,6 +13,7 @@ namespace JTOX {
     {
         connect(&toxCore, &ToxCore::messageDelivered, this, &EventModel::onMessageDelivered);
         connect(&toxCore, &ToxCore::messageReceived, this, &EventModel::onMessageReceived);
+        connect(&toxCore, &ToxCore::fileReceived, this, &EventModel::onFileReceived);
         connect(&friendModel, &FriendModel::friendUpdated, this, &EventModel::onFriendUpdated);
         connect(&friendModel, &FriendModel::friendWentOnline, this, &EventModel::onFriendWentOnline);
         connect(&fTimerViewed, &QTimer::timeout, this, &EventModel::onMessagesViewed);
@@ -205,6 +206,27 @@ namespace JTOX {
                     }
                 }
             }
+        }
+    }
+
+    void EventModel::onFileReceived(quint32 friend_id, quint32 file_id, quint64 file_size, const QString &file_name)
+    {
+        QDateTime createdAt;
+        int count = rowCount();
+        bool activeFriend = fFriendID == friend_id && fToxCore.getApplicationActive();
+        const QString fileInfo = Utils::getFileInfo(file_size, file_name);
+        int id = fDBData.insertEvent(file_id, friend_id, etFileTransferReceived, fileInfo, createdAt);
+
+        if ( fFriendID == friend_id ) { // add event to visible list if we're open on this friend
+            beginInsertRows(QModelIndex(), count, count);
+            fList.append(Event(id, friend_id, createdAt, etFileTransferReceived, fileInfo, file_id));
+            endInsertRows();
+        }
+
+        // only notify in case we're not open on sender already OR if we're in background regardless of which friend
+        if ( !activeFriend ) {
+            fFriendModel.unviewedMessageReceived(friend_id);
+            emit messageReceived(fFriendModel.getListIndexForFriendID(friend_id), fFriendModel.getFriendByID(friend_id).name());
         }
     }
 

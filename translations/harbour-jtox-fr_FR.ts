@@ -365,6 +365,13 @@
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <source>File reveived:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RequestItem</name>
     <message>
         <source>Accept</source>

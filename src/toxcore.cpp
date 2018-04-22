@@ -189,6 +189,8 @@ namespace JTOX {
         tox_callback_friend_status(tox, c_friend_status_cb);
         tox_callback_friend_status_message(tox, c_friend_status_message_cb);
         tox_callback_friend_typing(tox, c_friend_typing_cb);
+        tox_callback_file_recv(tox, c_tox_file_recv_cb);
+        tox_callback_file_recv_chunk(tox, c_tox_file_recv_chunk_cb);
 
         fWorking = false;
         emit resultReady(tox, QString());
@@ -314,6 +316,16 @@ namespace JTOX {
     void ToxCore::onFriendTypingChanged(quint32 friend_id, bool typing)
     {
         emit friendTypingChanged(friend_id, typing);
+    }
+
+    void ToxCore::onFileReceived(quint32 friend_id, quint32 file_id, quint64 file_size, const QString &file_name) const
+    {
+        emit fileReceived(friend_id, file_id, file_size, file_name);
+    }
+
+    void ToxCore::onFileChunkReceived(quint32 friend_id, quint32 file_id, quint64 position, const quint8 *data, size_t length) const
+    {
+        emit fileChunkReceived(friend_id, file_id, position, data, length);
     }
 
     bool ToxCore::getBusy() const {

@@ -40,6 +40,10 @@ namespace JTOX {
         static void hex_to_address(const QString& hexKey, unsigned char* address);
         static int get_overall_status(TOX_CONNECTION conStatus, TOX_USER_STATUS userStatus);
         static void bail(const QString& error);
+
+        static const QString getFileInfo(quint64 file_size, const QString& file_name);
+        static void parseFileInfo(const QString& fileInfo, quint64& file_size, QString& file_name);
+
     };
 
     void register_signals();

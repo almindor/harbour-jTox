@@ -46,7 +46,7 @@ ListItem {
     }
 
     function alignmentForEvent(et) {
-        if (et === Common.EventType.MessageInUnread || et === Common.EventType.MessageIn) {
+        if (Common.isMessageIncoming(et)) {
             return Text.AlignRight
         }
 

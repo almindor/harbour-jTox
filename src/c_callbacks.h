@@ -44,6 +44,12 @@ namespace JTOX {
 
     void c_friend_read_receipt_cb(Tox *tox, uint32_t friend_number, uint32_t message_id, void *user_data);
 
+    void c_tox_file_recv_cb(Tox *tox, uint32_t friend_number, uint32_t file_number, uint32_t kind, uint64_t file_size,
+                            const uint8_t *filename, size_t filename_length, void *user_data);
+
+    void c_tox_file_recv_chunk_cb(Tox *tox, uint32_t friend_number, uint32_t file_number, uint64_t position,
+                                  const uint8_t *data, size_t length, void *user_data);
+
 }
 
 #endif // C_CALLBACKS_H

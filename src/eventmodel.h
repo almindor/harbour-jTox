@@ -45,6 +45,7 @@ namespace JTOX {
         void onMessageReceived(quint32 friend_id, TOX_MESSAGE_TYPE type, const QString& message);
         void onFriendUpdated(quint32 friend_id);
         void onFriendWentOnline(quint32 friendID);
+        void onFileReceived(quint32 friend_id, quint32 file_id, quint64 file_size, const QString& file_name);
     private:
         ToxCore& fToxCore;
         FriendModel& fFriendModel;
