@@ -348,27 +348,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="593"/>
+        <location filename="../src/toxcore.cpp" line="594"/>
         <source>Offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="594"/>
+        <location filename="../src/toxcore.cpp" line="595"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="595"/>
+        <location filename="../src/toxcore.cpp" line="596"/>
         <source>Away</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="596"/>
+        <location filename="../src/toxcore.cpp" line="597"/>
         <source>Busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="599"/>
+        <location filename="../src/toxcore.cpp" line="600"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -404,13 +404,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="40"/>
-        <source>Reject transfer</source>
+        <location filename="../qml/components/MessageItem.qml" line="34"/>
+        <source>Resume transfer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="40"/>
+        <source>Pause transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/MessageItem.qml" line="46"/>
+        <source>Reject transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/MessageItem.qml" line="46"/>
         <source>Cancel transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/MessageItem.qml" line="52"/>
+        <source>Open file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -526,12 +541,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="58"/>
+        <location filename="../qml/harbour-jtox.qml" line="52"/>
+        <source>File transfer from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harbour-jtox.qml" line="52"/>
+        <source>completed</source>
+        <comment>file transfer</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harbour-jtox.qml" line="60"/>
         <source>Registered on </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="59"/>
+        <location filename="../qml/harbour-jtox.qml" line="61"/>
         <source>Removed from </source>
         <translation type="unfinished"></translation>
     </message>

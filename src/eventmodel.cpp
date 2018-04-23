@@ -2,8 +2,11 @@
 #include "utils.h"
 #include "friend.h"
 #include <QDateTime>
-#include <QDebug>
 #include <QRegularExpression>
+#include <QStandardPaths>
+#include <QFile>
+#include <QDir>
+#include <QDebug>
 
 namespace JTOX {
 
@@ -14,6 +17,7 @@ namespace JTOX {
         connect(&toxCore, &ToxCore::messageDelivered, this, &EventModel::onMessageDelivered);
         connect(&toxCore, &ToxCore::messageReceived, this, &EventModel::onMessageReceived);
         connect(&toxCore, &ToxCore::fileReceived, this, &EventModel::onFileReceived);
+        connect(&toxCore, &ToxCore::fileChunkReceived, this, &EventModel::onFileChunkReceived);
         connect(&friendModel, &FriendModel::friendUpdated, this, &EventModel::onFriendUpdated);
         connect(&friendModel, &FriendModel::friendWentOnline, this, &EventModel::onFriendWentOnline);
         connect(&fTimerViewed, &QTimer::timeout, this, &EventModel::onMessagesViewed);
@@ -37,6 +41,7 @@ namespace JTOX {
         result[erCreated] = "created_at";
         result[erMessage] = "message";
         result[erFileSize] = "file_size";
+        result[erFileName] = "file_name";
 
         return result;
     }
@@ -136,19 +141,70 @@ namespace JTOX {
         endRemoveRows();
     }
 
-    void EventModel::acceptFile(int eventID)
+    void EventModel::pauseFile(int eventID)
     {
         int index = indexForEvent(eventID);
-        if ( fList.at(index).type() != etFileTransferIn ) {
-            Utils::bail("Unable to accept file, invalid event");
+        if ( fList.at(index).type() != etFileTransferInRunning && fList.at(index).type() != etFileTransferOutRunning ) {
+            Utils::bail("Unable to pause file, invalid event");
         }
 
-        // TODO
+        // TODO: notify of busy less
+        Event transfer;
+        if ( !fDBData.getEvent(eventID, transfer) ) {
+            emit transferError("Unable to find file transfer in DB");
+            return;
+        }
+        TOX_ERR_FILE_CONTROL error;
+        tox_file_control(fToxCore.tox(), transfer.friendID(), transfer.sendID(), TOX_FILE_CONTROL_PAUSE, &error);
+        if ( !handleFileControlError(error) ) {
+            emit transferError("Unable to pause file transfer");
+            return;
+        }
+
+        const EventType pausedType = transfer.type() == etFileTransferInRunning ? etFileTransferInPaused : etFileTransferOutPaused;
+        fDBData.updateEventType(transfer.id(), pausedType);
+        if ( index >= 0 ) {
+            fList[index].setEventType(pausedType);
+            emit dataChanged(createIndex(index, 0), createIndex(index, 0), QVector<int>(1, erEventType));
+        }
+    }
+
+    void EventModel::resumeFile(int eventID)
+    {
+        int index = indexForEvent(eventID);
+        if ( fList.at(index).type() != etFileTransferIn && fList.at(index).type() != etFileTransferInPaused ) {
+            Utils::bail("Unable to resume file, invalid event");
+        }
+
+        // TODO: notify of busy need
+        Event transfer;
+        if ( !fDBData.getEvent(eventID, transfer) ) {
+            emit transferError("Transfer not found");
+        }
+        TOX_ERR_FILE_CONTROL error;
+        qDebug() << "Calling resume on file: " << transfer.sendID() << " friend: " << transfer.friendID() << "\n";
+        tox_file_control(fToxCore.tox(), transfer.friendID(), transfer.sendID(), TOX_FILE_CONTROL_RESUME, &error);
+        if ( !handleFileControlError(error) ) {
+            emit transferError("Unable to resume file transfer");
+            return;
+        }
+
+        fDBData.updateEventType(transfer.id(), etFileTransferInRunning);
+        if ( index >= 0 ) {
+            fList[index].setEventType(etFileTransferInRunning);
+            emit dataChanged(createIndex(index, 0), createIndex(index, 0), QVector<int>(1, erEventType));
+        }
     }
 
     void EventModel::cancelFile(int eventID)
     {
-        cancelTransfer(fDBData.getEvent(eventID));
+        Event transfer;
+        if ( !fDBData.getEvent(eventID, transfer) ) {
+            emit transferError("Transfer not found");
+            return;
+        }
+
+        cancelTransfer(transfer);
     }
 
     void EventModel::onMessageDelivered(quint32 friendID, quint32 sendID) {
@@ -158,7 +214,7 @@ namespace JTOX {
         if ( fFriendID == friendID ) {
             int row = 0;
             foreach ( const Event event, fList ) {
-                if ( event.sendID() >= 0 && event.sendID() == sendID ) {
+                if ( event.sendID() >= 0 && event.sendID() == sendID && event.type() == etMessageOutPending ) {
                     fList[row].delivered();
                     emit dataChanged(createIndex(row, 0), createIndex(row, 0), QVector<int>(1, erEventType));
                     break;
@@ -245,6 +301,34 @@ namespace JTOX {
             fFriendModel.unviewedMessageReceived(friend_id);
             emit messageReceived(fFriendModel.getListIndexForFriendID(friend_id), fFriendModel.getFriendByID(friend_id).name());
         }
+    }
+
+    void EventModel::onFileChunkReceived(quint32 friend_id, quint32 file_id, quint64 position, const QByteArray &data)
+    {
+        Event transfer;
+        if ( !fDBData.getEvent(friend_id, file_id, etFileTransferInRunning, transfer) ) {
+            emit transferError("Transfer not found");
+            return;
+        }
+
+        if ( data.size() == 0 ) { // done
+            return completeTransfer(transfer);
+        }
+
+        const QDir dir(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
+        QFile file(dir.absoluteFilePath(transfer.fileName()));
+        if ( !file.open(QIODevice::Append) ) {
+            emit transferError("Error opening file for appending: " + file.errorString());
+            return;
+        }
+
+        if ( (quint64)file.size() != position ) {
+            emit transferError("Transfer file position mismatch");
+            return;
+        }
+
+        file.write(data);
+        file.close();
     }
 
     int EventModel::indexForEvent(int eventID) const
@@ -368,8 +452,8 @@ namespace JTOX {
 
         if ( handleFileControlError(error, true) ) { // don't fail on cancel, just log. friend could be off etc.
             fDBData.updateEventType(transfer.id(), canceledType);
-            int index = indexForEvent(transfer.id());
-            if ( index >= 0 ) {
+            int index = -1;
+            if ( fFriendID == transfer.friendID() && (index = indexForEvent(transfer.id())) >= 0 ) {
                 fList[index].setEventType(canceledType);
                 emit dataChanged(createIndex(index, 0), createIndex(index, 0), QVector<int>(1, erEventType));
             }
@@ -385,6 +469,18 @@ namespace JTOX {
         foreach ( const Event& transfer, transfers ) {
             cancelTransfer(transfer);
         }
+    }
+
+    void EventModel::completeTransfer(const Event &transfer)
+    {
+        EventType eType = transfer.type() == etFileTransferInRunning ? etFileTransferInDone : etFileTransferOutDone;
+        fDBData.updateEventType(transfer.id(), eType);
+        int index = -1;
+        if ( fFriendID == transfer.friendID() && (index = indexForEvent(transfer.id())) >= 0 ) {
+            fList[index].setEventType(eType);
+            emit dataChanged(createIndex(index, 0), createIndex(index, 0), QVector<int>(1, erEventType));
+        }
+        emit transferComplete(transfer.fileName(), fFriendModel.getListIndexForFriendID(transfer.friendID()), fFriendModel.getFriendByID(transfer.friendID()).name());
     }
 
     void EventModel::onMessagesViewed()

@@ -29,7 +29,9 @@ namespace JTOX {
         etFileTransferInCanceled = 14,
         etFileTransferOutCanceled = 15,
         etFileTransferInRunning = 16,
-        etFileTransferOutRunning = 17
+        etFileTransferOutRunning = 17,
+        etFileTransferInDone = 18,
+        etFileTransferOutDone = 19
     };
 
     enum EventRole
@@ -38,12 +40,14 @@ namespace JTOX {
         erEventType,
         erCreated,
         erMessage,
-        erFileSize
+        erFileSize,
+        erFileName
     };
 
     class Event
     {
     public:
+        Event();
         Event(int id, quint32 friendID, QDateTime createdAt, EventType eventType, const QString& message, qint64 sendID);
         const QVariant value(int role) const;
         void delivered();
@@ -56,6 +60,7 @@ namespace JTOX {
         void setSendID(qint64 sendID);
         void setEventType(EventType eventType);
         quint64 fileSize() const;
+        const QString fileName() const;
     private:
         int fID;
         quint32 fFriendID;

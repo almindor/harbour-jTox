@@ -15,7 +15,8 @@ namespace JTOX {
     {
     public:
         DBData(EncryptSave& encryptSave);
-        const Event getEvent(int eventID);
+        bool getEvent(int event_id, Event& result);
+        bool getEvent(quint32 friend_id, quint32 send_id, EventType event_type, Event& result);
         void getEvents(EventList& list, quint32 friendID, int eventType = -1);
         void getTransfers(EventList& list);
         int getUnviewedEventCount(qint64 friendID);

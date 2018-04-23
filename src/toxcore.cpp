@@ -327,7 +327,8 @@ namespace JTOX {
 
     void ToxCore::onFileChunkReceived(quint32 friend_id, quint32 file_id, quint64 position, const quint8 *data, size_t length) const
     {
-        emit fileChunkReceived(friend_id, file_id, position, data, length);
+        const QByteArray qbd((char*)data, length);
+        emit fileChunkReceived(friend_id, file_id, position, qbd);
     }
 
     bool ToxCore::getBusy() const {

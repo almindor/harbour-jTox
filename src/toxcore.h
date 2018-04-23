@@ -155,7 +155,7 @@ namespace JTOX {
         void messageDelivered(quint32 friendID, quint32 messageID);
         void messageReceived(quint32 friendID, TOX_MESSAGE_TYPE type, const QString& message);
         void fileReceived(quint32 friend_id, quint32 file_id, quint64 file_size, const QString& file_name) const;
-        void fileChunkReceived(quint32 friend_id, quint32 file_id, quint64 position, const quint8* data, size_t length) const;
+        void fileChunkReceived(quint32 friend_id, quint32 file_id, quint64 position, const QByteArray& data) const;
         void passwordValidChanged(bool valid);
         void accountExported(const QString& fileName) const;
         void accountImported() const;

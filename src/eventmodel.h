@@ -36,11 +36,14 @@ namespace JTOX {
         Q_INVOKABLE void setFriend(qint64 friendID);
         Q_INVOKABLE void sendMessage(const QString& message);
         Q_INVOKABLE void deleteMessage(int eventID);
-        Q_INVOKABLE void acceptFile(int eventID);
+        Q_INVOKABLE void pauseFile(int eventID);
+        Q_INVOKABLE void resumeFile(int eventID);
         Q_INVOKABLE void cancelFile(int eventID);
     signals:
         void friendUpdated() const;
         void typingChanged(bool typing) const;
+        void transferError(const QString& error) const;
+        void transferComplete(const QString& fileName, int friendIndex, const QString& friendName);
         void messageReceived(int friendIndex, const QString& friendName) const;
     public slots:
         void onMessageDelivered(quint32 friendID, quint32 sendID);
@@ -48,6 +51,7 @@ namespace JTOX {
         void onFriendUpdated(quint32 friend_id);
         void onFriendWentOnline(quint32 friendID);
         void onFileReceived(quint32 friend_id, quint32 file_id, quint64 file_size, const QString& file_name);
+        void onFileChunkReceived(quint32 friend_id, quint32 file_id, quint64 position, const QByteArray& data);
     private:
         ToxCore& fToxCore;
         FriendModel& fFriendModel;
@@ -73,6 +77,7 @@ namespace JTOX {
         void setTyping(qint64 friendID, bool typing);
         void cancelTransfer(const Event& transfer);
         void cancelTransfers();
+        void completeTransfer(const Event& transfer);
     private slots:
         void onMessagesViewed();
         void onTypingDone();

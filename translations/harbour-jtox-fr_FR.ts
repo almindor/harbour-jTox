@@ -336,6 +336,18 @@
         <source>Cancel transfer</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Resume transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Password</name>
@@ -434,6 +446,15 @@
     </message>
     <message>
         <source>Removed from </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfer from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>completed</source>
+        <comment>file transfer</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -25,19 +25,43 @@ namespace JTOX {
         prepareQueries();
     }
 
-    const Event DBData::getEvent(int eventID)
+    bool DBData::getEvent(int event_id, Event& result)
     {
-        fEventSelectOneQuery.bindValue(":id", eventID);
+        fEventSelectOneQuery.bindValue(":id", event_id);
+        fEventSelectOneQuery.bindValue(":friend_id", -1);
+        fEventSelectOneQuery.bindValue(":send_id", -1);
+        fEventSelectOneQuery.bindValue(":event_type", -1);
 
         if ( !fEventSelectOneQuery.exec() ) {
             Utils::bail("Error on event select query exec: " + fEventSelectOneQuery.lastError().text());
         }
 
         if ( !fEventSelectOneQuery.next() ) {
-            Utils::bail("Event not found");
+            return false;
         }
 
-        return parseEvent(fEventSelectOneQuery);
+        result = parseEvent(fEventSelectOneQuery);
+        return true;
+    }
+
+    bool DBData::getEvent(quint32 friend_id, quint32 send_id, EventType event_type, Event& result)
+    {
+        fEventSelectOneQuery.bindValue(":id", -1);
+        fEventSelectOneQuery.bindValue(":friend_id", friend_id);
+        fEventSelectOneQuery.bindValue(":send_id", send_id);
+        fEventSelectOneQuery.bindValue(":event_type", event_type);
+
+        if ( !fEventSelectOneQuery.exec() ) {
+            Utils::bail("Error on event select query exec: " + fEventSelectOneQuery.lastError().text());
+        }
+
+        if ( !fEventSelectOneQuery.next() ) {
+            return false;
+        }
+
+        result = parseEvent(fEventSelectOneQuery);
+
+        return true;
     }
 
     void DBData::getEvents(EventList& list, quint32 friendID, int eventType)
@@ -316,7 +340,12 @@ namespace JTOX {
 
     void DBData::prepareQueries()
     {
-        fEventSelectOneQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id FROM events WHERE id = :id");
+        fEventSelectOneQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id "
+                                            "FROM events "
+                                            "WHERE (id = :id OR :id < 0) "
+                                            "AND (friend_id = :friend_id OR :friend_id < 0) "
+                                            "AND (send_id = :send_id OR :send_id < 0) "
+                                            "AND (event_type = :event_type OR :event_type < 0) ");
 
         fEventSelectQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id "
                                          "FROM ("
@@ -377,14 +406,14 @@ namespace JTOX {
         const QDateTime createdAt = query.value("created_at").toDateTime();
         qint64 sendID = -1;
         if ( !query.value("send_id").isNull() ) {
-            query.value("send_id").toLongLong(&ok);
+            sendID = query.value("send_id").toLongLong(&ok);
             if ( !ok ) {
                 Utils::bail("Error casting send_id: " + query.value("send_id").toString());
             }
         }
         quint32 friendID = -1;
         if ( !query.value("friend_id").isNull() ) {
-            query.value("friend_id").toUInt(&ok);
+            friendID = query.value("friend_id").toUInt(&ok);
             if ( !ok ) {
                 Utils::bail("Error casting event friend_id: " + query.value("friend_id").toString());
             }

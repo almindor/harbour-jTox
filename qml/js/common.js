@@ -19,7 +19,9 @@ var EventType = {
     FileTransferInCanceled: 14,
     FileTransferOutCanceled: 15,
     FileTransferInRunning: 16,
-    FileTransferOutRunning: 17
+    FileTransferOutRunning: 17,
+    FileTransferInDone: 18,
+    FileTransferOutDone: 19
 };
 
 function isMessage(et) {
@@ -27,7 +29,9 @@ function isMessage(et) {
 }
 
 function isFile(et) {
-    return [EventType.FileTransferIn, EventType.FileTransferOut, EventType.FileTransferInPaused, EventType.FileTransferOutPaused, EventType.FileTransferInCanceled, EventType.FileTransferOutCanceled].indexOf(et) >= 0;
+    return [EventType.FileTransferIn, EventType.FileTransferOut, EventType.FileTransferInPaused, EventType.FileTransferOutPaused,
+            EventType.FileTransferInCanceled, EventType.FileTransferOutCanceled,
+            EventType.FileTransferInDone, EventType.FileTransferOutDone].indexOf(et) >= 0;
 }
 
 function isFilePending(et) {
@@ -42,12 +46,28 @@ function isFilePaused(et) {
     return [EventType.FileTransferInPaused, EventType.FileTransferOutPaused].indexOf(et) >= 0;
 }
 
+function isFileRunning(et) {
+    return [EventType.FileTransferInRunning, EventType.FileTransferOutRunning].indexOf(et) >= 0;
+}
+
+function isFileDone(et) {
+    return [EventType.FileTransferInDone, EventType.FileTransferInDone].indexOf(et) >= 0;
+}
+
+function isFileActive(et) {
+    return isFilePending(et) || isFileRunning(et);
+}
+
 function isMessageIncoming(et) {
-    return [EventType.MessageIn, EventType.MessageInUnread, EventType.FileTransferIn, EventType.FileTransferInPaused, EventType.FileTransferInCanceled].indexOf(et) >= 0;
+    return [EventType.MessageIn, EventType.MessageInUnread, EventType.FileTransferIn,
+            EventType.FileTransferInPaused, EventType.FileTransferInCanceled,
+            EventType.FileTransferInRunning, EventType.FileTransferInDone].indexOf(et) >= 0;
 }
 
 function isMessageOutgoing(et) {
-    return [EventType.MessageOut, EventType.MessageOutPending, EventType.MessageOutOffline, EventType.FileTransferOut, EventType.FileTransferOutPaused, EventType.FileTransferOutCanceled].indexOf(et) >= 0;
+    return [EventType.MessageOut, EventType.MessageOutPending, EventType.MessageOutOffline,
+            EventType.FileTransferOut, EventType.FileTransferOutPaused,
+            EventType.FileTransferOutCanceled, EventType.FileTransferInRunning, EventType.FileTransferOutDone].indexOf(et) >= 0;
 }
 
 function isMessagePending(et) {

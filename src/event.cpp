@@ -5,6 +5,11 @@
 
 namespace JTOX {
 
+    Event::Event() : fID(-1), fFriendID(0), fEventType(etEdit), fMessage(QString()), fSendID(0)
+    {
+
+    }
+
     Event::Event(int id, quint32 friendID, QDateTime createdAt, EventType eventType, const QString& message, qint64 sendID) :
         fID(id), fFriendID(friendID), fEventType(eventType), fMessage(message), fSendID(sendID)
     {
@@ -19,6 +24,7 @@ namespace JTOX {
             case erEventType: return fEventType;
             case erMessage: return wrapMessage();
             case erFileSize: return fileSize();
+            case erFileName: return fileName();
         }
 
         return QVariant("invalid_role");
@@ -66,13 +72,39 @@ namespace JTOX {
             case etFileTransferInPaused:
             case etFileTransferOut:
             case etFileTransferOutCanceled:
-            case etFileTransferOutPaused: {
+            case etFileTransferOutPaused:
+            case etFileTransferInRunning:
+            case etFileTransferOutRunning:
+            case etFileTransferInDone:
+            case etFileTransferOutDone: {
                 quint64 file_size;
                 QString file_name;
                 Utils::parseFileInfo(fMessage, file_size, file_name);
                 return file_size;
             }
             default: return 0;
+        }
+    }
+
+    const QString Event::fileName() const
+    {
+        switch ( fEventType ) {
+            case etFileTransferIn:
+            case etFileTransferInCanceled:
+            case etFileTransferInPaused:
+            case etFileTransferOut:
+            case etFileTransferOutCanceled:
+            case etFileTransferOutPaused:
+            case etFileTransferInRunning:
+            case etFileTransferOutRunning:
+            case etFileTransferInDone:
+            case etFileTransferOutDone: {
+                quint64 file_size;
+                QString file_name;
+                Utils::parseFileInfo(fMessage, file_size, file_name);
+                return file_name;
+            }
+            default: return QString();
         }
     }
 
@@ -118,10 +150,16 @@ namespace JTOX {
             case etFileTransferInCanceled:
             case etFileTransferOut:
             case etFileTransferOutPaused:
-            case etFileTransferOutCanceled: return fileInfo(fMessage);
+            case etFileTransferOutCanceled:
+            case etFileTransferInRunning:
+            case etFileTransferOutRunning:
+            case etFileTransferInDone:
+            case etFileTransferOutDone: return fileInfo(fMessage);
             // TODO: handle others
-            default: throw QString("Invalid event type");
+            default: Utils::bail("Invalid event type");
         }
+
+        return QString();
     }
 
     void Event::delivered() {

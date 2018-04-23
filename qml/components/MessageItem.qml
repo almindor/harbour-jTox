@@ -30,15 +30,27 @@ ListItem {
         }
 
         MenuItem {
-            visible: Common.isFilePending(event_type) && Common.isMessageIncoming(event_type)
-            text: qsTr("Accept transfer")
-            onClicked: eventmodel.acceptFile(event_id)
+            visible: (Common.isFilePending(event_type) && Common.isMessageIncoming(event_type)) || Common.isFilePaused(event_type)
+            text: Common.isFilePaused(event_type) ? qsTr("Resume transfer") : qsTr("Accept transfer")
+            onClicked: eventmodel.resumeFile(event_id)
         }
 
         MenuItem {
-            visible: Common.isFilePending(event_type)
-            text: Common.isMessageIncoming(event_type) ? qsTr("Reject transfer") : qsTr("Cancel transfer")
+            visible: Common.isFileRunning(event_type)
+            text: qsTr("Pause transfer")
+            onClicked: eventmodel.pauseFile(event_id)
+        }
+
+        MenuItem {
+            visible: Common.isFilePending(event_type) || Common.isFilePaused(event_type) || Common.isFileRunning(event_type)
+            text: Common.isMessageIncoming(event_type) && Common.isFilePending(event_type) ? qsTr("Reject transfer") : qsTr("Cancel transfer")
             onClicked: eventmodel.cancelFile(event_id)
+        }
+
+        MenuItem {
+            visible: Common.isFileDone(event_type)
+            text: qsTr("Open file")
+            onClicked: Qt.openUrlExternally("/home/nemo/Downloads/" + file_name)
         }
     }
 
@@ -95,28 +107,6 @@ ListItem {
             running: Common.isMessagePending(event_type)
         }
     }
-/*
-    Text {
-        id: lineContent
-        anchors {
-            left: parent.left
-            right: parent.right
-            leftMargin: Theme.paddingLarge
-            rightMargin: Theme.paddingLarge
-        }
-        anchors.top: createdLabel.bottom
-
-        linkColor: Theme.highlightColor
-        textFormat: Text.RichText
-        onLinkActivated: Qt.openUrlExternally(link)
-
-        text: message
-        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-        font.pixelSize: Theme.fontSizeSmall
-        font.bold: event_type == 2
-        horizontalAlignment: alignmentForEvent(event_type)
-        color: colorForEventMsg(event_type)
-    }*/
 
     Loader {
         id: lineContent
