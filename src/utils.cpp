@@ -17,6 +17,7 @@
 
 #include "utils.h"
 #include <QtGlobal>
+#include <QDebug>
 #include <sodium/utils.h>
 
 #include <execinfo.h>
@@ -140,10 +141,16 @@ namespace JTOX {
         signal( SIGFPE,  abortHandler );
     }
 
-    void Utils::bail(const QString& error)
+    bool Utils::bail(const QString& error, bool soft)
     {
+        if ( soft ) {
+            qDebug() << "FATAL ERROR: " << error.toUtf8().data() << "\n";
+            return true;
+        }
+
         print_backtrace();
         qFatal("FATAL ERROR: %s\n", error.toUtf8().data());
+        return false;
     }
 
     const QString Utils::getFileInfo(quint64 file_size, const QString &file_name)

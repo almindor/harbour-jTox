@@ -15,7 +15,9 @@ namespace JTOX {
     {
     public:
         DBData(EncryptSave& encryptSave);
+        const Event getEvent(int eventID);
         void getEvents(EventList& list, quint32 friendID, int eventType = -1);
+        void getTransfers(EventList& list);
         int getUnviewedEventCount(qint64 friendID);
         int insertEvent(qint64 sendID, quint32 friendID, EventType eventType, const QString& message, QDateTime& createdAt);
         void updateEventType(int id, EventType eventType);
@@ -33,8 +35,10 @@ namespace JTOX {
     private:
         EncryptSave& fEncryptSave;
         QSqlDatabase fDB;
+        QSqlQuery fEventSelectOneQuery;
         QSqlQuery fEventSelectQuery;
         QSqlQuery fLastEventSelectQuery;
+        QSqlQuery fTransfersSelectQuery;
         QSqlQuery fEventUnviewedCountQuery;
         QSqlQuery fEventInsertQuery;
         QSqlQuery fEventUpdateQuery;
@@ -53,6 +57,7 @@ namespace JTOX {
         QSqlQuery fWipeFriendsQuery;
         void createTables();
         void prepareQueries();
+        const Event parseEvent(const QSqlQuery& query) const;
         const QSqlQuery prepareQuery(const QString& sql);
     };
 

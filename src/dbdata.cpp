@@ -25,6 +25,21 @@ namespace JTOX {
         prepareQueries();
     }
 
+    const Event DBData::getEvent(int eventID)
+    {
+        fEventSelectOneQuery.bindValue(":id", eventID);
+
+        if ( !fEventSelectOneQuery.exec() ) {
+            Utils::bail("Error on event select query exec: " + fEventSelectOneQuery.lastError().text());
+        }
+
+        if ( !fEventSelectOneQuery.next() ) {
+            Utils::bail("Event not found");
+        }
+
+        return parseEvent(fEventSelectOneQuery);
+    }
+
     void DBData::getEvents(EventList& list, quint32 friendID, int eventType)
     {
         fEventSelectQuery.bindValue(":friend_id", friendID);
@@ -36,27 +51,20 @@ namespace JTOX {
 
         list.clear();
         while ( fEventSelectQuery.next() ) {
-            bool ok = false;
-            int id = fEventSelectQuery.value("id").toInt(&ok);
-            if ( !ok ) {
-                Utils::bail("Error casting event id: " + fEventSelectQuery.value("id").toString());
-            }
-            const QString message = fEncryptSave.decrypt(fEventSelectQuery.value("message").toByteArray());
-            int rawEType = fEventSelectQuery.value("event_type").toInt(&ok);
-            if ( !ok ) {
-                Utils::bail("Error casting event type: " + fEventSelectQuery.value("event_type").toString());
-            }
-            EventType eventType = (EventType) rawEType;
-            const QDateTime createdAt = fEventSelectQuery.value("created_at").toDateTime();
-            qint64 sendID = -1;
-            if ( !fEventSelectQuery.value("send_id").isNull() ) {
-                fEventSelectQuery.value("send_id").toLongLong(&ok);
-                if ( !ok ) {
-                    Utils::bail("Error casting send_id: " + fEventSelectQuery.value("send_id").toString());
-                }
-            }
+            list.append(parseEvent(fEventSelectQuery));
+        }
+    }
 
-            list.append(Event(id, friendID, createdAt, eventType, message, sendID));
+    void DBData::getTransfers(EventList &list)
+    {
+        if ( !fTransfersSelectQuery.exec() ) {
+            Utils::bail("Error on transfers select query exec: " + fTransfersSelectQuery.lastError().text());
+        }
+
+
+        list.clear();
+        while ( fTransfersSelectQuery.next() ) {
+            list.append(parseEvent(fTransfersSelectQuery));
         }
     }
 
@@ -308,9 +316,11 @@ namespace JTOX {
 
     void DBData::prepareQueries()
     {
-        fEventSelectQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id "
+        fEventSelectOneQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id FROM events WHERE id = :id");
+
+        fEventSelectQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id "
                                          "FROM ("
-                                            "SELECT id, event_type, created_at, message, send_id "
+                                            "SELECT id, event_type, created_at, message, send_id, friend_id "
                                             "FROM events "
                                             "WHERE friend_id = :friend_id "
                                             "AND (event_type = :event_type OR :event_type < 0) "
@@ -323,6 +333,12 @@ namespace JTOX {
                                              "WHERE friend_id = :friend_id "
                                              "ORDER BY id DESC "
                                              "LIMIT 1");
+
+        fTransfersSelectQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id "
+                                             "FROM events "
+                                             "WHERE event_type IN (10, 11, 12, 13, 16, 17) "
+                                             "ORDER BY id DESC "
+                                             "LIMIT 100");
 
         fEventUnviewedCountQuery = prepareQuery("SELECT count(*) FROM events WHERE event_type = :event_type AND (friend_id = :friend_id OR :friend_id2 < 0)");
         fEventInsertQuery = prepareQuery("INSERT INTO events(send_id, friend_id, event_type, message) VALUES(:send_id, :friend_id, :event_type, :message)");
@@ -343,6 +359,38 @@ namespace JTOX {
         fWipeEventsQuery = prepareQuery("DELETE FROM events WHERE (friend_id = :friend_id OR :friend_id2 < 0)");
         fWipeFriendsQuery = prepareQuery("DELETE FROM friends WHERE (friend_id = :friend_id OR :friend_id2 < 0)");
         fWipeRequestsQuery = prepareQuery("DELETE FROM requests");
+    }
+
+    const Event DBData::parseEvent(const QSqlQuery &query) const
+    {
+        bool ok = false;
+        int id = query.value("id").toInt(&ok);
+        if ( !ok ) {
+            Utils::bail("Error casting event id: " + query.value("id").toString());
+        }
+        const QString message = fEncryptSave.decrypt(query.value("message").toByteArray());
+        int rawEType = query.value("event_type").toInt(&ok);
+        if ( !ok ) {
+            Utils::bail("Error casting event type: " + query.value("event_type").toString());
+        }
+        EventType eventType = (EventType) rawEType;
+        const QDateTime createdAt = query.value("created_at").toDateTime();
+        qint64 sendID = -1;
+        if ( !query.value("send_id").isNull() ) {
+            query.value("send_id").toLongLong(&ok);
+            if ( !ok ) {
+                Utils::bail("Error casting send_id: " + query.value("send_id").toString());
+            }
+        }
+        quint32 friendID = -1;
+        if ( !query.value("friend_id").isNull() ) {
+            query.value("friend_id").toUInt(&ok);
+            if ( !ok ) {
+                Utils::bail("Error casting event friend_id: " + query.value("friend_id").toString());
+            }
+        }
+
+        return Event(id, friendID, createdAt, eventType, message, sendID);
     }
 
     const QSqlQuery DBData::prepareQuery(const QString& sql)

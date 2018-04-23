@@ -253,11 +253,13 @@ namespace JTOX {
     }
 
     ToxCore::~ToxCore() {
-        if ( fInitialized ) {
-            awayRestore(); // restore away status so we don't override if killed while in bg mode
-            save();
-            killTox();
+        if ( !fInitialized ) {
+            return;
         }
+
+        awayRestore(); // restore away status so we don't override if killed while in bg mode
+        save();
+        killTox();
     }
 
     Tox* ToxCore::tox() {

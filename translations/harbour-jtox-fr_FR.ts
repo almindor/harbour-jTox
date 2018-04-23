@@ -324,6 +324,18 @@
         <source>Delete message</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Accept transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reject transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Password</name>
@@ -361,13 +373,6 @@
     </message>
     <message>
         <source>Account login</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QObject</name>
-    <message>
-        <source>File reveived:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

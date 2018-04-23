@@ -36,6 +36,8 @@ namespace JTOX {
         Q_INVOKABLE void setFriend(qint64 friendID);
         Q_INVOKABLE void sendMessage(const QString& message);
         Q_INVOKABLE void deleteMessage(int eventID);
+        Q_INVOKABLE void acceptFile(int eventID);
+        Q_INVOKABLE void cancelFile(int eventID);
     signals:
         void friendUpdated() const;
         void typingChanged(bool typing) const;
@@ -62,12 +64,15 @@ namespace JTOX {
 
         int indexForEvent(int eventID) const;
         bool handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error) const;
+        bool handleFileControlError(TOX_ERR_FILE_CONTROL error, bool soft = false) const;
         int getFriendStatus() const;
         bool getFriendTyping() const;
         const QString getFriendName() const;
         bool getTyping() const;
         void setTyping(bool typing);
         void setTyping(qint64 friendID, bool typing);
+        void cancelTransfer(const Event& transfer);
+        void cancelTransfers();
     private slots:
         void onMessagesViewed();
         void onTypingDone();

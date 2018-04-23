@@ -18,6 +18,7 @@ namespace JTOX {
             case erCreated: return fCreated;
             case erEventType: return fEventType;
             case erMessage: return wrapMessage();
+            case erFileSize: return fileSize();
         }
 
         return QVariant("invalid_role");
@@ -37,6 +38,11 @@ namespace JTOX {
         return fSendID;
     }
 
+    quint32 Event::friendID() const
+    {
+        return fFriendID;
+    }
+
     EventType Event::type() const
     {
         return fEventType;
@@ -50,6 +56,24 @@ namespace JTOX {
     void Event::setEventType(EventType eventType)
     {
         fEventType = eventType;
+    }
+
+    quint64 Event::fileSize() const
+    {
+        switch ( fEventType ) {
+            case etFileTransferIn:
+            case etFileTransferInCanceled:
+            case etFileTransferInPaused:
+            case etFileTransferOut:
+            case etFileTransferOutCanceled:
+            case etFileTransferOutPaused: {
+                quint64 file_size;
+                QString file_name;
+                Utils::parseFileInfo(fMessage, file_size, file_name);
+                return file_size;
+            }
+            default: return 0;
+        }
     }
 
     const QString Event::hyperLink(const QString& message) const
@@ -78,8 +102,7 @@ namespace JTOX {
         quint64 file_size;
         QString file_name;
         Utils::parseFileInfo(message, file_size, file_name);
-        // TODO: pretty print file_size kB/MB etc.
-        return QObject::tr("File reveived:") + " " + file_name + "(" + QString::number(file_size) + ")";
+        return file_name;
     }
 
     const QString Event::wrapMessage() const
@@ -90,7 +113,12 @@ namespace JTOX {
             case etMessageOut:
             case etMessageOutOffline:
             case etMessageOutPending: return hyperLink(fMessage);
-            case etFileTransferReceived: return fileInfo(fMessage);
+            case etFileTransferIn:
+            case etFileTransferInPaused:
+            case etFileTransferInCanceled:
+            case etFileTransferOut:
+            case etFileTransferOutPaused:
+            case etFileTransferOutCanceled: return fileInfo(fMessage);
             // TODO: handle others
             default: throw QString("Invalid event type");
         }

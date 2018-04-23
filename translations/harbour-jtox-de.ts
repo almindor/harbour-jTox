@@ -348,27 +348,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="591"/>
+        <location filename="../src/toxcore.cpp" line="593"/>
         <source>Offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="592"/>
+        <location filename="../src/toxcore.cpp" line="594"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="593"/>
+        <location filename="../src/toxcore.cpp" line="595"/>
         <source>Away</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="594"/>
+        <location filename="../src/toxcore.cpp" line="596"/>
         <source>Busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="597"/>
+        <location filename="../src/toxcore.cpp" line="599"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -389,13 +389,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="21"/>
+        <location filename="../qml/components/MessageItem.qml" line="22"/>
         <source>Message copied to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="27"/>
+        <location filename="../qml/components/MessageItem.qml" line="28"/>
         <source>Delete message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/MessageItem.qml" line="34"/>
+        <source>Accept transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/MessageItem.qml" line="40"/>
+        <source>Reject transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/MessageItem.qml" line="40"/>
+        <source>Cancel transfer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -444,14 +459,6 @@
     <message>
         <location filename="../qml/pages/Password.qml" line="117"/>
         <source>Invalid password</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QObject</name>
-    <message>
-        <location filename="../src/event.cpp" line="82"/>
-        <source>File reveived:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

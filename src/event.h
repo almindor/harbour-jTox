@@ -22,8 +22,14 @@ namespace JTOX {
         etCallOutAccepted = 7,
         etCallInRejected = 8,
         etCallInAccepted = 9,
-        etFileTransferSent = 10,
-        etFileTransferReceived = 11
+        etFileTransferIn = 10,
+        etFileTransferOut = 11,
+        etFileTransferInPaused = 12,
+        etFileTransferOutPaused = 13,
+        etFileTransferInCanceled = 14,
+        etFileTransferOutCanceled = 15,
+        etFileTransferInRunning = 16,
+        etFileTransferOutRunning = 17
     };
 
     enum EventRole
@@ -31,7 +37,8 @@ namespace JTOX {
         erID = Qt::UserRole + 1,
         erEventType,
         erCreated,
-        erMessage
+        erMessage,
+        erFileSize
     };
 
     class Event
@@ -44,9 +51,11 @@ namespace JTOX {
         int id() const;
         const QString message() const;
         qint64 sendID() const;
+        quint32 friendID() const;
         EventType type() const;
         void setSendID(qint64 sendID);
         void setEventType(EventType eventType);
+        quint64 fileSize() const;
     private:
         int fID;
         quint32 fFriendID;

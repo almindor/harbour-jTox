@@ -26,6 +26,7 @@ namespace JTOX {
     }
 
     EventModel::~EventModel() {
+        cancelTransfers();
         fDB.close();
     }
 
@@ -35,6 +36,7 @@ namespace JTOX {
         result[erEventType] = "event_type";
         result[erCreated] = "created_at";
         result[erMessage] = "message";
+        result[erFileSize] = "file_size";
 
         return result;
     }
@@ -134,6 +136,21 @@ namespace JTOX {
         endRemoveRows();
     }
 
+    void EventModel::acceptFile(int eventID)
+    {
+        int index = indexForEvent(eventID);
+        if ( fList.at(index).type() != etFileTransferIn ) {
+            Utils::bail("Unable to accept file, invalid event");
+        }
+
+        // TODO
+    }
+
+    void EventModel::cancelFile(int eventID)
+    {
+        cancelTransfer(fDBData.getEvent(eventID));
+    }
+
     void EventModel::onMessageDelivered(quint32 friendID, quint32 sendID) {
         fDBData.deliverEvent(sendID, friendID);
 
@@ -215,11 +232,11 @@ namespace JTOX {
         int count = rowCount();
         bool activeFriend = fFriendID == friend_id && fToxCore.getApplicationActive();
         const QString fileInfo = Utils::getFileInfo(file_size, file_name);
-        int id = fDBData.insertEvent(file_id, friend_id, etFileTransferReceived, fileInfo, createdAt);
+        int id = fDBData.insertEvent(file_id, friend_id, etFileTransferIn, fileInfo, createdAt);
 
         if ( fFriendID == friend_id ) { // add event to visible list if we're open on this friend
             beginInsertRows(QModelIndex(), count, count);
-            fList.append(Event(id, friend_id, createdAt, etFileTransferReceived, fileInfo, file_id));
+            fList.append(Event(id, friend_id, createdAt, etFileTransferIn, fileInfo, file_id));
             endInsertRows();
         }
 
@@ -245,13 +262,30 @@ namespace JTOX {
     bool EventModel::handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error) const
     {
         switch ( error ) {
-            case TOX_ERR_FRIEND_SEND_MESSAGE_EMPTY: Utils::bail("Cannot send empty message");
-            case TOX_ERR_FRIEND_SEND_MESSAGE_FRIEND_NOT_CONNECTED: Utils::bail("Cannot send message, friend not online");
-            case TOX_ERR_FRIEND_SEND_MESSAGE_FRIEND_NOT_FOUND: Utils::bail("Cannot send message, friend not found");
-            case TOX_ERR_FRIEND_SEND_MESSAGE_NULL: Utils::bail("Cannot send null message");
-            case TOX_ERR_FRIEND_SEND_MESSAGE_SENDQ: Utils::bail("Cannot send message, sendq error");
-            case TOX_ERR_FRIEND_SEND_MESSAGE_TOO_LONG: Utils::bail("Cannot send message it is too long");
+            case TOX_ERR_FRIEND_SEND_MESSAGE_EMPTY: return Utils::bail("Cannot send empty message");
+            case TOX_ERR_FRIEND_SEND_MESSAGE_FRIEND_NOT_CONNECTED: return Utils::bail("Cannot send message, friend not online");
+            case TOX_ERR_FRIEND_SEND_MESSAGE_FRIEND_NOT_FOUND: return Utils::bail("Cannot send message, friend not found");
+            case TOX_ERR_FRIEND_SEND_MESSAGE_NULL: return Utils::bail("Cannot send null message");
+            case TOX_ERR_FRIEND_SEND_MESSAGE_SENDQ: return Utils::bail("Cannot send message, sendq error");
+            case TOX_ERR_FRIEND_SEND_MESSAGE_TOO_LONG: return Utils::bail("Cannot send message it is too long");
             case TOX_ERR_FRIEND_SEND_MESSAGE_OK: return true;
+        }
+
+        Utils::bail("Unknown error");
+        return false;
+    }
+
+    bool EventModel::handleFileControlError(TOX_ERR_FILE_CONTROL error, bool soft) const
+    {
+        switch ( error ) {
+            case TOX_ERR_FILE_CONTROL_ALREADY_PAUSED: return Utils::bail("File transfer already paused", soft);
+            case TOX_ERR_FILE_CONTROL_DENIED: return Utils::bail("Permission denied", soft);
+            case TOX_ERR_FILE_CONTROL_FRIEND_NOT_CONNECTED: return Utils::bail("Friend not connected", soft);
+            case TOX_ERR_FILE_CONTROL_FRIEND_NOT_FOUND: return Utils::bail("Friend not found", soft);
+            case TOX_ERR_FILE_CONTROL_NOT_FOUND: return Utils::bail("File transfer not found", soft);
+            case TOX_ERR_FILE_CONTROL_NOT_PAUSED: return Utils::bail("File transfer not paused", soft);
+            case TOX_ERR_FILE_CONTROL_SENDQ: return Utils::bail("File transfer send queue full", soft);
+            case TOX_ERR_FILE_CONTROL_OK: return true;
         }
 
         Utils::bail("Unknown error");
@@ -314,6 +348,43 @@ namespace JTOX {
 
         fTyping = typing;
         emit typingChanged(fTyping);
+    }
+
+    void EventModel::cancelTransfer(const Event &transfer)
+    {
+        EventType canceledType = etFileTransferInCanceled;
+        switch ( transfer.type() ) {
+            case etFileTransferIn:
+            case etFileTransferInPaused:
+            case etFileTransferInRunning: canceledType = etFileTransferInCanceled; break;
+            case etFileTransferOut:
+            case etFileTransferOutPaused:
+            case etFileTransferOutRunning: canceledType = etFileTransferOutCanceled; break;
+            default: Utils::bail("Unable to cancel transfer, invalid event"); break;
+        }
+
+        TOX_ERR_FILE_CONTROL error;
+        tox_file_control(fToxCore.tox(), transfer.friendID(), transfer.sendID(), TOX_FILE_CONTROL_CANCEL, &error);
+
+        if ( handleFileControlError(error, true) ) { // don't fail on cancel, just log. friend could be off etc.
+            fDBData.updateEventType(transfer.id(), canceledType);
+            int index = indexForEvent(transfer.id());
+            if ( index >= 0 ) {
+                fList[index].setEventType(canceledType);
+                emit dataChanged(createIndex(index, 0), createIndex(index, 0), QVector<int>(1, erEventType));
+            }
+        }
+    }
+
+    void EventModel::cancelTransfers()
+    {
+        // cancel all transfers, in progress, paused or pending
+        EventList transfers;
+        fDBData.getTransfers(transfers);
+
+        foreach ( const Event& transfer, transfers ) {
+            cancelTransfer(transfer);
+        }
     }
 
     void EventModel::onMessagesViewed()
