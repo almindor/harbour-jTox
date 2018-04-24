@@ -8,12 +8,14 @@ Row {
     enabled: !Common.isFilePaused(event_type)
 
     Text {
+        id: paperclip
         text: "📎"
         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-        font.pixelSize: Theme.fontSizeMedium
+        font.pixelSize: Theme.fontSizeLarge
         font.bold: false
         font.strikeout: Common.isFileCanceled(event_type)
         horizontalAlignment: alignmentForEvent(event_type)
+        verticalAlignment: Qt.AlignVCenter
         color: colorForEventMsg(event_type)
 
         SequentialAnimation on opacity {
@@ -34,7 +36,13 @@ Row {
     }
 
     Column {
+        width: parent.parent.width - paperclip.width
+
         Text {
+            anchors { // let this spread to name size
+                left: parent.left
+                right: parent.right
+            }
             text: message
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             font.strikeout: Common.isFileCanceled(event_type)
@@ -65,7 +73,6 @@ Row {
                 left: parent.left
                 right: parent.right
             }
-
             text: Common.humanFileSize(file_size, true)
             font.strikeout: Common.isFileCanceled(event_type)
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
