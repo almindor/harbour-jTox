@@ -348,6 +348,10 @@
         <source>Open file</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Overriding</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Password</name>

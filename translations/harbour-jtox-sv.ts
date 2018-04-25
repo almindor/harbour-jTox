@@ -348,27 +348,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="594"/>
+        <location filename="../src/toxcore.cpp" line="610"/>
         <source>Offline</source>
         <translation>Offline</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="595"/>
+        <location filename="../src/toxcore.cpp" line="611"/>
         <source>Ready</source>
         <translation>Tillgänglig</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="596"/>
+        <location filename="../src/toxcore.cpp" line="612"/>
         <source>Away</source>
         <translation>Borta</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="597"/>
+        <location filename="../src/toxcore.cpp" line="613"/>
         <source>Busy</source>
         <translation>Upptagen</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="600"/>
+        <location filename="../src/toxcore.cpp" line="616"/>
         <source>Unknown</source>
         <translation>Okänt</translation>
     </message>
@@ -409,22 +409,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="40"/>
+        <location filename="../qml/components/MessageItem.qml" line="39"/>
+        <source>Overriding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/MessageItem.qml" line="50"/>
         <source>Pause transfer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="46"/>
+        <location filename="../qml/components/MessageItem.qml" line="56"/>
         <source>Reject transfer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="46"/>
+        <location filename="../qml/components/MessageItem.qml" line="56"/>
         <source>Cancel transfer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="52"/>
+        <location filename="../qml/components/MessageItem.qml" line="62"/>
         <source>Open file</source>
         <translation type="unfinished"></translation>
     </message>

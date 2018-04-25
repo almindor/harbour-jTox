@@ -36,6 +36,8 @@ namespace JTOX {
         Q_INVOKABLE void setFriend(qint64 friendID);
         Q_INVOKABLE void sendMessage(const QString& message);
         Q_INVOKABLE void deleteMessage(int eventID);
+        Q_INVOKABLE bool fileExists(int eventID);
+        Q_INVOKABLE bool deleteFile(int eventID);
         Q_INVOKABLE void pauseFile(int eventID);
         Q_INVOKABLE void resumeFile(int eventID);
         Q_INVOKABLE void cancelFile(int eventID);
@@ -52,6 +54,9 @@ namespace JTOX {
         void onFriendWentOnline(quint32 friendID);
         void onFileReceived(quint32 friend_id, quint32 file_id, quint64 file_size, const QString& file_name);
         void onFileChunkReceived(quint32 friend_id, quint32 file_id, quint64 position, const QByteArray& data);
+        void onFileCanceled(quint32 friend_id, quint32 file_id);
+        void onFilePaused(quint32 friend_id, quint32 file_id);
+        void onFileResumed(quint32 friend_id, quint32 file_id);
     private:
         ToxCore& fToxCore;
         FriendModel& fFriendModel;
@@ -78,6 +83,7 @@ namespace JTOX {
         void cancelTransfer(const Event& transfer);
         void cancelTransfers();
         void completeTransfer(const Event& transfer);
+        void updateEventType(const Event& event, EventType eventType);
     private slots:
         void onMessagesViewed();
         void onTypingDone();

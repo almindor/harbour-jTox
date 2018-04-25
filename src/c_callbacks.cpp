@@ -108,6 +108,19 @@ namespace JTOX {
         jTox->onMessageDelivered(friend_number, message_id);
     }
 
+    void c_tox_file_recv_control_cb(Tox *tox, uint32_t friend_number, uint32_t file_number,
+                                    TOX_FILE_CONTROL control, void *user_data) {
+        Q_UNUSED(tox);
+        ToxCore* jTox = (ToxCore*) user_data;
+
+        switch ( control ) {
+            case TOX_FILE_CONTROL_CANCEL: return jTox->onFileCanceled(friend_number, file_number);
+            case TOX_FILE_CONTROL_PAUSE: return jTox->onFilePaused(friend_number, file_number);
+            case TOX_FILE_CONTROL_RESUME: return jTox->onFileResumed(friend_number, file_number);
+            default: return;
+        }
+    }
+
     void c_tox_file_recv_cb(Tox *tox, uint32_t friend_number, uint32_t file_number, uint32_t kind, uint64_t file_size,
                             const uint8_t *filename, size_t filename_length, void *user_data) {
         Q_UNUSED(tox);
@@ -123,12 +136,12 @@ namespace JTOX {
     }
 
     void c_tox_file_recv_chunk_cb(Tox *tox, uint32_t friend_number, uint32_t file_number, uint64_t position,
-                                  const uint8_t *data, size_t length, void *user_data)
-    {
+                                  const uint8_t *data, size_t length, void *user_data) {
         Q_UNUSED(tox);
         ToxCore* jTox = (ToxCore*) user_data;
 
         jTox->onFileChunkReceived(friend_number, file_number, position, data, length);
     }
+
 
 }

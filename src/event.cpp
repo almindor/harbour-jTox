@@ -88,6 +88,18 @@ namespace JTOX {
 
     const QString Event::fileName() const
     {
+        if ( isFile() ) {
+            quint64 file_size;
+            QString file_name;
+            Utils::parseFileInfo(fMessage, file_size, file_name);
+            return file_name;
+        }
+
+        return QString();
+    }
+
+    bool Event::isFile() const
+    {
         switch ( fEventType ) {
             case etFileTransferIn:
             case etFileTransferInCanceled:
@@ -98,13 +110,8 @@ namespace JTOX {
             case etFileTransferInRunning:
             case etFileTransferOutRunning:
             case etFileTransferInDone:
-            case etFileTransferOutDone: {
-                quint64 file_size;
-                QString file_name;
-                Utils::parseFileInfo(fMessage, file_size, file_name);
-                return file_name;
-            }
-            default: return QString();
+            case etFileTransferOutDone: return true;
+            default: return false;
         }
     }
 

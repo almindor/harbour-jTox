@@ -51,7 +51,7 @@ function isFileRunning(et) {
 }
 
 function isFileDone(et) {
-    return [EventType.FileTransferInDone, EventType.FileTransferInDone].indexOf(et) >= 0;
+    return [EventType.FileTransferInDone, EventType.FileTransferOutDone].indexOf(et) >= 0;
 }
 
 function isFileActive(et) {

@@ -44,6 +44,9 @@ namespace JTOX {
 
     void c_friend_read_receipt_cb(Tox *tox, uint32_t friend_number, uint32_t message_id, void *user_data);
 
+    void c_tox_file_recv_control_cb(Tox *tox, uint32_t friend_number, uint32_t file_number,
+                                    TOX_FILE_CONTROL control, void *user_data);
+
     void c_tox_file_recv_cb(Tox *tox, uint32_t friend_number, uint32_t file_number, uint32_t kind, uint64_t file_size,
                             const uint8_t *filename, size_t filename_length, void *user_data);
 

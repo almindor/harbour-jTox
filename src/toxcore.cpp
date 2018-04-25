@@ -189,6 +189,7 @@ namespace JTOX {
         tox_callback_friend_status(tox, c_friend_status_cb);
         tox_callback_friend_status_message(tox, c_friend_status_message_cb);
         tox_callback_friend_typing(tox, c_friend_typing_cb);
+        tox_callback_file_recv_control(tox, c_tox_file_recv_control_cb);
         tox_callback_file_recv(tox, c_tox_file_recv_cb);
         tox_callback_file_recv_chunk(tox, c_tox_file_recv_chunk_cb);
 
@@ -323,6 +324,21 @@ namespace JTOX {
     void ToxCore::onFileReceived(quint32 friend_id, quint32 file_id, quint64 file_size, const QString &file_name) const
     {
         emit fileReceived(friend_id, file_id, file_size, file_name);
+    }
+
+    void ToxCore::onFileCanceled(quint32 friend_id, quint32 file_id) const
+    {
+        emit fileCanceled(friend_id, file_id);
+    }
+
+    void ToxCore::onFilePaused(quint32 friend_id, quint32 file_id) const
+    {
+        emit filePaused(friend_id, file_id);
+    }
+
+    void ToxCore::onFileResumed(quint32 friend_id, quint32 file_id) const
+    {
+        emit fileResumed(friend_id, file_id);
     }
 
     void ToxCore::onFileChunkReceived(quint32 friend_id, quint32 file_id, quint64 position, const quint8 *data, size_t length) const

@@ -61,6 +61,7 @@ namespace JTOX {
         void setEventType(EventType eventType);
         quint64 fileSize() const;
         const QString fileName() const;
+        bool isFile() const;
     private:
         int fID;
         quint32 fFriendID;

@@ -32,7 +32,17 @@ ListItem {
         MenuItem {
             visible: (Common.isFilePending(event_type) && Common.isMessageIncoming(event_type)) || Common.isFilePaused(event_type)
             text: Common.isFilePaused(event_type) ? qsTr("Resume transfer") : qsTr("Accept transfer")
-            onClicked: eventmodel.resumeFile(event_id)
+            onClicked: {
+                if ( Common.isFilePaused(event_type) || !eventmodel.fileExists(event_id) ) {
+                    eventmodel.resumeFile(event_id)
+                } else { // if file exists initially we must warn about override
+                    overrideRemorse.execute(listItem, qsTr("Overriding") + " " + file_name, function() {
+                        if ( eventmodel.deleteFile(event_id) ) {
+                            eventmodel.resumeFile(event_id)
+                        }
+                    })
+                }
+            }
         }
 
         MenuItem {
@@ -50,8 +60,12 @@ ListItem {
         MenuItem {
             visible: Common.isFileDone(event_type)
             text: qsTr("Open file")
-            onClicked: Qt.openUrlExternally("/home/nemo/Downloads/" + file_name)
+            onClicked: Qt.openUrlExternally("/home/nemo/Downloads/" + file_name) // TODO get full path from C++
         }
+    }
+
+    RemorseItem {
+        id: overrideRemorse
     }
 
     function colorForEventLabel(et) {

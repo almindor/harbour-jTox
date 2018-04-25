@@ -115,6 +115,9 @@ namespace JTOX {
         void onFriendNameChanged(quint32 friend_id, const QString& name);
         void onFriendTypingChanged(quint32 friend_id, bool typing);
         void onFileReceived(quint32 friend_id, quint32 file_id, quint64 file_size, const QString& file_name) const;
+        void onFileCanceled(quint32 friend_id, quint32 file_id) const;
+        void onFilePaused(quint32 friend_id, quint32 file_id) const;
+        void onFileResumed(quint32 friend_id, quint32 file_id) const;
         void onFileChunkReceived(quint32 friend_id, quint32 file_id, quint64 position, const quint8* data, size_t length) const;
 
         bool getBusy() const;
@@ -155,6 +158,9 @@ namespace JTOX {
         void messageDelivered(quint32 friendID, quint32 messageID);
         void messageReceived(quint32 friendID, TOX_MESSAGE_TYPE type, const QString& message);
         void fileReceived(quint32 friend_id, quint32 file_id, quint64 file_size, const QString& file_name) const;
+        void fileCanceled(quint32 friend_id, quint32 file_id) const;
+        void filePaused(quint32 friend_id, quint32 file_id) const;
+        void fileResumed(quint32 friend_id, quint32 file_id) const;
         void fileChunkReceived(quint32 friend_id, quint32 file_id, quint64 position, const QByteArray& data) const;
         void passwordValidChanged(bool valid);
         void accountExported(const QString& fileName) const;
