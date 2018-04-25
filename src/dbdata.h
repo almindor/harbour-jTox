@@ -57,9 +57,12 @@ namespace JTOX {
         QSqlQuery fWipeRequestsQuery;
         QSqlQuery fWipeFriendsQuery;
         void createTables();
+        void upgradeToV1(); // v0 to v1 upgrade
         void prepareQueries();
         const Event parseEvent(const QSqlQuery& query) const;
         const QSqlQuery prepareQuery(const QString& sql);
+        int userVersion() const;
+        void setUserVersion(int version);
     };
 
 }

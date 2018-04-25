@@ -21,7 +21,10 @@ namespace JTOX {
             Utils::bail( fDB.lastError().text() );
         }
 
-        createTables();
+        switch ( userVersion() ) {
+            case 0: createTables(); upgradeToV1(); // empty or unversioned (1.2.0-)
+            // TODO: add any upgrades necessary here in order
+        }
         prepareQueries();
     }
 
@@ -307,7 +310,7 @@ namespace JTOX {
         }
     }
 
-    void DBData::createTables() {
+    void DBData::createTables() {        
         QSqlQuery createTableQuery(fDB);
         // events
         // NOTE: integer in sqlite3 is up to 8 bytes
@@ -336,6 +339,19 @@ namespace JTOX {
             Utils::bail("unable to create friends table: " + createTableQuery.lastError().text());
         }
         fDB.commit();
+    }
+
+    void DBData::upgradeToV1()
+    {
+        QSqlQuery query(fDB);
+        // unknown if we have v0 to v1 or just init from scratch so these can fail
+        if ( !query.exec("ALTER TABLE events ADD COLUMN file_id BLOB") ) Utils::bail("Unable to upgrade DB to v1");
+        if ( !query.exec("ALTER TABLE events ADD COLUMN file_number INTEGER") ) Utils::bail("Unable to upgrade DB to v1");
+        if ( !query.exec("ALTER TABLE events ADD COLUMN file_size INTEGER") ) Utils::bail("Unable to upgrade DB to v1");
+        if ( !query.exec("ALTER TABLE events ADD COLUMN file_position INTEGER") ) Utils::bail("Unable to upgrade DB to v1");
+        if ( !query.exec("ALTER TABLE events ADD COLUMN file_pausers INTEGER") ) Utils::bail("Unable to upgrade DB to v1"); // how many pausers are there (0-2)
+
+        setUserVersion(1); // commits
     }
 
     void DBData::prepareQueries()
@@ -430,6 +446,36 @@ namespace JTOX {
         }
 
         return query;
+    }
+
+    int DBData::userVersion() const
+    {
+        QSqlQuery query(fDB);
+        if ( !query.exec("PRAGMA user_version") || !query.next() ) {
+            Utils::bail("unable to query user_version");
+            return 0;
+        }
+
+        bool ok = false;
+        int result = query.value("user_version").toInt(&ok);
+        if ( !ok ) {
+            Utils::bail("unable to parse user_version");
+            return 0;
+        }
+
+        return result;
+    }
+
+    void DBData::setUserVersion(int version)
+    {
+        QSqlQuery query(fDB);
+
+        if ( !query.exec("PRAGMA user_version = " + QString::number(version)) ) {
+            Utils::bail("unable to set user_version");
+            return;
+        }
+
+        fDB.commit();
     }
 
 }
