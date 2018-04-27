@@ -16,7 +16,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="52"/>
         <source>by Aleš Katona.</source>
-        <translation>Por Aleš Katona  </translation>
+        <translation>por Aleš Katona  </translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="63"/>
@@ -26,7 +26,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="75"/>
         <source>jTox is free software licensed under the GPL v3 available at &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</source>
-        <translation>jTox es un programa libre con licencia GPLv3 disponible en &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</translation>
+        <translation>jTox es un programa libre bajo la licencia GPLv3 disponible en &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="91"/>
@@ -116,7 +116,7 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="168"/>
         <source>Hi from jTox on Sailfish</source>
-        <translation>Hola desde jTox en Sailfish</translation>
+        <translation>Hola desde jTox en Sailfish OS</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="173"/>
@@ -164,7 +164,7 @@
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="48"/>
         <source>Add Friend</source>
-        <translation>Agregar un contacto</translation>
+        <translation>Añadir un contacto</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="59"/>
@@ -184,7 +184,7 @@
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="99"/>
         <source>Please add me to friends</source>
-        <translation>Por favor agregame a tus contactos</translation>
+        <translation>Por favor agregame a sus contactos</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="111"/>
@@ -230,7 +230,7 @@
     <message>
         <location filename="../qml/pages/Details.qml" line="68"/>
         <source>Friend offline name</source>
-        <translation>Nombre del contacto sin conexión</translation>
+        <translation>Nombre del contacto desconectado</translation>
     </message>
 </context>
 <context>
@@ -276,7 +276,7 @@
     <message>
         <location filename="../qml/pages/Friends.qml" line="93"/>
         <source>Add Friend</source>
-        <translation>Agregar un contacto</translation>
+        <translation>Agregando un contacto</translation>
     </message>
     <message>
         <location filename="../qml/pages/Friends.qml" line="101"/>
@@ -378,7 +378,7 @@
     <message>
         <location filename="../src/toxcore.cpp" line="178"/>
         <source>Hi from jTox on Sailfish</source>
-        <translation>Hola desde jTox en Sailfish</translation>
+        <translation>Hola desde jTox en Sailfish OS</translation>
     </message>
 </context>
 <context>
