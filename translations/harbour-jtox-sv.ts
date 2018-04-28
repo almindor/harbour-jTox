@@ -212,7 +212,7 @@
     <message>
         <location filename="../qml/cover/CoverPage.qml" line="88"/>
         <source>Messages: </source>
-        <translation>Meddelanden:</translation>
+        <translation>Meddelanden: </translation>
     </message>
 </context>
 <context>
@@ -261,7 +261,7 @@
     <message>
         <location filename="../qml/pages/Friends.qml" line="74"/>
         <source>Pending friend requests: </source>
-        <translation>Väntande kontaktförfrågningar:</translation>
+        <translation>Väntande kontaktförfrågningar: </translation>
     </message>
     <message>
         <location filename="../qml/pages/Friends.qml" line="83"/>
