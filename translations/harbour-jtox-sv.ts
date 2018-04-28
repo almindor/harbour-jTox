@@ -46,7 +46,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="91"/>
         <source>French: Jerome Hubert</source>
-        <translation type="unfinished"></translation>
+        <translation>Franska: Jerome Hubert</translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="103"/>
@@ -386,52 +386,52 @@
     <message>
         <location filename="../qml/components/MessageItem.qml" line="18"/>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera till urklipp</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="22"/>
         <source>Message copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Meddelande kopierat till urklipp</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="28"/>
         <source>Delete message</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort meddelande</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="34"/>
         <source>Accept transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta emot överföring</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="34"/>
         <source>Resume transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Återuppta överföringen</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="39"/>
         <source>Overriding</source>
-        <translation type="unfinished"></translation>
+        <translation>Åsidosätter</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="50"/>
         <source>Pause transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pausa överföringen</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="56"/>
         <source>Reject transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslå överföringen</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="56"/>
         <source>Cancel transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt överföringen</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="62"/>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna filen</translation>
     </message>
 </context>
 <context>
@@ -439,7 +439,7 @@
     <message>
         <location filename="../qml/pages/Password.qml" line="55"/>
         <source>Account login</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontoinloggning</translation>
     </message>
     <message>
         <location filename="../qml/pages/Password.qml" line="44"/>
@@ -548,13 +548,13 @@
     <message>
         <location filename="../qml/harbour-jtox.qml" line="52"/>
         <source>File transfer from</source>
-        <translation type="unfinished"></translation>
+        <translation>Filöverföring från</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="52"/>
         <source>completed</source>
         <comment>file transfer</comment>
-        <translation type="unfinished"></translation>
+        <translation>slutförd</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="60"/>
