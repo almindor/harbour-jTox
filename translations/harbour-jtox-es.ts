@@ -16,7 +16,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="52"/>
         <source>by Aleš Katona.</source>
-        <translation>Por Aleš Katona  </translation>
+        <translation>por Aleš Katona  </translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="63"/>
@@ -26,7 +26,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="75"/>
         <source>jTox is free software licensed under the GPL v3 available at &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</source>
-        <translation>jTox es un programa libre con licencia GPLv3 disponible en &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</translation>
+        <translation>jTox es un programa libre bajo la licencia GPLv3 disponible en &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="91"/>
@@ -46,7 +46,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="91"/>
         <source>French: Jerome Hubert</source>
-        <translation type="unfinished"></translation>
+        <translation>Francés: Jerome Hubert</translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="103"/>
@@ -111,12 +111,12 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="167"/>
         <source>Status message</source>
-        <translation>Mensaje de estado</translation>
+        <translation>Estado de mensaje</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="168"/>
         <source>Hi from jTox on Sailfish</source>
-        <translation>Hola desde jTox en Sailfish</translation>
+        <translation>Hola, desde jTox en Sailfish OS</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="173"/>
@@ -164,7 +164,7 @@
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="48"/>
         <source>Add Friend</source>
-        <translation>Agregar un contacto</translation>
+        <translation>añadir un contacto</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="59"/>
@@ -230,7 +230,7 @@
     <message>
         <location filename="../qml/pages/Details.qml" line="68"/>
         <source>Friend offline name</source>
-        <translation>Nombre del contacto sin conexión</translation>
+        <translation>Nombre del contacto desconectado</translation>
     </message>
 </context>
 <context>
@@ -276,7 +276,7 @@
     <message>
         <location filename="../qml/pages/Friends.qml" line="93"/>
         <source>Add Friend</source>
-        <translation>Agregar un contacto</translation>
+        <translation>Añadir un contacto</translation>
     </message>
     <message>
         <location filename="../qml/pages/Friends.qml" line="101"/>
@@ -324,7 +324,7 @@
     <message>
         <location filename="../qml/pages/Import.qml" line="65"/>
         <source>No account *.tox files found in Documents folder. Copy account file to Documents and try again.</source>
-        <translation>No hay archivos de cuenta *.tox en la carpeta Documentos. Copiar el archivo de cuenta en Documentos e inténtar de nuevo.</translation>
+        <translation>No hay cuenta *.tox en la carpeta Documentos. Copiar el archivo de la cuenta a Documentos e inténtar de nuevo.</translation>
     </message>
 </context>
 <context>
@@ -350,7 +350,7 @@
     <message>
         <location filename="../src/toxcore.cpp" line="610"/>
         <source>Offline</source>
-        <translation>Sin conexion</translation>
+        <translation>Desconectado</translation>
     </message>
     <message>
         <location filename="../src/toxcore.cpp" line="611"/>
@@ -378,7 +378,7 @@
     <message>
         <location filename="../src/toxcore.cpp" line="178"/>
         <source>Hi from jTox on Sailfish</source>
-        <translation>Hola desde jTox en Sailfish</translation>
+        <translation>Hola, desde jTox en Sailfish OS</translation>
     </message>
 </context>
 <context>
@@ -386,52 +386,52 @@
     <message>
         <location filename="../qml/components/MessageItem.qml" line="18"/>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar al portapapeles</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="22"/>
         <source>Message copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Mensaje copiado al portapapeles</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="28"/>
         <source>Delete message</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar mensaje</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="34"/>
         <source>Accept transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Aceptar transferencia</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="34"/>
         <source>Resume transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Reanudar transferencia</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="39"/>
         <source>Overriding</source>
-        <translation type="unfinished"></translation>
+        <translation>Primordial</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="50"/>
         <source>Pause transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pausar transferencia</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="56"/>
         <source>Reject transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechazar transferencia</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="56"/>
         <source>Cancel transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar transferencia</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="62"/>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir fichero</translation>
     </message>
 </context>
 <context>
@@ -439,17 +439,17 @@
     <message>
         <location filename="../qml/pages/Password.qml" line="55"/>
         <source>Account login</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuenta de iniciar sesión</translation>
     </message>
     <message>
         <location filename="../qml/pages/Password.qml" line="44"/>
         <source>Importing Account</source>
-        <translation type="unfinished">Importando la cuenta</translation>
+        <translation>Importando la cuenta</translation>
     </message>
     <message>
         <location filename="../qml/pages/Password.qml" line="75"/>
         <source>New Account</source>
-        <translation>Una nueva cuenta</translation>
+        <translation>Una cuenta nueva</translation>
     </message>
     <message>
         <location filename="../qml/pages/Password.qml" line="76"/>
@@ -459,7 +459,7 @@
     <message>
         <location filename="../qml/pages/Password.qml" line="82"/>
         <source>Import Account</source>
-        <translation type="unfinished">Importar la cuenta</translation>
+        <translation>Importar la cuenta</translation>
     </message>
     <message>
         <location filename="../qml/pages/Password.qml" line="96"/>
@@ -469,7 +469,7 @@
     <message>
         <location filename="../qml/pages/Password.qml" line="97"/>
         <source>New account password</source>
-        <translation>Contraseña de la nueva cuenta</translation>
+        <translation>Contraseña de la cuenta nueva</translation>
     </message>
     <message>
         <location filename="../qml/pages/Password.qml" line="97"/>
@@ -548,13 +548,13 @@
     <message>
         <location filename="../qml/harbour-jtox.qml" line="52"/>
         <source>File transfer from</source>
-        <translation type="unfinished"></translation>
+        <translation>Transferencia de fichero desde</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="52"/>
         <source>completed</source>
         <comment>file transfer</comment>
-        <translation type="unfinished"></translation>
+        <translation>completado</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="60"/>
