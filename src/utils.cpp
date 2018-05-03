@@ -153,26 +153,4 @@ namespace JTOX {
         return false;
     }
 
-    const QString Utils::getFileInfo(quint64 file_size, const QString &file_name)
-    {
-        const QString hexSize = QString("%1").arg(file_size, 8, 16, QLatin1Char('0'));
-        return hexSize + "/" + file_name;
-    }
-
-    void Utils::parseFileInfo(const QString &fileInfo, quint64 &file_size, QString &file_name)
-    {
-        const QStringList split = fileInfo.split('/');
-        if ( split.size() != 2 ) {
-            throw QString("Invalid file info");
-        }
-
-        const QString hexSize = split.at(0);
-        file_name = split.at(1);
-        bool ok = false;
-        file_size = hexSize.toULongLong(&ok, 16);
-        if ( !ok ) {
-            throw QString("Invalid file info, wrong file size: " + hexSize);
-        }
-    }
-
 }

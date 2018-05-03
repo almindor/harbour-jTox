@@ -192,6 +192,7 @@ namespace JTOX {
         tox_callback_file_recv_control(tox, c_tox_file_recv_control_cb);
         tox_callback_file_recv(tox, c_tox_file_recv_cb);
         tox_callback_file_recv_chunk(tox, c_tox_file_recv_chunk_cb);
+        tox_callback_file_chunk_request(tox, c_tox_file_chunk_request_cb);
 
         fWorking = false;
         emit resultReady(tox, QString());
@@ -208,20 +209,19 @@ namespace JTOX {
     {
         switch ( error ) {
             case TOX_ERR_NEW_OK: return true;
-            case TOX_ERR_NEW_NULL: Utils::bail("Cannot create toxcore, null argument");
-            case TOX_ERR_NEW_MALLOC: Utils::bail("Cannot create toxcore, malloc error");
-            case TOX_ERR_NEW_PORT_ALLOC: Utils::bail("Cannot create toxcore, port bind permission error");
-            case TOX_ERR_NEW_PROXY_BAD_TYPE: Utils::bail("Cannot create toxcore, invalid proxy type");
-            case TOX_ERR_NEW_PROXY_BAD_HOST: Utils::bail("Cannot create toxcore, bad proxy host");
-            case TOX_ERR_NEW_PROXY_BAD_PORT: Utils::bail("Cannot create toxcore, bad proxy port");
-            case TOX_ERR_NEW_PROXY_NOT_FOUND: Utils::bail("Cannot create toxcore, proxy not found");
-            case TOX_ERR_NEW_LOAD_ENCRYPTED: Utils::bail("Cannot create toxcore, save data encrypted");
-            case TOX_ERR_NEW_LOAD_BAD_FORMAT: Utils::bail("Cannot create toxcore, save data invalid");
+            case TOX_ERR_NEW_NULL: return Utils::bail("Cannot create toxcore, null argument");
+            case TOX_ERR_NEW_MALLOC: return Utils::bail("Cannot create toxcore, malloc error");
+            case TOX_ERR_NEW_PORT_ALLOC: return Utils::bail("Cannot create toxcore, port bind permission error");
+            case TOX_ERR_NEW_PROXY_BAD_TYPE: return Utils::bail("Cannot create toxcore, invalid proxy type");
+            case TOX_ERR_NEW_PROXY_BAD_HOST: return Utils::bail("Cannot create toxcore, bad proxy host");
+            case TOX_ERR_NEW_PROXY_BAD_PORT: return Utils::bail("Cannot create toxcore, bad proxy port");
+            case TOX_ERR_NEW_PROXY_NOT_FOUND: return Utils::bail("Cannot create toxcore, proxy not found");
+            case TOX_ERR_NEW_LOAD_ENCRYPTED: return Utils::bail("Cannot create toxcore, save data encrypted");
+            case TOX_ERR_NEW_LOAD_BAD_FORMAT: return Utils::bail("Cannot create toxcore, save data invalid");
         }
 
         return false;
     }
-
 
     //*******************************ToxCore******************************//
 
@@ -232,7 +232,8 @@ namespace JTOX {
     ToxCore::ToxCore(EncryptSave& encryptSave, DBData& dbData) : QObject(0),
         fEncryptSave(encryptSave), fDBData(dbData),
         fTox(NULL), fBootstrapper(), fInitializer(encryptSave), fPasswordValidator(encryptSave),
-        fNodesRequest(NULL), fIterationTimer(), fPasswordValid(false), fInitialized(false)
+        fNodesRequest(NULL), fIterationTimer(), fPasswordValid(false), fInitialized(false),
+        fActiveTransfers()
     {
         connect(&fNetManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpRequestDone(QNetworkReply*)));
         connect(&fBootstrapper, &Bootstrapper::resultReady, this, &ToxCore::bootstrappingDone);
@@ -316,35 +317,44 @@ namespace JTOX {
         emit friendNameChanged(friend_id, name);
     }
 
-    void ToxCore::onFriendTypingChanged(quint32 friend_id, bool typing)
+    void ToxCore::onFriendTypingChanged(quint32 friend_id, bool typing) const
     {
         emit friendTypingChanged(friend_id, typing);
     }
 
-    void ToxCore::onFileReceived(quint32 friend_id, quint32 file_id, quint64 file_size, const QString &file_name) const
+    void ToxCore::onFileReceived(quint32 friend_id, quint32 file_number, quint64 file_size, const QString &file_name) const
     {
-        emit fileReceived(friend_id, file_id, file_size, file_name);
+        emit fileReceived(friend_id, file_number, file_size, file_name);
     }
 
-    void ToxCore::onFileCanceled(quint32 friend_id, quint32 file_id) const
+    void ToxCore::onFileCanceled(quint32 friend_id, quint32 file_number) const
     {
-        emit fileCanceled(friend_id, file_id);
+        emit fileCanceled(friend_id, file_number);
     }
 
-    void ToxCore::onFilePaused(quint32 friend_id, quint32 file_id) const
+    void ToxCore::onFilePaused(quint32 friend_id, quint32 file_number) const
     {
-        emit filePaused(friend_id, file_id);
+        emit filePaused(friend_id, file_number);
     }
 
-    void ToxCore::onFileResumed(quint32 friend_id, quint32 file_id) const
+    void ToxCore::onFileResumed(quint32 friend_id, quint32 file_number) const
     {
-        emit fileResumed(friend_id, file_id);
+        emit fileResumed(friend_id, file_number);
     }
 
-    void ToxCore::onFileChunkReceived(quint32 friend_id, quint32 file_id, quint64 position, const quint8 *data, size_t length) const
+    void ToxCore::onFileChunkReceived(quint32 friend_id, quint32 file_number, quint64 position, const quint8 *data, size_t length)
     {
+        updateTransfers(friend_id, file_number, length);
+
         const QByteArray qbd((char*)data, length);
-        emit fileChunkReceived(friend_id, file_id, position, qbd);
+        emit fileChunkReceived(friend_id, file_number, position, qbd);
+    }
+
+    void ToxCore::onFileChunkRequest(quint32 friend_id, quint32 file_number, quint64 position, size_t length)
+    {
+        updateTransfers(friend_id, file_number, length);
+
+        emit fileChunkRequest(friend_id, file_number, position, length);
     }
 
     bool ToxCore::getBusy() const {
@@ -515,7 +525,7 @@ namespace JTOX {
     void ToxCore::setApplicationActive(bool active)
     {
         fApplicationActive = active;
-        fIterationTimer.setInterval(active ? ACTIVE_ITERATION_DELAY : PASSIVE_ITERATION_DELAY);
+        fIterationTimer.setInterval(getIterationInterval());
 
         if ( active ) {
             awayRestore(); // if we restored, stop away timer and restore old status
@@ -710,6 +720,15 @@ namespace JTOX {
         return file.readAll();
     }
 
+    int ToxCore::getIterationInterval() const
+    {
+        if ( fActiveTransfers.size() == 0 ) {
+            return fApplicationActive ? ACTIVE_ITERATION_DELAY : PASSIVE_ITERATION_DELAY;
+        }
+
+        return tox_iteration_interval(fTox); // downloading/uploading a file, go full speed
+    }
+
     void ToxCore::awayRestore()
     {
         fAwayTimer.stop();
@@ -747,6 +766,23 @@ namespace JTOX {
         emit initialUseChanged(false);
     }
 
+    quint32 ToxCore::sendFile(quint32 friendID, const QString &file_path, QByteArray &file_id)
+    {
+        const QFile file(file_path);
+        if ( file_id.isEmpty() ) {
+            file_id.resize(TOX_FILE_ID_LENGTH);
+            randombytes_buf((quint8*) file_id.data(), TOX_FILE_ID_LENGTH);
+        }
+
+        TOX_ERR_FILE_SEND error;
+        quint32 file_number = tox_file_send(fTox, friendID, TOX_FILE_KIND_DATA, (quint64) file.size(), (quint8*) file_id.constData(),
+                                            (quint8*) file.fileName().toUtf8().constData(), file.fileName().length(), &error);
+
+
+        handleToxFileSendError(error); // all critical and cause a bail
+        return file_number;
+    }
+
     void ToxCore::killTox()
     {
         if ( !fInitialized ) {
@@ -756,6 +792,40 @@ namespace JTOX {
         fInitialized = false;
         tox_kill(fTox);
         fTox = NULL;
+    }
+
+    bool ToxCore::handleToxFileSendError(TOX_ERR_FILE_SEND error) const
+    {
+        switch ( error ) {
+            case TOX_ERR_FILE_SEND_OK: return true;
+            case TOX_ERR_FILE_SEND_FRIEND_NOT_CONNECTED: return Utils::bail("Cannot send file, friend not connected");
+            case TOX_ERR_FILE_SEND_FRIEND_NOT_FOUND: return Utils::bail("Cannot send file, friend not found");
+            case TOX_ERR_FILE_SEND_NAME_TOO_LONG: return Utils::bail("Cannot send file, name too long");
+            case TOX_ERR_FILE_SEND_NULL: return Utils::bail("Cannot send file, unexpected null argument");
+            case TOX_ERR_FILE_SEND_TOO_MANY: return Utils::bail("Cannot send file, too many concurrent transfers in progress");
+        }
+
+        return false;
+    }
+
+    void ToxCore::updateTransfers(quint32 friend_id, quint32 file_number, size_t length)
+    {
+        quint64 transferID = (quint64)friend_id << 32 | file_number; // combined unique ID for transfer
+        if ( length > 0 && !fActiveTransfers.contains(transferID) ) { // started a new one
+            fActiveTransfers[transferID] = true;
+            if ( fActiveTransfers.size() == 1 ) { // we started first one
+                int interval = getIterationInterval();
+                fIterationTimer.setInterval(interval);
+                qDebug() << "setting super interval: " << interval << "\n";
+            }
+        } else if ( length == 0 && fActiveTransfers.contains(transferID) ) { // finished
+            fActiveTransfers.remove(transferID);
+            if ( fActiveTransfers.size() == 0 ) { // we finished last one
+                int interval = getIterationInterval();
+                fIterationTimer.setInterval(interval);
+                qDebug() << "setting normal interval: " << interval << "\n";
+            }
+        }
     }
 
     void ToxCore::httpRequestDone(QNetworkReply *reply) {       

@@ -29,8 +29,10 @@ function isMessage(et) {
 }
 
 function isFile(et) {
-    return [EventType.FileTransferIn, EventType.FileTransferOut, EventType.FileTransferInPaused, EventType.FileTransferOutPaused,
+    return [EventType.FileTransferIn, EventType.FileTransferOut,
+            EventType.FileTransferInPaused, EventType.FileTransferOutPaused,
             EventType.FileTransferInCanceled, EventType.FileTransferOutCanceled,
+            EventType.FileTransferInRunning, EventType.FileTransferOutRunning,
             EventType.FileTransferInDone, EventType.FileTransferOutDone].indexOf(et) >= 0;
 }
 
@@ -67,7 +69,7 @@ function isMessageIncoming(et) {
 function isMessageOutgoing(et) {
     return [EventType.MessageOut, EventType.MessageOutPending, EventType.MessageOutOffline,
             EventType.FileTransferOut, EventType.FileTransferOutPaused,
-            EventType.FileTransferOutCanceled, EventType.FileTransferInRunning, EventType.FileTransferOutDone].indexOf(et) >= 0;
+            EventType.FileTransferOutCanceled, EventType.FileTransferOutRunning, EventType.FileTransferOutDone].indexOf(et) >= 0;
 }
 
 function isMessagePending(et) {

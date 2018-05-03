@@ -20,8 +20,9 @@ namespace JTOX {
         void getEvents(EventList& list, quint32 friendID, int eventType = -1);
         void getTransfers(EventList& list);
         int getUnviewedEventCount(qint64 friendID);
-        int insertEvent(qint64 sendID, quint32 friendID, EventType eventType, const QString& message, QDateTime& createdAt);
+        int insertEvent(Event& event);
         void updateEventType(int id, EventType eventType);
+        void updateEvent(int id, EventType eventType, quint64 filePosition, int filePausers);
         void updateEventSent(int id, EventType eventType, qint64 sendID);
         void deliverEvent(quint32 sendID, quint32 friendID);
         void deleteEvent(int id);

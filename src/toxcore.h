@@ -28,6 +28,8 @@
 #include <QJsonValue>
 #include <QThread>
 #include <QTimer>
+#include <QMap>
+#include <QFile>
 #include <tox/tox.h>
 #include "encryptsave.h"
 #include "dbdata.h"
@@ -113,12 +115,13 @@ namespace JTOX {
         void onFriendConStatusChanged(quint32 friend_id, int status);
         void onFriendStatusMsgChanged(quint32 friend_id, const QString& statusMessage);
         void onFriendNameChanged(quint32 friend_id, const QString& name);
-        void onFriendTypingChanged(quint32 friend_id, bool typing);
-        void onFileReceived(quint32 friend_id, quint32 file_id, quint64 file_size, const QString& file_name) const;
-        void onFileCanceled(quint32 friend_id, quint32 file_id) const;
-        void onFilePaused(quint32 friend_id, quint32 file_id) const;
-        void onFileResumed(quint32 friend_id, quint32 file_id) const;
-        void onFileChunkReceived(quint32 friend_id, quint32 file_id, quint64 position, const quint8* data, size_t length) const;
+        void onFriendTypingChanged(quint32 friend_id, bool typing) const;
+        void onFileReceived(quint32 friend_id, quint32 file_number, quint64 file_size, const QString& file_name) const;
+        void onFileCanceled(quint32 friend_id, quint32 file_number) const;
+        void onFilePaused(quint32 friend_id, quint32 file_number) const;
+        void onFileResumed(quint32 friend_id, quint32 file_number) const;
+        void onFileChunkReceived(quint32 friend_id, quint32 file_number, quint64 position, const quint8* data, size_t length);
+        void onFileChunkRequest(quint32 friend_id, quint32 file_number, quint64 position, size_t length);
 
         bool getBusy() const;
         bool getInitialized() const;
@@ -128,6 +131,7 @@ namespace JTOX {
         const QString getHexPublicKey() const;
         const QString getHexToxID() const;
         void save();
+        quint32 sendFile(quint32 friend_id, const QString& file_path, QByteArray& file_id);
 
         Q_INVOKABLE void init(const QString& password);
         Q_INVOKABLE bool setNoSpam(const QString& hexVal); // we need to knox if the value is ok
@@ -157,11 +161,12 @@ namespace JTOX {
         void busyChanged(bool busy);
         void messageDelivered(quint32 friendID, quint32 messageID);
         void messageReceived(quint32 friendID, TOX_MESSAGE_TYPE type, const QString& message);
-        void fileReceived(quint32 friend_id, quint32 file_id, quint64 file_size, const QString& file_name) const;
-        void fileCanceled(quint32 friend_id, quint32 file_id) const;
-        void filePaused(quint32 friend_id, quint32 file_id) const;
-        void fileResumed(quint32 friend_id, quint32 file_id) const;
-        void fileChunkReceived(quint32 friend_id, quint32 file_id, quint64 position, const QByteArray& data) const;
+        void fileReceived(quint32 friend_id, quint32 file_number, quint64 file_size, const QString& file_name) const;
+        void fileCanceled(quint32 friend_id, quint32 file_number) const;
+        void filePaused(quint32 friend_id, quint32 file_number) const;
+        void fileResumed(quint32 friend_id, quint32 file_number) const;
+        void fileChunkReceived(quint32 friend_id, quint32 file_number, quint64 position, const QByteArray& data) const;
+        void fileChunkRequest(quint32 friend_number, quint32 file_number, quint64 position, size_t length) const;
         void passwordValidChanged(bool valid);
         void accountExported(const QString& fileName) const;
         void accountImported() const;
@@ -190,6 +195,7 @@ namespace JTOX {
         bool fPasswordValid;
         bool fInitialized;
         bool fApplicationActive;
+        QMap<quint64, bool> fActiveTransfers;
 
         quint32 getMajorVersion() const;
         quint32 getMinorVersion() const;
@@ -206,9 +212,12 @@ namespace JTOX {
         bool getKeepLogs() const;
         void setKeepLogs(bool keep);
         const QByteArray getDefaultNodes() const;
+        int getIterationInterval() const;
         void awayRestore();
         void awayStart();
         void killTox();
+        bool handleToxFileSendError(TOX_ERR_FILE_SEND error) const;
+        void updateTransfers(quint32 friend_id, quint32 file_number, size_t length);
     };
 
 }
