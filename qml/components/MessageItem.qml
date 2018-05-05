@@ -114,7 +114,8 @@ ListItem {
 
         BusyIndicator {
             anchors {
-                right: parent.right
+                right: !Common.isMessageIncoming(event_type) ? parent.right : undefined
+                left: Common.isMessageIncoming(event_type) ? parent.left : undefined
             }
             size: BusyIndicatorSize.ExtraSmall
             visible: Common.isMessagePending(event_type) || Common.isFilePending(event_type)

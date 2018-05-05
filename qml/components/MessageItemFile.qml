@@ -27,22 +27,6 @@ Column {
             font.bold: !Common.isFileCanceled(event_type)
             horizontalAlignment: alignmentForEvent(event_type)
             color: colorForEventMsg(event_type)
-/*
-            SequentialAnimation on opacity {
-                loops: Animation.Infinite
-                running: Common.isFilePending(event_type)
-
-                NumberAnimation {
-                    from: 1.0
-                    to: 0.5
-                    duration: 1000
-                }
-                NumberAnimation {
-                    from: 0.5
-                    to: 1.0
-                    duration: 1000
-                }
-            }*/
         } // text
     } // row
 
@@ -73,6 +57,6 @@ Column {
         running: eventmodel.friendID >= 0 && Common.isFileRunning(event_type) // run only when downloading this file
         repeat: true
         interval: 1000 // 1x a second
-        onTriggered: eventmodel.refreshFilePosition(event_id)
+        onTriggered: eventmodel.refreshFilePosition(index)
     }
 } // main column

@@ -6,6 +6,7 @@
 #include <QString>
 #include <QVariant>
 #include <QTimer>
+#include <QMap>
 #include <tox/tox.h>
 #include "toxcore.h"
 #include "friendmodel.h"
@@ -42,7 +43,7 @@ namespace JTOX {
         Q_INVOKABLE void pauseFile(int eventID);
         Q_INVOKABLE void resumeFile(int eventID);
         Q_INVOKABLE void cancelFile(int eventID);
-        Q_INVOKABLE void refreshFilePosition(int eventID);
+        Q_INVOKABLE void refreshFilePosition(int index);
     signals:
         void friendUpdated() const;
         void typingChanged(bool typing) const;
@@ -73,6 +74,7 @@ namespace JTOX {
         QSqlQuery fDeliveredUpdateQuery;
         qint64 fFriendID;
         bool fTyping;
+        QMap <quint64, QFile*> fTransferFiles;
 
         int indexForEvent(int eventID) const;
         bool handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error) const;
@@ -86,9 +88,10 @@ namespace JTOX {
         void setTyping(qint64 friendID, bool typing);
         void cancelTransfer(const Event& transfer);
         void cancelTransfers();
-        void completeTransfer(const Event& transfer);
+        void completeTransfer(const Event& transfer, quint64 position);
         void updateEventType(const Event& event, EventType eventType, const QVector<int>& roles = QVector<int>(1, erEventType));
         void updateEvent(const Event& event, EventType eventType, quint64 filePosition, int filePausers, const QVector<int>& roles);
+        QFile* fileForTransfer(const Event& transfer, QIODevice::OpenModeFlag openMode);
     private slots:
         void onMessagesViewed();
         void onTypingDone();

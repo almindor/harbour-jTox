@@ -40,6 +40,9 @@ namespace JTOX {
         static void hex_to_address(const QString& hexKey, unsigned char* address);
         static int get_overall_status(TOX_CONNECTION conStatus, TOX_USER_STATUS userStatus);
         static bool bail(const QString& error, bool soft = false);
+        static quint64 transferID(quint32 friend_id, quint32 file_number);
+        static quint32 friendID(quint64 transferID);
+        static quint32 fileNumber(quint64 transferID);
     };
 
     void register_signals();

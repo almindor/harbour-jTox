@@ -11,9 +11,11 @@
 
 namespace JTOX {
 
+    qint64 sLastPositionUpdate = 0;
+
     EventModel::EventModel(ToxCore& toxCore, FriendModel& friendModel, DBData& dbData) : QAbstractListModel(0),
                     fToxCore(toxCore), fFriendModel(friendModel), fDBData(dbData),
-                    fList(), fTimerViewed(), fTimerTyping(), fFriendID(-1), fTyping(false)
+                    fList(), fTimerViewed(), fTimerTyping(), fFriendID(-1), fTyping(false), fTransferFiles()
     {
         connect(&toxCore, &ToxCore::messageDelivered, this, &EventModel::onMessageDelivered);
         connect(&toxCore, &ToxCore::messageReceived, this, &EventModel::onMessageReceived);
@@ -99,8 +101,6 @@ namespace JTOX {
         if ( fFriendID == friendID ) {
             return;
         }
-
-        qDebug() << "setting friendID in event model to: " << friendID << "\n";
 
         setTyping(false);
         fFriendID = friendID;
@@ -292,11 +292,9 @@ namespace JTOX {
         cancelTransfer(transfer);
     }
 
-    void EventModel::refreshFilePosition(int eventID)
+    void EventModel::refreshFilePosition(int index)
     {
-        int index = indexForEvent(eventID);
-
-        if ( index >= 0 ) {
+        if ( index >= 0 && index < fList.size() ) {
             emit dataChanged(createIndex(index, 0), createIndex(index, 0), QVector<int>(1, erFilePosition));
         }
     }
@@ -321,7 +319,6 @@ namespace JTOX {
     void EventModel::onMessageReceived(quint32 friend_id, TOX_MESSAGE_TYPE type, const QString &message)
     {
         if ( type != TOX_MESSAGE_TYPE_NORMAL ) {
-            qDebug() << "TODO: Non normal message received\n"; // TODO: ??
             return;
         }
 
@@ -404,32 +401,35 @@ namespace JTOX {
     {
         Event transfer;
         if ( !fDBData.getEvent(friend_id, file_number, etFileTransferInRunning, transfer) &&
-             !fDBData.getEvent(friend_id, file_number, etFileTransferInPaused, transfer)) {
+             !fDBData.getEvent(friend_id, file_number, etFileTransferInPaused, transfer) ) {
             emit transferError("Transfer not found");
             return;
         }
 
+        QFile* file = fileForTransfer(transfer, QIODevice::Append);
         if ( data.size() == 0 ) { // done
-            return completeTransfer(transfer);
+            return completeTransfer(transfer, position);
         }
 
-        const QDir dir(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
-        QFile file(dir.absoluteFilePath(transfer.fileName()));
-        if ( !file.open(QIODevice::Append) ) {
-            emit transferError("Error opening file for appending: " + file.errorString());
-            return;
-        }
-
-        if ( (quint64)file.size() != position ) {
+        if ( (quint64) file->size() != position ) {
             emit transferError("Transfer file position mismatch");
             cancelTransfer(transfer);
             return;
         }
 
-        file.write(data);
-        file.close();
+        file->write(data);
+
+        qint64 now = QDateTime::currentMSecsSinceEpoch();
+        if ( now - sLastPositionUpdate < 500 ) {
+            return; // do not update db or in-mem too often, too expensive
+        }
+        sLastPositionUpdate = now;
 
         fDBData.updateEvent(transfer.id(), transfer.type(), position, transfer.filePausers());
+        if ( fFriendID != transfer.friendID() ) {
+            return; // not on active friend
+        }
+
         int index = indexForEvent(transfer.id());
         if ( index >= 0 ) {
             fList[index].setFilePosition(position);
@@ -447,32 +447,21 @@ namespace JTOX {
             return;
         }
 
+        QFile* file = fileForTransfer(transfer, QIODevice::ReadOnly);
+
         if ( length == 0 ) { // done
-            return completeTransfer(transfer);
+            return completeTransfer(transfer, position);
         }
 
-        QFile file(transfer.filePath());
-        if ( !file.exists() ) {
-            cancelFile(transfer.id());
-            emit transferError("Transfer file not found");
-            return;
-        }
-
-        if ( !file.open(QIODevice::ReadOnly) ) {
-            cancelFile(transfer.id());
-            emit transferError("Unable to open file");
-            return;
-        }
-
-        if ( position >= (quint64) file.size() || !file.seek(position) ) {
-            cancelFile(transfer.id());
+        if ( position >= (quint64) file->size() || !file->seek(position) ) {
+            cancelTransfer(transfer);
             emit transferError("Transfer position invalid");
             return;
         }
 
-        const QByteArray chunk = file.read(length);
+        const QByteArray chunk = file->read(length);
         if ( (size_t) chunk.size() != length ) {
-            cancelFile(transfer.id());
+            cancelTransfer(transfer);
             emit transferError("Transfer chunk length invalid");
             return;
         }
@@ -481,12 +470,19 @@ namespace JTOX {
         tox_file_send_chunk(fToxCore.tox(), friend_id, file_number, position, (quint8*) chunk.constData(), length, &error);
 
         if ( !handleFileSendChunkError(error) ) {
-            cancelFile(transfer.id());
+            cancelTransfer(transfer);
             emit transferError("Transfer chunk length invalid");
             return;
         }
 
+        qint64 now = QDateTime::currentMSecsSinceEpoch();
+        if ( now - sLastPositionUpdate < 500 ) {
+            return; // do not update db or in-mem too often, too expensive
+        }
+        sLastPositionUpdate = now;
+
         fDBData.updateEvent(transfer.id(), transfer.type(), position + length, transfer.filePausers());
+        // do not emit, UI will poll for updates
 
         if ( fFriendID == friend_id && position == 0 ) { // we just got "accepted" for sending
             onFileResumed(friend_id, file_number); // change to running and notify UI
@@ -563,7 +559,7 @@ namespace JTOX {
             }
         }
 
-        Utils::bail("Could not find index for event ID: " + eventID);
+        Utils::bail("Cannot find index for event");
         return -1;
     }
 
@@ -679,16 +675,14 @@ namespace JTOX {
 
     void EventModel::cancelTransfer(const Event &transfer)
     {
-        EventType canceledType = etFileTransferInCanceled;
-        switch ( transfer.type() ) {
-            case etFileTransferIn:
-            case etFileTransferInPaused:
-            case etFileTransferInRunning: canceledType = etFileTransferInCanceled; break;
-            case etFileTransferOut:
-            case etFileTransferOutPaused:
-            case etFileTransferOutRunning: canceledType = etFileTransferOutCanceled; break;
-            default: Utils::bail("Unable to cancel transfer, invalid event"); break;
+        quint64 transferID = Utils::transferID(transfer.friendID(), transfer.sendID());
+        if ( fTransferFiles.contains(transferID) ) {
+            fTransferFiles[transferID]->close();
+            delete fTransferFiles[transferID];
+            fTransferFiles.remove(transferID);
         }
+
+        EventType canceledType = transfer.isIncoming() ? etFileTransferInCanceled : etFileTransferOutCanceled;
 
         TOX_ERR_FILE_CONTROL error;
         tox_file_control(fToxCore.tox(), transfer.friendID(), transfer.sendID(), TOX_FILE_CONTROL_CANCEL, &error);
@@ -709,13 +703,22 @@ namespace JTOX {
         }
     }
 
-    void EventModel::completeTransfer(const Event &transfer)
+    void EventModel::completeTransfer(const Event &transfer, quint64 position)
     {
+        quint64 transferID = Utils::transferID(transfer.friendID(), transfer.sendID());
+        if ( !fTransferFiles.contains(transferID) ) {
+            emit transferError(tr("Unable to find file for transfer"));
+            return cancelTransfer(transfer);
+        }
+        fTransferFiles[transferID]->close();
+        delete fTransferFiles[transferID];
+        fTransferFiles.remove(transferID);
+
         EventType eType = transfer.type() == etFileTransferInRunning ? etFileTransferInDone : etFileTransferOutDone;
         QVector<int> roles(2);
         roles[0] = erEventType;
         roles[1] = erFilePosition;
-        updateEventType(transfer, eType, roles);
+        updateEvent(transfer, eType, position, transfer.filePausers(), roles);
         emit transferComplete(transfer.fileName(), fFriendModel.getListIndexForFriendID(transfer.friendID()), fFriendModel.getFriendByID(transfer.friendID()).name());
     }
 
@@ -735,6 +738,23 @@ namespace JTOX {
             fList[index].setFilePausers(filePausers);
             emit dataChanged(createIndex(index, 0), createIndex(index, 0), roles);
         }
+    }
+
+    QFile *EventModel::fileForTransfer(const Event &transfer, QIODevice::OpenModeFlag openMode)
+    {
+        quint64 transferID = Utils::transferID(transfer.friendID(), transfer.sendID());
+        QFile* file = fTransferFiles.value(transferID, NULL);
+        if ( file == NULL ) { // new
+            file = new QFile(transfer.filePath());
+
+            if ( !file->open(openMode) ) {
+                emit transferError("Error opening file: " + file->errorString());
+                return NULL;
+            }
+            fTransferFiles[transferID] = file;
+        }
+
+        return file;
     }
 
     void EventModel::onMessagesViewed()

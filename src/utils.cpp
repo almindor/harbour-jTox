@@ -153,4 +153,19 @@ namespace JTOX {
         return false;
     }
 
+    quint64 Utils::transferID(quint32 friend_id, quint32 file_number)
+    {
+        return (quint64)friend_id << 32 | file_number; // combined unique ID for transfer
+    }
+
+    quint32 Utils::friendID(quint64 transferID)
+    {
+        return (quint32) (transferID >> 32);
+    }
+
+    quint32 Utils::fileNumber(quint64 transferID)
+    {
+        return (quint32) transferID;
+    }
+
 }

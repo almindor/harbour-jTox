@@ -348,13 +348,18 @@
 <context>
     <name>JTOX::EventModel</name>
     <message>
-        <location filename="../src/eventmodel.cpp" line="518"/>
+        <location filename="../src/eventmodel.cpp" line="514"/>
         <source>Transfer canceled by sender</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="518"/>
+        <location filename="../src/eventmodel.cpp" line="514"/>
         <source>Transfer canceled by receiver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/eventmodel.cpp" line="710"/>
+        <source>Unable to find file for transfer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -445,7 +450,7 @@
 <context>
     <name>MessageItemFile</name>
     <message>
-        <location filename="../qml/components/MessageItemFile.qml" line="58"/>
+        <location filename="../qml/components/MessageItemFile.qml" line="42"/>
         <source>Unkown</source>
         <comment>file size</comment>
         <translation type="unfinished"></translation>
@@ -572,13 +577,7 @@
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="52"/>
-        <source>File transfer from</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harbour-jtox.qml" line="52"/>
-        <source>completed</source>
-        <comment>file transfer</comment>
+        <source>File transfer complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

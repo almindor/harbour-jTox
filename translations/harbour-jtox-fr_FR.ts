@@ -290,6 +290,10 @@
         <source>Transfer canceled by receiver</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unable to find file for transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>JTOX::ToxCore</name>
@@ -475,12 +479,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File transfer from</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>completed</source>
-        <comment>file transfer</comment>
+        <source>File transfer complete</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

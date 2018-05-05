@@ -810,20 +810,18 @@ namespace JTOX {
 
     void ToxCore::updateTransfers(quint32 friend_id, quint32 file_number, size_t length)
     {
-        quint64 transferID = (quint64)friend_id << 32 | file_number; // combined unique ID for transfer
+        quint64 transferID = Utils::transferID(friend_id, file_number);
         if ( length > 0 && !fActiveTransfers.contains(transferID) ) { // started a new one
             fActiveTransfers[transferID] = true;
             if ( fActiveTransfers.size() == 1 ) { // we started first one
                 int interval = getIterationInterval();
                 fIterationTimer.setInterval(interval);
-                qDebug() << "setting super interval: " << interval << "\n";
             }
         } else if ( length == 0 && fActiveTransfers.contains(transferID) ) { // finished
             fActiveTransfers.remove(transferID);
             if ( fActiveTransfers.size() == 0 ) { // we finished last one
                 int interval = getIterationInterval();
                 fIterationTimer.setInterval(interval);
-                qDebug() << "setting normal interval: " << interval << "\n";
             }
         }
     }
