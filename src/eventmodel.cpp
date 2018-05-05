@@ -133,6 +133,8 @@ namespace JTOX {
         if ( getFriendStatus() > 0 ) { // if friend is online, send it and use out pending mt
             sendID = sendMessageRaw(message, fFriendID, event.id());
             eventType = etMessageOutPending; // if we got here the message is out
+            event.setEventType(eventType);
+            event.setSendID(sendID);
         }
 
         beginInsertRows(QModelIndex(), count, count);
@@ -303,15 +305,16 @@ namespace JTOX {
         fDBData.deliverEvent(sendID, friendID);
 
         // if we're "open" on the given friend, make sure to update the UI
-        if ( fFriendID == friendID ) {
-            int row = 0;
-            foreach ( const Event event, fList ) {
-                if ( event.sendID() >= 0 && event.sendID() == sendID && event.type() == etMessageOutPending ) {
-                    fList[row].delivered();
-                    emit dataChanged(createIndex(row, 0), createIndex(row, 0), QVector<int>(1, erEventType));
-                    break;
-                }
-                row++;
+        if ( fFriendID != friendID ) {
+            return;
+        }
+
+        for ( int row = fList.size() - 1; row >= 0; row-- ) {
+            const Event& event = fList.at(row);
+            if ( event.sendID() >= 0 && event.sendID() == sendID && event.type() == etMessageOutPending ) {
+                fList[row].delivered();
+                emit dataChanged(createIndex(row, 0), createIndex(row, 0), QVector<int>(1, erEventType));
+                return;
             }
         }
     }
