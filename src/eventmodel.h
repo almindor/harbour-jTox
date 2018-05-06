@@ -6,6 +6,7 @@
 #include <QString>
 #include <QVariant>
 #include <QTimer>
+#include <QMap>
 #include <tox/tox.h>
 #include "toxcore.h"
 #include "friendmodel.h"
@@ -37,10 +38,12 @@ namespace JTOX {
         Q_INVOKABLE void sendMessage(const QString& message);
         Q_INVOKABLE void deleteMessage(int eventID);
         Q_INVOKABLE bool fileExists(int eventID);
+        Q_INVOKABLE void sendFile(const QString& filePath);
         Q_INVOKABLE bool deleteFile(int eventID);
         Q_INVOKABLE void pauseFile(int eventID);
         Q_INVOKABLE void resumeFile(int eventID);
         Q_INVOKABLE void cancelFile(int eventID);
+        Q_INVOKABLE void refreshFilePosition(int index);
     signals:
         void friendUpdated() const;
         void typingChanged(bool typing) const;
@@ -52,11 +55,12 @@ namespace JTOX {
         void onMessageReceived(quint32 friend_id, TOX_MESSAGE_TYPE type, const QString& message);
         void onFriendUpdated(quint32 friend_id);
         void onFriendWentOnline(quint32 friendID);
-        void onFileReceived(quint32 friend_id, quint32 file_id, quint64 file_size, const QString& file_name);
-        void onFileChunkReceived(quint32 friend_id, quint32 file_id, quint64 position, const QByteArray& data);
-        void onFileCanceled(quint32 friend_id, quint32 file_id);
-        void onFilePaused(quint32 friend_id, quint32 file_id);
-        void onFileResumed(quint32 friend_id, quint32 file_id);
+        void onFileReceived(quint32 friend_id, quint32 file_number, quint64 file_size, const QString& file_name);
+        void onFileChunkReceived(quint32 friend_id, quint32 file_number, quint64 position, const QByteArray& data);
+        void onFileChunkRequest(quint32 friend_id, quint32 file_number, quint64 position, size_t length);
+        void onFileCanceled(quint32 friend_id, quint32 file_number);
+        void onFilePaused(quint32 friend_id, quint32 file_number);
+        void onFileResumed(quint32 friend_id, quint32 file_number);
     private:
         ToxCore& fToxCore;
         FriendModel& fFriendModel;
@@ -70,10 +74,12 @@ namespace JTOX {
         QSqlQuery fDeliveredUpdateQuery;
         qint64 fFriendID;
         bool fTyping;
+        QMap <quint64, QFile*> fTransferFiles;
 
         int indexForEvent(int eventID) const;
         bool handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error) const;
         bool handleFileControlError(TOX_ERR_FILE_CONTROL error, bool soft = false) const;
+        bool handleFileSendChunkError(TOX_ERR_FILE_SEND_CHUNK error, bool soft = false) const;
         int getFriendStatus() const;
         bool getFriendTyping() const;
         const QString getFriendName() const;
@@ -82,8 +88,10 @@ namespace JTOX {
         void setTyping(qint64 friendID, bool typing);
         void cancelTransfer(const Event& transfer);
         void cancelTransfers();
-        void completeTransfer(const Event& transfer);
-        void updateEventType(const Event& event, EventType eventType);
+        void completeTransfer(const Event& transfer, quint64 position);
+        void updateEventType(const Event& event, EventType eventType, const QVector<int>& roles = QVector<int>(1, erEventType));
+        void updateEvent(const Event& event, EventType eventType, quint64 filePosition, int filePausers, const QVector<int>& roles);
+        QFile* fileForTransfer(const Event& transfer, QIODevice::OpenModeFlag openMode);
     private slots:
         void onMessagesViewed();
         void onTypingDone();

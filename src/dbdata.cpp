@@ -120,18 +120,23 @@ namespace JTOX {
         return count;
     }
 
-    int DBData::insertEvent(qint64 sendID, quint32 friendID, EventType eventType, const QString& message, QDateTime& createdAt)
+    int DBData::insertEvent(Event& event)
     {
-        fEventInsertQuery.bindValue(":send_id", sendID >= 0 ? sendID : QVariant(QVariant::Int));
-        fEventInsertQuery.bindValue(":friend_id", friendID);
-        fEventInsertQuery.bindValue(":event_type", eventType);
-        fEventInsertQuery.bindValue(":message", fEncryptSave.encrypt(message));
+        fEventInsertQuery.bindValue(":send_id", event.sendID() >= 0 ? event.sendID() : QVariant(QVariant::Int));
+        fEventInsertQuery.bindValue(":friend_id", event.friendID());
+        fEventInsertQuery.bindValue(":event_type", event.type());
+        fEventInsertQuery.bindValue(":message", fEncryptSave.encrypt(event.isFile() ? event.fileName() : event.message()));
+        fEventInsertQuery.bindValue(":file_path", event.filePath());
+        fEventInsertQuery.bindValue(":file_id", event.fileID());
+        fEventInsertQuery.bindValue(":file_size", event.fileSize());
+        fEventInsertQuery.bindValue(":file_position", event.filePosition());
+        fEventInsertQuery.bindValue(":file_pausers", event.filePausers());
 
         if ( !fEventInsertQuery.exec() ) {
             Utils::bail("Error on insert query execution: " + fEventInsertQuery.lastError().text());
         }
 
-        fLastEventSelectQuery.bindValue(":friend_id", friendID);
+        fLastEventSelectQuery.bindValue(":friend_id", event.friendID());
         if ( !fLastEventSelectQuery.exec() ) {
             Utils::bail("Error on last event query execution: " + fLastEventSelectQuery.lastError().text());
         }
@@ -145,8 +150,14 @@ namespace JTOX {
         if ( !ok ) {
             Utils::bail("Error on last event query int cast: " + val.toString());
         }
-        createdAt = fLastEventSelectQuery.value(1).toDateTime();
+        event.setID(id);
+        event.setCreatedAt(fLastEventSelectQuery.value(1).toDateTime());
         return id;
+    }
+
+    void DBData::updateEventType(int id, EventType eventType)
+    {
+        return updateEvent(id, eventType, 0, 0);
     }
 
     void DBData::deliverEvent(quint32 sendID, quint32 friendID)
@@ -289,10 +300,12 @@ namespace JTOX {
         }
     }
 
-    void DBData::updateEventType(int id, EventType eventType)
+    void DBData::updateEvent(int id, EventType eventType, quint64 filePosition, int filePausers)
     {
         fEventUpdateQuery.bindValue(":id", id);
         fEventUpdateQuery.bindValue(":event_type", eventType);
+        fEventUpdateQuery.bindValue(":file_position", filePosition);
+        fEventUpdateQuery.bindValue(":file_pausers", filePausers);
 
         if ( !fEventUpdateQuery.exec() ) {
             Utils::bail("unable to update event: " + fEventUpdateQuery.lastError().text());
@@ -345,8 +358,8 @@ namespace JTOX {
     {
         QSqlQuery query(fDB);
         // unknown if we have v0 to v1 or just init from scratch so these can fail
+        if ( !query.exec("ALTER TABLE events ADD COLUMN file_path BLOB") ) Utils::bail("Unable to upgrade DB to v1");
         if ( !query.exec("ALTER TABLE events ADD COLUMN file_id BLOB") ) Utils::bail("Unable to upgrade DB to v1");
-        if ( !query.exec("ALTER TABLE events ADD COLUMN file_number INTEGER") ) Utils::bail("Unable to upgrade DB to v1");
         if ( !query.exec("ALTER TABLE events ADD COLUMN file_size INTEGER") ) Utils::bail("Unable to upgrade DB to v1");
         if ( !query.exec("ALTER TABLE events ADD COLUMN file_position INTEGER") ) Utils::bail("Unable to upgrade DB to v1");
         if ( !query.exec("ALTER TABLE events ADD COLUMN file_pausers INTEGER") ) Utils::bail("Unable to upgrade DB to v1"); // how many pausers are there (0-2)
@@ -356,16 +369,19 @@ namespace JTOX {
 
     void DBData::prepareQueries()
     {
-        fEventSelectOneQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id "
+        fEventSelectOneQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id, "
+                                            "       file_path, file_id, file_size, file_position, file_pausers "
                                             "FROM events "
                                             "WHERE (id = :id OR :id < 0) "
                                             "AND (friend_id = :friend_id OR :friend_id < 0) "
                                             "AND (send_id = :send_id OR :send_id < 0) "
                                             "AND (event_type = :event_type OR :event_type < 0) ");
 
-        fEventSelectQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id "
+        fEventSelectQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id, "
+                                         "       file_path, file_id, file_size, file_position, file_pausers "
                                          "FROM ("
-                                            "SELECT id, event_type, created_at, message, send_id, friend_id "
+                                            "SELECT id, event_type, created_at, message, send_id, friend_id, "
+                                            "       file_path, file_id, file_size, file_position, file_pausers "
                                             "FROM events "
                                             "WHERE friend_id = :friend_id "
                                             "AND (event_type = :event_type OR :event_type < 0) "
@@ -379,15 +395,16 @@ namespace JTOX {
                                              "ORDER BY id DESC "
                                              "LIMIT 1");
 
-        fTransfersSelectQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id "
+        fTransfersSelectQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id,"
+                                             "       file_path, file_id, file_size, file_position, file_pausers "
                                              "FROM events "
                                              "WHERE event_type IN (10, 11, 12, 13, 16, 17) "
                                              "ORDER BY id DESC "
                                              "LIMIT 100");
 
         fEventUnviewedCountQuery = prepareQuery("SELECT count(*) FROM events WHERE event_type = :event_type AND (friend_id = :friend_id OR :friend_id2 < 0)");
-        fEventInsertQuery = prepareQuery("INSERT INTO events(send_id, friend_id, event_type, message) VALUES(:send_id, :friend_id, :event_type, :message)");
-        fEventUpdateQuery = prepareQuery("UPDATE events SET event_type = :event_type WHERE id = :id");
+        fEventInsertQuery = prepareQuery("INSERT INTO events(send_id, friend_id, event_type, message, file_path, file_id, file_size, file_position, file_pausers) VALUES(:send_id, :friend_id, :event_type, :message, :file_path, :file_id, :file_size, :file_position, :file_pausers)");
+        fEventUpdateQuery = prepareQuery("UPDATE events SET event_type = :event_type, file_position = :file_position, file_pausers = :file_pausers WHERE id = :id");
         fEventUpdateSentQuery = prepareQuery("UPDATE events SET event_type = :event_type, send_id = :send_id WHERE id = :id");
         fEventDeliveredQuery = prepareQuery("UPDATE events SET event_type = 1 WHERE send_id = :send_id AND friend_id = :friend_id");
         fEventDeleteQuery = prepareQuery("DELETE FROM events WHERE id = :id");
@@ -435,7 +452,41 @@ namespace JTOX {
             }
         }
 
-        return Event(id, friendID, createdAt, eventType, message, sendID);
+        QString file_path;
+        if ( !query.value("file_path").isNull() ) {
+            file_path = query.value("file_path").toString();
+        }
+
+        QByteArray file_id;
+        if ( !query.value("file_id").isNull() ) {
+            file_id = query.value("file_id").toByteArray();
+        }
+
+        quint64 file_size = 0;
+        if ( !query.value("file_size").isNull() ) {
+            file_size = query.value("file_size").toInt(&ok);
+            if ( !ok ) {
+                Utils::bail("Error casting event file_size: " + query.value("file_size").toString());
+            }
+        }
+
+        quint64 file_position = 0;
+        if ( !query.value("file_position").isNull() ) {
+            file_position = query.value("file_position").toInt(&ok);
+            if ( !ok ) {
+                Utils::bail("Error casting event file_position: " + query.value("file_position").toString());
+            }
+        }
+
+        int file_pausers = 0;
+        if ( !query.value("file_pausers").isNull() ) {
+            file_pausers = query.value("file_pausers").toInt(&ok);
+            if ( !ok ) {
+                Utils::bail("Error casting event file_pausers: " + query.value("file_pausers").toString());
+            }
+        }
+
+        return Event(id, friendID, createdAt, eventType, message, sendID, file_path, file_id, file_size, file_position, file_pausers);
     }
 
     const QSqlQuery DBData::prepareQuery(const QString& sql)

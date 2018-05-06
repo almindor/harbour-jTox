@@ -153,26 +153,19 @@ namespace JTOX {
         return false;
     }
 
-    const QString Utils::getFileInfo(quint64 file_size, const QString &file_name)
+    quint64 Utils::transferID(quint32 friend_id, quint32 file_number)
     {
-        const QString hexSize = QString("%1").arg(file_size, 8, 16, QLatin1Char('0'));
-        return hexSize + "/" + file_name;
+        return (quint64)friend_id << 32 | file_number; // combined unique ID for transfer
     }
 
-    void Utils::parseFileInfo(const QString &fileInfo, quint64 &file_size, QString &file_name)
+    quint32 Utils::friendID(quint64 transferID)
     {
-        const QStringList split = fileInfo.split('/');
-        if ( split.size() != 2 ) {
-            throw QString("Invalid file info");
-        }
+        return (quint32) (transferID >> 32);
+    }
 
-        const QString hexSize = split.at(0);
-        file_name = split.at(1);
-        bool ok = false;
-        file_size = hexSize.toULongLong(&ok, 16);
-        if ( !ok ) {
-            throw QString("Invalid file info, wrong file size: " + hexSize);
-        }
+    quint32 Utils::fileNumber(quint64 transferID)
+    {
+        return (quint32) transferID;
     }
 
 }

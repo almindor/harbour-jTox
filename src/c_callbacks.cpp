@@ -125,6 +125,9 @@ namespace JTOX {
                             const uint8_t *filename, size_t filename_length, void *user_data) {
         Q_UNUSED(tox);
         ToxCore* jTox = (ToxCore*) user_data;
+        if ( filename_length > TOX_MAX_FILENAME_LENGTH ) { // probably not required but safer
+            filename_length = TOX_MAX_FILENAME_LENGTH;
+        }
         const QString fn = QString::fromUtf8((char*)filename, filename_length);
 
         if ( kind == TOX_FILE_KIND_AVATAR ) {
@@ -141,6 +144,14 @@ namespace JTOX {
         ToxCore* jTox = (ToxCore*) user_data;
 
         jTox->onFileChunkReceived(friend_number, file_number, position, data, length);
+    }
+
+    void c_tox_file_chunk_request_cb(Tox *tox, uint32_t friend_number, uint32_t file_number, uint64_t position,
+                                     size_t length, void *user_data) {
+        Q_UNUSED(tox);
+        ToxCore* jTox = (ToxCore*) user_data;
+
+        jTox->onFileChunkRequest(friend_number, file_number, position, length);
     }
 
 

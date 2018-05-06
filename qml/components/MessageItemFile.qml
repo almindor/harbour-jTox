@@ -2,85 +2,61 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "../js/common.js" as Common
 
-Row {
-    spacing: Theme.paddingSmall
-    layoutDirection: Common.isMessageIncoming(event_type) ? Qt.RightToLeft : Qt.LeftToRight
-    enabled: !Common.isFilePaused(event_type)
-
-    Text {
-        id: paperclip
-        text: "📎"
-        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-        font.pixelSize: Theme.fontSizeLarge
-        font.bold: false
-        font.strikeout: Common.isFileCanceled(event_type)
-        horizontalAlignment: alignmentForEvent(event_type)
-        verticalAlignment: Qt.AlignVCenter
-        color: colorForEventMsg(event_type)
-
-        SequentialAnimation on opacity {
-            loops: Animation.Infinite
-            running: Common.isFileRunning(event_type)
-
-            NumberAnimation {
-                from: 1.0
-                to: 0.5
-                duration: 1000
-            }
-            NumberAnimation {
-                from: 0.5
-                to: 1.0
-                duration: 1000
-            }
-        }
+Column {
+    id: mainColumn
+    anchors {
+        left: parent.left
+        right: parent.right
     }
 
-    Column {
-        width: parent.parent.width - paperclip.width
+    Row {
+        spacing: Theme.paddingSmall
+        layoutDirection: Common.isMessageIncoming(event_type) ? Qt.RightToLeft : Qt.LeftToRight
+
+        Image {
+            id: paperclip
+            source: "image://theme/icon-m-transfer?" + colorForEventMsg(event_type)
+        }
 
         Text {
-            anchors { // let this spread to name size
-                left: parent.left
-                right: parent.right
-            }
+            width: mainColumn.width - paperclip.width - Theme.paddingSmall
             text: message
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             font.strikeout: Common.isFileCanceled(event_type)
             font.pixelSize: Theme.fontSizeSmall
-            font.bold: Common.isFileActive(event_type)
+            font.bold: !Common.isFileCanceled(event_type)
             horizontalAlignment: alignmentForEvent(event_type)
             color: colorForEventMsg(event_type)
+        } // text
+    } // row
 
-            SequentialAnimation on opacity {
-                loops: Animation.Infinite
-                running: Common.isFilePending(event_type)
-
-                NumberAnimation {
-                    from: 1.0
-                    to: 0.5
-                    duration: 1000
-                }
-                NumberAnimation {
-                    from: 0.5
-                    to: 1.0
-                    duration: 1000
-                }
-            }
+    ProgressBar {
+        anchors {
+            left: parent.left
+            right: parent.right
         }
 
-        Text {
-            anchors { // let this spread to name size
-                left: parent.left
-                right: parent.right
+        function labelText() {
+            var sizeText = Common.humanFileSize(file_position, true) + "/" + Common.humanFileSize(file_size, true)
+            if (file_size === 18446744073709551615) {
+                sizeText = qsTr("Unkown", "file size")
             }
-            text: Common.humanFileSize(file_size, true)
-            font.strikeout: Common.isFileCanceled(event_type)
-            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            font.pixelSize: Theme.fontSizeTiny
-            font.bold: Common.isFileActive(event_type)
-            horizontalAlignment: alignmentForEvent(event_type)
-            color: Theme.highlightBackgroundColor
+
+            return sizeText
         }
+
+        indeterminate: file_size === 18446744073709551615 // "streaming" unknown size file
+
+        minimumValue: 0
+        maximumValue: file_size
+        value: file_position
+        label: labelText()
     }
-}
 
+    Timer {
+        running: eventmodel.friendID >= 0 && Common.isFileRunning(event_type) // run only when downloading this file
+        repeat: true
+        interval: 1000 // 1x a second
+        onTriggered: eventmodel.refreshFilePosition(index)
+    }
+} // main column

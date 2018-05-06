@@ -346,29 +346,47 @@
     </message>
 </context>
 <context>
+    <name>JTOX::EventModel</name>
+    <message>
+        <location filename="../src/eventmodel.cpp" line="520"/>
+        <source>Transfer canceled by sender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/eventmodel.cpp" line="520"/>
+        <source>Transfer canceled by receiver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/eventmodel.cpp" line="716"/>
+        <source>Unable to find file for transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="610"/>
+        <location filename="../src/toxcore.cpp" line="620"/>
         <source>Offline</source>
         <translation>Offline</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="611"/>
+        <location filename="../src/toxcore.cpp" line="621"/>
         <source>Ready</source>
         <translation>Tillgänglig</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="612"/>
+        <location filename="../src/toxcore.cpp" line="622"/>
         <source>Away</source>
         <translation>Borta</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="613"/>
+        <location filename="../src/toxcore.cpp" line="623"/>
         <source>Busy</source>
         <translation>Upptagen</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="616"/>
+        <location filename="../src/toxcore.cpp" line="626"/>
         <source>Unknown</source>
         <translation>Okänt</translation>
     </message>
@@ -420,11 +438,6 @@
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="56"/>
-        <source>Reject transfer</source>
-        <translation>Avslå överföringen</translation>
-    </message>
-    <message>
-        <location filename="../qml/components/MessageItem.qml" line="56"/>
         <source>Cancel transfer</source>
         <translation>Avbryt överföringen</translation>
     </message>
@@ -432,6 +445,23 @@
         <location filename="../qml/components/MessageItem.qml" line="62"/>
         <source>Open file</source>
         <translation>Öppna filen</translation>
+    </message>
+</context>
+<context>
+    <name>MessageItemFile</name>
+    <message>
+        <location filename="../qml/components/MessageItemFile.qml" line="42"/>
+        <source>Unkown</source>
+        <comment>file size</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Messages</name>
+    <message>
+        <location filename="../qml/pages/Messages.qml" line="83"/>
+        <source>Send file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -547,14 +577,8 @@
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="52"/>
-        <source>File transfer from</source>
-        <translation>Filöverföring från</translation>
-    </message>
-    <message>
-        <location filename="../qml/harbour-jtox.qml" line="52"/>
-        <source>completed</source>
-        <comment>file transfer</comment>
-        <translation>slutförd</translation>
+        <source>File transfer complete</source>
+        <translation>Filöverföring slutförd</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="60"/>

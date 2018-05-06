@@ -17,20 +17,37 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Sailfish.Pickers 1.0
 import "../components"
 
 Page {
     id: page
     allowedOrientations: Orientation.Portrait
+    property bool checkFriendID: true
 
     onVisibleChanged: {
         if ( appWindow.activeFriendID < 0 ) {
             return; // nothing
         }
 
+        if ( !checkFriendID && !visible ) {
+            checkFriendID = true;
+            return;
+        }
+
         eventmodel.setFriend(visible ? appWindow.activeFriendID : -1)
         if ( visible ) {
             listView.positionViewAtEnd()
+        }
+    }
+
+    Component {
+        id: filePickerPage
+        FilePickerPage {
+            nameFilters: [ '*.*' ]
+            onSelectedContentPropertiesChanged: {
+                eventmodel.sendFile(selectedContentProperties.filePath)
+            }
         }
     }
 
@@ -58,6 +75,17 @@ Page {
         model: eventmodel
         VerticalScrollDecorator {
             flickable: listView
+        }
+
+        PushUpMenu {
+            enabled: toxcore.status > 0 && eventmodel.friendStatus > 0
+            MenuItem {
+                text: qsTr("Send file")
+                onClicked: {
+                    checkFriendID = false // ensure we don't lose friendID
+                    pageStack.push(filePickerPage)
+                }
+            }
         }
 
         delegate: MessageItem {}
