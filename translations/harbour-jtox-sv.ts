@@ -350,17 +350,17 @@
     <message>
         <location filename="../src/eventmodel.cpp" line="520"/>
         <source>Transfer canceled by sender</source>
-        <translation type="unfinished"></translation>
+        <translation>Överföring avbruten av avsändaren</translation>
     </message>
     <message>
         <location filename="../src/eventmodel.cpp" line="520"/>
         <source>Transfer canceled by receiver</source>
-        <translation type="unfinished"></translation>
+        <translation>Överföring avbruten av mottagaren</translation>
     </message>
     <message>
         <location filename="../src/eventmodel.cpp" line="716"/>
         <source>Unable to find file for transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte hitta filen för överföring</translation>
     </message>
 </context>
 <context>
@@ -453,7 +453,7 @@
         <location filename="../qml/components/MessageItemFile.qml" line="42"/>
         <source>Unkown</source>
         <comment>file size</comment>
-        <translation type="unfinished"></translation>
+        <translation>filstorlek</translation>
     </message>
 </context>
 <context>
@@ -461,7 +461,7 @@
     <message>
         <location filename="../qml/pages/Messages.qml" line="83"/>
         <source>Send file</source>
-        <translation type="unfinished"></translation>
+        <translation>Skicka fil</translation>
     </message>
 </context>
 <context>
