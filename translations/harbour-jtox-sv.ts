@@ -453,7 +453,7 @@
         <location filename="../qml/components/MessageItemFile.qml" line="42"/>
         <source>Unkown</source>
         <comment>file size</comment>
-        <translation>filstorlek</translation>
+        <translation>Okänd</translation>
     </message>
 </context>
 <context>
