@@ -348,17 +348,17 @@
 <context>
     <name>JTOX::EventModel</name>
     <message>
-        <location filename="../src/eventmodel.cpp" line="520"/>
+        <location filename="../src/eventmodel.cpp" line="517"/>
         <source>Transfer canceled by sender</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="520"/>
+        <location filename="../src/eventmodel.cpp" line="517"/>
         <source>Transfer canceled by receiver</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="716"/>
+        <location filename="../src/eventmodel.cpp" line="713"/>
         <source>Unable to find file for transfer</source>
         <translation type="unfinished"></translation>
     </message>
