@@ -5,13 +5,23 @@
 
 namespace JTOX {
 
-    Event::Event() : fID(-1), fFriendID(0), fEventType(etEdit), fMessage(QString()), fSendID(0)
+    Event::Event() : fID(-1), fFriendID(0), fEventType(etEdit), fMessage(QString()), fSendID(0), fFileID(), fFileSize(0), fFilePosition(0), fFilePausers(0)
     {
 
     }
 
     Event::Event(int id, quint32 friendID, QDateTime createdAt, EventType eventType, const QString& message, qint64 sendID) :
-        fID(id), fFriendID(friendID), fEventType(eventType), fMessage(message), fSendID(sendID)
+        fID(id), fFriendID(friendID), fEventType(eventType), fMessage(message), fSendID(sendID),
+        fFileID(), fFileSize(0), fFilePosition(0), fFilePausers(0)
+    {
+        createdAt.setTimeSpec(Qt::UTC);
+        fCreated = createdAt.toLocalTime();
+    }
+
+    Event::Event(int id, quint32 friendID, QDateTime createdAt, EventType eventType, const QString &message, qint64 sendID,
+                 const QString& filePath, const QByteArray& fileID, quint64 fileSize, quint64 filePosition, int pausers) :
+        fID(id), fFriendID(friendID), fEventType(eventType), fMessage(message), fSendID(sendID),
+        fFilePath(filePath), fFileID(fileID), fFileSize(fileSize), fFilePosition(filePosition), fFilePausers(pausers)
     {
         createdAt.setTimeSpec(Qt::UTC);
         fCreated = createdAt.toLocalTime();
@@ -22,9 +32,13 @@ namespace JTOX {
             case erID: return fID;
             case erCreated: return fCreated;
             case erEventType: return fEventType;
-            case erMessage: return wrapMessage();
+            case erMessage: return hyperLink(fMessage);
+            case erFileName: return fMessage; // ensure we don't attempt a hyperlink!
+            case erFilePath: return fFilePath;
+            case erFileID: return fFileID;
             case erFileSize: return fileSize();
-            case erFileName: return fileName();
+            case erFilePosition: return fFilePosition;
+            case erFilePausers: return fFilePausers;
         }
 
         return QVariant("invalid_role");
@@ -32,6 +46,16 @@ namespace JTOX {
 
     int Event::id() const {
         return fID;
+    }
+
+    void Event::setID(int id)
+    {
+        fID = id;
+    }
+
+    void Event::setCreatedAt(const QDateTime &created_at)
+    {
+        fCreated = created_at;
     }
 
     const QString Event::message() const
@@ -64,40 +88,6 @@ namespace JTOX {
         fEventType = eventType;
     }
 
-    quint64 Event::fileSize() const
-    {
-        switch ( fEventType ) {
-            case etFileTransferIn:
-            case etFileTransferInCanceled:
-            case etFileTransferInPaused:
-            case etFileTransferOut:
-            case etFileTransferOutCanceled:
-            case etFileTransferOutPaused:
-            case etFileTransferInRunning:
-            case etFileTransferOutRunning:
-            case etFileTransferInDone:
-            case etFileTransferOutDone: {
-                quint64 file_size;
-                QString file_name;
-                Utils::parseFileInfo(fMessage, file_size, file_name);
-                return file_size;
-            }
-            default: return 0;
-        }
-    }
-
-    const QString Event::fileName() const
-    {
-        if ( isFile() ) {
-            quint64 file_size;
-            QString file_name;
-            Utils::parseFileInfo(fMessage, file_size, file_name);
-            return file_name;
-        }
-
-        return QString();
-    }
-
     bool Event::isFile() const
     {
         switch ( fEventType ) {
@@ -113,6 +103,62 @@ namespace JTOX {
             case etFileTransferOutDone: return true;
             default: return false;
         }
+    }
+
+    bool Event::isIncoming() const
+    {
+        if ( !isFile() ) {
+            return false;
+        }
+
+        switch ( fEventType ) {
+            case etFileTransferIn:
+            case etFileTransferInCanceled:
+            case etFileTransferInPaused:
+            case etFileTransferInRunning:
+            case etFileTransferInDone: return true;
+            default: return false;
+        }
+    }
+
+    const QByteArray Event::fileID() const
+    {
+        return fFileID;
+    }
+
+    const QString Event::fileName() const
+    {
+        return fMessage;
+    }
+
+    const QString Event::filePath() const
+    {
+        return fFilePath;
+    }
+
+    quint64 Event::fileSize() const
+    {
+        return fFileSize;
+    }
+
+    quint64 Event::filePosition() const
+    {
+        return fFilePosition;
+    }
+
+    int Event::filePausers() const
+    {
+        return fFilePausers;
+    }
+
+    void Event::setFilePosition(quint64 position)
+    {
+        fFilePosition = position;
+    }
+
+    void Event::setFilePausers(int pausers)
+    {
+        fFilePausers = pausers;
     }
 
     const QString Event::hyperLink(const QString& message) const
@@ -134,39 +180,6 @@ namespace JTOX {
 
         QString newMsg = message;
         return hyperLink(newMsg.replace(link, "<a href=\"" + link + "\">" + link + "</a>"));
-    }
-
-    const QString Event::fileInfo(const QString &message) const
-    {
-        quint64 file_size;
-        QString file_name;
-        Utils::parseFileInfo(message, file_size, file_name);
-        return file_name;
-    }
-
-    const QString Event::wrapMessage() const
-    {
-        switch ( fEventType ) {
-            case etMessageIn:
-            case etMessageInUnread:
-            case etMessageOut:
-            case etMessageOutOffline:
-            case etMessageOutPending: return hyperLink(fMessage);
-            case etFileTransferIn:
-            case etFileTransferInPaused:
-            case etFileTransferInCanceled:
-            case etFileTransferOut:
-            case etFileTransferOutPaused:
-            case etFileTransferOutCanceled:
-            case etFileTransferInRunning:
-            case etFileTransferOutRunning:
-            case etFileTransferInDone:
-            case etFileTransferOutDone: return fileInfo(fMessage);
-            // TODO: handle others
-            default: Utils::bail("Invalid event type");
-        }
-
-        return QString();
     }
 
     void Event::delivered() {

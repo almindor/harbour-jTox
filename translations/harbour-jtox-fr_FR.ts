@@ -281,6 +281,21 @@
     </message>
 </context>
 <context>
+    <name>JTOX::EventModel</name>
+    <message>
+        <source>Transfer canceled by sender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transfer canceled by receiver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to find file for transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>JTOX::ToxCore</name>
     <message>
         <source>Offline</source>
@@ -329,10 +344,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reject transfer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel transfer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -350,6 +361,21 @@
     </message>
     <message>
         <source>Overriding</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MessageItemFile</name>
+    <message>
+        <source>Unkown</source>
+        <comment>file size</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Messages</name>
+    <message>
+        <source>Send file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -453,12 +479,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File transfer from</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>completed</source>
-        <comment>file transfer</comment>
+        <source>File transfer complete</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

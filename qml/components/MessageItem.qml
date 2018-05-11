@@ -30,8 +30,8 @@ ListItem {
         }
 
         MenuItem {
-            visible: (Common.isFilePending(event_type) && Common.isMessageIncoming(event_type)) || Common.isFilePaused(event_type)
-            text: Common.isFilePaused(event_type) ? qsTr("Resume transfer") : qsTr("Accept transfer")
+            visible: Common.isFilePending(event_type) && (file_pausers & 0x1) !== 0 // paused on our side
+            text: (event_type === Common.EventType.FileTransferIn ? qsTr("Accept transfer") : qsTr("Resume transfer"))
             onClicked: {
                 if ( Common.isFilePaused(event_type) || !eventmodel.fileExists(event_id) ) {
                     eventmodel.resumeFile(event_id)
@@ -52,15 +52,15 @@ ListItem {
         }
 
         MenuItem {
-            visible: Common.isFilePending(event_type) || Common.isFilePaused(event_type) || Common.isFileRunning(event_type)
-            text: Common.isMessageIncoming(event_type) && Common.isFilePending(event_type) ? qsTr("Reject transfer") : qsTr("Cancel transfer")
+            visible: Common.isFileActive(event_type) || Common.isFilePaused(event_type)
+            text: qsTr("Cancel transfer")
             onClicked: eventmodel.cancelFile(event_id)
         }
 
         MenuItem {
-            visible: Common.isFileDone(event_type)
+            visible: Common.isFile(event_type) && (Common.isFileDone(event_type) || Common.isMessageOutgoing(event_type))
             text: qsTr("Open file")
-            onClicked: Qt.openUrlExternally("/home/nemo/Downloads/" + file_name) // TODO get full path from C++
+            onClicked: Qt.openUrlExternally(file_path)
         }
     }
 
@@ -114,11 +114,12 @@ ListItem {
 
         BusyIndicator {
             anchors {
-                right: parent.right
+                right: !Common.isMessageIncoming(event_type) ? parent.right : undefined
+                left: Common.isMessageIncoming(event_type) ? parent.left : undefined
             }
             size: BusyIndicatorSize.ExtraSmall
-            visible: Common.isMessagePending(event_type)
-            running: Common.isMessagePending(event_type)
+            visible: Common.isMessagePending(event_type) || Common.isFilePending(event_type)
+            running: Common.isMessagePending(event_type) || Common.isFilePending(event_type)
         }
     }
 

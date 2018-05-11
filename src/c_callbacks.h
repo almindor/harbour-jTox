@@ -53,6 +53,9 @@ namespace JTOX {
     void c_tox_file_recv_chunk_cb(Tox *tox, uint32_t friend_number, uint32_t file_number, uint64_t position,
                                   const uint8_t *data, size_t length, void *user_data);
 
+    void c_tox_file_chunk_request_cb(Tox *tox, uint32_t friend_number, uint32_t file_number, uint64_t position,
+                                     size_t length, void *user_data);
+
 }
 
 #endif // C_CALLBACKS_H

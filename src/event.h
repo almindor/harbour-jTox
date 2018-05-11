@@ -40,8 +40,12 @@ namespace JTOX {
         erEventType,
         erCreated,
         erMessage,
+        erFileName,
+        erFilePath,
+        erFileID,
         erFileSize,
-        erFileName
+        erFilePosition,
+        erFilePausers
     };
 
     class Event
@@ -49,19 +53,30 @@ namespace JTOX {
     public:
         Event();
         Event(int id, quint32 friendID, QDateTime createdAt, EventType eventType, const QString& message, qint64 sendID);
+        Event(int id, quint32 friendID, QDateTime createdAt, EventType eventType, const QString& message, qint64 sendID,
+              const QString& file_path, const QByteArray& file_id, quint64 fileSize, quint64 filePosition, int pausers);
         const QVariant value(int role) const;
         void delivered();
         void viewed();
         int id() const;
+        void setID(int id);
+        void setCreatedAt(const QDateTime& created_at);
         const QString message() const;
         qint64 sendID() const;
         quint32 friendID() const;
         EventType type() const;
         void setSendID(qint64 sendID);
         void setEventType(EventType eventType);
-        quint64 fileSize() const;
-        const QString fileName() const;
         bool isFile() const;
+        bool isIncoming() const;
+        const QByteArray fileID() const;
+        const QString fileName() const; // just an alias
+        const QString filePath() const;
+        quint64 fileSize() const;
+        quint64 filePosition() const;
+        int filePausers() const;
+        void setFilePosition(quint64 position);
+        void setFilePausers(int pausers);
     private:
         int fID;
         quint32 fFriendID;
@@ -69,10 +84,13 @@ namespace JTOX {
         QString fMessage;
         qint64 fSendID;
         QDateTime fCreated;
+        QString fFilePath;
+        QByteArray fFileID;
+        quint64 fFileSize;
+        quint64 fFilePosition;
+        int fFilePausers;
 
         const QString hyperLink(const QString& message) const;
-        const QString fileInfo(const QString& message) const;
-        const QString wrapMessage() const;
     };
 
     typedef QList<Event> EventList;
