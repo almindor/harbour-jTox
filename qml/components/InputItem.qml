@@ -77,7 +77,7 @@ Item {
             }
         }
 
-        icon.source: "image://theme/icon-m-forward?" + (inputField.activeFocus ? Theme.highlightColor : Theme.primaryColor)
+        icon.source: "image://theme/icon-m-forward"
         onClicked: {
             var text = inputField.text
 

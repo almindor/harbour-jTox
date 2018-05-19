@@ -775,8 +775,9 @@ namespace JTOX {
         }
 
         TOX_ERR_FILE_SEND error;
+        const QString fileName = QFileInfo(file).fileName();
         quint32 file_number = tox_file_send(fTox, friendID, TOX_FILE_KIND_DATA, (quint64) file.size(), (quint8*) file_id.constData(),
-                                            (quint8*) file.fileName().toUtf8().constData(), file.fileName().length(), &error);
+                                            (quint8*) fileName.toUtf8().constData(), fileName.length(), &error);
 
 
         handleToxFileSendError(error); // all critical and cause a bail
