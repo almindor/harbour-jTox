@@ -79,12 +79,12 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="81"/>
         <source>Account</source>
-        <translation>Cuenta</translation>
+        <translation>Ajustes</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="85"/>
         <source>Show QR Code</source>
-        <translation>Código QR </translation>
+        <translation>Código QR</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="98"/>
@@ -164,7 +164,7 @@
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="48"/>
         <source>Add Friend</source>
-        <translation>añadir un contacto</translation>
+        <translation>Añadir</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="59"/>
@@ -261,7 +261,7 @@
     <message>
         <location filename="../qml/pages/Friends.qml" line="74"/>
         <source>Pending friend requests: </source>
-        <translation>Solicitud de amistad pendiente:</translation>
+        <translation>Solicitudes de amistad pendientes:</translation>
     </message>
     <message>
         <location filename="../qml/pages/Friends.qml" line="83"/>
@@ -271,7 +271,7 @@
     <message>
         <location filename="../qml/pages/Friends.qml" line="88"/>
         <source>Account</source>
-        <translation>Cuenta</translation>
+        <translation>Ajustes</translation>
     </message>
     <message>
         <location filename="../qml/pages/Friends.qml" line="93"/>
@@ -332,7 +332,7 @@
     <message>
         <location filename="../qml/components/InputItem.qml" line="24"/>
         <source>is typing</source>
-        <translation>escribiendo...</translation>
+        <translation>está escribiendo...</translation>
     </message>
     <message>
         <location filename="../qml/components/InputItem.qml" line="58"/>
@@ -350,32 +350,32 @@
     <message>
         <location filename="../src/eventmodel.cpp" line="130"/>
         <source>Cannot send empty message</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede enviar un mensaje en blanco</translation>
     </message>
     <message>
         <location filename="../src/eventmodel.cpp" line="145"/>
         <source>Unable to send message</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede enviar el mensaje</translation>
     </message>
     <message>
         <location filename="../src/eventmodel.cpp" line="389"/>
         <source>Removed invalid pending message</source>
-        <translation type="unfinished"></translation>
+        <translation>Se eliminó el mensaje pendiente no válido</translation>
     </message>
     <message>
         <location filename="../src/eventmodel.cpp" line="539"/>
         <source>Transfer canceled by sender</source>
-        <translation type="unfinished"></translation>
+        <translation>Transferencia cancelada por el remitente</translation>
     </message>
     <message>
         <location filename="../src/eventmodel.cpp" line="539"/>
         <source>Transfer canceled by receiver</source>
-        <translation type="unfinished"></translation>
+        <translation>Transferencia cancelada por el receptor</translation>
     </message>
     <message>
         <location filename="../src/eventmodel.cpp" line="735"/>
         <source>Unable to find file for transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede encontrar el archivo para transferir</translation>
     </message>
 </context>
 <context>
@@ -419,27 +419,27 @@
     <message>
         <location filename="../qml/components/MessageItem.qml" line="18"/>
         <source>Copy to clipboard</source>
-        <translation>Copiar al portapapeles</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="22"/>
         <source>Message copied to clipboard</source>
-        <translation>Mensaje copiado al portapapeles</translation>
+        <translation>Mensaje copiado</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="28"/>
         <source>Delete message</source>
-        <translation>Borrar mensaje</translation>
+        <translation>Borrar</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="34"/>
         <source>Accept transfer</source>
-        <translation>Aceptar transferencia</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="34"/>
         <source>Resume transfer</source>
-        <translation>Reanudar transferencia</translation>
+        <translation>Reanudar</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="39"/>
@@ -449,17 +449,17 @@
     <message>
         <location filename="../qml/components/MessageItem.qml" line="50"/>
         <source>Pause transfer</source>
-        <translation>Pausar transferencia</translation>
+        <translation>Pausar</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="56"/>
         <source>Cancel transfer</source>
-        <translation>Cancelar transferencia</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../qml/components/MessageItem.qml" line="62"/>
         <source>Open file</source>
-        <translation>Abrir fichero</translation>
+        <translation>Abrir</translation>
     </message>
 </context>
 <context>
@@ -468,7 +468,7 @@
         <location filename="../qml/components/MessageItemFile.qml" line="42"/>
         <source>Unkown</source>
         <comment>file size</comment>
-        <translation type="unfinished"></translation>
+        <translation>Desconocido</translation>
     </message>
 </context>
 <context>
@@ -476,7 +476,7 @@
     <message>
         <location filename="../qml/pages/Messages.qml" line="83"/>
         <source>Send file</source>
-        <translation type="unfinished"></translation>
+        <translation>Enviar</translation>
     </message>
 </context>
 <context>
@@ -484,7 +484,7 @@
     <message>
         <location filename="../qml/pages/Password.qml" line="55"/>
         <source>Account login</source>
-        <translation>Cuenta de iniciar sesión</translation>
+        <translation>Iniciar sesión</translation>
     </message>
     <message>
         <location filename="../qml/pages/Password.qml" line="44"/>
@@ -588,17 +588,17 @@
     <message>
         <location filename="../qml/harbour-jtox.qml" line="51"/>
         <source>Message from</source>
-        <translation>Mensanje desde</translation>
+        <translation>Mensanje de</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="52"/>
         <source>Transfer from</source>
-        <translation type="unfinished"></translation>
+        <translation>Transferencia de de</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="53"/>
         <source>File transfer complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Transferencia de archivo completa</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="62"/>
@@ -608,7 +608,7 @@
     <message>
         <location filename="../qml/harbour-jtox.qml" line="63"/>
         <source>Removed from </source>
-        <translation>Removido desde</translation>
+        <translation>Removido de</translation>
     </message>
 </context>
 </TS>
