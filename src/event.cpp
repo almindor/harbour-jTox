@@ -179,7 +179,7 @@ namespace JTOX {
         }
 
         QString newMsg = message;
-        return hyperLink(newMsg.replace(link, "<a href=\"" + link + "\">" + link + "</a>"));
+        return hyperLink(newMsg.replace(link, "<a href=\"" + link + "\">" + link + "</a>").replace('\n', "<br>"));
     }
 
     void Event::delivered() {

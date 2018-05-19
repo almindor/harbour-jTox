@@ -52,6 +52,7 @@ ApplicationWindow
         onTransferReceived: banner("x-nemo.messaging.mms", qsTr("Transfer from") + " " + friendName, "message", [friendIndex], appWindow.applicationActive)
         onTransferComplete: banner("x-nemo.transfer.complete", qsTr("File transfer complete"), "message", [friendIndex], appWindow.applicationActive)
         onTransferError: banner("x-nemo.transfer.error", error, "error", [error], appWindow.applicationActive)
+        onEventError: banner("x-nemo.messaging.error", error, "error", [error], appWindow.applicationActive)
     }
 
     Connections {

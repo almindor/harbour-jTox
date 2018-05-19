@@ -44,7 +44,7 @@ Item {
         anchors {
             bottom: parent.bottom
             left: parent.left
-            right: parent.right
+            right: sendButton.left
         }
 
         function shortened(name) {
@@ -56,11 +56,6 @@ Item {
         }
 
         placeholderText: toxcore.status > 0 && eventmodel.friendStatus > 0 ? qsTr("Type your message here") : (shortened(eventmodel.friendName) + " " + qsTr("is offline"))
-        EnterKey.onClicked: {
-            sendMessage(text)
-            text = ''
-            eventmodel.typing = false
-        }
 
         onTextChanged: {
             if ( text.length === 0 ) {
@@ -71,4 +66,28 @@ Item {
             eventmodel.typing = true
         }
     }
+
+    IconButton {
+        id: sendButton
+        anchors {
+            right: parent.right
+            bottom: parent.bottom
+            margins: {
+                bottom: Theme.paddingSmall
+            }
+        }
+
+        icon.source: "image://theme/icon-m-forward?" + (inputField.activeFocus ? Theme.highlightColor : Theme.primaryColor)
+        onClicked: {
+            var text = inputField.text
+
+            if ( text.length > 0 ) { // only send non-empties
+                sendMessage(text)
+            }
+
+            inputField.text = ''
+            eventmodel.typing = false
+        }
+    }
+
 }

@@ -294,6 +294,18 @@
         <source>Unable to find file for transfer</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cannot send empty message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removed invalid pending message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to send message</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>JTOX::ToxCore</name>

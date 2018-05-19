@@ -48,6 +48,7 @@ namespace JTOX {
         void friendUpdated() const;
         void typingChanged(bool typing) const;
         void transferError(const QString& error) const;
+        void eventError(const QString& error) const;
         void transferComplete(const QString& fileName, int friendIndex, const QString& friendName);
         void messageReceived(int friendIndex, const QString& friendName) const;
         void transferReceived(int friendIndex, const QString& friendName) const;

@@ -79,7 +79,10 @@ namespace JTOX {
     qint64 EventModel::sendMessageRaw(const QString& message, qint64 friendID, int id)
     {
         qint64 sendID = -1;
-        const QByteArray rawMsg = message.trimmed().toUtf8();
+        const QByteArray rawMsg = message.toUtf8();
+        if ( rawMsg.size() == 0 ) { // empty msg is disallowed in toxcore
+            return sendID;
+        }
         TOX_ERR_FRIEND_SEND_MESSAGE error;
         sendID = tox_friend_send_message(fToxCore.tox(), friendID, TOX_MESSAGE_TYPE_NORMAL, (uint8_t*) rawMsg.data(),
                                          rawMsg.size(), &error);
@@ -123,6 +126,11 @@ namespace JTOX {
             Utils::bail("Send called when toxcore not initialized!");
         }
 
+        if ( message.isEmpty() ) {
+            emit eventError(tr("Cannot send empty message"));
+            return; // this would cause error in toxcore!
+        }
+
         int count = rowCount();
         EventType eventType = etMessageOutOffline; // default to offline msg
         qint64 sendID = -1;
@@ -132,6 +140,11 @@ namespace JTOX {
 
         if ( getFriendStatus() > 0 ) { // if friend is online, send it and use out pending mt
             sendID = sendMessageRaw(message, fFriendID, event.id());
+            if ( sendID < 0 ) { // shouldn't happen since we check input now, but we need to handle somehow
+                fDBData.deleteEvent(event.id());
+                emit eventError(tr("Unable to send message"));
+                return;
+            }
             eventType = etMessageOutPending; // if we got here the message is out
             event.setEventType(eventType);
             event.setSendID(sendID);
@@ -363,16 +376,25 @@ namespace JTOX {
 
         offlineMessages.append(pendingMessages);
 
+        int index = -1;
         foreach ( const Event& event, offlineMessages ) {
             qint64 sendID = sendMessageRaw(event.message(), friendID, event.id());
 
-            if ( fFriendID == friendID ) { // we need to update list entries if we're active on given friend
-                for ( int i = 0; i < fList.size(); i++ ) {
-                    if ( fList.at(i).id() == event.id() ) {
-                        fList[i].setSendID(sendID);
-                        fList[i].setEventType(etMessageOutPending);
-                    }
+            if ( sendID < 0 ) { // handled error case or empty message bug (fixed since)
+                fDBData.deleteEvent(event.id()); // remove the message
+                if ( fFriendID == friendID && (index = indexForEvent(event.id())) >= 0 ) {
+                    beginRemoveRows(QModelIndex(), index, index);
+                    fList.removeAt(index);
+                    endRemoveRows();
+                    emit eventError(tr("Removed invalid pending message"));
+                    qDebug() << "removed invalid pending msg\n";
                 }
+                continue;
+            }
+
+            if ( fFriendID == friendID && (index = indexForEvent(event.id())) >= 0 ) {
+                fList[index].setSendID(sendID);
+                fList[index].setEventType(etMessageOutPending);
             }
         }
     }

@@ -49,11 +49,6 @@
         <translation>Французский: Jerome Hubert</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="91"/>
-        <source>Russian: moorchegue</source>
-        <translation>Русский: moorchegue</translation>
-    </message>
-    <message>
         <location filename="../qml/pages/About.qml" line="103"/>
         <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
         <translation>Протокол Tox является &lt;b&gt;ЭКСПЕРИМЕНТАЛЬНЫМ!&lt;/b&gt; Протокол не проходил аудит безопасности и может содержать уязвимости. Возможно потребление большого объема трафика. &lt;b&gt;ИСПОЛЬЗУЙТЕ НА СВОЙ СТРАХ И РИСК&lt;/b&gt;.</translation>
@@ -308,8 +303,8 @@
     </message>
     <message>
         <location filename="../qml/pages/Import.qml" line="43"/>
-        <source>ВНИМАНИЕ!</source>
-        <translation></translation>
+        <source>WARNING!</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/Import.qml" line="44"/>
@@ -353,17 +348,32 @@
 <context>
     <name>JTOX::EventModel</name>
     <message>
-        <location filename="../src/eventmodel.cpp" line="517"/>
+        <location filename="../src/eventmodel.cpp" line="130"/>
+        <source>Cannot send empty message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/eventmodel.cpp" line="145"/>
+        <source>Unable to send message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/eventmodel.cpp" line="389"/>
+        <source>Removed invalid pending message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/eventmodel.cpp" line="539"/>
         <source>Transfer canceled by sender</source>
         <translation>Передача отменена отправителем</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="517"/>
+        <location filename="../src/eventmodel.cpp" line="539"/>
         <source>Transfer canceled by receiver</source>
         <translation>Передача отменена получателем</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="713"/>
+        <location filename="../src/eventmodel.cpp" line="735"/>
         <source>Unable to find file for transfer</source>
         <translation>Не найден файл для передачи</translation>
     </message>
@@ -387,13 +397,13 @@
     </message>
     <message>
         <location filename="../src/toxcore.cpp" line="623"/>
-        <source>Занят</source>
-        <translation></translation>
+        <source>Busy</source>
+        <translation type="unfinished">Занят</translation>
     </message>
     <message>
         <location filename="../src/toxcore.cpp" line="626"/>
-        <source>Не известно</source>
-        <translation></translation>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -582,16 +592,21 @@
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="52"/>
+        <source>Transfer from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harbour-jtox.qml" line="53"/>
         <source>File transfer complete</source>
         <translation>Передача файла завершена</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="60"/>
+        <location filename="../qml/harbour-jtox.qml" line="62"/>
         <source>Registered on </source>
         <translation>Зарегистрирован на </translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="61"/>
+        <location filename="../qml/harbour-jtox.qml" line="63"/>
         <source>Removed from </source>
         <translation>Удален из </translation>
     </message>

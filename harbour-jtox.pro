@@ -76,6 +76,7 @@ TRANSLATIONS += \
     translations/harbour-jtox-es.ts \
     translations/harbour-jtox-fr_FR.ts \
     translations/harbour-jtox-sv.ts \
+    translations/harbour-jtox-ru.ts \
 
 HEADERS += \
     src/c_callbacks.h \

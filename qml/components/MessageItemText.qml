@@ -4,7 +4,7 @@ import "../js/common.js" as Common
 
 Text {
     linkColor: Theme.highlightColor
-    textFormat: Text.RichText
+    textFormat: Text.AutoText
     onLinkActivated: Qt.openUrlExternally(link)
 
     wrapMode: Text.WrapAtWordBoundaryOrAnywhere

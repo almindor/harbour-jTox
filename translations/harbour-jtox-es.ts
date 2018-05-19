@@ -348,17 +348,32 @@
 <context>
     <name>JTOX::EventModel</name>
     <message>
-        <location filename="../src/eventmodel.cpp" line="517"/>
+        <location filename="../src/eventmodel.cpp" line="130"/>
+        <source>Cannot send empty message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/eventmodel.cpp" line="145"/>
+        <source>Unable to send message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/eventmodel.cpp" line="389"/>
+        <source>Removed invalid pending message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/eventmodel.cpp" line="539"/>
         <source>Transfer canceled by sender</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="517"/>
+        <location filename="../src/eventmodel.cpp" line="539"/>
         <source>Transfer canceled by receiver</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="713"/>
+        <location filename="../src/eventmodel.cpp" line="735"/>
         <source>Unable to find file for transfer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -586,12 +601,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="61"/>
+        <location filename="../qml/harbour-jtox.qml" line="62"/>
         <source>Registered on </source>
         <translation>Registrado en</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="62"/>
+        <location filename="../qml/harbour-jtox.qml" line="63"/>
         <source>Removed from </source>
         <translation>Removido desde</translation>
     </message>
