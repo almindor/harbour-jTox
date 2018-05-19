@@ -396,7 +396,7 @@ namespace JTOX {
         // only notify in case we're not open on sender already OR if we're in background regardless of which friend
         if ( !activeFriend ) {
             fFriendModel.unviewedMessageReceived(friend_id);
-            emit messageReceived(fFriendModel.getListIndexForFriendID(friend_id), fFriendModel.getFriendByID(friend_id).name());
+            emit transferReceived(fFriendModel.getListIndexForFriendID(friend_id), fFriendModel.getFriendByID(friend_id).name());
         }
     }
 

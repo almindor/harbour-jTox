@@ -50,6 +50,7 @@ namespace JTOX {
         void transferError(const QString& error) const;
         void transferComplete(const QString& fileName, int friendIndex, const QString& friendName);
         void messageReceived(int friendIndex, const QString& friendName) const;
+        void transferReceived(int friendIndex, const QString& friendName) const;
     public slots:
         void onMessageDelivered(quint32 friendID, quint32 sendID);
         void onMessageReceived(quint32 friend_id, TOX_MESSAGE_TYPE type, const QString& message);

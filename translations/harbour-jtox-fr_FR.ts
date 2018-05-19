@@ -482,5 +482,9 @@
         <source>File transfer complete</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Transfer from</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

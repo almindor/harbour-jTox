@@ -577,16 +577,21 @@
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="52"/>
+        <source>Transfer from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/harbour-jtox.qml" line="53"/>
         <source>File transfer complete</source>
         <translation>Filöverföring slutförd</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="60"/>
+        <location filename="../qml/harbour-jtox.qml" line="61"/>
         <source>Registered on </source>
         <translation>Registrerat på </translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="61"/>
+        <location filename="../qml/harbour-jtox.qml" line="62"/>
         <source>Removed from </source>
         <translation>Borttaget från </translation>
     </message>
