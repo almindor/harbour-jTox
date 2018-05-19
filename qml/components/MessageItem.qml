@@ -18,7 +18,7 @@ ListItem {
             text: qsTr("Copy to clipboard")
             visible: Common.isMessage(event_type)
             onClicked: {
-                Clipboard.text = messageText.text
+                Clipboard.text = message
                 banner("im", qsTr("Message copied to clipboard"), undefined, undefined, true)
             }
         }
