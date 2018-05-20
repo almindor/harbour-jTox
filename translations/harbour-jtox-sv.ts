@@ -350,17 +350,17 @@
     <message>
         <location filename="../src/eventmodel.cpp" line="130"/>
         <source>Cannot send empty message</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte skicka tomt meddelande</translation>
     </message>
     <message>
         <location filename="../src/eventmodel.cpp" line="145"/>
         <source>Unable to send message</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte skicka meddelande</translation>
     </message>
     <message>
         <location filename="../src/eventmodel.cpp" line="389"/>
         <source>Removed invalid pending message</source>
-        <translation type="unfinished"></translation>
+        <translation>Tog bort ogiltigt väntande meddelande</translation>
     </message>
     <message>
         <location filename="../src/eventmodel.cpp" line="539"/>
@@ -593,7 +593,7 @@
     <message>
         <location filename="../qml/harbour-jtox.qml" line="52"/>
         <source>Transfer from</source>
-        <translation type="unfinished"></translation>
+        <translation>Överföring från</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="53"/>
