@@ -41,7 +41,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="91"/>
         <source>Spanish: caballlero</source>
-        <translation>Español: caballlero</translation>
+        <translation>Español: carlosgonz</translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="91"/>
@@ -164,7 +164,7 @@
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="48"/>
         <source>Add Friend</source>
-        <translation>Añadir</translation>
+        <translation>Añadir un contacto</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="59"/>
@@ -184,7 +184,7 @@
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="99"/>
         <source>Please add me to friends</source>
-        <translation>Por favor agregame a tus contactos</translation>
+        <translation>Por favor agrégame a sus contactos</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="111"/>
@@ -276,7 +276,7 @@
     <message>
         <location filename="../qml/pages/Friends.qml" line="93"/>
         <source>Add Friend</source>
-        <translation>Añadir un contacto</translation>
+        <translation>Añadir</translation>
     </message>
     <message>
         <location filename="../qml/pages/Friends.qml" line="101"/>
@@ -337,7 +337,7 @@
     <message>
         <location filename="../qml/components/InputItem.qml" line="58"/>
         <source>Type your message here</source>
-        <translation>su mensaje</translation>
+        <translation>Escribir texto</translation>
     </message>
     <message>
         <location filename="../qml/components/InputItem.qml" line="58"/>
