@@ -208,6 +208,24 @@
     </message>
 </context>
 <context>
+    <name>AltInputItem</name>
+    <message>
+        <location filename="../qml/components/AltInputItem.qml" line="24"/>
+        <source>is typing</source>
+        <translation type="unfinished">está escribiendo...</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/AltInputItem.qml" line="72"/>
+        <source>Type your message here</source>
+        <translation type="unfinished">Escribir texto</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/AltInputItem.qml" line="72"/>
+        <source>is offline</source>
+        <translation type="unfinished">esta desconectado</translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <location filename="../qml/cover/CoverPage.qml" line="88"/>
@@ -417,47 +435,47 @@
 <context>
     <name>MessageItem</name>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="18"/>
+        <location filename="../qml/components/MessageItem.qml" line="20"/>
         <source>Copy to clipboard</source>
         <translation>Copiar</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="22"/>
+        <location filename="../qml/components/MessageItem.qml" line="24"/>
         <source>Message copied to clipboard</source>
         <translation>Mensaje copiado</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="28"/>
+        <location filename="../qml/components/MessageItem.qml" line="30"/>
         <source>Delete message</source>
         <translation>Borrar</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="34"/>
+        <location filename="../qml/components/MessageItem.qml" line="36"/>
         <source>Accept transfer</source>
         <translation>Aceptar</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="34"/>
+        <location filename="../qml/components/MessageItem.qml" line="36"/>
         <source>Resume transfer</source>
         <translation>Reanudar</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="39"/>
+        <location filename="../qml/components/MessageItem.qml" line="41"/>
         <source>Overriding</source>
         <translation>Primordial</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="50"/>
+        <location filename="../qml/components/MessageItem.qml" line="52"/>
         <source>Pause transfer</source>
         <translation>Pausar</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="56"/>
+        <location filename="../qml/components/MessageItem.qml" line="58"/>
         <source>Cancel transfer</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="62"/>
+        <location filename="../qml/components/MessageItem.qml" line="64"/>
         <source>Open file</source>
         <translation>Abrir</translation>
     </message>
@@ -474,7 +492,7 @@
 <context>
     <name>Messages</name>
     <message>
-        <location filename="../qml/pages/Messages.qml" line="83"/>
+        <location filename="../qml/pages/Messages.qml" line="85"/>
         <source>Send file</source>
         <translation>Enviar</translation>
     </message>

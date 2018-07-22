@@ -150,8 +150,8 @@ namespace JTOX {
             event.setSendID(sendID);
         }
 
-        beginInsertRows(QModelIndex(), count, count);
-        fList.append(event);
+        beginInsertRows(QModelIndex(), 0, 0);
+        fList.push_front(event);
         endInsertRows();
     }
 
@@ -200,8 +200,8 @@ namespace JTOX {
         Event event(-1, fFriendID, createdAt, etFileTransferOut, QFileInfo(file).fileName(), fileNumber, filePath, fileID, file.size(), 0, 0x2);
         fDBData.insertEvent(event);
 
-        beginInsertRows(QModelIndex(), fList.size(), fList.size());
-        fList.append(event);
+        beginInsertRows(QModelIndex(), 0, 0);
+        fList.push_front(event);
         endInsertRows();
     }
 
@@ -346,8 +346,8 @@ namespace JTOX {
         fDBData.insertEvent(event);
 
         if ( fFriendID == friend_id ) { // only read last msg if we're open on this
-            beginInsertRows(QModelIndex(), count, count);
-            fList.append(event);
+            beginInsertRows(QModelIndex(), 0, 0);
+            fList.push_front(event);
             endInsertRows();
         }
 
@@ -410,8 +410,8 @@ namespace JTOX {
         fDBData.insertEvent(event);
 
         if ( fFriendID == friend_id ) { // add event to visible list if we're open on this friend
-            beginInsertRows(QModelIndex(), count, count);
-            fList.append(event);
+            beginInsertRows(QModelIndex(), 0, 0);
+            fList.push_front(event);
             endInsertRows();
         }
 

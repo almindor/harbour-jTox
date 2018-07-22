@@ -167,6 +167,21 @@
     </message>
 </context>
 <context>
+    <name>AltInputItem</name>
+    <message>
+        <source>is typing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type your message here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>is offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <source>Messages: </source>
