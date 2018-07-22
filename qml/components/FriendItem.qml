@@ -6,9 +6,9 @@ ListItem {
     anchors {
         left: parent.left
         right: parent.right
-        margins: Theme.paddingLarge
     }
-    contentHeight: Math.max(nameLabel.height + smText.height, 64)
+
+    contentHeight: Math.max(nameLabel.height + smText.height + Theme.paddingSmall*2, 64)
 
     onClicked: {
         appWindow.activeFriendID = friend_id
@@ -43,7 +43,11 @@ ListItem {
         id: nameLabel
         anchors {
             left: parent.left
+            right: parent.right
             top: parent.top
+            leftMargin: Theme.paddingLarge
+            rightMargin: Theme.paddingLarge
+            topMargin: Theme.paddingSmall
         }
 
         text: name
@@ -59,12 +63,16 @@ ListItem {
         anchors {
             left: parent.left
             bottom: parent.bottom
+            leftMargin: Theme.paddingLarge
+            rightMargin: Theme.paddingLarge
+            bottomMargin: Theme.paddingSmall
         }
         text: status_message
         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
         width: page.width - 64 - Theme.paddingSmall
         font.pixelSize: Theme.fontSizeTiny
     }
+
 
     UserTypingIndicator {
         anchors {
@@ -77,9 +85,13 @@ ListItem {
 
     UserStatusIndicator {
         userStatus: status
+
         anchors {
-            top: parent.top
+            top: mainItem.top
+            bottom: mainItem.bottom
             right: parent.right
+            rightMargin: Theme.paddingLarge
+            verticalCenter: parent.verticalCenter
         }
     }
 }
