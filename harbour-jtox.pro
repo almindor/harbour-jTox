@@ -120,4 +120,5 @@ DISTFILES += \
     qml/pages/Details.qml \
     qml/js/common.js \
     qml/components/MessageItemText.qml \
-    qml/components/MessageItemFile.qml
+    qml/components/MessageItemFile.qml \
+    qml/components/AltInputItem.qml
