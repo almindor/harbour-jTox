@@ -19,6 +19,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Sailfish.Pickers 1.0
 import "../components"
+import org.nemomobile.configuration 1.0
 
 Page {
     id: page
@@ -39,6 +40,13 @@ Page {
         if ( visible ) {
             listView.positionViewAtBeginning()
         }
+    }
+
+
+    ConfigurationValue {
+        id: multilineMessages
+        defaultValue: true
+        key: "/multilineMessages"
     }
 
     Component {
@@ -75,7 +83,7 @@ Page {
             spacing: Theme.paddingSmall
             anchors.fill: parent
             anchors.topMargin: pageHeader.height
-            anchors.bottomMargin: textField.height
+            anchors.bottomMargin: multilineMessages.value ? multiTextField.height : altTextField.height
 
             verticalLayoutDirection: ListView.BottomToTop
             clip: true
@@ -88,8 +96,18 @@ Page {
             delegate: MessageItem {}
         }
 
+        InputItem {
+            id: multiTextField
+            visible: multilineMessages.value
+            anchors.bottom: parent.bottom
+            onSendMessage: {
+                eventmodel.sendMessage(msg)
+            }
+        }
+
         AltInputItem {
-            id: textField
+            id: altTextField
+            visible: !multilineMessages.value
             anchors.bottom: parent.bottom
             onSendMessage: {
                 eventmodel.sendMessage(msg)
