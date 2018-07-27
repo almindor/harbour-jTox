@@ -56,7 +56,7 @@ Dialog {
             right: parent.right
         }
 
-        label: "C4D5..." + qsTr("or") + " handle@" + toxme.domain
+        label: qsTr("Press return to query") + " " + toxme.domain
         placeholderText: qsTr("Address or handle@") + toxme.domain
         errorHighlight: true
 

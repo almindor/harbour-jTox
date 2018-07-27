@@ -52,7 +52,7 @@ namespace JTOX {
         void transferComplete(const QString& fileName, int friendIndex, const QString& friendName);
         void messageReceived(int friendIndex, const QString& friendName) const;
         void transferReceived(int friendIndex, const QString& friendName) const;
-    public slots:
+    private slots:
         void onMessageDelivered(quint32 friendID, quint32 sendID);
         void onMessageReceived(quint32 friend_id, TOX_MESSAGE_TYPE type, const QString& message);
         void onFriendUpdated(quint32 friend_id);
@@ -80,8 +80,6 @@ namespace JTOX {
 
         int indexForEvent(int eventID) const;
         bool handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error) const;
-        bool handleFileControlError(TOX_ERR_FILE_CONTROL error, bool soft = false) const;
-        bool handleFileSendChunkError(TOX_ERR_FILE_SEND_CHUNK error, bool soft = false) const;
         int getFriendStatus() const;
         bool getFriendTyping() const;
         const QString getFriendName() const;

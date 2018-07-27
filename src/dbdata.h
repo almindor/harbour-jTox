@@ -29,6 +29,10 @@ namespace JTOX {
         void insertRequest(FriendRequest& request);
         void updateRequest(const FriendRequest& request);
         void deleteRequest(const FriendRequest& request);
+        bool getAvatar(qint64 friend_id, QByteArray& result); // -1 for "me"
+        bool checkAvatar(qint64 friend_id, const QByteArray& hash);
+        void clearAvatar(qint64 friend_id);
+        void setAvatar(qint64 friend_id, const QByteArray& hash, const QByteArray& data);
         void getRequests(RequestList& list);
         void setFriendOfflineName(const QString& address, quint32 friendID, const QString& name);
         const QString getFriendOfflineName(const QString& address);
@@ -57,8 +61,13 @@ namespace JTOX {
         QSqlQuery fWipeEventsQuery;
         QSqlQuery fWipeRequestsQuery;
         QSqlQuery fWipeFriendsQuery;
+        QSqlQuery fGetAvatarQuery;
+        QSqlQuery fCheckAvatarQuery;
+        QSqlQuery fSetAvatarQuery;
+        QSqlQuery fClearAvatarQuery;
         void createTables();
         void upgradeToV1(); // v0 to v1 upgrade
+        void upgradeToV2(); // v1 to v2 upgrade
         void prepareQueries();
         const Event parseEvent(const QSqlQuery& query) const;
         const QSqlQuery prepareQuery(const QString& sql);

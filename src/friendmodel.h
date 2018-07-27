@@ -27,6 +27,7 @@
 #include "toxme.h"
 #include "friend.h"
 #include "dbdata.h"
+#include "avatarprovider.h"
 
 namespace JTOX {
 
@@ -37,7 +38,7 @@ namespace JTOX {
         Q_PROPERTY(QString address READ getAddress NOTIFY activeFriendChanged)
         Q_PROPERTY(QString name READ getName NOTIFY activeFriendChanged)
     public:
-        explicit FriendModel(ToxCore& toxcore, DBData& dbData);
+        explicit FriendModel(ToxCore& toxcore, DBData& dbData, AvatarProvider* avatarProvider);
 
         int rowCount(const QModelIndex &parent = QModelIndex()) const;
         QHash<int, QByteArray> roleNames() const;
@@ -62,6 +63,9 @@ namespace JTOX {
         void activeFriendChanged(int friendIndex) const;
         void friendWentOnline(int friendID) const;
     public slots:
+        void onProfileAvatarChanged(const QByteArray& hash, const QByteArray& data);
+        void onFriendAvatarChanged(quint32 friend_id);
+    private slots:
         void refresh();
         void onFriendStatusChanged(quint32 friend_id, int status);
         void onFriendConStatusChanged(quint32 friend_id, int status);
@@ -71,6 +75,7 @@ namespace JTOX {
     private:
         ToxCore& fToxCore;
         DBData& fDBData;
+        AvatarProvider* fAvatarProvider; // pointer because freed by QT5
         FriendList fList;
         QString fFriendMessage;
         int fUnviewedMessages;
@@ -80,6 +85,7 @@ namespace JTOX {
         bool handleFriendDeleteError(TOX_ERR_FRIEND_DELETE error) const;
         void checkUnviewedTotals();
         int getUnviewedMessages() const;
+        void onFriendWentOnline(int index);
     };
 
 }

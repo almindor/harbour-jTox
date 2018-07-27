@@ -20,8 +20,9 @@
 
 namespace JTOX {
 
-    FriendModel::FriendModel(ToxCore& toxcore, DBData& dbData) : QAbstractListModel(0),
-        fToxCore(toxcore), fDBData(dbData), fList(), fFriendMessage(), fUnviewedMessages(0)
+    FriendModel::FriendModel(ToxCore& toxcore, DBData& dbData, AvatarProvider* avatarProvider) : QAbstractListModel(0),
+        fToxCore(toxcore), fDBData(dbData), fAvatarProvider(avatarProvider),
+        fList(), fFriendMessage(), fUnviewedMessages(0)
     {        
         connect(&toxcore, &ToxCore::clientReset, this, &FriendModel::refresh);
         connect(&toxcore, &ToxCore::friendStatusChanged, this, &FriendModel::onFriendStatusChanged);
@@ -187,6 +188,7 @@ namespace JTOX {
         emit dataChanged(createIndex(index, 0), createIndex(index, 0), QVector<int>());
         emit friendUpdated(friend_id);
         if  ( oldStatus == 0 && fList.at(index).status() > 0 ) {
+            onFriendWentOnline(index);
             emit friendWentOnline(friend_id); // we attempt sending all offline messages in eventmodel in this case
         }
     }
@@ -211,6 +213,25 @@ namespace JTOX {
     {
         int index = getListIndexForFriendID(friend_id);
         fList[index].setTyping(typing);
+        emit dataChanged(createIndex(index, 0), createIndex(index, 0), QVector<int>());
+        emit friendUpdated(friend_id);
+    }
+
+    void FriendModel::onProfileAvatarChanged(const QByteArray& hash, const QByteArray& data)
+    {
+        for ( int i = 0; i < fList.size(); i++ ) {
+            if ( !fList.at(i).isOnline() || fList.at(i).avatarHash() == hash ) {
+                continue; // skip offliners or friends who have this already
+            }
+
+            fToxCore.sendAvatar(fList.at(i).friendID(), hash, data);
+            fList[i].setAvatarHash(hash);
+        }
+    }
+
+    void FriendModel::onFriendAvatarChanged(quint32 friend_id)
+    {
+        int index = getListIndexForFriendID(friend_id);
         emit dataChanged(createIndex(index, 0), createIndex(index, 0), QVector<int>());
         emit friendUpdated(friend_id);
     }
@@ -333,6 +354,22 @@ namespace JTOX {
     int FriendModel::getUnviewedMessages() const
     {
         return fUnviewedMessages;
+    }
+
+    void FriendModel::onFriendWentOnline(int index)
+    {
+        const QByteArray data = fAvatarProvider->getProfileAvatarData();
+
+        if ( data.isEmpty() || index < 0 || index >= fList.size() ) {
+            return;
+        }
+
+        const QByteArray hash = fToxCore.hash(data);
+
+        if ( fList.at(index).avatarHash() != hash ) {
+            fToxCore.sendAvatar(fList.at(index).friendID(), hash, data);
+            fList[index].setAvatarHash(hash);
+        }
     }
 
 }

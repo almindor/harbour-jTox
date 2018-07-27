@@ -327,18 +327,36 @@ namespace JTOX {
         emit fileReceived(friend_id, file_number, file_size, file_name);
     }
 
-    void ToxCore::onFileCanceled(quint32 friend_id, quint32 file_number) const
+    void ToxCore::onAvatarFileReceived(quint32 friend_id, quint32 file_number, quint64 file_size, const QByteArray &fileID) const
     {
+        emit avatarFileReceived(friend_id, file_number, file_size, fileID);
+    }
+
+    void ToxCore::onFileCanceled(quint32 friend_id, quint32 file_number)
+    {
+        if ( fActiveAvatarTransfers.contains(friend_id) && fActiveAvatarTransfers.value(friend_id) == file_number ) {
+            fActiveAvatarTransfers.remove(friend_id);
+            return; // friend cancelled avatar transfer
+        }
+
         emit fileCanceled(friend_id, file_number);
     }
 
     void ToxCore::onFilePaused(quint32 friend_id, quint32 file_number) const
     {
+        if ( fActiveAvatarTransfers.contains(friend_id) && fActiveAvatarTransfers.value(friend_id) == file_number ) {
+            return; // nada
+        }
+
         emit filePaused(friend_id, file_number);
     }
 
     void ToxCore::onFileResumed(quint32 friend_id, quint32 file_number) const
     {
+        if ( fActiveAvatarTransfers.contains(friend_id) && fActiveAvatarTransfers.value(friend_id) == file_number ) {
+            return; // nada
+        }
+
         emit fileResumed(friend_id, file_number);
     }
 
@@ -353,6 +371,11 @@ namespace JTOX {
     void ToxCore::onFileChunkRequest(quint32 friend_id, quint32 file_number, quint64 position, size_t length)
     {
         updateTransfers(friend_id, file_number, length);
+
+        // if this is an avatar send, handle it here
+        if ( fActiveAvatarTransfers.contains(friend_id) && fActiveAvatarTransfers.value(friend_id) == file_number ) {
+            return sendAvatarChunk(friend_id, file_number, position, length);
+        }
 
         emit fileChunkRequest(friend_id, file_number, position, length);
     }
@@ -474,6 +497,17 @@ namespace JTOX {
         uint8_t addrRaw[TOX_ADDRESS_SIZE];
         tox_self_get_address(fTox, addrRaw);
         return Utils::key_to_hex(addrRaw, TOX_ADDRESS_SIZE);
+    }
+
+    const QByteArray ToxCore::hash(const QByteArray &data) const
+    {
+        quint8 result[TOX_HASH_LENGTH];
+        if ( !tox_hash(result, (quint8*) data.constData(), data.size()) ) {
+            Utils::bail("Unable to calculate hash");
+            return QByteArray();
+        }
+
+        return QByteArray((char*) result, TOX_HASH_LENGTH);
     }
 
     const QString ToxCore::getNoSpam() const
@@ -779,9 +813,43 @@ namespace JTOX {
         quint32 file_number = tox_file_send(fTox, friendID, TOX_FILE_KIND_DATA, (quint64) file.size(), (quint8*) file_id.constData(),
                                             (quint8*) fileName.toUtf8().constData(), fileName.length(), &error);
 
-
         handleToxFileSendError(error); // all critical and cause a bail
         return file_number;
+    }
+
+    bool ToxCore::sendAvatar(quint32 friend_id, const QByteArray& hash, const QByteArray& data)
+    {
+        // avatar changed, if we're still sending old one we need to cancel all the avatar transfers
+        if ( data != fProfileAvatarData ) {
+            TOX_ERR_FILE_CONTROL ctrl_error;
+            QMapIterator<quint32, quint32> i(fActiveAvatarTransfers);
+
+            while ( i.hasNext() ) {
+                i.next();
+                tox_file_control(fTox, i.key(), i.value(), TOX_FILE_CONTROL_CANCEL, &ctrl_error);
+
+                if ( ctrl_error != TOX_ERR_FILE_CONTROL_OK ) {
+                    Utils::bail("Unable to cancel avatar transfer in progress");
+                    return false;
+                }
+            }
+            fActiveAvatarTransfers.clear();
+        }
+
+        if ( fActiveAvatarTransfers.contains(friend_id) ) {
+            // we're already sending this one otherwise it'd clear
+            return false;
+        }
+
+        fProfileAvatarData = data; // source for chunks, can't get from avatarProvider due to circularity
+
+        TOX_ERR_FILE_SEND error;
+        quint32 file_number = tox_file_send(fTox, friend_id, TOX_FILE_KIND_AVATAR, (quint64) data.size(), (quint8*) hash.constData(),
+                                            NULL, 0, &error);
+
+        handleToxFileSendError(error); // all critical and cause a bail
+        fActiveAvatarTransfers[friend_id] = file_number;
+        return true;
     }
 
     void ToxCore::killTox()
@@ -815,15 +883,31 @@ namespace JTOX {
         if ( length > 0 && !fActiveTransfers.contains(transferID) ) { // started a new one
             fActiveTransfers[transferID] = true;
             if ( fActiveTransfers.size() == 1 ) { // we started first one
-                int interval = getIterationInterval();
-                fIterationTimer.setInterval(interval);
+                fIterationTimer.setInterval(getIterationInterval());
             }
         } else if ( length == 0 && fActiveTransfers.contains(transferID) ) { // finished
             fActiveTransfers.remove(transferID);
             if ( fActiveTransfers.size() == 0 ) { // we finished last one
-                int interval = getIterationInterval();
-                fIterationTimer.setInterval(interval);
+                fIterationTimer.setInterval(getIterationInterval());
             }
+        }
+    }
+
+    void ToxCore::sendAvatarChunk(quint32 friend_id, quint32 file_number, quint64 position, size_t length)
+    {
+        TOX_ERR_FILE_SEND_CHUNK error;
+
+        if ( length == 0 ) {
+            fActiveAvatarTransfers.remove(friend_id);
+            return; // done
+        }
+
+        quint8* data = (quint8*) fProfileAvatarData.mid(position).constData();
+        tox_file_send_chunk(fTox, friend_id, file_number, position, data, length, &error);
+
+        if ( !Utils::handleFileSendChunkError(error) ) {
+            emit errorOccurred("Avatar transfer error");
+            return;
         }
     }
 

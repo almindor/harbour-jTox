@@ -37,7 +37,8 @@ SOURCES += \
     src/friendrequest.cpp \
     src/dbdata.cpp \
     src/harbour-jtox.cpp \
-    src/dirmodel.cpp
+    src/dirmodel.cpp \
+    src/avatarprovider.cpp
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \
@@ -91,7 +92,8 @@ HEADERS += \
     src/requestmodel.h \
     src/friendrequest.h \
     src/dbdata.h \
-    src/dirmodel.h
+    src/dirmodel.h \
+    src/avatarprovider.h
 
 DISTFILES += \
     qml/pages/About.qml \
@@ -121,4 +123,5 @@ DISTFILES += \
     qml/js/common.js \
     qml/components/MessageItemText.qml \
     qml/components/MessageItemFile.qml \
-    qml/components/AltInputItem.qml
+    qml/components/AltInputItem.qml \
+    qml/components/Avatar.qml

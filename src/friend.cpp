@@ -5,7 +5,7 @@ namespace JTOX {
 
     Friend::Friend(ToxCore& toxCore, uint32_t friend_id) : fToxCore(toxCore), fFriendID(friend_id),
         fName(), fConnectionStatus(TOX_CONNECTION_NONE), fUserStatus(TOX_USER_STATUS_NONE),
-        fStatusMessage(), fTyping(false), fPublicKey(), fUnviewed(false)
+        fStatusMessage(), fTyping(false), fPublicKey(), fUnviewed(false), fAvatarHash()
     {
         refresh();
     }
@@ -109,6 +109,11 @@ namespace JTOX {
         fOfflineName = name;
     }
 
+    bool Friend::isOnline() const
+    {
+        return status() > 0; // 0 being offline
+    }
+
     int Friend::status() const {
         return Utils::get_overall_status(fConnectionStatus, fUserStatus);
     }
@@ -136,6 +141,16 @@ namespace JTOX {
     void Friend::setTyping(bool typing)
     {
         fTyping = typing;
+    }
+
+    const QByteArray& Friend::avatarHash() const
+    {
+        return fAvatarHash;
+    }
+
+    void Friend::setAvatarHash(const QByteArray& hash)
+    {
+        fAvatarHash = hash;
     }
 
     bool Friend::unviewed() const

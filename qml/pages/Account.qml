@@ -17,6 +17,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+ import Sailfish.Pickers 1.0
 import "../components"
 import org.nemomobile.configuration 1.0
 
@@ -174,6 +175,57 @@ Page {
                 label: qsTr("Status message")
                 placeholderText: qsTr("Hi from jTox on Sailfish")
                 EnterKey.onClicked: toxcore.statusMessage = statusField.text
+            }
+
+
+            SectionHeader {
+                text: qsTr("Avatar")
+            }
+
+            BackgroundItem {
+                id: avatarBG
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: {
+                        leftMargin: Theme.paddingLarge
+                        rightMargin: Theme.paddingLarge
+                    }
+                }
+                contentHeight: avatarImage.height
+                height: avatarImage.height + Theme.paddingSmall * 2
+
+                Avatar {
+                    id: avatarImage
+                    placeholder: "🖾"
+                    anchors.centerIn: parent
+                    height: 128
+
+                    Connections {
+                        target: avatarProvider
+                        onProfileAvatarChanged: avatarImage.refresh()
+                    }
+                }
+
+                onClicked: pageStack.push(avatarPicker)
+                onPressAndHold: avatarClearMenu.open(avatarBG)
+
+                Component {
+                    id: avatarPicker
+                    ImagePickerPage {
+                        title: qsTr("Choose your Avatar")
+                        onSelectedContentPropertiesChanged: avatarProvider.setAvatar(selectedContentProperties.filePath)
+                    }
+                }
+
+                ContextMenu {
+                    id: avatarClearMenu
+
+                    MenuItem {
+                        text: qsTr("Clear", "avatar picture")
+                        onClicked: avatarProvider.clearAvatar();
+                    }
+                }
             }
 
             SectionHeader {

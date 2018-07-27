@@ -138,15 +138,24 @@
         <source>Multiline messages</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Avatar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose your Avatar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <comment>avatar picture</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriend</name>
     <message>
         <source>Add Friend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>or</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -175,6 +184,10 @@
     </message>
     <message>
         <source>Resolve Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Press return to query</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

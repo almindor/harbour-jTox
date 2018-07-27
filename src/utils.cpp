@@ -168,4 +168,40 @@ namespace JTOX {
         return (quint32) transferID;
     }
 
+    bool Utils::handleFileControlError(TOX_ERR_FILE_CONTROL error, bool soft)
+    {
+        switch ( error ) {
+            case TOX_ERR_FILE_CONTROL_ALREADY_PAUSED: return Utils::bail("File transfer already paused", soft);
+            case TOX_ERR_FILE_CONTROL_DENIED: return Utils::bail("Permission denied", soft);
+            case TOX_ERR_FILE_CONTROL_FRIEND_NOT_CONNECTED: return Utils::bail("Friend not connected", soft);
+            case TOX_ERR_FILE_CONTROL_FRIEND_NOT_FOUND: return Utils::bail("Friend not found", soft);
+            case TOX_ERR_FILE_CONTROL_NOT_FOUND: return Utils::bail("File transfer not found", soft);
+            case TOX_ERR_FILE_CONTROL_NOT_PAUSED: return Utils::bail("File transfer not paused", soft);
+            case TOX_ERR_FILE_CONTROL_SENDQ: return Utils::bail("File transfer send queue full", soft);
+            case TOX_ERR_FILE_CONTROL_OK: return true;
+        }
+
+        Utils::bail("Unknown error");
+        return false;
+    }
+
+    bool Utils::handleFileSendChunkError(TOX_ERR_FILE_SEND_CHUNK error, bool soft)
+    {
+        switch ( error ) {
+            case TOX_ERR_FILE_SEND_CHUNK_FRIEND_NOT_CONNECTED: return Utils::bail("Friend not connected", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_FRIEND_NOT_FOUND: return Utils::bail("Friend not found", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_INVALID_LENGTH: return Utils::bail("Invalid chunk length", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_NOT_FOUND: return Utils::bail("Transfer not found", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_NOT_TRANSFERRING: return Utils::bail("Invalid transfer state", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_NULL: return Utils::bail("Invalid null parameter", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_SENDQ: return Utils::bail("File transfer send queue full", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_WRONG_POSITION: return Utils::bail("File transfer wrong position", soft);
+
+            case TOX_ERR_FILE_SEND_CHUNK_OK: return true;
+        }
+
+        Utils::bail("Unknown error");
+        return false;
+    }
+
 }

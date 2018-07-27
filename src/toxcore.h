@@ -117,7 +117,8 @@ namespace JTOX {
         void onFriendNameChanged(quint32 friend_id, const QString& name);
         void onFriendTypingChanged(quint32 friend_id, bool typing) const;
         void onFileReceived(quint32 friend_id, quint32 file_number, quint64 file_size, const QString& file_name) const;
-        void onFileCanceled(quint32 friend_id, quint32 file_number) const;
+        void onAvatarFileReceived(quint32 friend_id, quint32 file_number, quint64 file_size, const QByteArray& fileID) const;
+        void onFileCanceled(quint32 friend_id, quint32 file_number);
         void onFilePaused(quint32 friend_id, quint32 file_number) const;
         void onFileResumed(quint32 friend_id, quint32 file_number) const;
         void onFileChunkReceived(quint32 friend_id, quint32 file_number, quint64 position, const quint8* data, size_t length);
@@ -130,8 +131,10 @@ namespace JTOX {
         const QByteArray encryptPayload(const QByteArray& payload, const QByteArray& pk, const QByteArray& nonce) const;
         const QString getHexPublicKey() const;
         const QString getHexToxID() const;
+        const QByteArray hash(const QByteArray& data) const;
         void save();
         quint32 sendFile(quint32 friend_id, const QString& file_path, QByteArray& file_id);
+        bool sendAvatar(quint32 friend_id, const QByteArray& hash, const QByteArray& data);
 
         Q_INVOKABLE void init(const QString& password);
         Q_INVOKABLE bool setNoSpam(const QString& hexVal); // we need to knox if the value is ok
@@ -141,6 +144,8 @@ namespace JTOX {
         Q_INVOKABLE bool importAccount(const QString& fileName);
         Q_INVOKABLE void exportAccount() const;
         Q_INVOKABLE void wipeLogs();
+
+        static const int MAX_AVATAR_DATA_SIZE = 65536;
     signals:
         void clientReset();
         void initialUseChanged(bool initial);
@@ -155,19 +160,20 @@ namespace JTOX {
         void friendNameChanged(quint32 friend_id, const QString& name) const;
         void friendTypingChanged(quint32 friend_id, bool typing) const;
 
-        void friendRequest(const QString& publicKey, const QString& message);
-        void statusMessageChanged(const QString& sm);
-        void userNameChanged(const QString& sm);
-        void busyChanged(bool busy);
-        void messageDelivered(quint32 friendID, quint32 messageID);
-        void messageReceived(quint32 friendID, TOX_MESSAGE_TYPE type, const QString& message);
+        void friendRequest(const QString& publicKey, const QString& message) const;
+        void statusMessageChanged(const QString& sm) const;
+        void userNameChanged(const QString& sm) const;
+        void busyChanged(bool busy) const;
+        void messageDelivered(quint32 friendID, quint32 messageID) const;
+        void messageReceived(quint32 friendID, TOX_MESSAGE_TYPE type, const QString& message) const;
+        void avatarFileReceived(quint32 friend_id, quint32 file_number, quint64 file_size, const QByteArray& fileID) const;
         void fileReceived(quint32 friend_id, quint32 file_number, quint64 file_size, const QString& file_name) const;
         void fileCanceled(quint32 friend_id, quint32 file_number) const;
         void filePaused(quint32 friend_id, quint32 file_number) const;
         void fileResumed(quint32 friend_id, quint32 file_number) const;
         void fileChunkReceived(quint32 friend_id, quint32 file_number, quint64 position, const QByteArray& data) const;
         void fileChunkRequest(quint32 friend_number, quint32 file_number, quint64 position, size_t length) const;
-        void passwordValidChanged(bool valid);
+        void passwordValidChanged(bool valid) const;
         void accountExported(const QString& fileName) const;
         void accountImported() const;
         void accountCreated() const;
@@ -196,6 +202,8 @@ namespace JTOX {
         bool fInitialized;
         bool fApplicationActive;
         QMap<quint64, bool> fActiveTransfers;
+        QByteArray fProfileAvatarData;
+        QMap<quint32, quint32> fActiveAvatarTransfers; // friend_id -> file_number
 
         quint32 getMajorVersion() const;
         quint32 getMinorVersion() const;
@@ -218,6 +226,7 @@ namespace JTOX {
         void killTox();
         bool handleToxFileSendError(TOX_ERR_FILE_SEND error) const;
         void updateTransfers(quint32 friend_id, quint32 file_number, size_t length);
+        void sendAvatarChunk(quint32 friend_id, quint32 file_number, quint64 position, size_t length);
     };
 
 }

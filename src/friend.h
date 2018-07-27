@@ -30,12 +30,15 @@ namespace JTOX {
         const QString address() const;
         void setName(const QString& name);
         void setOfflineName(const QString& name);
+        bool isOnline() const;
         int status() const;
         void setStatus(int status);
         void setConStatus(int conStatus);
         void setStatusMessage(const QString& statusMessage);
         bool typing() const;
         void setTyping(bool typing);
+        const QByteArray& avatarHash() const;
+        void setAvatarHash(const QByteArray& hash);
 
         void setViewed();
         void setUnviewed();
@@ -51,6 +54,7 @@ namespace JTOX {
         QString fPublicKey;
         bool fUnviewed;
         QString fOfflineName;
+        QByteArray fAvatarHash; // hash of our profile avatar sent out to this friend
     };
 
     typedef QList<Friend> FriendList;

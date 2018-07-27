@@ -39,13 +39,28 @@ ListItem {
         id: removeRemorse
     }
 
+    Avatar {
+        id: avatarIcon
+
+        anchors {
+            left: parent.left
+            top: parent.top
+            leftMargin: Theme.paddingLarge
+            topMargin: Theme.paddingSmall
+        }
+
+        width: parent.width / 8
+        height: width
+        source_id: friend_id
+    }
+
     Label {
         id: nameLabel
         anchors {
-            left: parent.left
+            left: avatarIcon.right
             right: parent.right
             top: parent.top
-            leftMargin: Theme.paddingLarge
+            leftMargin: Theme.paddingSmall
             rightMargin: Theme.paddingLarge
             topMargin: Theme.paddingSmall
         }
@@ -61,15 +76,15 @@ ListItem {
         id: smText
         color: Theme.highlightColor
         anchors {
-            left: parent.left
+            left: avatarIcon.right
             bottom: parent.bottom
+            right: usi.left
             leftMargin: Theme.paddingLarge
             rightMargin: Theme.paddingLarge
             bottomMargin: Theme.paddingSmall
         }
         text: status_message
         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-        width: page.width - 64 - Theme.paddingSmall
         font.pixelSize: Theme.fontSizeTiny
     }
 
@@ -84,11 +99,10 @@ ListItem {
     }
 
     UserStatusIndicator {
+        id: usi
         userStatus: status
 
         anchors {
-            top: mainItem.top
-            bottom: mainItem.bottom
             right: parent.right
             rightMargin: Theme.paddingLarge
             verticalCenter: parent.verticalCenter

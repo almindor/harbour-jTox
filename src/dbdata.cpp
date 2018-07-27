@@ -23,7 +23,7 @@ namespace JTOX {
 
         switch ( userVersion() ) {
             case 0: createTables(); upgradeToV1(); // empty or unversioned (1.2.0-)
-            // TODO: add any upgrades necessary here in order
+            case 1: upgradeToV2();
         }
         prepareQueries();
     }
@@ -227,6 +227,66 @@ namespace JTOX {
         }
     }
 
+    bool DBData::getAvatar(qint64 friend_id, QByteArray &result)
+    {
+        fGetAvatarQuery.bindValue(":friend_id", friend_id);
+
+        if ( !fGetAvatarQuery.exec() ) {
+            Utils::bail("Unable to get avatar data: " + fGetAvatarQuery.lastError().text());
+        }
+
+        if ( fGetAvatarQuery.next() ) {
+            result = fGetAvatarQuery.value(0).toByteArray();
+            return true;
+        }
+
+        return false;
+    }
+
+    bool DBData::checkAvatar(qint64 friend_id, const QByteArray& hash)
+    {
+        fCheckAvatarQuery.bindValue(":friend_id", friend_id);
+        fCheckAvatarQuery.bindValue(":hash", hash);
+
+        if ( !fCheckAvatarQuery.exec() ) {
+            Utils::bail("Unable to check avatar hash: " + fCheckAvatarQuery.lastError().text());
+        }
+
+        if ( fCheckAvatarQuery.next() ) {
+            bool ok = false;
+            int count = fCheckAvatarQuery.value(0).toInt(&ok);
+
+            if ( !ok ) {
+                Utils::bail("Unable to parse avatar count integer");
+                return false;
+            }
+
+            return count > 0;
+        }
+
+        return false;
+    }
+
+    void DBData::clearAvatar(qint64 friend_id)
+    {
+        fClearAvatarQuery.bindValue(":friend_id", friend_id); // -1 for "me"
+
+        if ( !fClearAvatarQuery.exec() ) {
+            Utils::bail("Unable to clear avatar data: " + fClearAvatarQuery.lastError().text());
+        }
+    }
+
+    void DBData::setAvatar(qint64 friend_id, const QByteArray &hash, const QByteArray &data)
+    {
+        fSetAvatarQuery.bindValue(":friend_id", friend_id); // -1 for "me"
+        fSetAvatarQuery.bindValue(":hash", hash);
+        fSetAvatarQuery.bindValue(":data", data);
+
+        if ( !fSetAvatarQuery.exec() ) {
+            Utils::bail("Unable to save avatar data: " + fSetAvatarQuery.lastError().text());
+        }
+    }
+
     void DBData::getRequests(RequestList& list)
     {
         if ( !fRequestSelectQuery.exec() ) {
@@ -367,6 +427,17 @@ namespace JTOX {
         setUserVersion(1); // commits
     }
 
+    void DBData::upgradeToV2()
+    {
+        QSqlQuery query(fDB);
+        // unknown if we have v0 to v1 or just init from scratch so these can fail
+        if ( !query.exec("CREATE TABLE avatars (friend_id INTEGER PRIMARY KEY, hash BLOB NOT NULL, data BLOB NOT NULL)") ) {
+            Utils::bail("Unable to create avatars table");
+        }
+
+        setUserVersion(2); // commits
+    }
+
     void DBData::prepareQueries()
     {
         fEventSelectOneQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id, "
@@ -421,6 +492,11 @@ namespace JTOX {
         fWipeEventsQuery = prepareQuery("DELETE FROM events WHERE (friend_id = :friend_id OR :friend_id2 < 0)");
         fWipeFriendsQuery = prepareQuery("DELETE FROM friends WHERE (friend_id = :friend_id OR :friend_id2 < 0)");
         fWipeRequestsQuery = prepareQuery("DELETE FROM requests");
+
+        fGetAvatarQuery = prepareQuery("SELECT data FROM avatars WHERE friend_id = :friend_id");
+        fCheckAvatarQuery = prepareQuery("SELECT count(*) FROM avatars WHERE friend_id = :friend_id AND hash = :hash");
+        fSetAvatarQuery = prepareQuery("INSERT OR REPLACE INTO avatars(friend_id, hash, data) VALUES(:friend_id, :hash, :data)");
+        fClearAvatarQuery = prepareQuery("DELETE FROM avatars WHERE friend_id = :friend_id");
     }
 
     const Event DBData::parseEvent(const QSqlQuery &query) const

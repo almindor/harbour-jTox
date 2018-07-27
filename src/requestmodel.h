@@ -24,7 +24,7 @@ namespace JTOX {
         QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
         Q_INVOKABLE void accept(int index);
         Q_INVOKABLE void reject(int index);
-    public slots:
+    private slots:
         void onFriendRequest(const QString& publicKey, const QString& message);
         void onReverseLookupDone(const QString& publicKey, const QString& name, int requestID);
         void onReverseLookupError(const QString& error, const QString& userInfo, int requestID);

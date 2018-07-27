@@ -31,6 +31,7 @@
 #include "eventmodel.h"
 #include "toxme.h"
 #include "requestmodel.h"
+#include "avatarprovider.h"
 #include "dbdata.h"
 #include "dirmodel.h"
 #include "utils.h"
@@ -55,9 +56,13 @@ int main(int argc, char *argv[])
     DBData dbData(encryptSave);
     ToxCore toxCore(encryptSave, dbData);
     Toxme toxme(toxCore, encryptSave);
-    FriendModel friendModel(toxCore, dbData);
+    AvatarProvider* avatarProvider = new AvatarProvider(toxCore, dbData); // freed internally by QT5!
+    FriendModel friendModel(toxCore, dbData, avatarProvider);
     EventModel eventModel(toxCore, friendModel, dbData);
     RequestModel requestModel(toxCore, toxme, friendModel, dbData);
+
+    QObject::connect(avatarProvider, &AvatarProvider::avatarChanged, &friendModel, &FriendModel::onFriendAvatarChanged); // update when we get a new avatar
+    QObject::connect(avatarProvider, &AvatarProvider::profileAvatarChanged, &friendModel, &FriendModel::onProfileAvatarChanged); // update friends when we set a new avatar
 
     QString qml = QString("qml/%1.qml").arg("harbour-jtox");
     view->rootContext()->setContextProperty("toxcore", &toxCore);
@@ -66,6 +71,8 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty("toxme", &toxme);
     view->rootContext()->setContextProperty("requestmodel", &requestModel);
     view->rootContext()->setContextProperty("dirmodel", &dirModel);
+    view->rootContext()->setContextProperty("avatarProvider", avatarProvider);
+    view->engine()->addImageProvider("avatarProvider", avatarProvider); // freed internally by Qt5!
 
     view->setSource(SailfishApp::pathTo(qml));
     view->show();

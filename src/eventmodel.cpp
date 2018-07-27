@@ -246,7 +246,7 @@ namespace JTOX {
 
         TOX_ERR_FILE_CONTROL error;
         tox_file_control(fToxCore.tox(), transfer.friendID(), transfer.sendID(), TOX_FILE_CONTROL_PAUSE, &error);
-        if ( !handleFileControlError(error) ) {
+        if ( !Utils::handleFileControlError(error) ) {
             emit transferError("Unable to pause file transfer");
             return;
         }
@@ -284,7 +284,7 @@ namespace JTOX {
 
         TOX_ERR_FILE_CONTROL error;
         tox_file_control(fToxCore.tox(), transfer.friendID(), transfer.sendID(), TOX_FILE_CONTROL_RESUME, &error);
-        if ( !handleFileControlError(error) ) {
+        if ( !Utils::handleFileControlError(error) ) {
             emit transferError("Unable to resume file transfer");
             return;
         }
@@ -424,7 +424,8 @@ namespace JTOX {
         Event transfer;
         if ( !fDBData.getEvent(friend_id, file_number, etFileTransferInRunning, transfer) &&
              !fDBData.getEvent(friend_id, file_number, etFileTransferInPaused, transfer) ) {
-            emit transferError("Transfer not found");
+            // emit transferError("Transfer not found");
+            // probably an avatar transfer, do nothing here
             return;
         }
 
@@ -491,7 +492,7 @@ namespace JTOX {
         TOX_ERR_FILE_SEND_CHUNK error;
         tox_file_send_chunk(fToxCore.tox(), friend_id, file_number, position, (quint8*) chunk.constData(), length, &error);
 
-        if ( !handleFileSendChunkError(error) ) {
+        if ( !Utils::handleFileSendChunkError(error) ) {
             cancelTransfer(transfer);
             emit transferError("Transfer chunk length invalid");
             return;
@@ -601,42 +602,6 @@ namespace JTOX {
         return false;
     }
 
-    bool EventModel::handleFileControlError(TOX_ERR_FILE_CONTROL error, bool soft) const
-    {
-        switch ( error ) {
-            case TOX_ERR_FILE_CONTROL_ALREADY_PAUSED: return Utils::bail("File transfer already paused", soft);
-            case TOX_ERR_FILE_CONTROL_DENIED: return Utils::bail("Permission denied", soft);
-            case TOX_ERR_FILE_CONTROL_FRIEND_NOT_CONNECTED: return Utils::bail("Friend not connected", soft);
-            case TOX_ERR_FILE_CONTROL_FRIEND_NOT_FOUND: return Utils::bail("Friend not found", soft);
-            case TOX_ERR_FILE_CONTROL_NOT_FOUND: return Utils::bail("File transfer not found", soft);
-            case TOX_ERR_FILE_CONTROL_NOT_PAUSED: return Utils::bail("File transfer not paused", soft);
-            case TOX_ERR_FILE_CONTROL_SENDQ: return Utils::bail("File transfer send queue full", soft);
-            case TOX_ERR_FILE_CONTROL_OK: return true;
-        }
-
-        Utils::bail("Unknown error");
-        return false;
-    }
-
-    bool EventModel::handleFileSendChunkError(TOX_ERR_FILE_SEND_CHUNK error, bool soft) const
-    {
-        switch ( error ) {
-            case TOX_ERR_FILE_SEND_CHUNK_FRIEND_NOT_CONNECTED: return Utils::bail("Friend not connected", soft);
-            case TOX_ERR_FILE_SEND_CHUNK_FRIEND_NOT_FOUND: return Utils::bail("Friend not found", soft);
-            case TOX_ERR_FILE_SEND_CHUNK_INVALID_LENGTH: return Utils::bail("Invalid chunk length", soft);
-            case TOX_ERR_FILE_SEND_CHUNK_NOT_FOUND: return Utils::bail("Transfer not found", soft);
-            case TOX_ERR_FILE_SEND_CHUNK_NOT_TRANSFERRING: return Utils::bail("Invalid transfer state", soft);
-            case TOX_ERR_FILE_SEND_CHUNK_NULL: return Utils::bail("Invalid null parameter", soft);
-            case TOX_ERR_FILE_SEND_CHUNK_SENDQ: return Utils::bail("File transfer send queue full", soft);
-            case TOX_ERR_FILE_SEND_CHUNK_WRONG_POSITION: return Utils::bail("File transfer wrong position", soft);
-
-            case TOX_ERR_FILE_SEND_CHUNK_OK: return true;
-        }
-
-        Utils::bail("Unknown error");
-        return false;
-    }
-
     int EventModel::getFriendStatus() const {
         if ( fFriendID < 0 ) {
             return 0;
@@ -709,7 +674,7 @@ namespace JTOX {
         TOX_ERR_FILE_CONTROL error;
         tox_file_control(fToxCore.tox(), transfer.friendID(), transfer.sendID(), TOX_FILE_CONTROL_CANCEL, &error);
 
-        if ( handleFileControlError(error, true) ) { // don't fail on cancel, just log. friend could be off etc.
+        if ( Utils::handleFileControlError(error, true) ) { // don't fail on cancel, just log. friend could be off etc.
             updateEventType(transfer, canceledType);
         }
     }

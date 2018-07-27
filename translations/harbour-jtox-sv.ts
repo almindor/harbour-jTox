@@ -67,109 +67,125 @@
 <context>
     <name>Account</name>
     <message>
-        <location filename="../qml/pages/Account.qml" line="44"/>
+        <location filename="../qml/pages/Account.qml" line="45"/>
         <source>Importing Account</source>
         <translation>Importerar konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="64"/>
+        <location filename="../qml/pages/Account.qml" line="65"/>
         <source>Import Account</source>
         <translation>Importera konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="69"/>
+        <location filename="../qml/pages/Account.qml" line="70"/>
         <source>Export Account</source>
         <translation>Exportera konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="70"/>
+        <location filename="../qml/pages/Account.qml" line="71"/>
         <source>Exporting Account</source>
         <translation>Exporterar konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="88"/>
+        <location filename="../qml/pages/Account.qml" line="89"/>
         <source>Account</source>
         <translation>Konto</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="92"/>
+        <location filename="../qml/pages/Account.qml" line="93"/>
         <source>Show QR Code</source>
         <translation>Visa QR-kod</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="105"/>
+        <location filename="../qml/pages/Account.qml" line="106"/>
         <source>ToxID copied to clipboard</source>
         <translation>Tox-ID kopierat till urklipp</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="136"/>
+        <location filename="../qml/pages/Account.qml" line="137"/>
         <source>Tox ID: touch to copy to clipboard</source>
         <translation>Tox-ID: Tryck för att kopiera till urklipp</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="148"/>
-        <location filename="../qml/pages/Account.qml" line="150"/>
+        <location filename="../qml/pages/Account.qml" line="149"/>
+        <location filename="../qml/pages/Account.qml" line="151"/>
         <source>Nospam</source>
         <translation>Nospam</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="161"/>
-        <location filename="../qml/pages/Account.qml" line="163"/>
+        <location filename="../qml/pages/Account.qml" line="162"/>
+        <location filename="../qml/pages/Account.qml" line="164"/>
         <source>User name</source>
         <translation>Användarnamn</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="174"/>
+        <location filename="../qml/pages/Account.qml" line="175"/>
         <source>Status message</source>
         <translation>Statusmeddelande</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="175"/>
+        <location filename="../qml/pages/Account.qml" line="176"/>
         <source>Hi from jTox on Sailfish</source>
         <translation>Hej från jTox på Sailfish</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="180"/>
+        <location filename="../qml/pages/Account.qml" line="182"/>
+        <source>Avatar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Account.qml" line="216"/>
+        <source>Choose your Avatar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Account.qml" line="225"/>
+        <source>Clear</source>
+        <comment>avatar picture</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Account.qml" line="232"/>
         <source>Chat</source>
         <translation>Chatt</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="185"/>
+        <location filename="../qml/pages/Account.qml" line="237"/>
         <source>Wipe history</source>
         <translation>Rensa historiken</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="186"/>
+        <location filename="../qml/pages/Account.qml" line="238"/>
         <source>Wiping chat history</source>
         <translation>Rensar chatthistoriken</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="195"/>
+        <location filename="../qml/pages/Account.qml" line="247"/>
         <source>Multiline messages</source>
         <translation>Flerraders meddelanden</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="210"/>
+        <location filename="../qml/pages/Account.qml" line="262"/>
         <source>password</source>
         <translation>lösenord</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="216"/>
+        <location filename="../qml/pages/Account.qml" line="268"/>
         <source>Private</source>
         <translation>Privat</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="233"/>
+        <location filename="../qml/pages/Account.qml" line="285"/>
         <source>Update</source>
         <translation>Uppdatera</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="233"/>
+        <location filename="../qml/pages/Account.qml" line="285"/>
         <source>Register</source>
         <translation>Registrera</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="245"/>
+        <location filename="../qml/pages/Account.qml" line="297"/>
         <source>Delete</source>
         <translation>Ta bort</translation>
     </message>
@@ -183,8 +199,8 @@
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="59"/>
-        <source>or</source>
-        <translation>eller</translation>
+        <source>Press return to query</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="60"/>
@@ -396,17 +412,17 @@
         <translation>Tog bort ogiltigt väntande meddelande</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="536"/>
+        <location filename="../src/eventmodel.cpp" line="537"/>
         <source>Transfer canceled by sender</source>
         <translation>Överföring avbruten av avsändaren</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="536"/>
+        <location filename="../src/eventmodel.cpp" line="537"/>
         <source>Transfer canceled by receiver</source>
         <translation>Överföring avbruten av mottagaren</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="732"/>
+        <location filename="../src/eventmodel.cpp" line="697"/>
         <source>Unable to find file for transfer</source>
         <translation>Kunde inte hitta filen för överföring</translation>
     </message>
@@ -414,27 +430,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="620"/>
+        <location filename="../src/toxcore.cpp" line="654"/>
         <source>Offline</source>
         <translation>Offline</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="621"/>
+        <location filename="../src/toxcore.cpp" line="655"/>
         <source>Ready</source>
         <translation>Tillgänglig</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="622"/>
+        <location filename="../src/toxcore.cpp" line="656"/>
         <source>Away</source>
         <translation>Borta</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="623"/>
+        <location filename="../src/toxcore.cpp" line="657"/>
         <source>Busy</source>
         <translation>Upptagen</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="626"/>
+        <location filename="../src/toxcore.cpp" line="660"/>
         <source>Unknown</source>
         <translation>Okänt</translation>
     </message>

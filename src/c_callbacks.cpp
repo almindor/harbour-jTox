@@ -125,17 +125,30 @@ namespace JTOX {
                             const uint8_t *filename, size_t filename_length, void *user_data) {
         Q_UNUSED(tox);
         ToxCore* jTox = (ToxCore*) user_data;
-        if ( filename_length > TOX_MAX_FILENAME_LENGTH ) { // probably not required but safer
-            filename_length = TOX_MAX_FILENAME_LENGTH;
-        }
-        const QString fn = QString::fromUtf8((char*)filename, filename_length);
 
         if ( kind == TOX_FILE_KIND_AVATAR ) {
-            // TODO: handle avatars
-            return;
-        }
+            TOX_ERR_FILE_GET error;
+            QByteArray fileID(TOX_FILE_ID_LENGTH, 0);
+            uint8_t* file_id = (quint8*) fileID.data();
+            tox_file_get_file_id(tox, friend_number, file_number, file_id, &error);
+            if ( error != TOX_ERR_FILE_GET_OK ) {
+                TOX_ERR_FILE_CONTROL ctrl_error;
+                tox_file_control(tox, friend_number, file_number, TOX_FILE_CONTROL_CANCEL, &ctrl_error);
+                if ( ctrl_error != TOX_ERR_FILE_CONTROL_OK ) {
+                    qDebug() << "Error canceling avatar request: " << ctrl_error << "\n";
+                }
+                return;
+            }
 
-        jTox->onFileReceived(friend_number, file_number, file_size, fn);
+            jTox->onAvatarFileReceived(friend_number, file_number, file_size, fileID);
+        } else { // std. file
+            if ( filename_length > TOX_MAX_FILENAME_LENGTH ) { // probably not required but safer
+                filename_length = TOX_MAX_FILENAME_LENGTH;
+            }
+
+            const QString fn = QString::fromUtf8((char*)filename, filename_length);
+            jTox->onFileReceived(friend_number, file_number, file_size, fn);
+        }
     }
 
     void c_tox_file_recv_chunk_cb(Tox *tox, uint32_t friend_number, uint32_t file_number, uint64_t position,
