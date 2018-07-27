@@ -131,7 +131,6 @@ namespace JTOX {
             return; // this would cause error in toxcore!
         }
 
-        int count = rowCount();
         EventType eventType = etMessageOutOffline; // default to offline msg
         qint64 sendID = -1;
         QDateTime createdAt;
@@ -339,7 +338,6 @@ namespace JTOX {
         }
 
         QDateTime createdAt;
-        int count = rowCount();
         bool activeFriend = fFriendID == friend_id && fToxCore.getApplicationActive();
         EventType eventType = activeFriend ? etMessageIn : etMessageInUnread;
         Event event(-1, friend_id, createdAt, eventType, message, -1);
@@ -402,7 +400,6 @@ namespace JTOX {
     void EventModel::onFileReceived(quint32 friend_id, quint32 file_number, quint64 file_size, const QString &file_name)
     {
         QDateTime createdAt;
-        int count = rowCount();
         bool activeFriend = fFriendID == friend_id && fToxCore.getApplicationActive();
         const QDir dir(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
         const QString file_path = dir.absoluteFilePath(file_name);
