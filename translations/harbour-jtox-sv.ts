@@ -31,12 +31,12 @@
     <message>
         <location filename="../qml/pages/About.qml" line="92"/>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Medverkande</translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="92"/>
         <source>Michal Szczepaniak</source>
-        <translation type="unfinished"></translation>
+        <translation>Michal Szczepaniak</translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="104"/>
@@ -131,7 +131,7 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="180"/>
         <source>Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Chatt</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="185"/>
@@ -146,7 +146,7 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="195"/>
         <source>Multiline messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Flerraders meddelanden</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="210"/>
