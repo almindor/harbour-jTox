@@ -31,12 +31,12 @@
     <message>
         <location filename="../qml/pages/About.qml" line="92"/>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Colaboradores</translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="92"/>
         <source>Michal Szczepaniak</source>
-        <translation type="unfinished"></translation>
+        <translation>Michal Szczepaniak</translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="104"/>
@@ -131,7 +131,7 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="180"/>
         <source>Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Pláticar</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="185"/>
@@ -141,12 +141,12 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="186"/>
         <source>Wiping chat history</source>
-        <translation>Limpiando historal de charla</translation>
+        <translation>Limpiando historal de plática</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="195"/>
         <source>Multiline messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Mensajes multilínea</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="210"/>
@@ -227,17 +227,17 @@
     <message>
         <location filename="../qml/components/AltInputItem.qml" line="24"/>
         <source>is typing</source>
-        <translation type="unfinished">está escribiendo...</translation>
+        <translation>está escribiendo...</translation>
     </message>
     <message>
         <location filename="../qml/components/AltInputItem.qml" line="72"/>
         <source>Type your message here</source>
-        <translation type="unfinished">Escribir texto</translation>
+        <translation>Escribir texto</translation>
     </message>
     <message>
         <location filename="../qml/components/AltInputItem.qml" line="72"/>
         <source>is offline</source>
-        <translation type="unfinished">esta desconectado</translation>
+        <translation>esta desconectado</translation>
     </message>
 </context>
 <context>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../qml/cover/CoverPage.qml" line="88"/>
         <source>Messages: </source>
-        <translation>Mensajes:</translation>
+        <translation>Mensajes: </translation>
     </message>
 </context>
 <context>
@@ -271,12 +271,12 @@
     <message>
         <location filename="../qml/components/FriendItem.qml" line="23"/>
         <source>Remove</source>
-        <translation>Remover</translation>
+        <translation>Quitar</translation>
     </message>
     <message>
         <location filename="../qml/components/FriendItem.qml" line="24"/>
         <source>Removing</source>
-        <translation>Removiendo</translation>
+        <translation>Quitando</translation>
     </message>
     <message>
         <location filename="../qml/components/FriendItem.qml" line="30"/>
@@ -616,7 +616,7 @@
     <message>
         <location filename="../qml/harbour-jtox.qml" line="40"/>
         <source>Chat history wiped</source>
-        <translation>Limpiar historial de charla</translation>
+        <translation>Limpiar historial de plática</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="51"/>
@@ -641,7 +641,7 @@
     <message>
         <location filename="../qml/harbour-jtox.qml" line="63"/>
         <source>Removed from </source>
-        <translation>Removido de</translation>
+        <translation>Quitado de</translation>
     </message>
 </context>
 </TS>
