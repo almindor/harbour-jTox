@@ -9,47 +9,57 @@
         <translation>Om</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="52"/>
+        <location filename="../qml/pages/About.qml" line="53"/>
         <source>jTox</source>
         <translation>jTox</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="52"/>
+        <location filename="../qml/pages/About.qml" line="53"/>
         <source>by Aleš Katona.</source>
         <translation>av Aleš Katona.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="63"/>
+        <location filename="../qml/pages/About.qml" line="64"/>
         <source>Toxcore version</source>
         <translation>Toxcore-version</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="75"/>
+        <location filename="../qml/pages/About.qml" line="76"/>
         <source>jTox is free software licensed under the GPL v3 available at &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</source>
         <translation>jTox är fri mjukvara, licensierad under GPL v3 tillgänglig på &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;GitHub&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="91"/>
+        <location filename="../qml/pages/About.qml" line="92"/>
+        <source>Contributors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/About.qml" line="92"/>
+        <source>Michal Szczepaniak</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/About.qml" line="104"/>
         <source>Translators</source>
         <translation>Översättare</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="91"/>
+        <location filename="../qml/pages/About.qml" line="104"/>
         <source>Swedish: Åke Engelbrektson</source>
         <translation>Svenska: Åke Engelbrektson</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="91"/>
+        <location filename="../qml/pages/About.qml" line="104"/>
         <source>Spanish: caballlero</source>
         <translation>Spanska: caballlero</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="91"/>
+        <location filename="../qml/pages/About.qml" line="104"/>
         <source>French: Jerome Hubert</source>
         <translation>Franska: Jerome Hubert</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="103"/>
+        <location filename="../qml/pages/About.qml" line="116"/>
         <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
         <translation>Tox-protokollet är &lt;b&gt;EXPERIMENTELLT!&lt;b&gt; Protokollet har inte granskats gällande säkerhet och kan innehålla sårbarheter. Stor dataförbrukning kan förväntas. &lt;b&gt;ANVÄND DET PÅ EGEN RISK&lt;b&gt;.</translation>
     </message>
@@ -376,27 +386,27 @@
         <translation>Kan inte skicka tomt meddelande</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="145"/>
+        <location filename="../src/eventmodel.cpp" line="144"/>
         <source>Unable to send message</source>
         <translation>Kunde inte skicka meddelande</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="389"/>
+        <location filename="../src/eventmodel.cpp" line="387"/>
         <source>Removed invalid pending message</source>
         <translation>Tog bort ogiltigt väntande meddelande</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="539"/>
+        <location filename="../src/eventmodel.cpp" line="536"/>
         <source>Transfer canceled by sender</source>
         <translation>Överföring avbruten av avsändaren</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="539"/>
+        <location filename="../src/eventmodel.cpp" line="536"/>
         <source>Transfer canceled by receiver</source>
         <translation>Överföring avbruten av mottagaren</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="735"/>
+        <location filename="../src/eventmodel.cpp" line="732"/>
         <source>Unable to find file for transfer</source>
         <translation>Kunde inte hitta filen för överföring</translation>
     </message>

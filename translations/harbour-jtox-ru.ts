@@ -9,47 +9,57 @@
         <translation>О приложении</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="52"/>
+        <location filename="../qml/pages/About.qml" line="53"/>
         <source>jTox</source>
         <translation>jTox</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="52"/>
+        <location filename="../qml/pages/About.qml" line="53"/>
         <source>by Aleš Katona.</source>
         <translation>от Алеша Катоны.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="63"/>
+        <location filename="../qml/pages/About.qml" line="64"/>
         <source>Toxcore version</source>
         <translation>Версия Toxcore</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="75"/>
+        <location filename="../qml/pages/About.qml" line="76"/>
         <source>jTox is free software licensed under the GPL v3 available at &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</source>
         <translation>jTox — свободный софт, доступный здесь: &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt; по лицензии GPL v3.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="91"/>
+        <location filename="../qml/pages/About.qml" line="92"/>
+        <source>Contributors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/About.qml" line="92"/>
+        <source>Michal Szczepaniak</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/About.qml" line="104"/>
         <source>Translators</source>
         <translation>Переводчики</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="91"/>
+        <location filename="../qml/pages/About.qml" line="104"/>
         <source>Swedish: Åke Engelbrektson</source>
         <translation>Шведский: Åke Engelbrektson</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="91"/>
+        <location filename="../qml/pages/About.qml" line="104"/>
         <source>Spanish: caballlero</source>
         <translation>Испанский: caballlero</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="91"/>
+        <location filename="../qml/pages/About.qml" line="104"/>
         <source>French: Jerome Hubert</source>
         <translation>Французский: Jerome Hubert</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="103"/>
+        <location filename="../qml/pages/About.qml" line="116"/>
         <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
         <translation>Протокол Tox является &lt;b&gt;ЭКСПЕРИМЕНТАЛЬНЫМ!&lt;/b&gt; Протокол не проходил аудит безопасности и может содержать уязвимости. Возможно потребление большого объема трафика. &lt;b&gt;ИСПОЛЬЗУЙТЕ НА СВОЙ СТРАХ И РИСК&lt;/b&gt;.</translation>
     </message>
@@ -376,27 +386,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="145"/>
+        <location filename="../src/eventmodel.cpp" line="144"/>
         <source>Unable to send message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="389"/>
+        <location filename="../src/eventmodel.cpp" line="387"/>
         <source>Removed invalid pending message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="539"/>
+        <location filename="../src/eventmodel.cpp" line="536"/>
         <source>Transfer canceled by sender</source>
         <translation>Передача отменена отправителем</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="539"/>
+        <location filename="../src/eventmodel.cpp" line="536"/>
         <source>Transfer canceled by receiver</source>
         <translation>Передача отменена получателем</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="735"/>
+        <location filename="../src/eventmodel.cpp" line="732"/>
         <source>Unable to find file for transfer</source>
         <translation>Не найден файл для передачи</translation>
     </message>

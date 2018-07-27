@@ -49,6 +49,7 @@ Page {
                 }
                 wrapMode: Text.WordWrap
                 color: Theme.primaryColor
+                font.bold: true
                 text: qsTr("jTox") + " v1.3.2 " + qsTr("by Aleš Katona.")
             }
 
@@ -88,7 +89,19 @@ Page {
                 color: Theme.secondaryColor
                 font.pointSize: Theme.fontSizeExtraSmall
                 wrapMode: Text.WordWrap
-                text: qsTr("Translators") + "\n" + qsTr("Swedish: Åke Engelbrektson") + "\n" + qsTr("Spanish: caballlero") + "\n" + qsTr("French: Jerome Hubert")
+                text: "<b>" + qsTr("Contributors") + "</b><br>" + qsTr("Michal Szczepaniak")
+            }
+
+            Text {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingLarge
+                }
+                color: Theme.secondaryColor
+                font.pointSize: Theme.fontSizeExtraSmall
+                wrapMode: Text.WordWrap
+                text: "<b>" + qsTr("Translators") + "</b><br>" + qsTr("Swedish: Åke Engelbrektson") + "<br>" + qsTr("Spanish: caballlero") + "<br>" + qsTr("French: Jerome Hubert")
             }
 
             Text {

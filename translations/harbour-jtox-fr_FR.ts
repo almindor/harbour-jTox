@@ -43,6 +43,14 @@
         <source>French: Jerome Hubert</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Contributors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Michal Szczepaniak</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Account</name>
