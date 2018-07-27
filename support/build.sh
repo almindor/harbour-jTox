@@ -13,9 +13,9 @@ if [ "$1" != "i486" ] && [ "$1" != "armv7hl" ]; then
 		exit 2
 fi
 
-SFVER="2.1.4.13"
+SFVER="2.2.0.29"
 SODIUMVER="1.0.16"
-TOXCOREVER="0.2.2"
+TOXCOREVER="0.2.4"
 THREADS="8"
 TARGET="$SFVER-$1"
 TOXDIR=`pwd`
