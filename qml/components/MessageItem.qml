@@ -7,6 +7,8 @@ ListItem {
     anchors {
         left: parent.left
         right: parent.right
+        rightMargin: Theme.paddingLarge
+        leftMargin: Theme.paddingLarge
     }
 
     contentHeight: createdLabel.height + lineContent.height

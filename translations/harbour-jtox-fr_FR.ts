@@ -95,10 +95,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Chat history</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Wipe history</source>
         <translation type="unfinished"></translation>
     </message>
@@ -125,6 +121,14 @@
     <message>
         <source>Delete</source>
         <translation type="unfinished">Effacer</translation>
+    </message>
+    <message>
+        <source>Chat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiline messages</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -163,6 +167,21 @@
     </message>
     <message>
         <source>Resolve Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AltInputItem</name>
+    <message>
+        <source>is typing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type your message here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>is offline</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

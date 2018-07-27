@@ -57,104 +57,109 @@
 <context>
     <name>Account</name>
     <message>
-        <location filename="../qml/pages/Account.qml" line="37"/>
+        <location filename="../qml/pages/Account.qml" line="44"/>
         <source>Importing Account</source>
         <translation>Importando la cuenta</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="57"/>
+        <location filename="../qml/pages/Account.qml" line="64"/>
         <source>Import Account</source>
         <translation>Importar la cuenta</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="62"/>
+        <location filename="../qml/pages/Account.qml" line="69"/>
         <source>Export Account</source>
         <translation>Exportar la cuenta</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="63"/>
+        <location filename="../qml/pages/Account.qml" line="70"/>
         <source>Exporting Account</source>
         <translation>Exportando la cuenta</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="81"/>
+        <location filename="../qml/pages/Account.qml" line="88"/>
         <source>Account</source>
         <translation>Ajustes</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="85"/>
+        <location filename="../qml/pages/Account.qml" line="92"/>
         <source>Show QR Code</source>
         <translation>Código QR</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="98"/>
+        <location filename="../qml/pages/Account.qml" line="105"/>
         <source>ToxID copied to clipboard</source>
         <translation>ToxID copiado al portapapeles</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="129"/>
+        <location filename="../qml/pages/Account.qml" line="136"/>
         <source>Tox ID: touch to copy to clipboard</source>
         <translation>Tox ID: tocar para copiar al portapapeles</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="141"/>
-        <location filename="../qml/pages/Account.qml" line="143"/>
+        <location filename="../qml/pages/Account.qml" line="148"/>
+        <location filename="../qml/pages/Account.qml" line="150"/>
         <source>Nospam</source>
         <translation>Sin Correos basura</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="154"/>
-        <location filename="../qml/pages/Account.qml" line="156"/>
+        <location filename="../qml/pages/Account.qml" line="161"/>
+        <location filename="../qml/pages/Account.qml" line="163"/>
         <source>User name</source>
         <translation>Nombre de usuario</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="167"/>
+        <location filename="../qml/pages/Account.qml" line="174"/>
         <source>Status message</source>
         <translation>Estado de mensaje</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="168"/>
+        <location filename="../qml/pages/Account.qml" line="175"/>
         <source>Hi from jTox on Sailfish</source>
         <translation>Hola, desde jTox en Sailfish OS</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="173"/>
-        <source>Chat history</source>
-        <translation>Historial de conversación</translation>
+        <location filename="../qml/pages/Account.qml" line="180"/>
+        <source>Chat</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="178"/>
+        <location filename="../qml/pages/Account.qml" line="185"/>
         <source>Wipe history</source>
         <translation>Limpiar historial</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="179"/>
+        <location filename="../qml/pages/Account.qml" line="186"/>
         <source>Wiping chat history</source>
         <translation>Limpiando historal de charla</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="195"/>
+        <source>Multiline messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Account.qml" line="210"/>
         <source>password</source>
         <translation>Contraseña</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="201"/>
+        <location filename="../qml/pages/Account.qml" line="216"/>
         <source>Private</source>
         <translation>Privado</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="218"/>
+        <location filename="../qml/pages/Account.qml" line="233"/>
         <source>Update</source>
         <translation>Actualizar</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="218"/>
+        <location filename="../qml/pages/Account.qml" line="233"/>
         <source>Register</source>
         <translation>Registrar</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="230"/>
+        <location filename="../qml/pages/Account.qml" line="245"/>
         <source>Delete</source>
         <translation>Borrar</translation>
     </message>
@@ -205,6 +210,24 @@
         <location filename="../qml/pages/AddFriend.qml" line="134"/>
         <source>Resolve Error</source>
         <translation>Resolver error</translation>
+    </message>
+</context>
+<context>
+    <name>AltInputItem</name>
+    <message>
+        <location filename="../qml/components/AltInputItem.qml" line="24"/>
+        <source>is typing</source>
+        <translation type="unfinished">está escribiendo...</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/AltInputItem.qml" line="72"/>
+        <source>Type your message here</source>
+        <translation type="unfinished">Escribir texto</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/AltInputItem.qml" line="72"/>
+        <source>is offline</source>
+        <translation type="unfinished">esta desconectado</translation>
     </message>
 </context>
 <context>
@@ -417,47 +440,47 @@
 <context>
     <name>MessageItem</name>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="18"/>
+        <location filename="../qml/components/MessageItem.qml" line="20"/>
         <source>Copy to clipboard</source>
         <translation>Copiar</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="22"/>
+        <location filename="../qml/components/MessageItem.qml" line="24"/>
         <source>Message copied to clipboard</source>
         <translation>Mensaje copiado</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="28"/>
+        <location filename="../qml/components/MessageItem.qml" line="30"/>
         <source>Delete message</source>
         <translation>Borrar</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="34"/>
+        <location filename="../qml/components/MessageItem.qml" line="36"/>
         <source>Accept transfer</source>
         <translation>Aceptar</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="34"/>
+        <location filename="../qml/components/MessageItem.qml" line="36"/>
         <source>Resume transfer</source>
         <translation>Reanudar</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="39"/>
+        <location filename="../qml/components/MessageItem.qml" line="41"/>
         <source>Overriding</source>
         <translation>Primordial</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="50"/>
+        <location filename="../qml/components/MessageItem.qml" line="52"/>
         <source>Pause transfer</source>
         <translation>Pausar</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="56"/>
+        <location filename="../qml/components/MessageItem.qml" line="58"/>
         <source>Cancel transfer</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="62"/>
+        <location filename="../qml/components/MessageItem.qml" line="64"/>
         <source>Open file</source>
         <translation>Abrir</translation>
     </message>
@@ -474,7 +497,7 @@
 <context>
     <name>Messages</name>
     <message>
-        <location filename="../qml/pages/Messages.qml" line="83"/>
+        <location filename="../qml/pages/Messages.qml" line="120"/>
         <source>Send file</source>
         <translation>Enviar</translation>
     </message>

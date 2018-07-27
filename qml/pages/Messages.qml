@@ -19,6 +19,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Sailfish.Pickers 1.0
 import "../components"
+import org.nemomobile.configuration 1.0
 
 Page {
     id: page
@@ -37,24 +38,32 @@ Page {
 
         eventmodel.setFriend(visible ? appWindow.activeFriendID : -1)
         if ( visible ) {
-            listView.positionViewAtEnd()
+            listView.positionViewAtBeginning()
         }
+    }
+
+
+    ConfigurationValue {
+        id: multilineMessages
+        defaultValue: true
+        key: "/multilineMessages"
     }
 
     Component {
         id: filePickerPage
-        FilePickerPage {
-            nameFilters: [ '*.*' ]
+        ContentPickerPage {
             onSelectedContentPropertiesChanged: {
                 eventmodel.sendFile(selectedContentProperties.filePath)
             }
         }
     }
 
-    SilicaListView {
-        id: listView
+    SilicaFlickable {
+        anchors.fill: parent
+        contentHeight: parent.height - Theme.paddingLarge
+        clip: true
 
-        header: PageHeader {
+        PageHeader {
             id: pageHeader
             title: eventmodel.friendName
 
@@ -69,12 +78,40 @@ Page {
             }
         }
 
-        anchors.fill: parent
+        SilicaListView {
+            id: listView
+            spacing: Theme.paddingSmall
+            anchors.fill: parent
+            anchors.topMargin: pageHeader.height
+            anchors.bottomMargin: multilineMessages.value ? multiTextField.height : altTextField.height
 
-        spacing: Theme.paddingSmall
-        model: eventmodel
-        VerticalScrollDecorator {
-            flickable: listView
+            verticalLayoutDirection: ListView.BottomToTop
+            clip: true
+
+            model: eventmodel
+            VerticalScrollDecorator {
+                flickable: listView
+            }
+
+            delegate: MessageItem {}
+        }
+
+        InputItem {
+            id: multiTextField
+            visible: multilineMessages.value
+            anchors.bottom: parent.bottom
+            onSendMessage: {
+                eventmodel.sendMessage(msg)
+            }
+        }
+
+        AltInputItem {
+            id: altTextField
+            visible: !multilineMessages.value
+            anchors.bottom: parent.bottom
+            onSendMessage: {
+                eventmodel.sendMessage(msg)
+            }
         }
 
         PushUpMenu {
@@ -85,15 +122,6 @@ Page {
                     checkFriendID = false // ensure we don't lose friendID
                     pageStack.push(filePickerPage)
                 }
-            }
-        }
-
-        delegate: MessageItem {}
-
-        footer: InputItem {
-            onSendMessage: {
-                eventmodel.sendMessage(msg)
-                listView.positionViewAtEnd()
             }
         }
     }

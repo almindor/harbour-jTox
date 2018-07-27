@@ -18,10 +18,17 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "../components"
+import org.nemomobile.configuration 1.0
 
 Page {
     id: page
     allowedOrientations: Orientation.Portrait
+
+    ConfigurationValue {
+        id: multilineMessages
+        defaultValue: true
+        key: "/multilineMessages"
+    }
 
     RemorsePopup {
         id: remorseIE
@@ -170,7 +177,7 @@ Page {
             }
 
             SectionHeader {
-                text: qsTr("Chat history")
+                text: qsTr("Chat")
             }
 
             Button {
@@ -179,6 +186,14 @@ Page {
                 onClicked: remorseCH.execute(qsTr("Wiping chat history"), function() {
                     toxcore.wipeLogs()
                 } )
+            }
+
+            TextSwitch {
+               id: multilineMessagesSwitch
+               checked: multilineMessages.value
+               width: parent.width
+               text: qsTr("Multiline messages")
+               onClicked: multilineMessages.value = !multilineMessages.value
             }
 
             SectionHeader {
