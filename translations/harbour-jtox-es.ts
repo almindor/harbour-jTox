@@ -56,7 +56,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="104"/>
         <source>Spanish: carlosgonz</source>
-        <translation type="unfinished"></translation>
+        <translation>Español: carlosgonz</translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="116"/>
