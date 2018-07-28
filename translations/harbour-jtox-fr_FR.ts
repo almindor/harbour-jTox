@@ -32,10 +32,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Spanish: caballlero</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -49,6 +45,10 @@
     </message>
     <message>
         <source>Michal Szczepaniak</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spanish: carlosgonz</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

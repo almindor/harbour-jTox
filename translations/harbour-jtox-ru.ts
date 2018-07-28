@@ -50,13 +50,13 @@
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="104"/>
-        <source>Spanish: caballlero</source>
-        <translation>Испанский: caballlero</translation>
+        <source>French: Jerome Hubert</source>
+        <translation>Французский: Jerome Hubert</translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="104"/>
-        <source>French: Jerome Hubert</source>
-        <translation>Французский: Jerome Hubert</translation>
+        <source>Spanish: carlosgonz</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="116"/>
