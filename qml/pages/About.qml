@@ -101,7 +101,7 @@ Page {
                 color: Theme.secondaryColor
                 font.pointSize: Theme.fontSizeExtraSmall
                 wrapMode: Text.WordWrap
-                text: "<b>" + qsTr("Translators") + "</b><br>" + qsTr("Swedish: Åke Engelbrektson") + "<br>" + qsTr("Spanish: caballlero") + "<br>" + qsTr("French: Jerome Hubert")
+                text: "<b>" + qsTr("Translators") + "</b><br>" + qsTr("Swedish: Åke Engelbrektson") + "<br>" + qsTr("Spanish: carlosgonz") + "<br>" + qsTr("French: Jerome Hubert")
             }
 
             Text {
