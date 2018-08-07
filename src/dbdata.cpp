@@ -78,7 +78,7 @@ namespace JTOX {
 
         list.clear();
         while ( fEventSelectQuery.next() ) {
-            list.append(parseEvent(fEventSelectQuery));
+            list.push_front(parseEvent(fEventSelectQuery));
         }
     }
 
