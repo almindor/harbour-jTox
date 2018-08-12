@@ -131,18 +131,18 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="182"/>
         <source>Avatar</source>
-        <translation type="unfinished"></translation>
+        <translation>Avatar</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="216"/>
         <source>Choose your Avatar</source>
-        <translation type="unfinished"></translation>
+        <translation>Elegir el avatar</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="225"/>
         <source>Clear</source>
         <comment>avatar picture</comment>
-        <translation type="unfinished"></translation>
+        <translation>foto avatar</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="232"/>
@@ -200,7 +200,7 @@
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="59"/>
         <source>Press return to query</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulsar volver para consultar</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="60"/>
