@@ -43,6 +43,17 @@ Dialog {
             right: parent.right
         }
 
+        Avatar {
+            source_id: friendmodel.friend_id
+            width: parent.width / 8
+            height: width
+            placeholder: "🖾"
+
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+            }
+        }
+
         Label {
             id: address
             anchors {

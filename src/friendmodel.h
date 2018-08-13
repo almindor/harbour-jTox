@@ -37,6 +37,7 @@ namespace JTOX {
         Q_PROPERTY(int unviewedMessages READ getUnviewedMessages NOTIFY unviewedMessagesChanged)
         Q_PROPERTY(QString address READ getAddress NOTIFY activeFriendChanged)
         Q_PROPERTY(QString name READ getName NOTIFY activeFriendChanged)
+        Q_PROPERTY(qint64 friend_id READ getFriendID NOTIFY activeFriendChanged)
     public:
         explicit FriendModel(ToxCore& toxcore, DBData& dbData, AvatarProvider* avatarProvider);
 
@@ -50,6 +51,7 @@ namespace JTOX {
         void messagesViewed(quint32 friend_id);
         const QString getAddress() const;
         const QString getName() const;
+        qint64 getFriendID() const;
         Q_INVOKABLE void setOfflineName(const QString& name);
         Q_INVOKABLE void addFriend(const QString& address, const QString& message);
         Q_INVOKABLE void addFriendNoRequest(const QString& publicKey, const QString& name);

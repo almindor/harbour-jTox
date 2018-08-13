@@ -134,58 +134,58 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="216"/>
+        <location filename="../qml/pages/Account.qml" line="217"/>
         <source>Choose your Avatar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="225"/>
+        <location filename="../qml/pages/Account.qml" line="226"/>
         <source>Clear</source>
         <comment>avatar picture</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="232"/>
+        <location filename="../qml/pages/Account.qml" line="233"/>
         <source>Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="237"/>
+        <location filename="../qml/pages/Account.qml" line="238"/>
         <source>Wipe history</source>
         <translation>Очистить историю</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="238"/>
+        <location filename="../qml/pages/Account.qml" line="239"/>
         <source>Wiping chat history</source>
         <translation>Очистка истории</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="247"/>
+        <location filename="../qml/pages/Account.qml" line="248"/>
         <source>Multiline messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="262"/>
+        <location filename="../qml/pages/Account.qml" line="263"/>
         <source>password</source>
         <translation>пароль</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="268"/>
+        <location filename="../qml/pages/Account.qml" line="269"/>
         <source>Private</source>
         <translation>Приватный</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="285"/>
+        <location filename="../qml/pages/Account.qml" line="286"/>
         <source>Update</source>
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="285"/>
+        <location filename="../qml/pages/Account.qml" line="286"/>
         <source>Register</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Account.qml" line="297"/>
+        <location filename="../qml/pages/Account.qml" line="298"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
@@ -272,12 +272,12 @@
         <translation>Детали</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Details.qml" line="65"/>
+        <location filename="../qml/pages/Details.qml" line="76"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Details.qml" line="68"/>
+        <location filename="../qml/pages/Details.qml" line="79"/>
         <source>Friend offline name</source>
         <translation>Оффлайновое имя контакта</translation>
     </message>
@@ -523,7 +523,7 @@
 <context>
     <name>Messages</name>
     <message>
-        <location filename="../qml/pages/Messages.qml" line="120"/>
+        <location filename="../qml/pages/Messages.qml" line="134"/>
         <source>Send file</source>
         <translation>Отправить файл</translation>
     </message>

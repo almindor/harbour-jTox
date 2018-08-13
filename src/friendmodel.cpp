@@ -298,6 +298,15 @@ namespace JTOX {
         return fList.at(fActiveFriendIndex).name();
     }
 
+    qint64 FriendModel::getFriendID() const
+    {
+        if (fActiveFriendIndex < 0 || fActiveFriendIndex >= fList.size()) {
+            return -2; // nobody, -1 is "me"
+        }
+
+        return fList.at(fActiveFriendIndex).friendID();
+    }
+
     void FriendModel::setOfflineName(const QString& name)
     {
         if (fActiveFriendIndex < 0 || fActiveFriendIndex >= fList.size()) {

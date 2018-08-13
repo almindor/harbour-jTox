@@ -68,6 +68,7 @@ Page {
             title: eventmodel.friendName
 
             UserStatusIndicator {
+                id: usi
                 anchors {
                     verticalCenter: parent.verticalCenter
                     left: parent.left
@@ -75,6 +76,19 @@ Page {
                 }
 
                 userStatus: eventmodel.friendStatus
+            }
+
+            Avatar {
+                source_id: appWindow.activeFriendID
+                width: parent.width / 8
+                height: width
+                placeholder: "🖾"
+
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: usi.right
+                    leftMargin: Theme.paddingLarge
+                }
             }
         }
 

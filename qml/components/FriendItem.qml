@@ -49,6 +49,7 @@ ListItem {
             topMargin: Theme.paddingSmall
         }
 
+        placeholder: "🖾"
         width: parent.width / 8
         height: width
         source_id: friend_id

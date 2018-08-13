@@ -199,7 +199,8 @@ Page {
                     id: avatarImage
                     placeholder: "🖾"
                     anchors.centerIn: parent
-                    height: 128
+                    width: parent.width / 4
+                    height: width
 
                     Connections {
                         target: avatarProvider
