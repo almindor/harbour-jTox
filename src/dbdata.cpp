@@ -235,9 +235,9 @@ namespace JTOX {
             Utils::bail("Unable to get avatar data: " + fGetAvatarQuery.lastError().text());
         }
 
-        if ( fGetAvatarQuery.next() ) {
+        if ( fGetAvatarQuery.next() && !fGetAvatarQuery.value(0).isNull() ) {
             result = fGetAvatarQuery.value(0).toByteArray();
-            return true;
+            return result.size() > 0;
         }
 
         return false;
@@ -278,6 +278,10 @@ namespace JTOX {
 
     void DBData::setAvatar(qint64 friend_id, const QByteArray &hash, const QByteArray &data)
     {
+        if ( data.isEmpty() ) {
+            return clearAvatar(friend_id);
+        }
+
         fSetAvatarQuery.bindValue(":friend_id", friend_id); // -1 for "me"
         fSetAvatarQuery.bindValue(":hash", hash);
         fSetAvatarQuery.bindValue(":data", data);
