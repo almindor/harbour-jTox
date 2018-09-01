@@ -82,7 +82,7 @@ Page {
                 source_id: appWindow.activeFriendID
                 width: parent.width / 8
                 height: width
-                placeholder: "🖾"
+                placeholder: ""
 
                 anchors {
                     verticalCenter: parent.verticalCenter
