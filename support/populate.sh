@@ -7,6 +7,7 @@ SSH_KEYDIR="~/SailfishOS/vmshare/ssh/private_keys/engine/mersdk"
 
 # prepare extra
 mkdir -p ../extra
+rm -fr ../extra/i486 ../extra/armv7hl
 
 # Prepare build dir and script
 echo -en "Preparing build dir..\t\t\t"
