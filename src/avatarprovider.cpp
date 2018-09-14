@@ -165,15 +165,11 @@ namespace JTOX {
         }
 
         if ( data.size() == 0 ) { // done
-            const Avatar& avatar = fAvatars.value(transferID);
             const QByteArray pixmapData = fAvatars.value(transferID).data();
             const QByteArray hash = fToxCore.hash(pixmapData);
 
             fDBData.setAvatar(friend_id, hash, pixmapData);
-
-            if ( !avatar.isEmpty() ) {
-                emit avatarChanged(friend_id);
-            }
+            emit avatarChanged(friend_id);
         } else {
             fAvatars[transferID].addData(data);
         }
