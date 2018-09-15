@@ -229,13 +229,6 @@ namespace JTOX {
         }
     }
 
-    void FriendModel::onFriendAvatarChanged(quint32 friend_id)
-    {
-        int index = getListIndexForFriendID(friend_id);
-        emit dataChanged(createIndex(index, 0), createIndex(index, 0), QVector<int>());
-        emit friendUpdated(friend_id);
-    }
-
     int FriendModel::getListIndexForFriendID(quint32 friend_id) const {
         int i = 0;
         foreach ( const Friend& fr, fList ) {

@@ -66,7 +66,6 @@ namespace JTOX {
         void friendWentOnline(int friendID) const;
     public slots:
         void onProfileAvatarChanged(const QByteArray& hash, const QByteArray& data);
-        void onFriendAvatarChanged(quint32 friend_id);
     private slots:
         void refresh();
         void onFriendStatusChanged(quint32 friend_id, int status);

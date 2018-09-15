@@ -61,7 +61,6 @@ int main(int argc, char *argv[])
     EventModel eventModel(toxCore, friendModel, dbData);
     RequestModel requestModel(toxCore, toxme, friendModel, dbData);
 
-    QObject::connect(avatarProvider, &AvatarProvider::avatarChanged, &friendModel, &FriendModel::onFriendAvatarChanged); // update when we get a new avatar
     QObject::connect(avatarProvider, &AvatarProvider::profileAvatarChanged, &friendModel, &FriendModel::onProfileAvatarChanged); // update friends when we set a new avatar
 
     QString qml = QString("qml/%1.qml").arg("harbour-jtox");
