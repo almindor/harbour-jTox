@@ -21,7 +21,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="64"/>
         <source>Toxcore version</source>
-        <translation>Versión toxcore</translation>
+        <translation>Versión toxcore:</translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="76"/>
@@ -61,7 +61,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="116"/>
         <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
-        <translation>El protocolo Tox es &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; y no ha sido auditado la seguridad y puede contener vulnerabilidades. &lt;b&gt;ÚSELO BAJO SU PROPIO RIESGO&lt;/b&gt;.</translation>
+        <translation>El protocolo Tox es &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; y no ha sido auditado la seguridad y puede contener vulnerabilidades. Esta aplicación usa grandes cantidades de datos para su función. &lt;b&gt;USARLO CON RESPONSABILIDAD&lt;/b&gt;.</translation>
     </message>
 </context>
 <context>
@@ -99,18 +99,18 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="106"/>
         <source>ToxID copied to clipboard</source>
-        <translation>ToxID copiado al portapapeles</translation>
+        <translation>Id Tox copiado al portapapeles</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="137"/>
         <source>Tox ID: touch to copy to clipboard</source>
-        <translation>Tox ID: tocar para copiar al portapapeles</translation>
+        <translation>Id TOX: tocar aquí para copiarlo</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="149"/>
         <location filename="../qml/pages/Account.qml" line="151"/>
         <source>Nospam</source>
-        <translation>Sin Correos basura</translation>
+        <translation>Anticorreos basura</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="162"/>
@@ -131,18 +131,18 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="182"/>
         <source>Avatar</source>
-        <translation type="unfinished"></translation>
+        <translation>Fotografia</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="217"/>
         <source>Choose your Avatar</source>
-        <translation type="unfinished"></translation>
+        <translation>Elegir la fotografia</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="226"/>
         <source>Clear</source>
         <comment>avatar picture</comment>
-        <translation type="unfinished"></translation>
+        <translation>Quitar</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="233"/>
@@ -195,17 +195,17 @@
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="48"/>
         <source>Add Friend</source>
-        <translation>Añadir un contacto</translation>
+        <translation>Añadiendo a contactos</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="59"/>
         <source>Press return to query</source>
-        <translation type="unfinished"></translation>
+        <translation>Presionar retorno para consultar</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="60"/>
         <source>Address or handle@</source>
-        <translation>Dirección o manejar@</translation>
+        <translation>Dirección o alias@</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="98"/>
@@ -215,7 +215,7 @@
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="99"/>
         <source>Please add me to friends</source>
-        <translation>Por favor agrégame a sus contactos</translation>
+        <translation>Por favor agrégame a contactos</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="111"/>
@@ -325,7 +325,7 @@
     <message>
         <location filename="../qml/pages/Friends.qml" line="93"/>
         <source>Add Friend</source>
-        <translation>Añadir</translation>
+        <translation>Agregar</translation>
     </message>
     <message>
         <location filename="../qml/pages/Friends.qml" line="101"/>
@@ -373,7 +373,7 @@
     <message>
         <location filename="../qml/pages/Import.qml" line="65"/>
         <source>No account *.tox files found in Documents folder. Copy account file to Documents and try again.</source>
-        <translation>No hay cuenta *.tox en la carpeta Documentos. Copiar el archivo de la cuenta a Documentos e inténtar de nuevo.</translation>
+        <translation>No hay cuenta *.tox en la carpeta Documentos. Copia el archivo de la cuenta a Documentos e inténtar de nuevo.</translation>
     </message>
 </context>
 <context>
@@ -642,7 +642,7 @@
     <message>
         <location filename="../qml/harbour-jtox.qml" line="52"/>
         <source>Transfer from</source>
-        <translation>Transferencia de de</translation>
+        <translation>Transferencia de</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="53"/>
