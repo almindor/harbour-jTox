@@ -56,7 +56,7 @@
     <message>
         <location filename="../qml/pages/About.qml" line="104"/>
         <source>Spanish: carlosgonz</source>
-        <translation type="unfinished"></translation>
+        <translation>Spanska: carlosgonz</translation>
     </message>
     <message>
         <location filename="../qml/pages/About.qml" line="116"/>
@@ -131,18 +131,18 @@
     <message>
         <location filename="../qml/pages/Account.qml" line="182"/>
         <source>Avatar</source>
-        <translation type="unfinished"></translation>
+        <translation>Avatar</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="217"/>
         <source>Choose your Avatar</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj din avatar</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="226"/>
         <source>Clear</source>
         <comment>avatar picture</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <location filename="../qml/pages/Account.qml" line="233"/>
@@ -200,7 +200,7 @@
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="59"/>
         <source>Press return to query</source>
-        <translation type="unfinished"></translation>
+        <translation>Tryck retur för att fråga</translation>
     </message>
     <message>
         <location filename="../qml/pages/AddFriend.qml" line="60"/>
@@ -243,17 +243,17 @@
     <message>
         <location filename="../qml/components/AltInputItem.qml" line="24"/>
         <source>is typing</source>
-        <translation type="unfinished">skriver</translation>
+        <translation>skriver</translation>
     </message>
     <message>
         <location filename="../qml/components/AltInputItem.qml" line="72"/>
         <source>Type your message here</source>
-        <translation type="unfinished">Skriv ditt meddelande här</translation>
+        <translation>Skriv ditt meddelande här</translation>
     </message>
     <message>
         <location filename="../qml/components/AltInputItem.qml" line="72"/>
         <source>is offline</source>
-        <translation type="unfinished">är offline</translation>
+        <translation>är offline</translation>
     </message>
 </context>
 <context>
