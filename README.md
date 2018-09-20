@@ -17,9 +17,9 @@ These steps will install all the required packages on mersdk build engine. Be su
 Change this to the SailfishOS version required
 `SFVER=2.1.4.13`
 
-`sb2 -t SailfishOS-$SFVER-armv7hl -m sdk-install -R zypper install gcc gcc-c++ autoconf automake make libtool`
+`sb2 -t SailfishOS-$SFVER-armv7hl -m sdk-install -R zypper install gcc gcc-c++ autoconf automake make libtool nasm`
 
-`sb2 -t "SailfishOS-$SFVER-i486" -m sdk-install -R zypper install gcc gcc-c++ autoconf automake make libtool`
+`sb2 -t "SailfishOS-$SFVER-i486" -m sdk-install -R zypper install gcc gcc-c++ autoconf automake make libtool yasm`
 
 ### Building the required libraries
 
