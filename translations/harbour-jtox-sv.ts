@@ -430,27 +430,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="654"/>
+        <location filename="../src/toxcore.cpp" line="655"/>
         <source>Offline</source>
         <translation>Offline</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="655"/>
+        <location filename="../src/toxcore.cpp" line="656"/>
         <source>Ready</source>
         <translation>Tillgänglig</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="656"/>
+        <location filename="../src/toxcore.cpp" line="657"/>
         <source>Away</source>
         <translation>Borta</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="657"/>
+        <location filename="../src/toxcore.cpp" line="658"/>
         <source>Busy</source>
         <translation>Upptagen</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="660"/>
+        <location filename="../src/toxcore.cpp" line="661"/>
         <source>Unknown</source>
         <translation>Okänt</translation>
     </message>
@@ -458,7 +458,7 @@
 <context>
     <name>JTOX::ToxInitializer</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="178"/>
+        <location filename="../src/toxcore.cpp" line="179"/>
         <source>Hi from jTox on Sailfish</source>
         <translation>Hej från jTox på Sailfish</translation>
     </message>
