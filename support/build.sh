@@ -17,7 +17,7 @@ else
     exit 2
 fi
 
-SFVER="2.2.0.29"
+SFVER="2.2.1.18"
 SODIUMVER="1.0.16"
 TOXCOREVER="0.2.7"
 THREADS="8"

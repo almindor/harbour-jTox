@@ -12,10 +12,12 @@ Increasing the VM RAM and CPU count inside VirtualBox for the build engine is hi
 
 ### Requirements
 
-These steps will install all the required packages on mersdk build engine. Be sure to log into the engine as **mersdk** user not as root.
+These steps will install all the required packages on mersdk build engine.
+See [the sailfish SDK FAQ](https://sailfishos.org/develop/sdk-overview/develop-faq/) for instructions on how to connect to the build engine.
+Be sure to log into the engine as **mersdk** user not as root.
 
-Change this to the SailfishOS version required
-`SFVER=2.1.4.13`
+Change this to the SailfishOS version required, also in **support/build.sh**
+`export SFVER='2.2.1.18'`
 
 `sb2 -t SailfishOS-$SFVER-armv7hl -m sdk-install -R zypper install gcc gcc-c++ autoconf automake make libtool nasm`
 
