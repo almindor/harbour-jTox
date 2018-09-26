@@ -184,7 +184,7 @@ namespace JTOX {
 
     void Event::delivered() {
         if ( fEventType != etMessageOutPending ) {
-            Utils::bail("Delivered called on non pending message. MessageID: " + QString::number(fID) + " event type: " + QString::number(fEventType));
+            Utils::fatal("Delivered called on non pending message. MessageID: " + QString::number(fID) + " event type: " + QString::number(fEventType));
         }
 
         fEventType = etMessageOut;
@@ -193,7 +193,7 @@ namespace JTOX {
     void Event::viewed()
     {
         if ( fEventType != etMessageInUnread ) {
-            Utils::bail("Viewed called on non unread message. MessageID: " + QString::number(fID) + " event type: " + QString::number(fEventType));
+            Utils::fatal("Viewed called on non unread message. MessageID: " + QString::number(fID) + " event type: " + QString::number(fEventType));
         }
 
         fEventType = etMessageIn;

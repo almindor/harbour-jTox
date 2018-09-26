@@ -38,12 +38,43 @@ namespace JTOX {
         return new JToxException(*this);
     }
 
+    //***************************Tools****************************//
+
+    static void print_backtrace(FILE *outb = stderr)
+    {
+        void *stack[128];
+        int stack_size = backtrace(stack, sizeof(stack) / sizeof(void *));
+        char **stack_symbols = backtrace_symbols(stack, stack_size);
+        fprintf(outb, "Stack [%d]:\n", stack_size);
+        if(FILE *cppfilt = popen("c++filt", "rw")) {
+            dup2(fileno(outb), fileno(cppfilt));
+            for(int i = stack_size-1; i>=0; --i)
+                fwrite(stack_symbols[i], 1, strlen(stack_symbols[i]), cppfilt);
+            pclose(cppfilt);
+        } else {
+            for(int i = stack_size-1; i>=0; --i)
+                fprintf(outb, "#%d  %p [%s]\n", i, stack[i], stack_symbols[i]);
+        }
+    }
+
+    bool bail(const QString& error, bool soft)
+    {
+        if ( soft ) {
+            qWarning() << "FATAL ERROR: " << error.toUtf8().data() << "\n";
+            return false;
+        }
+
+        print_backtrace();
+        qFatal("FATAL ERROR: %s\n", error.toUtf8().data());
+        return false;
+    }
+
     //***************************Utils****************************//
 
     const QString Utils::key_to_hex(const uint8_t* key, int size) {
         char hexRaw[size * 2 + 1];
         if ( sodium_bin2hex(hexRaw, size * 2 + 1, key, size) == NULL ) {
-            Utils::bail("key_to_hex conversion failed");
+            fatal("key_to_hex conversion failed");
         }
         return QString::fromUtf8(hexRaw, size * 2).toUpper();
     }
@@ -51,7 +82,7 @@ namespace JTOX {
     void Utils::hex_to_key(const QString& hexKey, unsigned char* key) {
         const QByteArray hexBytes = hexKey.toUtf8();
         if ( sodium_hex2bin(key, TOX_PUBLIC_KEY_SIZE, hexBytes.data(), hexBytes.size(), NULL, NULL, NULL) != 0 ) {
-            Utils::bail("hex_to_key conversion failed");
+            fatal("hex_to_key conversion failed");
         }
     }
 
@@ -59,7 +90,7 @@ namespace JTOX {
     {
         const QByteArray hexBytes = hexKey.toUtf8();
         if ( sodium_hex2bin(address, TOX_ADDRESS_SIZE, hexBytes.data(), hexBytes.size(), NULL, NULL, NULL) != 0 ) {
-            Utils::bail("hex_to_address conversion failed");
+            fatal("hex_to_address conversion failed");
         }
     }
 
@@ -80,25 +111,8 @@ namespace JTOX {
             case TOX_USER_STATUS_BUSY: return 3;
         }
 
-        Utils::bail("Unknown user status");
+        fatal("Unknown user status");
         return -1;
-    }
-
-    static void print_backtrace(FILE *outb = stderr)
-    {
-        void *stack[128];
-        int stack_size = backtrace(stack, sizeof(stack) / sizeof(void *));
-        char **stack_symbols = backtrace_symbols(stack, stack_size);
-        fprintf(outb, "Stack [%d]:\n", stack_size);
-        if(FILE *cppfilt = popen("c++filt", "rw")) {
-            dup2(fileno(outb), fileno(cppfilt));
-            for(int i = stack_size-1; i>=0; --i)
-                fwrite(stack_symbols[i], 1, strlen(stack_symbols[i]), cppfilt);
-            pclose(cppfilt);
-        } else {
-            for(int i = stack_size-1; i>=0; --i)
-                fprintf(outb, "#%d  %p [%s]\n", i, stack[i], stack_symbols[i]);
-        }
     }
 
     void abortHandler( int signum )
@@ -141,16 +155,14 @@ namespace JTOX {
         signal( SIGFPE,  abortHandler );
     }
 
-    bool Utils::bail(const QString& error, bool soft)
+    bool Utils::warn(const QString &error)
     {
-        if ( soft ) {
-            qDebug() << "FATAL ERROR: " << error.toUtf8().data() << "\n";
-            return true;
-        }
+        return bail(error, true);
+    }
 
-        print_backtrace();
-        qFatal("FATAL ERROR: %s\n", error.toUtf8().data());
-        return false;
+    bool Utils::fatal(const QString &error)
+    {
+        return bail(error, false);
     }
 
     quint64 Utils::transferID(quint32 friend_id, quint32 file_number)
@@ -171,36 +183,52 @@ namespace JTOX {
     bool Utils::handleFileControlError(TOX_ERR_FILE_CONTROL error, bool soft)
     {
         switch ( error ) {
-            case TOX_ERR_FILE_CONTROL_ALREADY_PAUSED: return Utils::bail("File transfer already paused", soft);
-            case TOX_ERR_FILE_CONTROL_DENIED: return Utils::bail("Permission denied", soft);
-            case TOX_ERR_FILE_CONTROL_FRIEND_NOT_CONNECTED: return Utils::bail("Friend not connected", soft);
-            case TOX_ERR_FILE_CONTROL_FRIEND_NOT_FOUND: return Utils::bail("Friend not found", soft);
-            case TOX_ERR_FILE_CONTROL_NOT_FOUND: return Utils::bail("File transfer not found", soft);
-            case TOX_ERR_FILE_CONTROL_NOT_PAUSED: return Utils::bail("File transfer not paused", soft);
-            case TOX_ERR_FILE_CONTROL_SENDQ: return Utils::bail("File transfer send queue full", soft);
+            case TOX_ERR_FILE_CONTROL_ALREADY_PAUSED: return bail("File transfer already paused", soft);
+            case TOX_ERR_FILE_CONTROL_DENIED: return bail("Permission denied", soft);
+            case TOX_ERR_FILE_CONTROL_FRIEND_NOT_CONNECTED: return bail("Friend not connected", soft);
+            case TOX_ERR_FILE_CONTROL_FRIEND_NOT_FOUND: return bail("Friend not found", soft);
+            case TOX_ERR_FILE_CONTROL_NOT_FOUND: return bail("File transfer not found", soft);
+            case TOX_ERR_FILE_CONTROL_NOT_PAUSED: return bail("File transfer not paused", soft);
+            case TOX_ERR_FILE_CONTROL_SENDQ: return bail("File transfer send queue full", soft);
             case TOX_ERR_FILE_CONTROL_OK: return true;
         }
 
-        Utils::bail("Unknown error");
+        fatal("Unknown error");
         return false;
     }
 
     bool Utils::handleFileSendChunkError(TOX_ERR_FILE_SEND_CHUNK error, bool soft)
     {
         switch ( error ) {
-            case TOX_ERR_FILE_SEND_CHUNK_FRIEND_NOT_CONNECTED: return Utils::bail("Friend not connected", soft);
-            case TOX_ERR_FILE_SEND_CHUNK_FRIEND_NOT_FOUND: return Utils::bail("Friend not found", soft);
-            case TOX_ERR_FILE_SEND_CHUNK_INVALID_LENGTH: return Utils::bail("Invalid chunk length", soft);
-            case TOX_ERR_FILE_SEND_CHUNK_NOT_FOUND: return Utils::bail("Transfer not found", soft);
-            case TOX_ERR_FILE_SEND_CHUNK_NOT_TRANSFERRING: return Utils::bail("Invalid transfer state", soft);
-            case TOX_ERR_FILE_SEND_CHUNK_NULL: return Utils::bail("Invalid null parameter", soft);
-            case TOX_ERR_FILE_SEND_CHUNK_SENDQ: return Utils::bail("File transfer send queue full", soft);
-            case TOX_ERR_FILE_SEND_CHUNK_WRONG_POSITION: return Utils::bail("File transfer wrong position", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_FRIEND_NOT_CONNECTED: return bail("Friend not connected", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_FRIEND_NOT_FOUND: return bail("Friend not found", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_INVALID_LENGTH: return bail("Invalid chunk length", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_NOT_FOUND: return bail("Transfer not found", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_NOT_TRANSFERRING: return bail("Invalid transfer state", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_NULL: return bail("Invalid null parameter", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_SENDQ: return bail("File transfer send queue full", soft);
+            case TOX_ERR_FILE_SEND_CHUNK_WRONG_POSITION: return bail("File transfer wrong position", soft);
 
             case TOX_ERR_FILE_SEND_CHUNK_OK: return true;
         }
 
-        Utils::bail("Unknown error");
+        fatal("Unknown error");
+        return false;
+    }
+
+    bool Utils::handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error, bool soft)
+    {
+        switch ( error ) {
+            case TOX_ERR_FRIEND_SEND_MESSAGE_EMPTY: return bail("Cannot send empty message", soft);
+            case TOX_ERR_FRIEND_SEND_MESSAGE_FRIEND_NOT_CONNECTED: return bail("Cannot send message, friend not online", soft);
+            case TOX_ERR_FRIEND_SEND_MESSAGE_FRIEND_NOT_FOUND: return bail("Cannot send message, friend not found", soft);
+            case TOX_ERR_FRIEND_SEND_MESSAGE_NULL: return bail("Cannot send null message", soft);
+            case TOX_ERR_FRIEND_SEND_MESSAGE_SENDQ: return bail("Cannot send message, sendq error", soft);
+            case TOX_ERR_FRIEND_SEND_MESSAGE_TOO_LONG: return bail("Cannot send message it is too long", soft);
+            case TOX_ERR_FRIEND_SEND_MESSAGE_OK: return true;
+        }
+
+        fatal("Unknown error");
         return false;
     }
 

@@ -58,7 +58,7 @@ namespace JTOX {
         bool ok = false;
         qint64 friend_id = ids[0].toInt(&ok, 10);
         if ( !ok ) {
-            Utils::bail("Unable to cast friend_id::int for avatar");
+            Utils::warn("Unable to cast friend_id::int for avatar");
             return pixmap;
         }
 
@@ -98,7 +98,7 @@ namespace JTOX {
     {
         QFile file(fAvatarFilePath);
         if ( !file.open(QIODevice::ReadOnly) ) {
-            Utils::bail("Unable to open avatar file", true);
+            Utils::warn("Unable to open avatar file");
             return;
         }
 
@@ -107,7 +107,7 @@ namespace JTOX {
 
         QPixmap pixmap;
         if ( !pixmap.loadFromData(pixmapData) ) {
-            Utils::bail("Unable to load avatar file into image", true);
+            Utils::warn("Unable to load avatar file into image");
             return;
         }
         if ( pixmap.width() >= pixmap.height() ) {
@@ -120,11 +120,11 @@ namespace JTOX {
         QBuffer buffer(&bytes);
         buffer.open(QIODevice::WriteOnly);
         if ( !pixmap.save(&buffer, "PNG") ) {
-            Utils::bail("Unable to save scaled avatar pixmap data", true);
+            Utils::warn("Unable to save scaled avatar pixmap data");
             return;
         }
         if ( bytes.size() > ToxCore::MAX_AVATAR_DATA_SIZE ) {
-            Utils::bail("Avatar image too large after scaling", true);
+            Utils::warn("Avatar image too large after scaling");
             return;
         }
 

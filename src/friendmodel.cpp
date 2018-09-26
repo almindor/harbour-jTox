@@ -53,7 +53,7 @@ namespace JTOX {
 
     QVariant FriendModel::data(const QModelIndex &index, int role) const {
         if ( index.row() < 0 || index.row() >= fList.size() ) {
-            Utils::bail("Friend data out of bounds");
+            Utils::fatal("Friend data out of bounds");
         }
 
         return fList.at(index.row()).value(role);
@@ -62,7 +62,7 @@ namespace JTOX {
     const Friend& FriendModel::getFriendByID(quint32 friend_id) const {
         int index = getListIndexForFriendID(friend_id);
         if ( index < 0 || index >= fList.size() ) {
-            Utils::bail("FriendID not found in model list");
+            Utils::fatal("FriendID not found in model list");
         }
 
         return fList.at(index);
@@ -70,7 +70,7 @@ namespace JTOX {
 
     void FriendModel::addFriend(const QString& address, const QString& message) {
         if ( !fToxCore.getInitialized() ) {
-            Utils::bail("Friend add called when toxcore not initialized!");
+            Utils::fatal("Friend add called when toxcore not initialized!");
         }
 
         TOX_ERR_FRIEND_ADD error;
@@ -93,7 +93,7 @@ namespace JTOX {
 
     void FriendModel::addFriendNoRequest(const QString& publicKey, const QString& name) {
         if ( !fToxCore.getInitialized() ) {
-            Utils::bail("Friend add (nor) called when toxcore not initialized!");
+            Utils::fatal("Friend add (nor) called when toxcore not initialized!");
         }
 
         TOX_ERR_FRIEND_ADD error;
@@ -116,12 +116,12 @@ namespace JTOX {
     void FriendModel::removeFriend(quint32 friendID)
     {
         if ( !fToxCore.getInitialized() ) {
-            Utils::bail("Friend remove called when toxcore not initialized!");
+            Utils::fatal("Friend remove called when toxcore not initialized!");
         }
 
         int index = getListIndexForFriendID(friendID);
         if ( index < 0 || index >= fList.size() ) {
-            Utils::bail("FriendID not found in model list");
+            Utils::fatal("FriendID not found in model list");
         }
 
         TOX_ERR_FRIEND_DELETE error;
@@ -145,7 +145,7 @@ namespace JTOX {
 
     void FriendModel::refresh() {
         if ( !fToxCore.getInitialized() ) {
-            Utils::bail("Refreshing friend list with uninitialized tox instance");
+            Utils::fatal("Refreshing friend list with uninitialized tox instance");
         }
         beginResetModel();
 
@@ -238,14 +238,14 @@ namespace JTOX {
             i++;
         }
 
-        Utils::bail("Invalid friend ID received on getListIndexForFriendID: " + QString::number(friend_id, 10));
+        Utils::fatal("Invalid friend ID received on getListIndexForFriendID: " + QString::number(friend_id, 10));
         return -1;
     }
 
     quint32 FriendModel::getFriendIDByIndex(int index) const
     {
         if ( index < 0 || index >= fList.size() ) {
-            Utils::bail("Friend index out of bounds");
+            Utils::fatal("Friend index out of bounds");
         }
 
         return fList.at(index).friendID();
@@ -303,7 +303,7 @@ namespace JTOX {
     void FriendModel::setOfflineName(const QString& name)
     {
         if (fActiveFriendIndex < 0 || fActiveFriendIndex >= fList.size()) {
-            Utils::bail("Active friend index out of bounds: " + fActiveFriendIndex);
+            Utils::fatal("Active friend index out of bounds: " + fActiveFriendIndex);
         }
 
         fList[fActiveFriendIndex].setOfflineName(name);
@@ -319,9 +319,9 @@ namespace JTOX {
         switch ( error ) {
             case TOX_ERR_FRIEND_ADD_ALREADY_SENT: errorOut = "Friend request already sent"; break;
             case TOX_ERR_FRIEND_ADD_BAD_CHECKSUM: errorOut = "Bad checksum on friend request"; break;
-            case TOX_ERR_FRIEND_ADD_MALLOC: Utils::bail("Malloc error on friend request"); break; // fatal
+            case TOX_ERR_FRIEND_ADD_MALLOC: Utils::fatal("Malloc error on friend request"); break; // fatal
             case TOX_ERR_FRIEND_ADD_NO_MESSAGE: errorOut = "No message specified on friend request"; break;
-            case TOX_ERR_FRIEND_ADD_NULL: Utils::bail("Null error on friend request"); break; // fatal
+            case TOX_ERR_FRIEND_ADD_NULL: Utils::fatal("Null error on friend request"); break; // fatal
             case TOX_ERR_FRIEND_ADD_OWN_KEY: errorOut = "Friend request attempted with own key"; break;
             case TOX_ERR_FRIEND_ADD_SET_NEW_NOSPAM: errorOut = "Friend request failed, nospam different"; break;
             case TOX_ERR_FRIEND_ADD_TOO_LONG: errorOut = "Friend request message too long"; break;
@@ -332,14 +332,14 @@ namespace JTOX {
             return false;
         }
 
-        Utils::bail("Unknown error");
+        Utils::fatal("Unknown error");
         return false;
     }
 
     bool FriendModel::handleFriendDeleteError(TOX_ERR_FRIEND_DELETE error) const
     {
         switch ( error ) {
-            case TOX_ERR_FRIEND_DELETE_FRIEND_NOT_FOUND: Utils::bail("Friend not found");
+            case TOX_ERR_FRIEND_DELETE_FRIEND_NOT_FOUND: Utils::fatal("Friend not found");
             case TOX_ERR_FRIEND_DELETE_OK: return true;
         }
 

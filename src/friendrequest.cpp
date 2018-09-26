@@ -18,7 +18,7 @@ namespace JTOX {
             case rrName: return fName;
         }
 
-        Utils::bail("Invalid request role");
+        Utils::fatal("Invalid request role");
         return QVariant();
     }
 
@@ -44,7 +44,7 @@ namespace JTOX {
     void FriendRequest::setID(int id)
     {
         if ( fID >= 0 ) {
-            Utils::bail("Attempted to set request ID twice");
+            Utils::fatal("Attempted to set request ID twice");
         }
 
         fID = id;

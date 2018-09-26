@@ -28,7 +28,7 @@ namespace JTOX {
             tox_get_salt((uint8_t*) data.data(), (uint8_t*) salt.data(), &saltError);
             if ( saltError != TOX_ERR_GET_SALT_OK ) {
                 qDebug() << "Unable to get salt from data\n";
-                Utils::bail("Unable to get salt from data");
+                Utils::fatal("Unable to get salt from data");
             }
         }
 
@@ -39,7 +39,7 @@ namespace JTOX {
 
         if ( error != TOX_ERR_KEY_DERIVATION_OK ) {
             qDebug() << "Unable to derive key\n";
-            Utils::bail("Unable to derive key");
+            Utils::fatal("Unable to derive key");
         }
     }
 
@@ -60,8 +60,7 @@ namespace JTOX {
         tox_pass_key_encrypt(fKey, (uint8_t*) data.data(), rawSize, (uint8_t*) rawResult.data(), &error);
 
         if ( error != TOX_ERR_ENCRYPTION_OK ) {
-            qDebug() << "Error on data encryption";
-            Utils::bail("Error on data encryption");
+            Utils::fatal("Error on data encryption");
         }
 
         return rawResult;
@@ -82,7 +81,7 @@ namespace JTOX {
         QByteArray salt(TOX_PASS_SALT_LENGTH, Qt::Uninitialized);
         tox_get_salt((uint8_t*) data.data(), (uint8_t*) salt.data(), &saltError);
         if ( saltError != TOX_ERR_GET_SALT_OK ) {
-            Utils::bail("Error getting salt from encrypted data"); // not ignorable
+            Utils::fatal("Error getting salt from encrypted data"); // not ignorable
         }
 
         QByteArray result(data.size() - TOX_PASS_ENCRYPTION_EXTRA_LENGTH, Qt::Uninitialized);
@@ -91,7 +90,7 @@ namespace JTOX {
             if ( ignoreErrors ) {
                 return QByteArray();
             }
-            Utils::bail("Decryption error");
+            Utils::fatal("Decryption error");
         }
 
         return result;

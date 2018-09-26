@@ -209,15 +209,15 @@ namespace JTOX {
     {
         switch ( error ) {
             case TOX_ERR_NEW_OK: return true;
-            case TOX_ERR_NEW_NULL: return Utils::bail("Cannot create toxcore, null argument");
-            case TOX_ERR_NEW_MALLOC: return Utils::bail("Cannot create toxcore, malloc error");
-            case TOX_ERR_NEW_PORT_ALLOC: return Utils::bail("Cannot create toxcore, port bind permission error");
-            case TOX_ERR_NEW_PROXY_BAD_TYPE: return Utils::bail("Cannot create toxcore, invalid proxy type");
-            case TOX_ERR_NEW_PROXY_BAD_HOST: return Utils::bail("Cannot create toxcore, bad proxy host");
-            case TOX_ERR_NEW_PROXY_BAD_PORT: return Utils::bail("Cannot create toxcore, bad proxy port");
-            case TOX_ERR_NEW_PROXY_NOT_FOUND: return Utils::bail("Cannot create toxcore, proxy not found");
-            case TOX_ERR_NEW_LOAD_ENCRYPTED: return Utils::bail("Cannot create toxcore, save data encrypted");
-            case TOX_ERR_NEW_LOAD_BAD_FORMAT: return Utils::bail("Cannot create toxcore, save data invalid");
+            case TOX_ERR_NEW_NULL: return Utils::fatal("Cannot create toxcore, null argument");
+            case TOX_ERR_NEW_MALLOC: return Utils::fatal("Cannot create toxcore, malloc error");
+            case TOX_ERR_NEW_PORT_ALLOC: return Utils::fatal("Cannot create toxcore, port bind permission error");
+            case TOX_ERR_NEW_PROXY_BAD_TYPE: return Utils::fatal("Cannot create toxcore, invalid proxy type");
+            case TOX_ERR_NEW_PROXY_BAD_HOST: return Utils::fatal("Cannot create toxcore, bad proxy host");
+            case TOX_ERR_NEW_PROXY_BAD_PORT: return Utils::fatal("Cannot create toxcore, bad proxy port");
+            case TOX_ERR_NEW_PROXY_NOT_FOUND: return Utils::fatal("Cannot create toxcore, proxy not found");
+            case TOX_ERR_NEW_LOAD_ENCRYPTED: return Utils::fatal("Cannot create toxcore, save data encrypted");
+            case TOX_ERR_NEW_LOAD_BAD_FORMAT: return Utils::fatal("Cannot create toxcore, save data invalid");
         }
 
         return false;
@@ -409,7 +409,7 @@ namespace JTOX {
 
     const QByteArray ToxCore::encryptPayload(const QByteArray &payload, const QByteArray& pk, const QByteArray& nonce) const {
         if ( !fInitialized ) {
-            Utils::bail("Attempting to retreive secret key on unintialized tox");
+            Utils::fatal("Attempting to retreive secret key on unintialized tox");
         }
         uint8_t sk[TOX_SECRET_KEY_SIZE];
         tox_self_get_secret_key(fTox, sk);
@@ -421,7 +421,7 @@ namespace JTOX {
                         (uint8_t*) nonce.data(), (uint8_t*) pk.constData(), sk);
 
         if ( cryptResult != 0 ) {
-            Utils::bail("Error on payload encryption");
+            Utils::fatal("Error on payload encryption");
         }
 
         return payloadEnc.toBase64();
@@ -480,7 +480,7 @@ namespace JTOX {
 
     const QString ToxCore::getHexPublicKey() const {
         if ( !fInitialized ) {
-            Utils::bail("Attempt to get public key with uninitialized tox");
+            Utils::fatal("Attempt to get public key with uninitialized tox");
         }
 
         uint8_t pubRaw[TOX_PUBLIC_KEY_SIZE];
@@ -491,7 +491,7 @@ namespace JTOX {
     const QString ToxCore::getHexToxID() const
     {
         if ( !fInitialized ) {
-            Utils::bail("Attempt to get public toxID with uninitialized tox");
+            Utils::fatal("Attempt to get public toxID with uninitialized tox");
         }
 
         uint8_t addrRaw[TOX_ADDRESS_SIZE];
@@ -503,7 +503,7 @@ namespace JTOX {
     {
         quint8 result[TOX_HASH_LENGTH];
         if ( !tox_hash(result, (quint8*) data.constData(), data.size()) ) {
-            Utils::bail("Unable to calculate hash");
+            Utils::fatal("Unable to calculate hash");
             return QByteArray();
         }
 
@@ -513,7 +513,7 @@ namespace JTOX {
     const QString ToxCore::getNoSpam() const
     {
         if ( !fInitialized ) {
-            Utils::bail("Attempt to get nospam with uninitialized tox");
+            Utils::fatal("Attempt to get nospam with uninitialized tox");
         }
 
         uint32_t noSpamInt = tox_self_get_nospam(fTox);
@@ -522,7 +522,7 @@ namespace JTOX {
 
     bool ToxCore::setNoSpam(const QString& hexVal) {
         if ( !fInitialized ) {
-            Utils::bail("Attempting to set nospam on unintialized tox");
+            Utils::fatal("Attempting to set nospam on unintialized tox");
         }
 
         bool ok = false;
@@ -662,7 +662,7 @@ namespace JTOX {
 
     void ToxCore::setStatus(int status) {
         if ( !fInitialized ) {
-            Utils::bail("Attempting to set status on unintialized tox");
+            Utils::fatal("Attempting to set status on unintialized tox");
         }
 
         TOX_USER_STATUS userStatus = TOX_USER_STATUS_NONE;
@@ -670,7 +670,7 @@ namespace JTOX {
             case 1: userStatus = TOX_USER_STATUS_NONE; break;
             case 2: userStatus = TOX_USER_STATUS_AWAY; break;
             case 3: userStatus = TOX_USER_STATUS_BUSY; break;
-            default: Utils::bail("Invalid status update"); break;
+            default: Utils::fatal("Invalid status update"); break;
         }
 
         tox_self_set_status(fTox, userStatus);
@@ -685,7 +685,7 @@ namespace JTOX {
 
     const QString ToxCore::getStatusMessage() const {
         if ( !fInitialized ) {
-            Utils::bail("Attempting to get status msg on unintialized tox");
+            Utils::fatal("Attempting to get status msg on unintialized tox");
         }
 
         size_t size = tox_self_get_status_message_size(fTox);
@@ -697,7 +697,7 @@ namespace JTOX {
 
     void ToxCore::setStatusMessage(const QString& sm) {
         if ( !fInitialized ) {
-            Utils::bail("Attempting to set status msg on unintialized tox");
+            Utils::fatal("Attempting to set status msg on unintialized tox");
         }
 
         TOX_ERR_SET_INFO error;
@@ -706,7 +706,7 @@ namespace JTOX {
         tox_self_set_status_message(fTox, (uint8_t*)rawMessage.data(), size, &error);
 
         if ( error != TOX_ERR_SET_INFO_OK ) {
-            Utils::bail("Error setting status message: " + QString::number(error, 10));
+            Utils::fatal("Error setting status message: " + QString::number(error, 10));
         }
 
         save();
@@ -715,7 +715,7 @@ namespace JTOX {
 
     const QString ToxCore::getUserName() const {
         if ( !fInitialized ) {
-            Utils::bail("Attempt to get username with uninitialized tox");
+            Utils::fatal("Attempt to get username with uninitialized tox");
         }
 
         size_t size = tox_self_get_name_size(fTox);
@@ -727,7 +727,7 @@ namespace JTOX {
 
     void ToxCore::setUserName(const QString& uname) {
         if ( !fInitialized ) {
-            Utils::bail("Attempting to set username on unintialized tox");
+            Utils::fatal("Attempting to set username on unintialized tox");
         }
 
         TOX_ERR_SET_INFO error;
@@ -736,7 +736,7 @@ namespace JTOX {
         tox_self_set_name(fTox, (uint8_t*)rawName.data(), size, &error);
 
         if ( error != TOX_ERR_SET_INFO_OK ) {
-            Utils::bail("Error setting user name: " + QString::number(error, 10));
+            Utils::fatal("Error setting user name: " + QString::number(error, 10));
         }
 
         save();
@@ -748,7 +748,7 @@ namespace JTOX {
         const QUrl path = SailfishApp::pathTo("nodes/nodes.json");
         QFile file(path.toLocalFile());
         if ( !file.open(QFile::ReadOnly) ) {
-            Utils::bail("Error opening default nodes file");
+            Utils::fatal("Error opening default nodes file");
         }
 
         return file.readAll();
@@ -786,7 +786,7 @@ namespace JTOX {
     void ToxCore::save()
     {
         if ( !fInitialized ) {
-            Utils::bail("Attempting to save on unintialized tox");
+            Utils::fatal("Attempting to save on unintialized tox");
         }
 
         size_t size = tox_get_savedata_size(fTox);
@@ -829,7 +829,7 @@ namespace JTOX {
                 tox_file_control(fTox, i.key(), i.value(), TOX_FILE_CONTROL_CANCEL, &ctrl_error);
 
                 if ( ctrl_error != TOX_ERR_FILE_CONTROL_OK ) {
-                    Utils::bail("Unable to cancel avatar transfer in progress");
+                    Utils::fatal("Unable to cancel avatar transfer in progress");
                     return false;
                 }
             }
@@ -855,7 +855,7 @@ namespace JTOX {
     void ToxCore::killTox()
     {
         if ( !fInitialized ) {
-            Utils::bail("Killtox called when not initialized");
+            Utils::fatal("Killtox called when not initialized");
         }
 
         fInitialized = false;
@@ -867,11 +867,11 @@ namespace JTOX {
     {
         switch ( error ) {
             case TOX_ERR_FILE_SEND_OK: return true;
-            case TOX_ERR_FILE_SEND_FRIEND_NOT_CONNECTED: return Utils::bail("Cannot send file, friend not connected");
-            case TOX_ERR_FILE_SEND_FRIEND_NOT_FOUND: return Utils::bail("Cannot send file, friend not found");
-            case TOX_ERR_FILE_SEND_NAME_TOO_LONG: return Utils::bail("Cannot send file, name too long");
-            case TOX_ERR_FILE_SEND_NULL: return Utils::bail("Cannot send file, unexpected null argument");
-            case TOX_ERR_FILE_SEND_TOO_MANY: return Utils::bail("Cannot send file, too many concurrent transfers in progress");
+            case TOX_ERR_FILE_SEND_FRIEND_NOT_CONNECTED: return Utils::fatal("Cannot send file, friend not connected");
+            case TOX_ERR_FILE_SEND_FRIEND_NOT_FOUND: return Utils::fatal("Cannot send file, friend not found");
+            case TOX_ERR_FILE_SEND_NAME_TOO_LONG: return Utils::fatal("Cannot send file, name too long");
+            case TOX_ERR_FILE_SEND_NULL: return Utils::fatal("Cannot send file, unexpected null argument");
+            case TOX_ERR_FILE_SEND_TOO_MANY: return Utils::fatal("Cannot send file, too many concurrent transfers in progress");
         }
 
         return false;
@@ -962,7 +962,7 @@ namespace JTOX {
         QJsonParseError parseError;
         const QJsonDocument nodesDoc = QJsonDocument::fromJson(settings.value("tox/nodes", "invalid").toByteArray(), &parseError);
         if ( parseError.error != QJsonParseError::NoError ) {
-            Utils::bail("Nodes parse error: " + parseError.errorString());
+            Utils::fatal("Nodes parse error: " + parseError.errorString());
         }
         const QJsonObject nodesObject = nodesDoc.object();
         const QJsonArray nodes = nodesObject.value("nodes").toArray();
@@ -973,7 +973,7 @@ namespace JTOX {
         const QVariant lnr = settings.value("app/lastnodesrequest", 0);
         qint64 lastRequest = lnr.toLongLong(&ok);
         if ( !ok ) {
-            Utils::bail("Invalid last nodes request time value: " + lnr.toString());
+            Utils::fatal("Invalid last nodes request time value: " + lnr.toString());
         }
         qint64 currentSeconds = QDateTime::currentMSecsSinceEpoch() / 1000;
         if ( currentSeconds - lastRequest > 604800 ) {

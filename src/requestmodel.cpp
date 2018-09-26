@@ -32,7 +32,7 @@ namespace JTOX {
 
     QVariant RequestModel::data(const QModelIndex &index, int role) const {
         if ( index.row() < 0 || index.row() >= fList.size() ) {
-            Utils::bail("Friend request data index out of bounds");
+            Utils::fatal("Friend request data index out of bounds");
         }
 
         return fList.at(index.row()).value(role);

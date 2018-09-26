@@ -422,7 +422,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="697"/>
+        <location filename="../src/eventmodel.cpp" line="680"/>
         <source>Unable to find file for transfer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -430,27 +430,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="655"/>
+        <location filename="../src/toxcore.cpp" line="654"/>
         <source>Offline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="656"/>
+        <location filename="../src/toxcore.cpp" line="655"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="657"/>
+        <location filename="../src/toxcore.cpp" line="656"/>
         <source>Away</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="658"/>
+        <location filename="../src/toxcore.cpp" line="657"/>
         <source>Busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="661"/>
+        <location filename="../src/toxcore.cpp" line="660"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -458,7 +458,7 @@
 <context>
     <name>JTOX::ToxInitializer</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="179"/>
+        <location filename="../src/toxcore.cpp" line="178"/>
         <source>Hi from jTox on Sailfish</source>
         <translation type="unfinished"></translation>
     </message>

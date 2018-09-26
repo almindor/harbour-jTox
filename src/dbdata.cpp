@@ -18,7 +18,7 @@ namespace JTOX {
         fDB.setDatabaseName(dir.absoluteFilePath("jtox.sqlite"));
         fDB.open();
         if ( !fDB.open() ) {
-            Utils::bail( fDB.lastError().text() );
+            Utils::fatal( fDB.lastError().text() );
         }
 
         switch ( userVersion() ) {
@@ -36,7 +36,7 @@ namespace JTOX {
         fEventSelectOneQuery.bindValue(":event_type", -1);
 
         if ( !fEventSelectOneQuery.exec() ) {
-            Utils::bail("Error on event select query exec: " + fEventSelectOneQuery.lastError().text());
+            Utils::fatal("Error on event select query exec: " + fEventSelectOneQuery.lastError().text());
         }
 
         if ( !fEventSelectOneQuery.next() ) {
@@ -55,7 +55,7 @@ namespace JTOX {
         fEventSelectOneQuery.bindValue(":event_type", event_type);
 
         if ( !fEventSelectOneQuery.exec() ) {
-            Utils::bail("Error on event select query exec: " + fEventSelectOneQuery.lastError().text());
+            Utils::fatal("Error on event select query exec: " + fEventSelectOneQuery.lastError().text());
         }
 
         if ( !fEventSelectOneQuery.next() ) {
@@ -73,7 +73,7 @@ namespace JTOX {
         fEventSelectQuery.bindValue(":event_type", eventType);
 
         if ( !fEventSelectQuery.exec() ) {
-            Utils::bail("Error on event select query exec: " + fEventSelectQuery.lastError().text());
+            Utils::fatal("Error on event select query exec: " + fEventSelectQuery.lastError().text());
         }
 
         list.clear();
@@ -85,7 +85,7 @@ namespace JTOX {
     void DBData::getTransfers(EventList &list)
     {
         if ( !fTransfersSelectQuery.exec() ) {
-            Utils::bail("Error on transfers select query exec: " + fTransfersSelectQuery.lastError().text());
+            Utils::fatal("Error on transfers select query exec: " + fTransfersSelectQuery.lastError().text());
         }
 
 
@@ -104,17 +104,17 @@ namespace JTOX {
 
         if ( !fEventUnviewedCountQuery.exec() ) {
             qDebug() << fEventUnviewedCountQuery.executedQuery() << "\n";
-            Utils::bail("Error on unviewed count query exec: " + fEventUnviewedCountQuery.lastError().text());
+            Utils::fatal("Error on unviewed count query exec: " + fEventUnviewedCountQuery.lastError().text());
         }
 
         if ( !fEventUnviewedCountQuery.first() ) {
-            Utils::bail("Unable to fetch count row for unviewed count query");
+            Utils::fatal("Unable to fetch count row for unviewed count query");
         }
 
         bool ok = false;
         int count = fEventUnviewedCountQuery.value(0).toInt(&ok);
         if ( !ok ) {
-            Utils::bail("Unable to get event count int");
+            Utils::fatal("Unable to get event count int");
         }
 
         return count;
@@ -133,22 +133,22 @@ namespace JTOX {
         fEventInsertQuery.bindValue(":file_pausers", event.filePausers());
 
         if ( !fEventInsertQuery.exec() ) {
-            Utils::bail("Error on insert query execution: " + fEventInsertQuery.lastError().text());
+            Utils::fatal("Error on insert query execution: " + fEventInsertQuery.lastError().text());
         }
 
         fLastEventSelectQuery.bindValue(":friend_id", event.friendID());
         if ( !fLastEventSelectQuery.exec() ) {
-            Utils::bail("Error on last event query execution: " + fLastEventSelectQuery.lastError().text());
+            Utils::fatal("Error on last event query execution: " + fLastEventSelectQuery.lastError().text());
         }
         if ( !fLastEventSelectQuery.first() ) {
-            Utils::bail("Error on last event query fetch: " + fLastEventSelectQuery.lastError().text());
+            Utils::fatal("Error on last event query fetch: " + fLastEventSelectQuery.lastError().text());
         }
 
         bool ok = false;
         const QVariant val = fLastEventSelectQuery.value(0);
         int id = val.toInt(&ok);
         if ( !ok ) {
-            Utils::bail("Error on last event query int cast: " + val.toString());
+            Utils::fatal("Error on last event query int cast: " + val.toString());
         }
         event.setID(id);
         event.setCreatedAt(fLastEventSelectQuery.value(1).toDateTime());
@@ -166,7 +166,7 @@ namespace JTOX {
         fEventDeliveredQuery.bindValue(":send_id", sendID);
 
         if ( !fEventDeliveredQuery.exec() ) {
-            Utils::bail("Unable to update event to delivered state: " + fEventDeliveredQuery.lastError().text());
+            Utils::fatal("Unable to update event to delivered state: " + fEventDeliveredQuery.lastError().text());
         }
     }
 
@@ -175,7 +175,7 @@ namespace JTOX {
         fEventDeleteQuery.bindValue(":id", id);
 
         if ( !fEventDeleteQuery.exec() ) {
-            Utils::bail("Unable to delete event: " + fEventDeleteQuery.lastError().text());
+            Utils::fatal("Unable to delete event: " + fEventDeleteQuery.lastError().text());
         }
     }
 
@@ -186,22 +186,22 @@ namespace JTOX {
         fRequestInsertQuery.bindValue(":name", request.getName());
 
         if ( !fRequestInsertQuery.exec() ) {
-            Utils::bail("Unable to insert request: " + fRequestInsertQuery.lastError().text());
+            Utils::fatal("Unable to insert request: " + fRequestInsertQuery.lastError().text());
         }
 
         if ( !fLastRequestSelectQuery.exec() ) {
-            Utils::bail("Error on last request query execution: " + fLastRequestSelectQuery.lastError().text());
+            Utils::fatal("Error on last request query execution: " + fLastRequestSelectQuery.lastError().text());
         }
 
         if ( !fLastRequestSelectQuery.first() ) {
-            Utils::bail("Error on last request query fetch: " + fLastRequestSelectQuery.lastError().text());
+            Utils::fatal("Error on last request query fetch: " + fLastRequestSelectQuery.lastError().text());
         }
 
         bool ok = false;
         const QVariant val = fLastRequestSelectQuery.value(0);
         int id = val.toInt(&ok);
         if ( !ok ) {
-            Utils::bail("Error on last request query int cast: " + val.toString());
+            Utils::fatal("Error on last request query int cast: " + val.toString());
         }
 
         request.setID(id);
@@ -213,7 +213,7 @@ namespace JTOX {
         fRequestUpdateQuery.bindValue(":name", request.getName());
 
         if ( !fRequestUpdateQuery.exec() ) {
-            Utils::bail("Unable to update request: " + fRequestUpdateQuery.lastError().text());
+            Utils::fatal("Unable to update request: " + fRequestUpdateQuery.lastError().text());
         }
     }
 
@@ -223,7 +223,7 @@ namespace JTOX {
         fRequestDeleteQuery.bindValue(":id2", request.getID()); // double bind trick
 
         if ( !fRequestDeleteQuery.exec() ) {
-            Utils::bail("Unable to delete request: " + fRequestDeleteQuery.lastError().text());
+            Utils::fatal("Unable to delete request: " + fRequestDeleteQuery.lastError().text());
         }
     }
 
@@ -232,7 +232,7 @@ namespace JTOX {
         fGetAvatarQuery.bindValue(":friend_id", friend_id);
 
         if ( !fGetAvatarQuery.exec() ) {
-            Utils::bail("Unable to get avatar data: " + fGetAvatarQuery.lastError().text());
+            Utils::fatal("Unable to get avatar data: " + fGetAvatarQuery.lastError().text());
         }
 
         if ( fGetAvatarQuery.next() && !fGetAvatarQuery.value(0).isNull() ) {
@@ -249,7 +249,7 @@ namespace JTOX {
         fCheckAvatarQuery.bindValue(":hash", hash);
 
         if ( !fCheckAvatarQuery.exec() ) {
-            Utils::bail("Unable to check avatar hash: " + fCheckAvatarQuery.lastError().text());
+            Utils::fatal("Unable to check avatar hash: " + fCheckAvatarQuery.lastError().text());
         }
 
         if ( fCheckAvatarQuery.next() ) {
@@ -257,7 +257,7 @@ namespace JTOX {
             int count = fCheckAvatarQuery.value(0).toInt(&ok);
 
             if ( !ok ) {
-                Utils::bail("Unable to parse avatar count integer");
+                Utils::fatal("Unable to parse avatar count integer");
                 return false;
             }
 
@@ -272,7 +272,7 @@ namespace JTOX {
         fClearAvatarQuery.bindValue(":friend_id", friend_id); // -1 for "me"
 
         if ( !fClearAvatarQuery.exec() ) {
-            Utils::bail("Unable to clear avatar data: " + fClearAvatarQuery.lastError().text());
+            Utils::fatal("Unable to clear avatar data: " + fClearAvatarQuery.lastError().text());
         }
     }
 
@@ -287,14 +287,14 @@ namespace JTOX {
         fSetAvatarQuery.bindValue(":data", data);
 
         if ( !fSetAvatarQuery.exec() ) {
-            Utils::bail("Unable to save avatar data: " + fSetAvatarQuery.lastError().text());
+            Utils::fatal("Unable to save avatar data: " + fSetAvatarQuery.lastError().text());
         }
     }
 
     void DBData::getRequests(RequestList& list)
     {
         if ( !fRequestSelectQuery.exec() ) {
-            Utils::bail("Error on request select query exec: " + fEventSelectQuery.lastError().text());
+            Utils::fatal("Error on request select query exec: " + fEventSelectQuery.lastError().text());
         }
 
         while ( fRequestSelectQuery.next() ) {
@@ -313,7 +313,7 @@ namespace JTOX {
         fFriendOfflineNameUpdateQuery.bindValue(":name", name);
 
         if ( !fFriendOfflineNameUpdateQuery.exec() ) {
-            Utils::bail("Unable to update friend: " + fFriendOfflineNameUpdateQuery.lastError().text());
+            Utils::fatal("Unable to update friend: " + fFriendOfflineNameUpdateQuery.lastError().text());
         }
     }
 
@@ -322,7 +322,7 @@ namespace JTOX {
         fFriendOfflineNameSelectQuery.bindValue(":address", address);
 
         if ( !fFriendOfflineNameSelectQuery.exec() ) {
-            Utils::bail("Unable to select friend: " + fFriendOfflineNameSelectQuery.lastError().text());
+            Utils::fatal("Unable to select friend: " + fFriendOfflineNameSelectQuery.lastError().text());
         }
 
         if ( !fFriendOfflineNameSelectQuery.first() ) {
@@ -341,16 +341,16 @@ namespace JTOX {
         fWipeFriendsQuery.bindValue(":friend_id2", friendID);
 
         if ( !fWipeEventsQuery.exec() ) {
-            Utils::bail("Unable to wipe events: " + fWipeEventsQuery.lastError().text());
+            Utils::fatal("Unable to wipe events: " + fWipeEventsQuery.lastError().text());
         }
 
         if ( !fWipeFriendsQuery.exec() ) {
-            Utils::bail("Unable to wipe friends: " + fWipeFriendsQuery.lastError().text());
+            Utils::fatal("Unable to wipe friends: " + fWipeFriendsQuery.lastError().text());
         }
 
         // only wipe requests if we're doing a full wipe
         if ( friendID < 0 && !fWipeRequestsQuery.exec() ) {
-            Utils::bail("Unable to wipe requests: " + fWipeRequestsQuery.lastError().text());
+            Utils::fatal("Unable to wipe requests: " + fWipeRequestsQuery.lastError().text());
         }
     }
 
@@ -360,7 +360,7 @@ namespace JTOX {
         fWipeEventsQuery.bindValue(":friend_id2", -1);
 
         if ( !fWipeEventsQuery.exec() ) {
-            Utils::bail("Unable to wipe events: " + fWipeEventsQuery.lastError().text());
+            Utils::fatal("Unable to wipe events: " + fWipeEventsQuery.lastError().text());
         }
     }
 
@@ -372,7 +372,7 @@ namespace JTOX {
         fEventUpdateQuery.bindValue(":file_pausers", filePausers);
 
         if ( !fEventUpdateQuery.exec() ) {
-            Utils::bail("unable to update event: " + fEventUpdateQuery.lastError().text());
+            Utils::fatal("unable to update event: " + fEventUpdateQuery.lastError().text());
         }
     }
 
@@ -383,7 +383,7 @@ namespace JTOX {
         fEventUpdateSentQuery.bindValue(":send_id", sendID);
 
         if ( !fEventUpdateSentQuery.exec() ) {
-            Utils::bail("unable to update event: " + fEventUpdateSentQuery.lastError().text());
+            Utils::fatal("unable to update event: " + fEventUpdateSentQuery.lastError().text());
         }
     }
 
@@ -398,7 +398,7 @@ namespace JTOX {
                                      "event_type INTEGER NOT NULL,"
                                      "created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
                                      "message BLOB)") ) {
-            Utils::bail("unable to create events table: " + createTableQuery.lastError().text());
+            Utils::fatal("unable to create events table: " + createTableQuery.lastError().text());
         }
         // requests
         if ( !createTableQuery.exec("CREATE TABLE IF NOT EXISTS requests("
@@ -406,14 +406,14 @@ namespace JTOX {
                                      "address TEXT NOT NULL,"
                                      "message TEXT NOT NULL,"
                                      "name TEXT NOT NULL)") ) {
-            Utils::bail("unable to create requests table: " + createTableQuery.lastError().text());
+            Utils::fatal("unable to create requests table: " + createTableQuery.lastError().text());
         }
         // friends for offline name storage
         if ( !createTableQuery.exec("CREATE TABLE IF NOT EXISTS friends("
                                      "address TEXT PRIMARY KEY,"
                                      "friend_id INTEGER NOT NULL,"
                                      "name TEXT NOT NULL)") ) {
-            Utils::bail("unable to create friends table: " + createTableQuery.lastError().text());
+            Utils::fatal("unable to create friends table: " + createTableQuery.lastError().text());
         }
         fDB.commit();
     }
@@ -422,11 +422,11 @@ namespace JTOX {
     {
         QSqlQuery query(fDB);
         // unknown if we have v0 to v1 or just init from scratch so these can fail
-        if ( !query.exec("ALTER TABLE events ADD COLUMN file_path BLOB") ) Utils::bail("Unable to upgrade DB to v1");
-        if ( !query.exec("ALTER TABLE events ADD COLUMN file_id BLOB") ) Utils::bail("Unable to upgrade DB to v1");
-        if ( !query.exec("ALTER TABLE events ADD COLUMN file_size INTEGER") ) Utils::bail("Unable to upgrade DB to v1");
-        if ( !query.exec("ALTER TABLE events ADD COLUMN file_position INTEGER") ) Utils::bail("Unable to upgrade DB to v1");
-        if ( !query.exec("ALTER TABLE events ADD COLUMN file_pausers INTEGER") ) Utils::bail("Unable to upgrade DB to v1"); // how many pausers are there (0-2)
+        if ( !query.exec("ALTER TABLE events ADD COLUMN file_path BLOB") ) Utils::fatal("Unable to upgrade DB to v1");
+        if ( !query.exec("ALTER TABLE events ADD COLUMN file_id BLOB") ) Utils::fatal("Unable to upgrade DB to v1");
+        if ( !query.exec("ALTER TABLE events ADD COLUMN file_size INTEGER") ) Utils::fatal("Unable to upgrade DB to v1");
+        if ( !query.exec("ALTER TABLE events ADD COLUMN file_position INTEGER") ) Utils::fatal("Unable to upgrade DB to v1");
+        if ( !query.exec("ALTER TABLE events ADD COLUMN file_pausers INTEGER") ) Utils::fatal("Unable to upgrade DB to v1"); // how many pausers are there (0-2)
 
         setUserVersion(1); // commits
     }
@@ -436,7 +436,7 @@ namespace JTOX {
         QSqlQuery query(fDB);
         // unknown if we have v0 to v1 or just init from scratch so these can fail
         if ( !query.exec("CREATE TABLE avatars (friend_id INTEGER PRIMARY KEY, hash BLOB NOT NULL, data BLOB NOT NULL)") ) {
-            Utils::bail("Unable to create avatars table");
+            Utils::fatal("Unable to create avatars table");
         }
 
         setUserVersion(2); // commits
@@ -508,12 +508,12 @@ namespace JTOX {
         bool ok = false;
         int id = query.value("id").toInt(&ok);
         if ( !ok ) {
-            Utils::bail("Error casting event id: " + query.value("id").toString());
+            Utils::fatal("Error casting event id: " + query.value("id").toString());
         }
         const QString message = fEncryptSave.decrypt(query.value("message").toByteArray());
         int rawEType = query.value("event_type").toInt(&ok);
         if ( !ok ) {
-            Utils::bail("Error casting event type: " + query.value("event_type").toString());
+            Utils::fatal("Error casting event type: " + query.value("event_type").toString());
         }
         EventType eventType = (EventType) rawEType;
         const QDateTime createdAt = query.value("created_at").toDateTime();
@@ -521,14 +521,14 @@ namespace JTOX {
         if ( !query.value("send_id").isNull() ) {
             sendID = query.value("send_id").toLongLong(&ok);
             if ( !ok ) {
-                Utils::bail("Error casting send_id: " + query.value("send_id").toString());
+                Utils::fatal("Error casting send_id: " + query.value("send_id").toString());
             }
         }
         quint32 friendID = -1;
         if ( !query.value("friend_id").isNull() ) {
             friendID = query.value("friend_id").toUInt(&ok);
             if ( !ok ) {
-                Utils::bail("Error casting event friend_id: " + query.value("friend_id").toString());
+                Utils::fatal("Error casting event friend_id: " + query.value("friend_id").toString());
             }
         }
 
@@ -546,7 +546,7 @@ namespace JTOX {
         if ( !query.value("file_size").isNull() ) {
             file_size = query.value("file_size").toInt(&ok);
             if ( !ok ) {
-                Utils::bail("Error casting event file_size: " + query.value("file_size").toString());
+                Utils::fatal("Error casting event file_size: " + query.value("file_size").toString());
             }
         }
 
@@ -554,7 +554,7 @@ namespace JTOX {
         if ( !query.value("file_position").isNull() ) {
             file_position = query.value("file_position").toInt(&ok);
             if ( !ok ) {
-                Utils::bail("Error casting event file_position: " + query.value("file_position").toString());
+                Utils::fatal("Error casting event file_position: " + query.value("file_position").toString());
             }
         }
 
@@ -562,7 +562,7 @@ namespace JTOX {
         if ( !query.value("file_pausers").isNull() ) {
             file_pausers = query.value("file_pausers").toInt(&ok);
             if ( !ok ) {
-                Utils::bail("Error casting event file_pausers: " + query.value("file_pausers").toString());
+                Utils::fatal("Error casting event file_pausers: " + query.value("file_pausers").toString());
             }
         }
 
@@ -573,7 +573,7 @@ namespace JTOX {
     {
         QSqlQuery query(fDB);
         if ( !query.prepare(sql) ) {
-            Utils::bail("Unable to prepare query: " + query.lastError().text());
+            Utils::fatal("Unable to prepare query: " + query.lastError().text());
         }
 
         return query;
@@ -583,14 +583,14 @@ namespace JTOX {
     {
         QSqlQuery query(fDB);
         if ( !query.exec("PRAGMA user_version") || !query.next() ) {
-            Utils::bail("unable to query user_version");
+            Utils::fatal("unable to query user_version");
             return 0;
         }
 
         bool ok = false;
         int result = query.value("user_version").toInt(&ok);
         if ( !ok ) {
-            Utils::bail("unable to parse user_version");
+            Utils::fatal("unable to parse user_version");
             return 0;
         }
 
@@ -602,7 +602,7 @@ namespace JTOX {
         QSqlQuery query(fDB);
 
         if ( !query.exec("PRAGMA user_version = " + QString::number(version)) ) {
-            Utils::bail("unable to set user_version");
+            Utils::fatal("unable to set user_version");
             return;
         }
 

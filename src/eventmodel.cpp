@@ -65,7 +65,7 @@ namespace JTOX {
     QVariant EventModel::data(const QModelIndex &index, int role) const {
         int row = index.row();
         if ( row < 0 || row >= fList.size() ) {
-            Utils::bail("Requesting out of bounds data");
+            Utils::fatal("Requesting out of bounds data");
         }
 
         return fList.at(row).value(role);
@@ -86,7 +86,7 @@ namespace JTOX {
         TOX_ERR_FRIEND_SEND_MESSAGE error;
         sendID = tox_friend_send_message(fToxCore.tox(), friendID, TOX_MESSAGE_TYPE_NORMAL, (uint8_t*) rawMsg.data(),
                                          rawMsg.size(), &error);
-        if ( !handleSendMessageError(error) ) {
+        if ( !Utils::handleSendMessageError(error, true) ) {
             return -1;
         }
 
@@ -123,7 +123,7 @@ namespace JTOX {
 
     void EventModel::sendMessage(const QString& message) {
         if ( !fToxCore.getInitialized() ) {
-            Utils::bail("Send called when toxcore not initialized!");
+            Utils::fatal("Send called when toxcore not initialized!");
         }
 
         if ( message.isEmpty() ) {
@@ -158,7 +158,7 @@ namespace JTOX {
     {
         int index = indexForEvent(eventID);
         if ( fList.at(index).type() != etMessageOutOffline ) {
-            Utils::bail("Unable to delete online message");
+            Utils::fatal("Unable to delete online message");
         }
 
         beginRemoveRows(QModelIndex(), index, index);
@@ -237,11 +237,11 @@ namespace JTOX {
             case etFileTransferInPaused: pausedType = etFileTransferInPaused; break;
             case etFileTransferOutRunning:
             case etFileTransferOutPaused: pausedType = etFileTransferOutPaused; break;
-            default: Utils::bail("Unable to pause file, invalid event type"); return;
+            default: Utils::fatal("Unable to pause file, invalid event type"); return;
         }
 
         if ( (transfer.filePausers() & 0x1) != 0 ) {
-            Utils::bail("Unable to pause file, already paused locally");
+            Utils::fatal("Unable to pause file, already paused locally");
         }
 
         TOX_ERR_FILE_CONTROL error;
@@ -267,7 +267,7 @@ namespace JTOX {
         }
 
         if ( (transfer.filePausers() & 0x1) == 0x0 ) { // if not paused on our side
-            Utils::bail("Unable to resume file, not paused locally");
+            Utils::fatal("Unable to resume file, not paused locally");
         }
 
         EventType resumeType = etFileTransferInRunning;
@@ -275,7 +275,7 @@ namespace JTOX {
             case etFileTransferIn: resumeType = etFileTransferInRunning; break;
             case etFileTransferInPaused: resumeType = etFileTransferInRunning; break;
             case etFileTransferOutPaused: resumeType = etFileTransferOutRunning; break;
-            default: Utils::bail("Unable to resume file, invalid event type"); return;
+            default: Utils::fatal("Unable to resume file, invalid event type"); return;
         }
 
         if ( (transfer.filePausers() & 0x2) != 0x0 ) { // if still paused on their side keep paused on event type
@@ -528,7 +528,7 @@ namespace JTOX {
              !fDBData.getEvent(friend_id, file_number, etFileTransferOutRunning, transfer) &&
              !fDBData.getEvent(friend_id, file_number, etFileTransferOutPaused, transfer) &&
              !fDBData.getEvent(friend_id, file_number, etFileTransferOut, transfer) ) {
-            Utils::bail("Unable to find transfer", true); // minor, don't crash on possibly race conditioned request
+            Utils::warn("Unable to find transfer"); // minor, don't crash on possibly race conditioned request
             return;
         }
 
@@ -544,7 +544,7 @@ namespace JTOX {
              !fDBData.getEvent(friend_id, file_number, etFileTransferInPaused, transfer) &&
              !fDBData.getEvent(friend_id, file_number, etFileTransferOutRunning, transfer) &&
              !fDBData.getEvent(friend_id, file_number, etFileTransferOutPaused, transfer) ) {
-            Utils::bail("Unable to find transfer", true); // minor, don't crash on possibly race conditioned request
+            Utils::warn("Unable to find transfer"); // minor, don't crash on possibly race conditioned request
             return;
         }
 
@@ -563,7 +563,7 @@ namespace JTOX {
              !fDBData.getEvent(friend_id, file_number, etFileTransferOutRunning, transfer) &&
              !fDBData.getEvent(friend_id, file_number, etFileTransferOutPaused, transfer) &&
              !fDBData.getEvent(friend_id, file_number, etFileTransferOut, transfer) ) {
-            Utils::bail("Unable to find transfer", true); // minor, don't crash on possibly race conditioned request
+            Utils::warn("Unable to find transfer"); // minor, don't crash on possibly race conditioned request
             return;
         }
 
@@ -582,24 +582,8 @@ namespace JTOX {
             }
         }
 
-        Utils::bail("Cannot find index for event");
+        Utils::fatal("Cannot find index for event");
         return -1;
-    }
-
-    bool EventModel::handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error) const
-    {
-        switch ( error ) {
-            case TOX_ERR_FRIEND_SEND_MESSAGE_EMPTY: return Utils::bail("Cannot send empty message");
-            case TOX_ERR_FRIEND_SEND_MESSAGE_FRIEND_NOT_CONNECTED: return Utils::bail("Cannot send message, friend not online");
-            case TOX_ERR_FRIEND_SEND_MESSAGE_FRIEND_NOT_FOUND: return Utils::bail("Cannot send message, friend not found");
-            case TOX_ERR_FRIEND_SEND_MESSAGE_NULL: return Utils::bail("Cannot send null message");
-            case TOX_ERR_FRIEND_SEND_MESSAGE_SENDQ: return Utils::bail("Cannot send message, sendq error");
-            case TOX_ERR_FRIEND_SEND_MESSAGE_TOO_LONG: return Utils::bail("Cannot send message it is too long");
-            case TOX_ERR_FRIEND_SEND_MESSAGE_OK: return true;
-        }
-
-        Utils::bail("Unknown error");
-        return false;
     }
 
     int EventModel::getFriendStatus() const {
@@ -653,7 +637,7 @@ namespace JTOX {
         TOX_ERR_SET_TYPING error;
         tox_self_set_typing(fToxCore.tox(), friendID, typing, &error);
         if ( error != TOX_ERR_SET_TYPING_OK ) {
-            Utils::bail("Friend not found");
+            Utils::fatal("Friend not found");
         }
 
         fTyping = typing;
@@ -674,9 +658,8 @@ namespace JTOX {
         TOX_ERR_FILE_CONTROL error;
         tox_file_control(fToxCore.tox(), transfer.friendID(), transfer.sendID(), TOX_FILE_CONTROL_CANCEL, &error);
 
-        if ( Utils::handleFileControlError(error, true) ) { // don't fail on cancel, just log. friend could be off etc.
-            updateEventType(transfer, canceledType);
-        }
+        Utils::handleFileControlError(error, true); // don't fail on cancel, just log. friend could be off etc.
+        updateEventType(transfer, canceledType);
     }
 
     void EventModel::cancelTransfers()

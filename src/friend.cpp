@@ -19,39 +19,39 @@ namespace JTOX {
         TOX_ERR_FRIEND_QUERY error;
         size_t friend_name_size = tox_friend_get_name_size(fToxCore.tox(), fFriendID, &error);
         if ( error != TOX_ERR_FRIEND_QUERY_OK ) {
-            Utils::bail("Error retrieving friend name size");
+            Utils::fatal("Error retrieving friend name size");
         }
 
         uint8_t name[friend_name_size];
         if ( !tox_friend_get_name(fToxCore.tox(), fFriendID, name, &error) || error != TOX_ERR_FRIEND_QUERY_OK ) {
-            Utils::bail("Error retrieving friend name");
+            Utils::fatal("Error retrieving friend name");
         }
         fName = QString::fromUtf8((char*) name, friend_name_size);
 
         fTyping = tox_friend_get_typing(fToxCore.tox(), fFriendID, &error);
         if ( error != TOX_ERR_FRIEND_QUERY_OK ) {
-            Utils::bail("Error retrieving friend typing status");
+            Utils::fatal("Error retrieving friend typing status");
         }
 
         fConnectionStatus = tox_friend_get_connection_status(fToxCore.tox(), fFriendID, &error);
         if ( error != TOX_ERR_FRIEND_QUERY_OK ) {
-            Utils::bail("Error retrieving friend connection status");
+            Utils::fatal("Error retrieving friend connection status");
         }
 
         fUserStatus = tox_friend_get_status(fToxCore.tox(), fFriendID, &error);
         if ( error != TOX_ERR_FRIEND_QUERY_OK ) {
-            Utils::bail("Error retrieving friend user status");
+            Utils::fatal("Error retrieving friend user status");
         }
 
         size_t friend_status_size = tox_friend_get_status_message_size(fToxCore.tox(), fFriendID, &error);
         if ( error != TOX_ERR_FRIEND_QUERY_OK ) {
-            Utils::bail("Error retrieving friend status message size");
+            Utils::fatal("Error retrieving friend status message size");
         }
 
         uint8_t status[friend_status_size];
         tox_friend_get_status_message(fToxCore.tox(), fFriendID, status, &error);
         if ( error != TOX_ERR_FRIEND_QUERY_OK ) {
-            Utils::bail("Error retrieving friend status message");
+            Utils::fatal("Error retrieving friend status message");
         }
         fStatusMessage = QString::fromUtf8((char*) status, friend_status_size);
 
@@ -59,7 +59,7 @@ namespace JTOX {
         uint8_t pubRaw[TOX_PUBLIC_KEY_SIZE];
         tox_friend_get_public_key(fToxCore.tox(), fFriendID, pubRaw, &pubError);
         if ( pubError != TOX_ERR_FRIEND_GET_PUBLIC_KEY_OK ) {
-            Utils::bail("Error retrieving friend public key");
+            Utils::fatal("Error retrieving friend public key");
         }
         fPublicKey = Utils::key_to_hex(pubRaw, TOX_PUBLIC_KEY_SIZE);
     }
@@ -75,7 +75,7 @@ namespace JTOX {
             case frUnviewed: return fUnviewed;
         }
 
-        Utils::bail("Invalid role requested for friend value");
+        Utils::fatal("Invalid role requested for friend value");
         return QVariant();
     }
 

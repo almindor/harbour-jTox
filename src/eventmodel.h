@@ -79,7 +79,6 @@ namespace JTOX {
         QMap <quint64, QFile*> fTransferFiles;
 
         int indexForEvent(int eventID) const;
-        bool handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error) const;
         int getFriendStatus() const;
         bool getFriendTyping() const;
         const QString getFriendName() const;
