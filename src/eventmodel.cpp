@@ -76,7 +76,7 @@ namespace JTOX {
         return fFriendID;
     }
 
-    qint64 EventModel::sendMessageRaw(const QString& message, qint64 friendID, int id)
+    qint64 EventModel::sendMessageRaw(const QString& message, qint64 friendID, int id, QString& strError)
     {
         qint64 sendID = -1;
         const QByteArray rawMsg = message.toUtf8();
@@ -86,7 +86,7 @@ namespace JTOX {
         TOX_ERR_FRIEND_SEND_MESSAGE error;
         sendID = tox_friend_send_message(fToxCore.tox(), friendID, TOX_MESSAGE_TYPE_NORMAL, (uint8_t*) rawMsg.data(),
                                          rawMsg.size(), &error);
-        const QString strError = Utils::handleSendMessageError(error, true);
+        strError = Utils::handleSendMessageError(error, true);
         if ( !strError.isEmpty() ) {
             return -1;
         }
@@ -139,10 +139,11 @@ namespace JTOX {
         fDBData.insertEvent(event);
 
         if ( getFriendStatus() > 0 ) { // if friend is online, send it and use out pending mt
-            sendID = sendMessageRaw(message, fFriendID, event.id());
+            QString strError;
+            sendID = sendMessageRaw(message, fFriendID, event.id(), strError);
             if ( sendID < 0 ) { // shouldn't happen since we check input now, but we need to handle somehow
                 fDBData.deleteEvent(event.id());
-                emit eventError(tr("Unable to send message"));
+                emit eventError(strError);
                 return;
             }
             eventType = etMessageOutPending; // if we got here the message is out
@@ -379,7 +380,8 @@ namespace JTOX {
 
         int index = -1;
         foreach ( const Event& event, offlineMessages ) {
-            qint64 sendID = sendMessageRaw(event.message(), friendID, event.id());
+            QString strError;
+            qint64 sendID = sendMessageRaw(event.message(), friendID, event.id(), strError);
 
             if ( sendID < 0 ) { // handled error case or empty message bug (fixed since)
                 fDBData.deleteEvent(event.id()); // remove the message

@@ -402,27 +402,22 @@
         <translation>No se puede enviar un mensaje en blanco</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="145"/>
-        <source>Unable to send message</source>
-        <translation>No se puede enviar el mensaje</translation>
-    </message>
-    <message>
-        <location filename="../src/eventmodel.cpp" line="390"/>
+        <location filename="../src/eventmodel.cpp" line="392"/>
         <source>Removed invalid pending message</source>
         <translation>Se eliminó el mensaje pendiente no válido</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="541"/>
+        <location filename="../src/eventmodel.cpp" line="543"/>
         <source>Transfer canceled by sender</source>
         <translation>Transferencia cancelada por el remitente</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="541"/>
+        <location filename="../src/eventmodel.cpp" line="543"/>
         <source>Transfer canceled by receiver</source>
         <translation>Transferencia cancelada por el receptor</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="684"/>
+        <location filename="../src/eventmodel.cpp" line="686"/>
         <source>Unable to find file for transfer</source>
         <translation>No se puede encontrar el archivo para transferir</translation>
     </message>

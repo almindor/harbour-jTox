@@ -31,7 +31,7 @@ namespace JTOX {
         int rowCount(const QModelIndex &parent = QModelIndex()) const;
         QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
         int getFriendID() const;
-        qint64 sendMessageRaw(const QString& message, qint64 friendID, int id);
+        qint64 sendMessageRaw(const QString& message, qint64 friendID, int id, QString& strError);
 
         Q_INVOKABLE qint64 setFriendIndex(int friendIndex);
         Q_INVOKABLE void setFriend(qint64 friendID);

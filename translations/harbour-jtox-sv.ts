@@ -402,27 +402,22 @@
         <translation>Kan inte skicka tomt meddelande</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="145"/>
-        <source>Unable to send message</source>
-        <translation>Kunde inte skicka meddelande</translation>
-    </message>
-    <message>
-        <location filename="../src/eventmodel.cpp" line="390"/>
+        <location filename="../src/eventmodel.cpp" line="392"/>
         <source>Removed invalid pending message</source>
         <translation>Tog bort ogiltigt väntande meddelande</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="541"/>
+        <location filename="../src/eventmodel.cpp" line="543"/>
         <source>Transfer canceled by sender</source>
         <translation>Överföring avbruten av avsändaren</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="541"/>
+        <location filename="../src/eventmodel.cpp" line="543"/>
         <source>Transfer canceled by receiver</source>
         <translation>Överföring avbruten av mottagaren</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="684"/>
+        <location filename="../src/eventmodel.cpp" line="686"/>
         <source>Unable to find file for transfer</source>
         <translation>Kunde inte hitta filen för överföring</translation>
     </message>
