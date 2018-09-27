@@ -39,14 +39,16 @@ namespace JTOX {
         static void hex_to_key(const QString& hexKey, unsigned char* key);
         static void hex_to_address(const QString& hexKey, unsigned char* address);
         static int get_overall_status(TOX_CONNECTION conStatus, TOX_USER_STATUS userStatus);
-        static bool warn(const QString& error);
-        static bool fatal(const QString& error);
+        static const QString warn(const QString& error);
+        static const QString fatal(const QString& error);
         static quint64 transferID(quint32 friend_id, quint32 file_number);
         static quint32 friendID(quint64 transferID);
         static quint32 fileNumber(quint64 transferID);
-        static bool handleFileControlError(TOX_ERR_FILE_CONTROL error, bool soft = false);
-        static bool handleFileSendChunkError(TOX_ERR_FILE_SEND_CHUNK error, bool soft = false);
-        static bool handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error, bool soft);
+        static const QString handleFileControlError(TOX_ERR_FILE_CONTROL error, bool soft = false);
+        static const QString handleFileSendChunkError(TOX_ERR_FILE_SEND_CHUNK error, bool soft = false);
+        static const QString handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error, bool soft);
+        static const QString handleToxFileSendError(TOX_ERR_FILE_SEND error);
+        static const QString handleToxNewError(TOX_ERR_NEW error);
     };
 
     void register_signals();

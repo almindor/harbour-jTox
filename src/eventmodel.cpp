@@ -86,7 +86,8 @@ namespace JTOX {
         TOX_ERR_FRIEND_SEND_MESSAGE error;
         sendID = tox_friend_send_message(fToxCore.tox(), friendID, TOX_MESSAGE_TYPE_NORMAL, (uint8_t*) rawMsg.data(),
                                          rawMsg.size(), &error);
-        if ( !Utils::handleSendMessageError(error, true) ) {
+        const QString strError = Utils::handleSendMessageError(error, true);
+        if ( !strError.isEmpty() ) {
             return -1;
         }
 
@@ -246,7 +247,8 @@ namespace JTOX {
 
         TOX_ERR_FILE_CONTROL error;
         tox_file_control(fToxCore.tox(), transfer.friendID(), transfer.sendID(), TOX_FILE_CONTROL_PAUSE, &error);
-        if ( !Utils::handleFileControlError(error) ) {
+        const QString strError = Utils::handleFileControlError(error);
+        if ( !strError.isEmpty() ) {
             emit transferError("Unable to pause file transfer");
             return;
         }
@@ -284,7 +286,8 @@ namespace JTOX {
 
         TOX_ERR_FILE_CONTROL error;
         tox_file_control(fToxCore.tox(), transfer.friendID(), transfer.sendID(), TOX_FILE_CONTROL_RESUME, &error);
-        if ( !Utils::handleFileControlError(error) ) {
+        const QString strError = Utils::handleFileControlError(error);
+        if ( !strError.isEmpty() ) {
             emit transferError("Unable to resume file transfer");
             return;
         }
@@ -492,7 +495,8 @@ namespace JTOX {
         TOX_ERR_FILE_SEND_CHUNK error;
         tox_file_send_chunk(fToxCore.tox(), friend_id, file_number, position, (quint8*) chunk.constData(), length, &error);
 
-        if ( !Utils::handleFileSendChunkError(error) ) {
+        const QString strError = Utils::handleFileSendChunkError(error);
+        if ( !strError.isEmpty() ) {
             cancelTransfer(transfer);
             emit transferError("Transfer chunk length invalid");
             return;

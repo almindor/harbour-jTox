@@ -397,32 +397,32 @@
 <context>
     <name>JTOX::EventModel</name>
     <message>
-        <location filename="../src/eventmodel.cpp" line="130"/>
+        <location filename="../src/eventmodel.cpp" line="131"/>
         <source>Cannot send empty message</source>
         <translation>No se puede enviar un mensaje en blanco</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="144"/>
+        <location filename="../src/eventmodel.cpp" line="145"/>
         <source>Unable to send message</source>
         <translation>No se puede enviar el mensaje</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="387"/>
+        <location filename="../src/eventmodel.cpp" line="390"/>
         <source>Removed invalid pending message</source>
         <translation>Se eliminó el mensaje pendiente no válido</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="537"/>
+        <location filename="../src/eventmodel.cpp" line="541"/>
         <source>Transfer canceled by sender</source>
         <translation>Transferencia cancelada por el remitente</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="537"/>
+        <location filename="../src/eventmodel.cpp" line="541"/>
         <source>Transfer canceled by receiver</source>
         <translation>Transferencia cancelada por el receptor</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="680"/>
+        <location filename="../src/eventmodel.cpp" line="684"/>
         <source>Unable to find file for transfer</source>
         <translation>No se puede encontrar el archivo para transferir</translation>
     </message>
@@ -430,27 +430,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="654"/>
+        <location filename="../src/toxcore.cpp" line="637"/>
         <source>Offline</source>
         <translation>Desconectado</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="655"/>
+        <location filename="../src/toxcore.cpp" line="638"/>
         <source>Ready</source>
         <translation>Disponible</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="656"/>
+        <location filename="../src/toxcore.cpp" line="639"/>
         <source>Away</source>
         <translation>Ausente</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="657"/>
+        <location filename="../src/toxcore.cpp" line="640"/>
         <source>Busy</source>
         <translation>Ocupado</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="660"/>
+        <location filename="../src/toxcore.cpp" line="643"/>
         <source>Unknown</source>
         <translation>Desconocido</translation>
     </message>
@@ -458,7 +458,7 @@
 <context>
     <name>JTOX::ToxInitializer</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="178"/>
+        <location filename="../src/toxcore.cpp" line="179"/>
         <source>Hi from jTox on Sailfish</source>
         <translation>Hola, desde jTox en Sailfish OS</translation>
     </message>

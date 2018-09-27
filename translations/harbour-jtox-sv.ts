@@ -397,32 +397,32 @@
 <context>
     <name>JTOX::EventModel</name>
     <message>
-        <location filename="../src/eventmodel.cpp" line="130"/>
+        <location filename="../src/eventmodel.cpp" line="131"/>
         <source>Cannot send empty message</source>
         <translation>Kan inte skicka tomt meddelande</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="144"/>
+        <location filename="../src/eventmodel.cpp" line="145"/>
         <source>Unable to send message</source>
         <translation>Kunde inte skicka meddelande</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="387"/>
+        <location filename="../src/eventmodel.cpp" line="390"/>
         <source>Removed invalid pending message</source>
         <translation>Tog bort ogiltigt väntande meddelande</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="537"/>
+        <location filename="../src/eventmodel.cpp" line="541"/>
         <source>Transfer canceled by sender</source>
         <translation>Överföring avbruten av avsändaren</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="537"/>
+        <location filename="../src/eventmodel.cpp" line="541"/>
         <source>Transfer canceled by receiver</source>
         <translation>Överföring avbruten av mottagaren</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="680"/>
+        <location filename="../src/eventmodel.cpp" line="684"/>
         <source>Unable to find file for transfer</source>
         <translation>Kunde inte hitta filen för överföring</translation>
     </message>
@@ -430,27 +430,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="654"/>
+        <location filename="../src/toxcore.cpp" line="637"/>
         <source>Offline</source>
         <translation>Offline</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="655"/>
+        <location filename="../src/toxcore.cpp" line="638"/>
         <source>Ready</source>
         <translation>Tillgänglig</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="656"/>
+        <location filename="../src/toxcore.cpp" line="639"/>
         <source>Away</source>
         <translation>Borta</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="657"/>
+        <location filename="../src/toxcore.cpp" line="640"/>
         <source>Busy</source>
         <translation>Upptagen</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="660"/>
+        <location filename="../src/toxcore.cpp" line="643"/>
         <source>Unknown</source>
         <translation>Okänt</translation>
     </message>
@@ -458,7 +458,7 @@
 <context>
     <name>JTOX::ToxInitializer</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="178"/>
+        <location filename="../src/toxcore.cpp" line="179"/>
         <source>Hi from jTox on Sailfish</source>
         <translation>Hej från jTox på Sailfish</translation>
     </message>

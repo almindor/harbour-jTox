@@ -224,7 +224,6 @@ namespace JTOX {
         void awayRestore();
         void awayStart();
         void killTox();
-        bool handleToxFileSendError(TOX_ERR_FILE_SEND error) const;
         void updateTransfers(quint32 friend_id, quint32 file_number, size_t length);
         void sendAvatarChunk(quint32 friend_id, quint32 file_number, quint64 position, size_t length);
     };

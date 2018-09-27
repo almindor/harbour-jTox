@@ -57,16 +57,16 @@ namespace JTOX {
         }
     }
 
-    bool bail(const QString& error, bool soft)
+    const QString bail(const QString& error, bool soft)
     {
         if ( soft ) {
             qWarning() << "FATAL ERROR: " << error.toUtf8().data() << "\n";
-            return false;
+        } else {
+            print_backtrace();
+            qFatal("FATAL ERROR: %s\n", error.toUtf8().data());
         }
 
-        print_backtrace();
-        qFatal("FATAL ERROR: %s\n", error.toUtf8().data());
-        return false;
+        return error;
     }
 
     //***************************Utils****************************//
@@ -155,12 +155,12 @@ namespace JTOX {
         signal( SIGFPE,  abortHandler );
     }
 
-    bool Utils::warn(const QString &error)
+    const QString Utils::warn(const QString &error)
     {
         return bail(error, true);
     }
 
-    bool Utils::fatal(const QString &error)
+    const QString Utils::fatal(const QString &error)
     {
         return bail(error, false);
     }
@@ -180,7 +180,7 @@ namespace JTOX {
         return (quint32) transferID;
     }
 
-    bool Utils::handleFileControlError(TOX_ERR_FILE_CONTROL error, bool soft)
+    const QString Utils::handleFileControlError(TOX_ERR_FILE_CONTROL error, bool soft)
     {
         switch ( error ) {
             case TOX_ERR_FILE_CONTROL_ALREADY_PAUSED: return bail("File transfer already paused", soft);
@@ -190,14 +190,13 @@ namespace JTOX {
             case TOX_ERR_FILE_CONTROL_NOT_FOUND: return bail("File transfer not found", soft);
             case TOX_ERR_FILE_CONTROL_NOT_PAUSED: return bail("File transfer not paused", soft);
             case TOX_ERR_FILE_CONTROL_SENDQ: return bail("File transfer send queue full", soft);
-            case TOX_ERR_FILE_CONTROL_OK: return true;
+            case TOX_ERR_FILE_CONTROL_OK: return QString();
         }
 
-        fatal("Unknown error");
-        return false;
+        return fatal("Unknown error");
     }
 
-    bool Utils::handleFileSendChunkError(TOX_ERR_FILE_SEND_CHUNK error, bool soft)
+    const QString Utils::handleFileSendChunkError(TOX_ERR_FILE_SEND_CHUNK error, bool soft)
     {
         switch ( error ) {
             case TOX_ERR_FILE_SEND_CHUNK_FRIEND_NOT_CONNECTED: return bail("Friend not connected", soft);
@@ -209,14 +208,13 @@ namespace JTOX {
             case TOX_ERR_FILE_SEND_CHUNK_SENDQ: return bail("File transfer send queue full", soft);
             case TOX_ERR_FILE_SEND_CHUNK_WRONG_POSITION: return bail("File transfer wrong position", soft);
 
-            case TOX_ERR_FILE_SEND_CHUNK_OK: return true;
+            case TOX_ERR_FILE_SEND_CHUNK_OK: return QString();
         }
 
-        fatal("Unknown error");
-        return false;
+        return fatal("Unknown error");
     }
 
-    bool Utils::handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error, bool soft)
+    const QString Utils::handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error, bool soft)
     {
         switch ( error ) {
             case TOX_ERR_FRIEND_SEND_MESSAGE_EMPTY: return bail("Cannot send empty message", soft);
@@ -225,11 +223,42 @@ namespace JTOX {
             case TOX_ERR_FRIEND_SEND_MESSAGE_NULL: return bail("Cannot send null message", soft);
             case TOX_ERR_FRIEND_SEND_MESSAGE_SENDQ: return bail("Cannot send message, sendq error", soft);
             case TOX_ERR_FRIEND_SEND_MESSAGE_TOO_LONG: return bail("Cannot send message it is too long", soft);
-            case TOX_ERR_FRIEND_SEND_MESSAGE_OK: return true;
+            case TOX_ERR_FRIEND_SEND_MESSAGE_OK: return QString();
         }
 
-        fatal("Unknown error");
-        return false;
+        return fatal("Unknown error");
+    }
+
+    const QString Utils::handleToxFileSendError(TOX_ERR_FILE_SEND error)
+    {
+        switch ( error ) {
+            case TOX_ERR_FILE_SEND_FRIEND_NOT_CONNECTED: return Utils::fatal("Cannot send file, friend not connected");
+            case TOX_ERR_FILE_SEND_FRIEND_NOT_FOUND: return Utils::fatal("Cannot send file, friend not found");
+            case TOX_ERR_FILE_SEND_NAME_TOO_LONG: return Utils::fatal("Cannot send file, name too long");
+            case TOX_ERR_FILE_SEND_NULL: return Utils::fatal("Cannot send file, unexpected null argument");
+            case TOX_ERR_FILE_SEND_TOO_MANY: return Utils::fatal("Cannot send file, too many concurrent transfers in progress");
+            case TOX_ERR_FILE_SEND_OK: return QString();
+        }
+
+        return fatal("Unknown error");
+    }
+
+    const QString Utils::handleToxNewError(TOX_ERR_NEW error)
+    {
+        switch ( error ) {
+            case TOX_ERR_NEW_NULL: return Utils::fatal("Cannot create toxcore, null argument");
+            case TOX_ERR_NEW_MALLOC: return Utils::fatal("Cannot create toxcore, malloc error");
+            case TOX_ERR_NEW_PORT_ALLOC: return Utils::fatal("Cannot create toxcore, port bind permission error");
+            case TOX_ERR_NEW_PROXY_BAD_TYPE: return Utils::fatal("Cannot create toxcore, invalid proxy type");
+            case TOX_ERR_NEW_PROXY_BAD_HOST: return Utils::fatal("Cannot create toxcore, bad proxy host");
+            case TOX_ERR_NEW_PROXY_BAD_PORT: return Utils::fatal("Cannot create toxcore, bad proxy port");
+            case TOX_ERR_NEW_PROXY_NOT_FOUND: return Utils::fatal("Cannot create toxcore, proxy not found");
+            case TOX_ERR_NEW_LOAD_ENCRYPTED: return Utils::fatal("Cannot create toxcore, save data encrypted");
+            case TOX_ERR_NEW_LOAD_BAD_FORMAT: return Utils::fatal("Cannot create toxcore, save data invalid");
+            case TOX_ERR_NEW_OK: return QString();
+        }
+
+        return fatal("Unknown error");
     }
 
 }

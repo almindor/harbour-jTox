@@ -168,9 +168,10 @@ namespace JTOX {
         }
 
         Tox* tox = tox_new(&options, &error);
-        if ( !handleToxNewError(error) ) {
+        const QString strError = Utils::handleToxNewError(error);
+        if ( !strError.isEmpty() ) {
             fWorking = false;
-            emit resultReady(NULL, "Error creating tox service object");
+            emit resultReady(NULL, "Error creating tox service object: " + strError);
             return;
         }
 
@@ -203,24 +204,6 @@ namespace JTOX {
         fInitialUse = initialUse;
         fPassword = password;
         QThread::start();
-    }
-
-    bool ToxInitializer::handleToxNewError(TOX_ERR_NEW error) const
-    {
-        switch ( error ) {
-            case TOX_ERR_NEW_OK: return true;
-            case TOX_ERR_NEW_NULL: return Utils::fatal("Cannot create toxcore, null argument");
-            case TOX_ERR_NEW_MALLOC: return Utils::fatal("Cannot create toxcore, malloc error");
-            case TOX_ERR_NEW_PORT_ALLOC: return Utils::fatal("Cannot create toxcore, port bind permission error");
-            case TOX_ERR_NEW_PROXY_BAD_TYPE: return Utils::fatal("Cannot create toxcore, invalid proxy type");
-            case TOX_ERR_NEW_PROXY_BAD_HOST: return Utils::fatal("Cannot create toxcore, bad proxy host");
-            case TOX_ERR_NEW_PROXY_BAD_PORT: return Utils::fatal("Cannot create toxcore, bad proxy port");
-            case TOX_ERR_NEW_PROXY_NOT_FOUND: return Utils::fatal("Cannot create toxcore, proxy not found");
-            case TOX_ERR_NEW_LOAD_ENCRYPTED: return Utils::fatal("Cannot create toxcore, save data encrypted");
-            case TOX_ERR_NEW_LOAD_BAD_FORMAT: return Utils::fatal("Cannot create toxcore, save data invalid");
-        }
-
-        return false;
     }
 
     //*******************************ToxCore******************************//
@@ -813,7 +796,7 @@ namespace JTOX {
         quint32 file_number = tox_file_send(fTox, friendID, TOX_FILE_KIND_DATA, (quint64) file.size(), (quint8*) file_id.constData(),
                                             (quint8*) fileName.toUtf8().constData(), fileName.length(), &error);
 
-        handleToxFileSendError(error); // all critical and cause a bail
+        Utils::handleToxFileSendError(error); // all critical and cause a bail
         return file_number;
     }
 
@@ -847,7 +830,7 @@ namespace JTOX {
         quint32 file_number = tox_file_send(fTox, friend_id, TOX_FILE_KIND_AVATAR, (quint64) data.size(), (quint8*) hash.constData(),
                                             NULL, 0, &error);
 
-        handleToxFileSendError(error); // all critical and cause a bail
+        Utils::handleToxFileSendError(error); // all critical and cause a bail
         fActiveAvatarTransfers[friend_id] = file_number;
         return true;
     }
@@ -861,20 +844,6 @@ namespace JTOX {
         fInitialized = false;
         tox_kill(fTox);
         fTox = NULL;
-    }
-
-    bool ToxCore::handleToxFileSendError(TOX_ERR_FILE_SEND error) const
-    {
-        switch ( error ) {
-            case TOX_ERR_FILE_SEND_OK: return true;
-            case TOX_ERR_FILE_SEND_FRIEND_NOT_CONNECTED: return Utils::fatal("Cannot send file, friend not connected");
-            case TOX_ERR_FILE_SEND_FRIEND_NOT_FOUND: return Utils::fatal("Cannot send file, friend not found");
-            case TOX_ERR_FILE_SEND_NAME_TOO_LONG: return Utils::fatal("Cannot send file, name too long");
-            case TOX_ERR_FILE_SEND_NULL: return Utils::fatal("Cannot send file, unexpected null argument");
-            case TOX_ERR_FILE_SEND_TOO_MANY: return Utils::fatal("Cannot send file, too many concurrent transfers in progress");
-        }
-
-        return false;
     }
 
     void ToxCore::updateTransfers(quint32 friend_id, quint32 file_number, size_t length)
@@ -905,7 +874,8 @@ namespace JTOX {
         quint8* data = (quint8*) fProfileAvatarData.mid(position).constData();
         tox_file_send_chunk(fTox, friend_id, file_number, position, data, length, &error);
 
-        if ( !Utils::handleFileSendChunkError(error) ) {
+        const QString strError = Utils::handleFileSendChunkError(error);
+        if ( !strError.isEmpty() ) {
             emit errorOccurred("Avatar transfer error");
             return;
         }

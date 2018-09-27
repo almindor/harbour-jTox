@@ -149,8 +149,9 @@ namespace JTOX {
 
         tox_file_control(fToxCore.tox(), friend_id, file_number, op, &ctrl_error);
 
-        if ( !Utils::handleFileControlError(ctrl_error, true) ) { // don't fail on avatar requests, just log
-            qDebug() << "Unable to resume/cancel avatar download\n";
+        const QString strError = Utils::handleFileControlError(ctrl_error, true);
+        if ( !strError.isEmpty() ) { // don't fail on avatar requests, just log
+            qDebug() << "Unable to resume/cancel avatar download: " << strError << "\n";
             return;
         }
     }
