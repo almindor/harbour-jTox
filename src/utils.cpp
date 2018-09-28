@@ -180,6 +180,27 @@ namespace JTOX {
         return (quint32) transferID;
     }
 
+    const StringListUTF8 Utils::splitStringUTF8(const QByteArray &source, int maxByteSize)
+    {
+        StringListUTF8 result;
+        int i = 0;
+        int size;
+
+        while ( i < source.size() ) {
+            size = maxByteSize;
+            while ( i + size < source.size() &&
+                    (source.at(i + size) & 0xC0) == 0x80 ) {
+                --size; // find UTF-8 character start to the left
+            }
+
+            result << source.mid(i, size);
+            i += size;
+        }
+        // result << source.mid(i);
+
+        return result;
+    }
+
     const QString Utils::handleFileControlError(TOX_ERR_FILE_CONTROL error, bool soft)
     {
         switch ( error ) {

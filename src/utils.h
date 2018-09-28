@@ -18,7 +18,9 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <QList>
 #include <QString>
+#include <QByteArray>
 #include <stdint.h>
 #include <tox/tox.h>
 #include <QException>
@@ -32,6 +34,8 @@ namespace JTOX {
         JToxException *clone() const;
     };
 
+    typedef QList<QByteArray> StringListUTF8;
+
     class Utils
     {
     public:
@@ -44,6 +48,7 @@ namespace JTOX {
         static quint64 transferID(quint32 friend_id, quint32 file_number);
         static quint32 friendID(quint64 transferID);
         static quint32 fileNumber(quint64 transferID);
+        static const StringListUTF8 splitStringUTF8(const QByteArray& source, int maxByteSize);
         static const QString handleFileControlError(TOX_ERR_FILE_CONTROL error, bool soft = false);
         static const QString handleFileSendChunkError(TOX_ERR_FILE_SEND_CHUNK error, bool soft = false);
         static const QString handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error, bool soft);
