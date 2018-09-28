@@ -132,28 +132,32 @@ namespace JTOX {
             return; // this would cause error in toxcore!
         }
 
-        EventType eventType = etMessageOutOffline; // default to offline msg
-        qint64 sendID = -1;
-        QDateTime createdAt;
-        Event event(-1, fFriendID, createdAt, eventType, message, sendID);
-        fDBData.insertEvent(event);
+        StringListUTF8 parts = Utils::splitStringUTF8(message.toUtf8(), tox_max_message_length());
 
-        if ( getFriendStatus() > 0 ) { // if friend is online, send it and use out pending mt
-            QString strError;
-            sendID = sendMessageRaw(message, fFriendID, event.id(), strError);
-            if ( sendID < 0 ) { // shouldn't happen since we check input now, but we need to handle somehow
-                fDBData.deleteEvent(event.id());
-                emit eventError(strError);
-                return;
+        foreach ( const QByteArray part, parts ) {
+            EventType eventType = etMessageOutOffline; // default to offline msg
+            qint64 sendID = -1;
+            QDateTime createdAt;
+            Event event(-1, fFriendID, createdAt, eventType, part, sendID);
+            fDBData.insertEvent(event);
+
+            if ( getFriendStatus() > 0 ) { // if friend is online, send it and use out pending mt
+                QString strError;
+                sendID = sendMessageRaw(part, fFriendID, event.id(), strError);
+                if ( sendID < 0 ) { // shouldn't happen since we check input now, but we need to handle somehow
+                    fDBData.deleteEvent(event.id());
+                    emit eventError(strError);
+                    return;
+                }
+                eventType = etMessageOutPending; // if we got here the message is out
+                event.setEventType(eventType);
+                event.setSendID(sendID);
             }
-            eventType = etMessageOutPending; // if we got here the message is out
-            event.setEventType(eventType);
-            event.setSendID(sendID);
-        }
 
-        beginInsertRows(QModelIndex(), 0, 0);
-        fList.push_front(event);
-        endInsertRows();
+            beginInsertRows(QModelIndex(), 0, 0);
+            fList.push_front(event);
+            endInsertRows();
+        }
     }
 
     void EventModel::deleteMessage(int eventID)

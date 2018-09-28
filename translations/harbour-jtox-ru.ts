@@ -402,22 +402,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="392"/>
+        <location filename="../src/eventmodel.cpp" line="396"/>
         <source>Removed invalid pending message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="543"/>
+        <location filename="../src/eventmodel.cpp" line="547"/>
         <source>Transfer canceled by sender</source>
         <translation>Передача отменена отправителем</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="543"/>
+        <location filename="../src/eventmodel.cpp" line="547"/>
         <source>Transfer canceled by receiver</source>
         <translation>Передача отменена получателем</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="686"/>
+        <location filename="../src/eventmodel.cpp" line="690"/>
         <source>Unable to find file for transfer</source>
         <translation>Не найден файл для передачи</translation>
     </message>
