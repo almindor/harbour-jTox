@@ -15,6 +15,7 @@ TARGET = harbour-jtox
 QT += sql
 
 CONFIG += sailfishapp
+CONFIG += C++-17
 CONFIG(debug,debug|release){ TOX_PATH = extra/i486 }
 # CONFIG(debug,debug|release){ TOX_PATH = extra/armv7hl }
 CONFIG(release,debug|release){ TOX_PATH = extra/armv7hl }
