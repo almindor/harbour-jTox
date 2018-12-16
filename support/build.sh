@@ -19,7 +19,9 @@ fi
 
 SFVER="3.0.0.8"
 SODIUMVER="1.0.16"
-TOXCOREVER="0.2.7"
+TOXCOREVER="0.2.8"
+VPXVER="1.7.0"
+OPUSVER="1.2.1"
 THREADS="8"
 TARGET="$SFVER-$1"
 TOXDIR=`pwd`
@@ -31,10 +33,10 @@ SODIUMSRC="https://github.com/jedisct1/libsodium/archive/$SODIUMVER.tar.gz"
 TOXCORESRC="https://github.com/TokTok/c-toxcore/archive/v$TOXCOREVER.tar.gz"
 TOXCOREDIR="$TOXDIR/c-toxcore"
 
-VPXSRC="https://github.com/webmproject/libvpx/archive/v1.7.0.tar.gz"
+VPXSRC="https://github.com/webmproject/libvpx/archive/v$VPXVER.tar.gz"
 VPXDIR="$TOXDIR/vpx"
 
-OPUSSRC="https://github.com/xiph/opus/archive/v1.2.1.tar.gz"
+OPUSSRC="https://github.com/xiph/opus/archive/v$OPUSVER.tar.gz"
 OPUSDIR="$TOXDIR/opus"
 
 if [ ! -d "$FAKEDIR" ]
