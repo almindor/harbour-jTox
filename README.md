@@ -17,7 +17,7 @@ See [the sailfish SDK FAQ](https://sailfishos.org/develop/sdk-overview/develop-f
 Be sure to log into the engine as **mersdk** user not as root.
 
 Change this to the SailfishOS version required, also in **support/build.sh**
-`export SFVER='3.0.0.8'`
+`export SFVER='3.0.2.8'`
 
 `sb2 -t SailfishOS-$SFVER-armv7hl -m sdk-install -R zypper install gcc gcc-c++ autoconf automake make libtool nasm`
 

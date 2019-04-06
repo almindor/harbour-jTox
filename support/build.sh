@@ -17,11 +17,11 @@ else
     exit 2
 fi
 
-SFVER="3.0.0.8"
-SODIUMVER="1.0.16"
-TOXCOREVER="0.2.8"
-VPXVER="1.7.0"
-OPUSVER="1.2.1"
+SFVER="3.0.2.8"
+SODIUMVER="1.0.17"
+TOXCOREVER="0.2.9"
+VPXVER="1.8.0"
+OPUSVER="1.3"
 THREADS="8"
 TARGET="$SFVER-$1"
 TOXDIR=`pwd`
@@ -87,7 +87,10 @@ cd "$TOXDIR"
 # VPX
 cd "$VPXDIR"
 echo -en "Building libvpx.. \t\t\t"
-sb2 -t SailfishOS-$TARGET -m sdk-build ./configure --enable-pic --prefix="$FAKEDIR" --target="$TARGET_COMPILER" &> "$TOXDIR/output.log"
+# build machine has busybox diff which doesn't have --version flag
+sed 's/diff --version/echo busybox diff/g' configure > configure2
+chmod +x configure2
+sb2 -t SailfishOS-$TARGET -m sdk-build ./configure2 --enable-pic --prefix="$FAKEDIR" --target="$TARGET_COMPILER" &> "$TOXDIR/output.log"
 sb2 -t SailfishOS-$TARGET -m sdk-build make clean &> "$TOXDIR/output.log"
 sb2 -t SailfishOS-$TARGET -m sdk-build make -j $THREADS &> "$TOXDIR/output.log"
 echo "OK"
