@@ -4,62 +4,62 @@
 <context>
     <name>About</name>
     <message>
-        <location filename="../qml/pages/About.qml" line="41"/>
+        <location filename="../qml/pages/About.qml" line="49"/>
         <source>About</source>
         <translation>О приложении</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="53"/>
+        <location filename="../qml/pages/About.qml" line="61"/>
         <source>jTox</source>
         <translation>jTox</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="53"/>
+        <location filename="../qml/pages/About.qml" line="61"/>
         <source>by Aleš Katona.</source>
         <translation>от Алеша Катоны.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="64"/>
+        <location filename="../qml/pages/About.qml" line="72"/>
         <source>Toxcore version</source>
         <translation>Версия Toxcore</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="76"/>
+        <location filename="../qml/pages/About.qml" line="84"/>
         <source>jTox is free software licensed under the GPL v3 available at &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</source>
         <translation>jTox — свободный софт, доступный здесь: &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt; по лицензии GPL v3.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="92"/>
+        <location filename="../qml/pages/About.qml" line="100"/>
         <source>Contributors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="92"/>
+        <location filename="../qml/pages/About.qml" line="100"/>
         <source>Michal Szczepaniak</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="104"/>
+        <location filename="../qml/pages/About.qml" line="112"/>
         <source>Translators</source>
         <translation>Переводчики</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="104"/>
+        <location filename="../qml/pages/About.qml" line="112"/>
         <source>Swedish: Åke Engelbrektson</source>
         <translation>Шведский: Åke Engelbrektson</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="104"/>
+        <location filename="../qml/pages/About.qml" line="112"/>
         <source>French: Jerome Hubert</source>
         <translation>Французский: Jerome Hubert</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="104"/>
+        <location filename="../qml/pages/About.qml" line="112"/>
         <source>Spanish: carlosgonz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="116"/>
+        <location filename="../qml/pages/About.qml" line="124"/>
         <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
         <translation>Протокол Tox является &lt;b&gt;ЭКСПЕРИМЕНТАЛЬНЫМ!&lt;/b&gt; Протокол не проходил аудит безопасности и может содержать уязвимости. Возможно потребление большого объема трафика. &lt;b&gt;ИСПОЛЬЗУЙТЕ НА СВОЙ СТРАХ И РИСК&lt;/b&gt;.</translation>
     </message>

@@ -13,6 +13,7 @@
 TARGET = harbour-jtox
 
 QT += sql
+QT += multimedia
 
 CONFIG += sailfishapp
 CONFIG(debug,debug|release){ TOX_PATH = extra/i486 }
