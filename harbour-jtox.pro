@@ -39,7 +39,8 @@ SOURCES += \
     src/dbdata.cpp \
     src/harbour-jtox.cpp \
     src/dirmodel.cpp \
-    src/avatarprovider.cpp
+    src/avatarprovider.cpp \
+    src/toxcoreav.cpp
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \
@@ -100,13 +101,13 @@ HEADERS += \
     src/friendrequest.h \
     src/dbdata.h \
     src/dirmodel.h \
-    src/avatarprovider.h
+    src/avatarprovider.h \
+    src/toxcoreav.h
 
 DISTFILES += \
     qml/pages/About.qml \
     qml/pages/Account.qml \
     qml/pages/Friends.qml \
-    qml/pages/Chat.qml \
     qml/components/FriendItem.qml \
     qml/components/UserStatusIndicator.qml \
     qml/components/QRCode.qml \
@@ -131,4 +132,5 @@ DISTFILES += \
     qml/components/MessageItemText.qml \
     qml/components/MessageItemFile.qml \
     qml/components/AltInputItem.qml \
-    qml/components/Avatar.qml
+    qml/components/Avatar.qml \
+    qml/pages/Calls.qml

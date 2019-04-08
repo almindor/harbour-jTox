@@ -26,7 +26,7 @@ Page {
     allowedOrientations: Orientation.Portrait
 
     MediaPlayer {
-        source: "file://home/nemo/test.wav"
+        source: "file:///home/nemo/test.wav"
         autoPlay: true
     }
 

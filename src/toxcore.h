@@ -148,6 +148,7 @@ namespace JTOX {
         static const int MAX_AVATAR_DATA_SIZE = 65536;
     signals:
         void clientReset();
+        void beforeToxKill(); // required for A/V cleanup!
         void initialUseChanged(bool initial);
         void versionChanged();
         void connectionStatusChanged(const QString& status);

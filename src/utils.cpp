@@ -282,4 +282,58 @@ namespace JTOX {
         return fatal("Unknown error");
     }
 
+    const QString Utils::handleToxAVNewError(TOXAV_ERR_NEW error)
+    {
+        switch ( error ) {
+            case TOXAV_ERR_NEW_NULL: return Utils::fatal("[A/V] One of the arguments to the function was NULL when it was not expected");
+            case TOXAV_ERR_NEW_MALLOC: return Utils::fatal("[A/V] Memory allocation failure while trying to allocate structures required for the A/V session");
+            case TOXAV_ERR_NEW_MULTIPLE: return Utils::fatal("[A/V] Attempted to create a second session for the same Tox instance");
+            case TOXAV_ERR_NEW_OK: return QString();
+        }
+
+        return fatal("Unknown error");
+    }
+
+    const QString Utils::handleToxAVAnswerError(TOXAV_ERR_ANSWER error)
+    {
+        switch ( error ) {
+            case TOXAV_ERR_ANSWER_FRIEND_NOT_CALLING: return bail("[A/V] Friend is not calling", true);
+            case TOXAV_ERR_ANSWER_FRIEND_NOT_FOUND: return bail("[A/V] Friend not found", true);
+            case TOXAV_ERR_ANSWER_CODEC_INITIALIZATION: return bail("[A/V] Unable to initialize codec", true);
+            case TOXAV_ERR_ANSWER_INVALID_BIT_RATE: return bail("[A/V] Invalid bitrate", true);
+            case TOXAV_ERR_ANSWER_SYNC: return bail("[A/V] Synchronization error", true);
+            case TOXAV_ERR_ANSWER_OK: return QString();
+        }
+
+        return fatal("Unknown error");
+    }
+
+    const QString Utils::handleToxAVControlError(TOXAV_ERR_CALL_CONTROL error)
+    {
+        switch ( error ) {
+            case TOXAV_ERR_CALL_CONTROL_FRIEND_NOT_IN_CALL: return bail("[A/V] Friend is not calling", true);
+            case TOXAV_ERR_CALL_CONTROL_FRIEND_NOT_FOUND: return bail("[A/V] Friend not found", true);
+            case TOXAV_ERR_CALL_CONTROL_INVALID_TRANSITION: return bail("[A/V] Invalid state transition", true);
+            case TOXAV_ERR_CALL_CONTROL_SYNC: return bail("[A/V] Synchronization error", true);
+            case TOXAV_ERR_CALL_CONTROL_OK: return QString();
+        }
+
+        return fatal("Unknown error");
+    }
+
+    const QString Utils::handleTOXAVCallError(TOXAV_ERR_CALL error)
+    {
+        switch ( error ) {
+            case TOXAV_ERR_CALL_FRIEND_NOT_CONNECTED: return bail("[A/V] Friend not connected", true);
+            case TOXAV_ERR_CALL_FRIEND_NOT_FOUND: return bail("[A/V] Friend not found", true);
+            case TOXAV_ERR_CALL_FRIEND_ALREADY_IN_CALL: return bail("[A/V] Friend already in call", true);
+            case TOXAV_ERR_CALL_MALLOC: return bail("[A/V] Memory allocation error", true);
+            case TOXAV_ERR_CALL_SYNC: return bail("[A/V] Synchronization error", true);
+            case TOXAV_ERR_CALL_OK: return QString();
+        }
+
+        return fatal("Unknown error");
+    }
+
+
 }

@@ -16,12 +16,15 @@
 */
 
 #include "toxcore.h"
+#include "toxcoreav.h"
 #include "utils.h"
 #include <QObject>
 #include <QString>
 #include <QDebug>
 
 namespace JTOX {
+
+    // TOXCORE
 
     void c_connection_status_cb(Tox *tox, TOX_CONNECTION connection_status, void *user_data)
     {
@@ -167,5 +170,36 @@ namespace JTOX {
         jTox->onFileChunkRequest(friend_number, file_number, position, length);
     }
 
+    // TOXAV
+
+    void c_toxav_call_cb(ToxAV *av, uint32_t friend_number, bool audio_enabled, bool video_enabled, void *user_data) {
+        Q_UNUSED(av);
+        ToxCoreAV* jToxAV = (ToxCoreAV*) user_data;
+
+        jToxAV->onIncomingCall(friend_number, audio_enabled, video_enabled);
+    }
+
+    void c_toxav_call_state_cb(ToxAV *av, uint32_t friend_number, uint32_t state, void *user_data) {
+        Q_UNUSED(av);
+        ToxCoreAV* jToxAV = (ToxCoreAV*) user_data;
+
+        jToxAV->onCallStateChanged(friend_number, state);
+    }
+
+    void c_toxav_audio_bit_rate_cb(ToxAV* av, uint32_t friend_number, uint32_t audio_bit_rate, void* user_data)
+    {
+        Q_UNUSED(av);
+        ToxCoreAV* jToxAV = (ToxCoreAV*) user_data;
+
+        // TODO
+    }
+
+    void c_toxav_audio_receive_frame_cb(ToxAV* av, uint32_t friend_number, const int16_t* pcm, size_t sample_count, uint8_t channels, uint32_t sampling_rate, void* user_data)
+    {
+        Q_UNUSED(av);
+        ToxCoreAV* jToxAV = (ToxCoreAV*) user_data;
+
+        // TODO
+    }
 
 }

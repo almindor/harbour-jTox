@@ -257,6 +257,24 @@
     </message>
 </context>
 <context>
+    <name>Calls</name>
+    <message>
+        <location filename="../qml/pages/Calls.qml" line="50"/>
+        <source>Accept</source>
+        <translation type="unfinished">Acceptera</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Calls.qml" line="59"/>
+        <source>Reject</source>
+        <translation type="unfinished">Avvisa</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Calls.qml" line="77"/>
+        <source>End Call</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <location filename="../qml/cover/CoverPage.qml" line="88"/>
@@ -285,17 +303,27 @@
 <context>
     <name>FriendItem</name>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="23"/>
+        <location filename="../qml/components/FriendItem.qml" line="32"/>
+        <source>Messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/FriendItem.qml" line="37"/>
+        <source>Call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/FriendItem.qml" line="42"/>
         <source>Remove</source>
         <translation>Ta bort</translation>
     </message>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="24"/>
+        <location filename="../qml/components/FriendItem.qml" line="43"/>
         <source>Removing</source>
         <translation>Tar bort</translation>
     </message>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="30"/>
+        <location filename="../qml/components/FriendItem.qml" line="49"/>
         <source>Details</source>
         <translation>Detaljerat</translation>
     </message>
@@ -425,27 +453,27 @@
 <context>
     <name>JTOX::ToxCore</name>
     <message>
-        <location filename="../src/toxcore.cpp" line="637"/>
+        <location filename="../src/toxcore.cpp" line="638"/>
         <source>Offline</source>
         <translation>Offline</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="638"/>
+        <location filename="../src/toxcore.cpp" line="639"/>
         <source>Ready</source>
         <translation>Tillgänglig</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="639"/>
+        <location filename="../src/toxcore.cpp" line="640"/>
         <source>Away</source>
         <translation>Borta</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="640"/>
+        <location filename="../src/toxcore.cpp" line="641"/>
         <source>Busy</source>
         <translation>Upptagen</translation>
     </message>
     <message>
-        <location filename="../src/toxcore.cpp" line="643"/>
+        <location filename="../src/toxcore.cpp" line="644"/>
         <source>Unknown</source>
         <translation>Okänt</translation>
     </message>
@@ -518,7 +546,7 @@
 <context>
     <name>Messages</name>
     <message>
-        <location filename="../qml/pages/Messages.qml" line="134"/>
+        <location filename="../qml/pages/Messages.qml" line="133"/>
         <source>Send file</source>
         <translation>Skicka fil</translation>
     </message>

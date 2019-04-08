@@ -10,14 +10,33 @@ ListItem {
 
     contentHeight: Math.max(nameLabel.height + smText.height + Theme.paddingSmall*2, 64)
 
-    onClicked: {
+    function gotoDetails(page, attached, gotoAttached) {
         appWindow.activeFriendID = friend_id
         eventmodel.setFriend(friend_id)
-        pageStack.push(Qt.resolvedUrl("../pages/Messages.qml"), { friend_id: friend_id })
+        var transitionType = gotoAttached ? PageStackAction.Immediate : PageStackAction.Animated
+        pageStack.push(page, { friend_id: friend_id }, transitionType)
+        if (attached) {
+            pageStack.pushAttached(attached, { friend: friend_id }, transitionType)
+            if (gotoAttached) {
+                pageStack.navigateForward(PageStackAction.Animated)
+            }
+        }
     }
+
+    onClicked: gotoDetails(Qt.resolvedUrl("../pages/Messages.qml"), Qt.resolvedUrl("../pages/Calls.qml"))
 
     menu: ContextMenu {
         id: removeMenu
+
+        MenuItem {
+            text: qsTr("Messages")
+            onClicked: gotoDetails(Qt.resolvedUrl("../pages/Messages.qml"), Qt.resolvedUrl("../pages/Calls.qml"))
+        }
+
+        MenuItem {
+            text: qsTr("Call")
+            onClicked: gotoDetails(Qt.resolvedUrl("../pages/Messages.qml"), Qt.resolvedUrl("../pages/Calls.qml"), true)
+        }
 
         MenuItem {
             text: qsTr("Remove")

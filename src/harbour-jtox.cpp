@@ -26,6 +26,7 @@
 #include <QString>
 #include <sodium.h>
 #include "toxcore.h"
+#include "toxcoreav.h"
 #include "encryptsave.h"
 #include "friendmodel.h"
 #include "eventmodel.h"
@@ -55,11 +56,16 @@ int main(int argc, char *argv[])
     EncryptSave encryptSave;
     DBData dbData(encryptSave);
     ToxCore toxCore(encryptSave, dbData);
+    ToxCoreAV toxCoreAV(toxCore);
     Toxme toxme(toxCore, encryptSave);
     AvatarProvider* avatarProvider = new AvatarProvider(toxCore, dbData); // freed internally by QT5!
     FriendModel friendModel(toxCore, dbData, avatarProvider);
     EventModel eventModel(toxCore, friendModel, dbData);
     RequestModel requestModel(toxCore, toxme, friendModel, dbData);
+
+    // ToxCore -> ToxCoreAV needs to make sure init/kill are followed up properly
+    QObject::connect(&toxCore, &ToxCore::clientReset, &toxCoreAV, &ToxCoreAV::onToxInitDone, Qt::DirectConnection); // Ensure we setup AV when tox* is done
+    QObject::connect(&toxCore, &ToxCore::beforeToxKill, &toxCoreAV, &ToxCoreAV::beforeToxKill, Qt::DirectConnection); // Ensure we clean up BEFORE toxcore continues the kill
 
     QObject::connect(avatarProvider, &AvatarProvider::profileAvatarChanged, &friendModel, &FriendModel::onProfileAvatarChanged); // update friends when we set a new avatar
 

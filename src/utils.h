@@ -23,6 +23,7 @@
 #include <QByteArray>
 #include <stdint.h>
 #include <tox/tox.h>
+#include <tox/toxav.h>
 #include <QException>
 
 namespace JTOX {
@@ -54,6 +55,10 @@ namespace JTOX {
         static const QString handleSendMessageError(TOX_ERR_FRIEND_SEND_MESSAGE error, bool soft);
         static const QString handleToxFileSendError(TOX_ERR_FILE_SEND error);
         static const QString handleToxNewError(TOX_ERR_NEW error);
+        static const QString handleToxAVNewError(TOXAV_ERR_NEW error);
+        static const QString handleToxAVAnswerError(TOXAV_ERR_ANSWER error);
+        static const QString handleToxAVControlError(TOXAV_ERR_CALL_CONTROL error);
+        static const QString handleTOXAVCallError(TOXAV_ERR_CALL error);
     };
 
     void register_signals();

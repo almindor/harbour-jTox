@@ -214,7 +214,8 @@ namespace JTOX {
 
     ToxCore::ToxCore(EncryptSave& encryptSave, DBData& dbData) : QObject(0),
         fEncryptSave(encryptSave), fDBData(dbData),
-        fTox(NULL), fBootstrapper(), fInitializer(encryptSave), fPasswordValidator(encryptSave),
+        fTox(NULL),
+        fBootstrapper(), fInitializer(encryptSave), fPasswordValidator(encryptSave),
         fNodesRequest(NULL), fIterationTimer(), fPasswordValid(false), fInitialized(false),
         fActiveTransfers()
     {
@@ -841,9 +842,12 @@ namespace JTOX {
             Utils::fatal("Killtox called when not initialized");
         }
 
+        qDebug() << "emiting beforeToxKill\n";
+        emit beforeToxKill(); // make sure toxAV has a chance to cleanup first
+
         fInitialized = false;
         tox_kill(fTox);
-        fTox = NULL;
+        fTox = nullptr;
     }
 
     void ToxCore::updateTransfers(quint32 friend_id, quint32 file_number, size_t length)

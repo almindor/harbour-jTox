@@ -21,7 +21,7 @@
 #include <tox/tox.h>
 
 namespace JTOX {
-
+    // TOXCORE
     void c_connection_status_cb(Tox *tox, TOX_CONNECTION connection_status, void *user_data);
 
     void c_friend_request_cb(Tox *tox, const uint8_t *public_key, const uint8_t *message,
@@ -55,6 +55,16 @@ namespace JTOX {
 
     void c_tox_file_chunk_request_cb(Tox *tox, uint32_t friend_number, uint32_t file_number, uint64_t position,
                                      size_t length, void *user_data);
+
+    // TOXAV
+    void c_toxav_call_cb(ToxAV *av, uint32_t friend_number, bool audio_enabled, bool video_enabled, void *user_data);
+
+    void c_toxav_call_state_cb(ToxAV *av, uint32_t friend_number, uint32_t state, void *user_data);
+
+    void c_toxav_audio_bit_rate_cb(ToxAV *av, uint32_t friend_number, uint32_t audio_bit_rate, void *user_data);
+
+    void c_toxav_audio_receive_frame_cb(ToxAV *av, uint32_t friend_number, const int16_t *pcm, size_t sample_count,
+                                        uint8_t channels, uint32_t sampling_rate, void *user_data);
 
 }
 

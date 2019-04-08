@@ -207,6 +207,21 @@
     </message>
 </context>
 <context>
+    <name>Calls</name>
+    <message>
+        <source>Accept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End Call</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <source>Messages: </source>
@@ -241,6 +256,14 @@
     <message>
         <source>Details</source>
         <translation type="unfinished">Détails</translation>
+    </message>
+    <message>
+        <source>Messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Call</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

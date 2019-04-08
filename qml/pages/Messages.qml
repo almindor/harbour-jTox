@@ -42,7 +42,6 @@ Page {
         }
     }
 
-
     ConfigurationValue {
         id: multilineMessages
         defaultValue: true
