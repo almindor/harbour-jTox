@@ -129,7 +129,7 @@ Page {
         }
 
         PushUpMenu {
-            enabled: toxcore.status > 0 && eventmodel.friendStatus > 0
+            visible: toxcore.status > 0 && eventmodel.friendStatus > 0
             MenuItem {
                 text: qsTr("Send file")
                 onClicked: {
