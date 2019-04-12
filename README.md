@@ -6,6 +6,10 @@ jTox is a Jolla/SailfishOS [https://tox.chat](Tox) client.
 
 jTox uses an **experimental** cryptographic network [library](https://github.com/TokTok/c-toxcore). It has not been formally audited by an independent third party that specializes in cryptography or cryptanalysis. The protocol is not optimized for mobile yet and causes significant data traffic. **Use at your own risk.**
 
+## Community
+
+[![Gitter](https://badges.gitter.im/almindor/jtox.svg)](https://gitter.im/almindor/jtox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 ## Building toxcore for Jolla
 
 Increasing the VM RAM and CPU count inside VirtualBox for the build engine is highly recommended.
