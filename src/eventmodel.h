@@ -44,14 +44,21 @@ namespace JTOX {
         Q_INVOKABLE void resumeFile(int eventID);
         Q_INVOKABLE void cancelFile(int eventID);
         Q_INVOKABLE void refreshFilePosition(int index);
+        Q_INVOKABLE void acceptCall();
     signals:
         void friendUpdated() const;
         void typingChanged(bool typing) const;
         void transferError(const QString& error) const;
         void eventError(const QString& error) const;
         void transferComplete(const QString& fileName, int friendIndex, const QString& friendName);
+        void incomingCall(int friendIndex, const QString& friendName, bool audio, bool video) const;
         void messageReceived(int friendIndex, const QString& friendName) const;
         void transferReceived(int friendIndex, const QString& friendName) const;
+        void acceptCall(quint32 friend_id) const;
+    public slots:
+        void onOutgoingCall(quint32 friend_id);
+        void onIncomingCall(quint32 friend_id, bool audio, bool video);
+        void onCallStateChanged(quint32 friend_id, quint32 state);
     private slots:
         void onMessageDelivered(quint32 friendID, quint32 sendID);
         void onMessageReceived(quint32 friend_id, TOX_MESSAGE_TYPE type, const QString& message);

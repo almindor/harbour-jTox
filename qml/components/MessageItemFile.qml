@@ -11,7 +11,7 @@ Column {
 
     Row {
         spacing: Theme.paddingSmall
-        layoutDirection: Common.isMessageIncoming(event_type) ? Qt.RightToLeft : Qt.LeftToRight
+        layoutDirection: Common.isEventIncoming(event_type) ? Qt.RightToLeft : Qt.LeftToRight
 
         Image {
             id: paperclip

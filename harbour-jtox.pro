@@ -40,7 +40,8 @@ SOURCES += \
     src/harbour-jtox.cpp \
     src/dirmodel.cpp \
     src/avatarprovider.cpp \
-    src/toxcoreav.cpp
+    src/toxcoreav.cpp \
+    src/call.cpp
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \
@@ -102,7 +103,8 @@ HEADERS += \
     src/dbdata.h \
     src/dirmodel.h \
     src/avatarprovider.h \
-    src/toxcoreav.h
+    src/toxcoreav.h \
+    src/call.h
 
 DISTFILES += \
     qml/pages/About.qml \
@@ -133,4 +135,5 @@ DISTFILES += \
     qml/components/MessageItemFile.qml \
     qml/components/AltInputItem.qml \
     qml/components/Avatar.qml \
-    qml/pages/Calls.qml
+    qml/pages/Calls.qml \
+    qml/components/MessageItemCall.qml

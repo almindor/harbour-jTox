@@ -18,17 +18,9 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// debug
-import QtMultimedia 5.0
-
 Page {
     id: page
     allowedOrientations: Orientation.Portrait
-
-    MediaPlayer {
-        source: "file:///home/nemo/test.wav"
-        autoPlay: true
-    }
 
     SilicaFlickable {
         anchors.fill: parent

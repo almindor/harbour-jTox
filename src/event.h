@@ -31,7 +31,11 @@ namespace JTOX {
         etFileTransferInRunning = 16,
         etFileTransferOutRunning = 17,
         etFileTransferInDone = 18,
-        etFileTransferOutDone = 19
+        etFileTransferOutDone = 19,
+        etCallInPending = 20,
+        etCallOutPending = 21,
+        etCallInFinished = 22,
+        etCallOutFinished = 23
     };
 
     enum EventRole

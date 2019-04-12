@@ -26,6 +26,16 @@ Page {
     allowedOrientations: Orientation.Portrait
     property bool checkFriendID: true
 
+    Connections {
+        target: eventmodel
+        onIncomingCall: {
+            var fid = friendmodel.getFriendIDByIndex(friendIndex)
+            if (fid === eventmodel.friendID) {
+                pageStack.navigateForward(PageStackAction.Animated)
+            }
+        }
+    }
+
     onVisibleChanged: {
         if ( appWindow.activeFriendID < 0 ) {
             return; // nothing
@@ -129,6 +139,15 @@ Page {
 
         PushUpMenu {
             visible: toxcore.status > 0 && eventmodel.friendStatus > 0
+
+            MenuItem {
+                text: qsTr("Call")
+                onClicked: {
+                    // TODO: start call
+                    pageStack.navigateForward(PageStackAction.Animated)
+                }
+            }
+
             MenuItem {
                 text: qsTr("Send file")
                 onClicked: {

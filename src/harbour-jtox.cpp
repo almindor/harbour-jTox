@@ -66,11 +66,16 @@ int main(int argc, char *argv[])
     // ToxCore -> ToxCoreAV needs to make sure init/kill are followed up properly
     QObject::connect(&toxCore, &ToxCore::clientReset, &toxCoreAV, &ToxCoreAV::onToxInitDone, Qt::DirectConnection); // Ensure we setup AV when tox* is done
     QObject::connect(&toxCore, &ToxCore::beforeToxKill, &toxCoreAV, &ToxCoreAV::beforeToxKill, Qt::DirectConnection); // Ensure we clean up BEFORE toxcore continues the kill
-
+    // ToxCoreAV -> EventModel
+    QObject::connect(&toxCoreAV, &ToxCoreAV::outgoingCall, &eventModel, &EventModel::onOutgoingCall);
+    QObject::connect(&toxCoreAV, &ToxCoreAV::incomingCall, &eventModel, &EventModel::onIncomingCall);
+    QObject::connect(&toxCoreAV, &ToxCoreAV::callStateChanged, &eventModel, &EventModel::onCallStateChanged);
+    // AvatarProvider -> FriendModel
     QObject::connect(avatarProvider, &AvatarProvider::profileAvatarChanged, &friendModel, &FriendModel::onProfileAvatarChanged); // update friends when we set a new avatar
 
     QString qml = QString("qml/%1.qml").arg("harbour-jtox");
     view->rootContext()->setContextProperty("toxcore", &toxCore);
+    view->rootContext()->setContextProperty("toxcoreav", &toxCoreAV);
     view->rootContext()->setContextProperty("friendmodel", &friendModel);
     view->rootContext()->setContextProperty("eventmodel", &eventModel);
     view->rootContext()->setContextProperty("toxme", &toxme);

@@ -209,15 +209,19 @@
 <context>
     <name>Calls</name>
     <message>
-        <source>Accept</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reject</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>End Call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Answer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -434,6 +438,10 @@
         <source>Overriding</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MessageItemFile</name>
@@ -447,6 +455,10 @@
     <name>Messages</name>
     <message>
         <source>Send file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Call</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -516,6 +528,29 @@
     </message>
 </context>
 <context>
+    <name>common</name>
+    <message>
+        <source>Incoming call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outgoing call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown call state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missed call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unanswered call</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>harbour-jtox</name>
     <message>
         <source>New friend request</source>
@@ -542,11 +577,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Registered on </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Removed from </source>
+        <source>Transfer from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -554,7 +585,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Transfer from</source>
+        <source>Registered on </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removed from </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -46,7 +46,7 @@ namespace JTOX {
         QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
         const Friend& getFriendByID(quint32 friend_id) const;
         int getListIndexForFriendID(quint32 friend_id) const;
-        quint32 getFriendIDByIndex(int index) const;
+        Q_INVOKABLE quint32 getFriendIDByIndex(int index) const;
         void unviewedMessageReceived(quint32 friend_id);
         void messagesViewed(quint32 friend_id);
         const QString getAddress() const;

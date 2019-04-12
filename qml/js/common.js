@@ -21,11 +21,43 @@ var EventType = {
     FileTransferInRunning: 16,
     FileTransferOutRunning: 17,
     FileTransferInDone: 18,
-    FileTransferOutDone: 19
+    FileTransferOutDone: 19,
+    CallInPending: 20,
+    CallOutPending: 21,
+    CallInFinished: 22,
+    CallOutFinished: 23
 };
 
 function isMessage(et) {
     return [EventType.MessageIn, EventType.MessageInUnread, EventType.MessageOut, EventType.MessageOutPending, EventType.MessageOutOffline].indexOf(et) >= 0;
+}
+
+function isCall(et) {
+    return [EventType.CallInPending, EventType.CallOutPending,
+            EventType.CallInAccepted, EventType.CallOutAccepted,
+            EventType.CallInRejected, EventType.CallOutRejected,
+            EventType.CallInFinished, EventType.CallOutFinished,].indexOf(et) >= 0;
+}
+
+function isCallPending(et) {
+    return [EventType.CallInPending, EventType.CallOutPending].indexOf(et) >= 0;
+}
+
+function isCallRejected(et) {
+    return [EventType.CallInRejected, EventType.CallOutRejected].indexOf(et) >= 0;
+}
+
+function msgForCall(et) {
+    switch (et) {
+        case EventType.CallInPending:
+        case EventType.CallInAccepted: return qsTr('Incoming call')
+        case EventType.CallOutPending:
+        case EventType.CallOutAccepted: return qsTr('Outgoing call')
+        case EventType.CallInRejected: return qsTr('Missed call')
+        case EventType.CallOutRejected: return qsTr('Unanswered call')
+    }
+
+    return qsTr('Unknown call state')
 }
 
 function isFile(et) {
@@ -37,7 +69,8 @@ function isFile(et) {
 }
 
 function isFilePending(et) {
-    return [EventType.FileTransferIn, EventType.FileTransferOut, EventType.FileTransferInPaused, EventType.FileTransferOutPaused].indexOf(et) >= 0;
+    return [EventType.FileTransferIn, EventType.FileTransferOut,
+            EventType.FileTransferInPaused, EventType.FileTransferOutPaused].indexOf(et) >= 0;
 }
 
 function isFileCanceled(et) {
@@ -60,20 +93,26 @@ function isFileActive(et) {
     return isFilePending(et) || isFileRunning(et);
 }
 
-function isMessageIncoming(et) {
+function isEventIncoming(et) {
     return [EventType.MessageIn, EventType.MessageInUnread, EventType.FileTransferIn,
             EventType.FileTransferInPaused, EventType.FileTransferInCanceled,
-            EventType.FileTransferInRunning, EventType.FileTransferInDone].indexOf(et) >= 0;
+            EventType.FileTransferInRunning, EventType.FileTransferInDone,
+            EventType.CallInPending, EventType.CallInAccepted, EventType.CallInRejected].indexOf(et) >= 0;
 }
 
-function isMessageOutgoing(et) {
+function isEventOutgoing(et) {
     return [EventType.MessageOut, EventType.MessageOutPending, EventType.MessageOutOffline,
             EventType.FileTransferOut, EventType.FileTransferOutPaused,
-            EventType.FileTransferOutCanceled, EventType.FileTransferOutRunning, EventType.FileTransferOutDone].indexOf(et) >= 0;
+            EventType.FileTransferOutCanceled, EventType.FileTransferOutRunning, EventType.FileTransferOutDone,
+            EventType.CallOutPending, EventType.CallOutAccepted, EventType.CallOutRejected].indexOf(et) >= 0;
 }
 
 function isMessagePending(et) {
     return [EventType.MessageOutPending, EventType.MessageOutOffline].indexOf(et) >= 0;
+}
+
+function isEventPending(et) {
+    return isMessagePending(et) || isFilePending(et) || isCallPending(et)
 }
 
 function wrapMessage(message, et, file_size) {
@@ -116,4 +155,21 @@ function prettifyDateTime(datetime) {
     }
 
     return prettyDateTime;
+}
+
+function qmlForEventType(et) {
+    if (isMessage(et)) {
+        return "MessageItemText.qml";
+    }
+
+    if (isFile(et)) {
+        return "MessageItemFile.qml";
+    }
+
+    if (isCall(et)) {
+        return "MessageItemCall.qml";
+    }
+
+    console.error("Unknown category: " + et);
+    return undefined;
 }

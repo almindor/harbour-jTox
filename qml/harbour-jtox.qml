@@ -17,9 +17,14 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import org.nemomobile.notifications 1.0
-import org.nemomobile.dbus 2.0
+import QtSensors 5.2
+import Nemo.DBus 2.0
+import Nemo.Notifications 1.0
 import "pages"
+
+// debug
+// import QtMultimedia 5.6
+// import Sailfish.Telephony 1.0
 
 ApplicationWindow
 {
@@ -30,6 +35,41 @@ ApplicationWindow
     allowedOrientations: Orientation.Portrait
     _defaultPageOrientations: Orientation.Portrait
     onApplicationActiveChanged: toxcore.setApplicationActive(applicationActive);
+
+//    MediaPlayer {
+//        source: "file:///home/nemo/test.wav"
+//        audioRole: MediaPlayer.VoiceCommunicationRole
+//        autoPlay: true
+//    }
+//    ProximitySensor {
+//        active: true // TODO: only in call!
+//        onReadingChanged: console.log('NEar: ' + reading.near)
+//    }
+
+    DBusInterface {
+        id: mce
+
+        bus: DBus.SystemBus
+        service: 'com.nokia.mce'
+        iface: 'com.nokia.mce.request'
+        path: '/com/nokia/mce/request'
+
+        function setCallState(state) {
+            var strState = 'none'
+            switch (state) {
+                case 0: strState = 'none'; break;
+                case 1: strState = 'ringing'; break;
+                case 2: strState = 'active'; break;
+                default: console.error('Unknown MCE state from ToxCoreAV'); break;
+            }
+
+            // Telephony.audioMode = 'earpiece'
+            console.log('setting mce call state: ' + strState)
+            mce.call('req_call_state_change', [strState, 'normal'],
+                     function(result) { console.log('call completed with:', result) },
+                     function(error, message) { console.error('call failed', error, 'message:', message) })
+        }
+    }
 
     Connections {
         target: toxcore
@@ -42,12 +82,18 @@ ApplicationWindow
     }
 
     Connections {
+        target: toxcoreav
+        onGlobalCallStateChanged: mce.setCallState(state)
+    }
+
+    Connections {
         target: friendmodel
         onFriendAddError: banner("x-nemo.messaging.error", error, "error", [error], appWindow.applicationActive)
     }
 
     Connections {
         target: eventmodel
+        onIncomingCall: dbus.call(friendIndex) // banner("m-incoming-call", qsTr("Call from") + " " + friendName, "call", [friendIndex], appWindow.applicationActive)
         onMessageReceived: banner("x-nemo.messaging.im", qsTr("Message from") + " " + friendName, "message", [friendIndex], appWindow.applicationActive)
         onTransferReceived: banner("x-nemo.messaging.mms", qsTr("Transfer from") + " " + friendName, "message", [friendIndex], appWindow.applicationActive)
         onTransferComplete: banner("x-nemo.transfer.complete", qsTr("File transfer complete"), "message", [friendIndex], appWindow.applicationActive)
@@ -102,6 +148,23 @@ ApplicationWindow
 
             appWindow.activeFriendID = eventmodel.setFriendIndex(friendIndex)
             pageStack.push(Qt.resolvedUrl("pages/Messages.qml"), null, PageStackAction.Immediate)
+        }
+
+        function call(friendIndex) {
+            if ( !appWindow.applicationActive ) {
+                appWindow.activate()
+            }
+
+            // jump up to friends page
+            while ( pageStack.depth > 1 ) {
+                pageStack.pop(null, PageStackAction.Immediate)
+            }
+
+            appWindow.activeFriendID = eventmodel.setFriendIndex(friendIndex)
+            eventmodel.setFriend(appWindow.activeFriendID)
+            pageStack.push("pages/Messages.qml", { friend_id: appWindow.activeFriendID }, PageStackAction.Immediate)
+            pageStack.pushAttached("pages/Calls.qml", { friend: appWindow.activeFriendID }, PageStackAction.Immediate)
+            pageStack.navigateForward(PageStackAction.Immediate)
         }
     }
 

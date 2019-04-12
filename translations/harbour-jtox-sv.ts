@@ -4,62 +4,62 @@
 <context>
     <name>About</name>
     <message>
-        <location filename="../qml/pages/About.qml" line="49"/>
+        <location filename="../qml/pages/About.qml" line="41"/>
         <source>About</source>
         <translation>Om</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="61"/>
+        <location filename="../qml/pages/About.qml" line="53"/>
         <source>jTox</source>
         <translation>jTox</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="61"/>
+        <location filename="../qml/pages/About.qml" line="53"/>
         <source>by Aleš Katona.</source>
         <translation>av Aleš Katona.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="72"/>
+        <location filename="../qml/pages/About.qml" line="64"/>
         <source>Toxcore version</source>
         <translation>Toxcore-version</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="84"/>
+        <location filename="../qml/pages/About.qml" line="76"/>
         <source>jTox is free software licensed under the GPL v3 available at &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;github&lt;/a&gt;.</source>
         <translation>jTox är fri mjukvara, licensierad under GPL v3 tillgänglig på &lt;a href=&apos;https://github.com/almindor/harbour-jTox&apos;&gt;GitHub&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="100"/>
+        <location filename="../qml/pages/About.qml" line="92"/>
         <source>Contributors</source>
         <translation>Medverkande</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="100"/>
+        <location filename="../qml/pages/About.qml" line="92"/>
         <source>Michal Szczepaniak</source>
         <translation>Michal Szczepaniak</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="112"/>
+        <location filename="../qml/pages/About.qml" line="104"/>
         <source>Translators</source>
         <translation>Översättare</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="112"/>
+        <location filename="../qml/pages/About.qml" line="104"/>
         <source>Swedish: Åke Engelbrektson</source>
         <translation>Svenska: Åke Engelbrektson</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="112"/>
+        <location filename="../qml/pages/About.qml" line="104"/>
         <source>French: Jerome Hubert</source>
         <translation>Franska: Jerome Hubert</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="112"/>
+        <location filename="../qml/pages/About.qml" line="104"/>
         <source>Spanish: carlosgonz</source>
         <translation>Spanska: carlosgonz</translation>
     </message>
     <message>
-        <location filename="../qml/pages/About.qml" line="124"/>
+        <location filename="../qml/pages/About.qml" line="116"/>
         <source>The Tox protocol is &lt;b&gt;EXPERIMENTAL!&lt;/b&gt; The protocol has not been audited for security and can contain vulnerabilities. Large data usage is to be expected. &lt;b&gt;USE AT YOUR OWN RISK&lt;/b&gt;.</source>
         <translation>Tox-protokollet är &lt;b&gt;EXPERIMENTELLT!&lt;b&gt; Protokollet har inte granskats gällande säkerhet och kan innehålla sårbarheter. Stor dataförbrukning kan förväntas. &lt;b&gt;ANVÄND DET PÅ EGEN RISK&lt;b&gt;.</translation>
     </message>
@@ -259,17 +259,22 @@
 <context>
     <name>Calls</name>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="50"/>
-        <source>Accept</source>
-        <translation type="unfinished">Acceptera</translation>
+        <location filename="../qml/pages/Calls.qml" line="49"/>
+        <source>Answer</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="59"/>
+        <location filename="../qml/pages/Calls.qml" line="58"/>
         <source>Reject</source>
         <translation type="unfinished">Avvisa</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="77"/>
+        <location filename="../qml/pages/Calls.qml" line="76"/>
+        <source>Call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Calls.qml" line="87"/>
         <source>End Call</source>
         <translation type="unfinished"></translation>
     </message>
@@ -303,27 +308,27 @@
 <context>
     <name>FriendItem</name>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="32"/>
+        <location filename="../qml/components/FriendItem.qml" line="33"/>
         <source>Messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="37"/>
+        <location filename="../qml/components/FriendItem.qml" line="38"/>
         <source>Call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="42"/>
+        <location filename="../qml/components/FriendItem.qml" line="43"/>
         <source>Remove</source>
         <translation>Ta bort</translation>
     </message>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="43"/>
+        <location filename="../qml/components/FriendItem.qml" line="44"/>
         <source>Removing</source>
         <translation>Tar bort</translation>
     </message>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="49"/>
+        <location filename="../qml/components/FriendItem.qml" line="50"/>
         <source>Details</source>
         <translation>Detaljerat</translation>
     </message>
@@ -425,27 +430,27 @@
 <context>
     <name>JTOX::EventModel</name>
     <message>
-        <location filename="../src/eventmodel.cpp" line="131"/>
+        <location filename="../src/eventmodel.cpp" line="132"/>
         <source>Cannot send empty message</source>
         <translation>Kan inte skicka tomt meddelande</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="396"/>
+        <location filename="../src/eventmodel.cpp" line="494"/>
         <source>Removed invalid pending message</source>
         <translation>Tog bort ogiltigt väntande meddelande</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="547"/>
+        <location filename="../src/eventmodel.cpp" line="645"/>
         <source>Transfer canceled by sender</source>
         <translation>Överföring avbruten av avsändaren</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="547"/>
+        <location filename="../src/eventmodel.cpp" line="645"/>
         <source>Transfer canceled by receiver</source>
         <translation>Överföring avbruten av mottagaren</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="690"/>
+        <location filename="../src/eventmodel.cpp" line="788"/>
         <source>Unable to find file for transfer</source>
         <translation>Kunde inte hitta filen för överföring</translation>
     </message>
@@ -489,47 +494,52 @@
 <context>
     <name>MessageItem</name>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="20"/>
+        <location filename="../qml/components/MessageItem.qml" line="27"/>
+        <source>Call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/MessageItem.qml" line="36"/>
         <source>Copy to clipboard</source>
         <translation>Kopiera till urklipp</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="24"/>
+        <location filename="../qml/components/MessageItem.qml" line="40"/>
         <source>Message copied to clipboard</source>
         <translation>Meddelande kopierat till urklipp</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="30"/>
+        <location filename="../qml/components/MessageItem.qml" line="46"/>
         <source>Delete message</source>
         <translation>Ta bort meddelande</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="36"/>
+        <location filename="../qml/components/MessageItem.qml" line="52"/>
         <source>Accept transfer</source>
         <translation>Ta emot överföring</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="36"/>
+        <location filename="../qml/components/MessageItem.qml" line="52"/>
         <source>Resume transfer</source>
         <translation>Återuppta överföringen</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="41"/>
+        <location filename="../qml/components/MessageItem.qml" line="57"/>
         <source>Overriding</source>
         <translation>Åsidosätter</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="52"/>
+        <location filename="../qml/components/MessageItem.qml" line="68"/>
         <source>Pause transfer</source>
         <translation>Pausa överföringen</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="58"/>
+        <location filename="../qml/components/MessageItem.qml" line="74"/>
         <source>Cancel transfer</source>
         <translation>Avbryt överföringen</translation>
     </message>
     <message>
-        <location filename="../qml/components/MessageItem.qml" line="64"/>
+        <location filename="../qml/components/MessageItem.qml" line="80"/>
         <source>Open file</source>
         <translation>Öppna filen</translation>
     </message>
@@ -546,9 +556,14 @@
 <context>
     <name>Messages</name>
     <message>
-        <location filename="../qml/pages/Messages.qml" line="133"/>
+        <location filename="../qml/pages/Messages.qml" line="152"/>
         <source>Send file</source>
         <translation>Skicka fil</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/Messages.qml" line="144"/>
+        <source>Call</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -631,56 +646,84 @@
     </message>
 </context>
 <context>
+    <name>common</name>
+    <message>
+        <location filename="../qml/js/common.js" line="53"/>
+        <source>Incoming call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/js/common.js" line="55"/>
+        <source>Outgoing call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/js/common.js" line="56"/>
+        <source>Missed call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/js/common.js" line="57"/>
+        <source>Unanswered call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/js/common.js" line="60"/>
+        <source>Unknown call state</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>harbour-jtox</name>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="36"/>
+        <location filename="../qml/harbour-jtox.qml" line="76"/>
         <source>New friend request</source>
-        <translation>Ny kontaktförfrågan</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="37"/>
+        <location filename="../qml/harbour-jtox.qml" line="77"/>
         <source>Account Imported</source>
-        <translation>Kontot importerat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="38"/>
+        <location filename="../qml/harbour-jtox.qml" line="78"/>
         <source>Account Exported: </source>
-        <translation>Konto exporterat: </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="39"/>
+        <location filename="../qml/harbour-jtox.qml" line="79"/>
         <source>New account created</source>
-        <translation>Nytt konto skapat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="40"/>
+        <location filename="../qml/harbour-jtox.qml" line="80"/>
         <source>Chat history wiped</source>
-        <translation>Chatthistoriken rensad</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="51"/>
+        <location filename="../qml/harbour-jtox.qml" line="97"/>
         <source>Message from</source>
-        <translation>Meddelande från</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="52"/>
+        <location filename="../qml/harbour-jtox.qml" line="98"/>
         <source>Transfer from</source>
-        <translation>Överföring från</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="53"/>
+        <location filename="../qml/harbour-jtox.qml" line="99"/>
         <source>File transfer complete</source>
-        <translation>Filöverföring slutförd</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="62"/>
+        <location filename="../qml/harbour-jtox.qml" line="108"/>
         <source>Registered on </source>
-        <translation>Registrerat på </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="63"/>
+        <location filename="../qml/harbour-jtox.qml" line="109"/>
         <source>Removed from </source>
-        <translation>Borttaget från </translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -1,6 +1,7 @@
 #include "eventmodel.h"
 #include "utils.h"
 #include "friend.h"
+#include "toxcoreav.h"
 #include <QDateTime>
 #include <QRegularExpression>
 #include <QStandardPaths>
@@ -318,6 +319,103 @@ namespace JTOX {
     {
         if ( index >= 0 && index < fList.size() ) {
             emit dataChanged(createIndex(index, 0), createIndex(index, 0), QVector<int>(1, erFilePosition));
+        }
+    }
+
+    void EventModel::acceptCall()
+    {
+        Event event;
+
+        if (!fDBData.getCall(fFriendID, event)) {
+            emit eventError("Unable to find previous call state");
+            return;
+        }
+
+        if (event.type() != etCallInPending) {
+            emit eventError("Unable to accept call: invalid call state");
+            return;
+        }
+
+        emit acceptCall(); // eventmodel -> ToxCoreAV -> toxav_accept
+    }
+
+    void EventModel::onOutgoingCall(quint32 friend_id)
+    {
+        qDebug() << "[EventModel] onOutgoingCall(" << friend_id << ")\n";
+
+        Event event(-1, friend_id, QDateTime(), etCallOutPending, QString(), -1);
+        fDBData.insertEvent(event);
+
+        if ( fFriendID == friend_id ) { // only show if we're open on friend
+            beginInsertRows(QModelIndex(), 0, 0);
+            fList.push_front(event);
+            endInsertRows();
+        }
+    }
+
+    void EventModel::onIncomingCall(quint32 friend_id, bool audio, bool video)
+    {
+        qDebug() << "[EventModel] onIncomingCall(" << friend_id << "," << audio << "," << video << ")\n";
+
+        Event event(-1, friend_id, QDateTime(), etCallInPending, QString(), -1);
+        fDBData.insertEvent(event);
+
+        if ( fFriendID == friend_id ) { // only show if we're open on friend
+            beginInsertRows(QModelIndex(), 0, 0);
+            fList.push_front(event);
+            endInsertRows();
+        }
+
+        emit incomingCall(fFriendModel.getListIndexForFriendID(friend_id), fFriendModel.getFriendByID(friend_id).name(), audio, video);
+    }
+
+    void EventModel::onCallStateChanged(quint32 friend_id, quint32 state)
+    {
+        qDebug() << "[EventModel] onCallStateChanged(" << friend_id << "," << state << ")\n";
+
+        Event event;
+        // try incoming first
+        if (!fDBData.getCall(friend_id, event)) {
+            emit eventError("Unable to find previous call state");
+            return;
+        }
+
+        bool callIsIncoming = event.type() == etCallInAccepted || event.type() == etCallInPending || event.type() == etCallInRejected;
+        bool callIsOngoing = event.type() == etCallInAccepted || event.type() == etCallOutAccepted;
+
+        EventType newState;
+
+        switch (state) {
+            case csNone: {
+                if (callIsIncoming) {
+                    if (callIsOngoing) { // ongoing -> none == finished
+                        newState = etCallInFinished;
+                    } else {
+                        newState = etCallInRejected; // ringing -> none = rejected
+                    }
+                } else {
+                    if (callIsOngoing) { // ongoing -> none == finished
+                        newState = etCallOutFinished;
+                    } else {
+                        newState = etCallOutRejected; // ringing -> none = rejected
+                    }
+                }
+            } break;
+            case csRinging: newState = callIsIncoming ? etCallInPending : etCallOutPending; break;
+            case csActive: newState = callIsIncoming ? etCallInAccepted : etCallOutAccepted; break;
+            default: {
+                emit eventError("Invalid call state");
+                return;
+            }
+        }
+
+        if (event.type() != newState) {
+            fDBData.updateEventType(event.id(), newState);
+
+            if (fFriendID == friend_id) {
+                int row = indexForEvent(event.id());
+                emit dataChanged(createIndex(row, 0), createIndex(row, 0), QVector<int>(1, erEventType));
+            }
         }
     }
 

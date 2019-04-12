@@ -13,8 +13,24 @@ ListItem {
 
     contentHeight: createdLabel.height + lineContent.height
 
+    onClicked: {
+        if (Common.isCall(event_type)) {
+            // do NOT start call here, just go to call page
+            pageStack.navigateForward(PageStackAction.Animated)
+        }
+    }
+
     menu: ContextMenu {
         id: clipMenu
+
+        MenuItem {
+            text: qsTr("Call")
+            visible: Common.isCall(event_type)
+            onClicked: {
+                // TODO: make the call
+                pageStack.navigateForward(PageStackAction.Animated)
+            }
+        }
 
         MenuItem {
             text: qsTr("Copy to clipboard")
@@ -60,7 +76,7 @@ ListItem {
         }
 
         MenuItem {
-            visible: Common.isFile(event_type) && (Common.isFileDone(event_type) || Common.isMessageOutgoing(event_type))
+            visible: Common.isFile(event_type) && (Common.isFileDone(event_type) || Common.isEventOutgoing(event_type))
             text: qsTr("Open file")
             onClicked: Qt.openUrlExternally(file_path)
         }
@@ -71,7 +87,7 @@ ListItem {
     }
 
     function colorForEventLabel(et) {
-        if (Common.isMessageIncoming(et)) {
+        if (Common.isEventIncoming(et)) {
             return Theme.secondaryColor
         }
         return Theme.secondaryHighlightColor
@@ -80,7 +96,7 @@ ListItem {
     function colorForEventMsg(et, inverted) {
         var index = 0;
         var colors = [Theme.highlightColor, Theme.primaryColor];
-        if (Common.isMessageIncoming(et)) {
+        if (Common.isEventIncoming(et)) {
             index = 1;
         }
 
@@ -91,8 +107,17 @@ ListItem {
         return colors[index];
     }
 
+    function colorForEventCall(et) {
+        var index = 0;
+        if (Common.isCallRejected(et)) {
+            return 'red'
+        }
+
+        return colorForEventMsg(et)
+    }
+
     function alignmentForEvent(et) {
-        if (Common.isMessageIncoming(et)) {
+        if (Common.isEventIncoming(et)) {
             return Text.AlignRight
         }
 
@@ -116,21 +141,18 @@ ListItem {
 
         BusyIndicator {
             anchors {
-                right: !Common.isMessageIncoming(event_type) ? parent.right : undefined
-                left: Common.isMessageIncoming(event_type) ? parent.left : undefined
+                right: !Common.isEventIncoming(event_type) ? parent.right : undefined
+                left: Common.isEventIncoming(event_type) ? parent.left : undefined
             }
             size: BusyIndicatorSize.ExtraSmall
-            visible: Common.isMessagePending(event_type) || Common.isFilePending(event_type)
-            running: Common.isMessagePending(event_type) || Common.isFilePending(event_type)
+            visible: Common.isEventPending(event_type)
+            running: Common.isEventPending(event_type)
         }
     }
 
     Loader {
         id: lineContent
-        source: switch(Common.isFile(event_type)) {
-            case true: return "MessageItemFile.qml"
-            case false: return "MessageItemText.qml"
-        }
+        source: Common.qmlForEventType(event_type)
 
         anchors {
             left: parent.left

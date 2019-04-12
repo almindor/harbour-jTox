@@ -82,6 +82,23 @@ namespace JTOX {
         }
     }
 
+    bool DBData::getCall(quint32 friend_id, Event& result)
+    {
+        fCallSelectOneQuery.bindValue(":friend_id", friend_id);
+
+        if ( !fCallSelectOneQuery.exec() ) {
+            Utils::fatal("Error on call select query exec: " + fCallSelectOneQuery.lastError().text());
+        }
+
+        if ( !fCallSelectOneQuery.next() ) {
+            return false;
+        }
+
+        result = parseEvent(fCallSelectOneQuery);
+
+        return true;
+    }
+
     void DBData::getTransfers(EventList &list)
     {
         if ( !fTransfersSelectQuery.exec() ) {
@@ -122,10 +139,13 @@ namespace JTOX {
 
     int DBData::insertEvent(Event& event)
     {
+        const QString messageDataRaw = event.isFile() ? event.fileName() : event.message();
+        const QVariant messageData = messageDataRaw.isEmpty() ? QVariant() : fEncryptSave.encrypt(messageDataRaw);
+
         fEventInsertQuery.bindValue(":send_id", event.sendID() >= 0 ? event.sendID() : QVariant(QVariant::Int));
         fEventInsertQuery.bindValue(":friend_id", event.friendID());
         fEventInsertQuery.bindValue(":event_type", event.type());
-        fEventInsertQuery.bindValue(":message", fEncryptSave.encrypt(event.isFile() ? event.fileName() : event.message()));
+        fEventInsertQuery.bindValue(":message", messageData);
         fEventInsertQuery.bindValue(":file_path", event.filePath());
         fEventInsertQuery.bindValue(":file_id", event.fileID());
         fEventInsertQuery.bindValue(":file_size", event.fileSize());
@@ -452,6 +472,14 @@ namespace JTOX {
                                             "AND (send_id = :send_id OR :send_id < 0) "
                                             "AND (event_type = :event_type OR :event_type < 0) ");
 
+        fCallSelectOneQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id, "
+                                           "       file_path, file_id, file_size, file_position, file_pausers "
+                                           "FROM events "
+                                           "WHERE (friend_id = :friend_id) "
+                                           "AND (event_type IN (6, 7, 8, 9, 20, 21)) "
+                                           "ORDER BY id DESC "
+                                           "LIMIT 1");
+
         fEventSelectQuery = prepareQuery("SELECT id, event_type, created_at, message, send_id, friend_id, "
                                          "       file_path, file_id, file_size, file_position, file_pausers "
                                          "FROM ("
@@ -510,7 +538,12 @@ namespace JTOX {
         if ( !ok ) {
             Utils::fatal("Error casting event id: " + query.value("id").toString());
         }
-        const QString message = fEncryptSave.decrypt(query.value("message").toByteArray());
+
+        QString message;
+        if (!query.value("message").isNull()) {
+            message = fEncryptSave.decrypt(query.value("message").toByteArray());
+        }
+
         int rawEType = query.value("event_type").toInt(&ok);
         if ( !ok ) {
             Utils::fatal("Error casting event type: " + query.value("event_type").toString());

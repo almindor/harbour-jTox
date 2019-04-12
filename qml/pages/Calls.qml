@@ -44,20 +44,19 @@ Page {
         }
 
         PullDownMenu {
-            visible: true // TODO: only if ringing
-
+            visible: toxcoreav.globalCallState === 1 // ringing
             MenuItem {
-                text: qsTr("Accept")
-                onClicked: console.log("TODO: accepting call")
+                text: qsTr("Answer")
+                onClicked: toxcoreav.answerIncomingCall(appWindow.activeFriendID)
             }
         }
 
         PushUpMenu {
-            visible: true // TODO: only if ringing
+            visible: toxcoreav.globalCallState === 1 // ringing
 
             MenuItem {
                 text: qsTr("Reject")
-                onClicked: console.log("TODO: rejecting call")
+                onClicked: toxcoreav.endCall(appWindow.activeFriendID)
             }
         }
 
@@ -73,8 +72,9 @@ Page {
         }
 
         Button {
-            visible: false // TODO: only if not in call
+            visible: toxcoreav.globalCallState === 0 // none
             text: qsTr("Call")
+            onClicked: toxcoreav.callFriend(appWindow.activeFriendID)
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom
@@ -83,8 +83,9 @@ Page {
         }
 
         Button {
-            visible: true // TODO: only if in call
+            visible: toxcoreav.globalCallState > 0 // ringing or calling
             text: qsTr("End Call")
+            onClicked: toxcoreav.endCall(appWindow.activeFriendID)
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom
