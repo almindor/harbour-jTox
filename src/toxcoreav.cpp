@@ -84,6 +84,11 @@ namespace JTOX {
             return false;
         }
 
+        if (result) {
+            handleGlobalCallState(friend_id, csNone);
+            emit callStateChanged(friend_id, csNone);
+        }
+
         return result;
     }
 
