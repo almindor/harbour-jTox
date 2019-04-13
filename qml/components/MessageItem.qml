@@ -109,7 +109,9 @@ ListItem {
             rightMargin: Theme.paddingMedium
         }
 
-        text: created_at
+        text: (parseInt(Qt.formatDateTime(created_at, "d")) < parseInt(Qt.formatDateTime(new Date(), "d"))) ?
+                  (parseInt(Qt.formatDateTime(created_at, "yyyy")) < parseInt(Qt.formatDateTime(new Date(), "yyyy")) ? Qt.formatDateTime(created_at, "dd-MM-yy hh:mm") : Qt.formatDateTime(created_at, "dd-MMM hh:mm") )
+                                                                                                                     : Qt.formatTime(created_at, "hh:mm")
         font.pixelSize: Theme.fontSizeTiny
         horizontalAlignment: alignmentForEvent(event_type)
         color: colorForEventLabel(event_type)
