@@ -549,6 +549,10 @@
         <source>Unanswered call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Finished call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>harbour-jtox</name>

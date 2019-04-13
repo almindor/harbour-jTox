@@ -54,6 +54,7 @@ namespace JTOX {
         result[erFileSize] = "file_size";
         result[erFilePosition] = "file_position";
         result[erFilePausers] = "file_pausers";
+        result[erDuration] = "duration";
 
         return result;
     }
@@ -410,7 +411,15 @@ namespace JTOX {
         }
 
         if (event.type() != newState) {
-            fDBData.updateEventType(event.id(), newState);
+            // make sure to include duration as "sendID" for finished calls
+            if (newState == etCallOutFinished || newState == etCallInFinished) {
+                qint64 duration = (QDateTime::QDateTime::currentMSecsSinceEpoch() - event.sendID());
+                fDBData.updateEventSent(event.id(), newState, duration);
+            } else if (newState == etCallInAccepted || newState == etCallOutAccepted) {
+                fDBData.updateEventSent(event.id(), newState, QDateTime::currentMSecsSinceEpoch());
+            } else {
+                fDBData.updateEventType(event.id(), newState);
+            }
 
             if (fFriendID == friend_id) {
                 int row = indexForEvent(event.id());

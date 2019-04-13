@@ -20,7 +20,7 @@ Column {
 
         Text {
             width: mainColumn.width - callIcon.width - Theme.paddingSmall
-            text: Common.msgForCall(event_type)
+            text: Common.msgForCall(event_type, duration)
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             font.strikeout: Common.isCallRejected(event_type)
             font.pixelSize: Theme.fontSizeSmall

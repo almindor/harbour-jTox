@@ -49,7 +49,8 @@ namespace JTOX {
         erFileID,
         erFileSize,
         erFilePosition,
-        erFilePausers
+        erFilePausers,
+        erDuration
     };
 
     class Event
@@ -65,6 +66,7 @@ namespace JTOX {
         int id() const;
         void setID(int id);
         void setCreatedAt(const QDateTime& created_at);
+        const QDateTime createdAt() const;
         const QString message() const;
         qint64 sendID() const;
         quint32 friendID() const;

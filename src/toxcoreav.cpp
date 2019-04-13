@@ -59,12 +59,13 @@ namespace JTOX {
         bool result = toxav_answer(fToxAV, friend_id, audio_bitrate, 0, &error);
         const QString errorStr = Utils::handleToxAVAnswerError(error);
 
-        handleGlobalCallState(friend_id, result ? csActive : csNone);
-
         if (!errorStr.isEmpty()) {
             emit errorOccurred(errorStr);
             return false;
         }
+
+        handleGlobalCallState(friend_id, result ? csActive : csNone);
+        callStateChanged(friend_id, result ? csActive : csNone);
 
         return result;
     }

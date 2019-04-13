@@ -39,6 +39,7 @@ namespace JTOX {
             case erFileSize: return fileSize();
             case erFilePosition: return fFilePosition;
             case erFilePausers: return fFilePausers;
+            case erDuration: return fSendID; // stores duration for finished calls
         }
 
         return QVariant("invalid_role");
@@ -56,6 +57,11 @@ namespace JTOX {
     void Event::setCreatedAt(const QDateTime &created_at)
     {
         fCreated = created_at;
+    }
+
+    const QDateTime Event::createdAt() const
+    {
+        return fCreated;
     }
 
     const QString Event::message() const

@@ -47,7 +47,17 @@ function isCallRejected(et) {
     return [EventType.CallInRejected, EventType.CallOutRejected].indexOf(et) >= 0;
 }
 
-function msgForCall(et) {
+function toTimeStr(msSinceEpoch) {
+    if (!msSinceEpoch || msSinceEpoch < 0) {
+        return '00:00:00?';
+    }
+
+    var date = new Date(null)
+    date.setSeconds(msSinceEpoch / 1000)
+    return date.toISOString().substr(11, 8)
+}
+
+function msgForCall(et, duration) {
     switch (et) {
         case EventType.CallInPending:
         case EventType.CallInAccepted: return qsTr('Incoming call')
@@ -55,6 +65,8 @@ function msgForCall(et) {
         case EventType.CallOutAccepted: return qsTr('Outgoing call')
         case EventType.CallInRejected: return qsTr('Missed call')
         case EventType.CallOutRejected: return qsTr('Unanswered call')
+        case EventType.CallInFinished:
+        case EventType.CallOutFinished: return qsTr('Finished call') + ' (' + toTimeStr(duration) + ')'
     }
 
     return qsTr('Unknown call state')
@@ -97,14 +109,16 @@ function isEventIncoming(et) {
     return [EventType.MessageIn, EventType.MessageInUnread, EventType.FileTransferIn,
             EventType.FileTransferInPaused, EventType.FileTransferInCanceled,
             EventType.FileTransferInRunning, EventType.FileTransferInDone,
-            EventType.CallInPending, EventType.CallInAccepted, EventType.CallInRejected].indexOf(et) >= 0;
+            EventType.CallInPending, EventType.CallInAccepted, EventType.CallInRejected,
+            EventType.CallInFinished].indexOf(et) >= 0;
 }
 
 function isEventOutgoing(et) {
     return [EventType.MessageOut, EventType.MessageOutPending, EventType.MessageOutOffline,
             EventType.FileTransferOut, EventType.FileTransferOutPaused,
             EventType.FileTransferOutCanceled, EventType.FileTransferOutRunning, EventType.FileTransferOutDone,
-            EventType.CallOutPending, EventType.CallOutAccepted, EventType.CallOutRejected].indexOf(et) >= 0;
+            EventType.CallOutPending, EventType.CallOutAccepted, EventType.CallOutRejected,
+            EventType.CallOutFinished].indexOf(et) >= 0;
 }
 
 function isMessagePending(et) {
