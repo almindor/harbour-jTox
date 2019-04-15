@@ -8,9 +8,10 @@ namespace JTOX {
     ToxCoreAV::ToxCoreAV(ToxCore& toxCore): QObject(0),
         fToxCore(toxCore), fToxAV(nullptr),
         fIterationTimer(), fCallStateMap(),
-        fGlobalCallState(csNone)
+        fGlobalCallState(csNone), fAudioInput(ToxCoreAV::defaultAudioFormat())
     {
-        fIterationTimer.setInterval(200); // TODO
+        fAudioInput.setNotifyInterval(20); // opus default
+        fIterationTimer.setInterval(DEFAULT_OOC_INTERVAL);
     }
 
     ToxCoreAV::~ToxCoreAV()
@@ -187,7 +188,26 @@ namespace JTOX {
         if (maxState != fGlobalCallState) {
             fGlobalCallState = maxState;
             emit globalCallStateChanged(fGlobalCallState);
+
+            if (fGlobalCallState == csActive) {
+                fIterationTimer.setInterval(toxav_iteration_interval(fToxAV));
+            } else {
+                fIterationTimer.setInterval(DEFAULT_OOC_INTERVAL);
+            }
         }
+    }
+
+    const QAudioFormat ToxCoreAV::defaultAudioFormat()
+    {
+        QAudioFormat result;
+
+        result.setCodec("audio/pcm");
+        // result.setSampleType(QAudioFormat::SignedInt); // not sure yet!
+        result.setChannelCount(1);
+        result.setSampleSize(16);
+        result.setSampleRate(48000);
+
+        return result;
     }
 
 }

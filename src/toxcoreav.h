@@ -5,8 +5,12 @@
 #include <tox/tox.h>
 #include <tox/toxav.h>
 #include <QMap>
+#include <QAudioInput>
 
 namespace JTOX {
+
+    constexpr int DEFAULT_BITRATE = 24;
+    constexpr int DEFAULT_OOC_INTERVAL = 2000; // 2s to save battery when out of call
 
     enum MCECallState {
         csNone = 0,
@@ -28,9 +32,9 @@ namespace JTOX {
         void onIncomingCall(quint32 friend_id, bool audio, bool video);
         void onCallStateChanged(quint32 friend_id, quint32 state);
 
-        Q_INVOKABLE bool answerIncomingCall(quint32 friend_id, quint32 audio_bitrate = 192);
+        Q_INVOKABLE bool answerIncomingCall(quint32 friend_id, quint32 audio_bitrate = DEFAULT_BITRATE);
         Q_INVOKABLE bool endCall(quint32 friend_id);
-        Q_INVOKABLE bool callFriend(quint32 friend_id, quint32 audio_bitrate = 192);
+        Q_INVOKABLE bool callFriend(quint32 friend_id, quint32 audio_bitrate = DEFAULT_BITRATE);
     public slots:
         void onToxInitDone();
         void beforeToxKill();
@@ -46,10 +50,13 @@ namespace JTOX {
         QTimer fIterationTimer;
         CallStateMap fCallStateMap;
         MCECallState fGlobalCallState;
+        QAudioInput fAudioInput;
 
         void initCallbacks();
         MCECallState getMaxGlobalState() const;
         void handleGlobalCallState(quint32 friend_id, MCECallState proposedState);
+
+        static const QAudioFormat defaultAudioFormat();
     };
 
 }
