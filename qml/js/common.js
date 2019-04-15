@@ -100,3 +100,20 @@ function humanFileSize(bytes, si) {
     } while(Math.abs(bytes) >= thresh && u < units.length - 1);
     return bytes.toFixed(1)+' '+units[u];
 }
+
+function prettifyDateTime(datetime) {
+    var prettyDateTime = "";
+    var now = new Date();
+
+    if ( parseInt(Qt.formatDateTime(datetime, "d")) < parseInt(Qt.formatDateTime(now, "d")) ) {
+        if (parseInt(Qt.formatDateTime(datetime, "yyyy")) < parseInt(Qt.formatDateTime(now, "yyyy"))) {
+            prettyDateTime = Qt.formatDateTime(datetime, "dd-MM-yy hh:mm");
+        } else {
+            prettyDateTime = Qt.formatDateTime(datetime, "dd-MMM hh:mm");
+        }
+    } else {
+        prettyDateTime = Qt.formatTime(datetime, "hh:mm");
+    }
+
+    return prettyDateTime;
+}
