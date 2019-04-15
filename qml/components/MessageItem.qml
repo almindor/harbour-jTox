@@ -109,7 +109,7 @@ ListItem {
             rightMargin: Theme.paddingMedium
         }
 
-        text: created_at
+        text: Common.prettifyDateTime(created_at)
         font.pixelSize: Theme.fontSizeTiny
         horizontalAlignment: alignmentForEvent(event_type)
         color: colorForEventLabel(event_type)
