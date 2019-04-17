@@ -191,7 +191,7 @@ namespace JTOX {
         Q_UNUSED(av);
         ToxCoreAV* jToxAV = (ToxCoreAV*) user_data;
 
-        // TODO
+        qDebug() << "c_toxav_audio_bit_rate_cb\n";
     }
 
     void c_toxav_audio_receive_frame_cb(ToxAV* av, uint32_t friend_number, const int16_t* pcm, size_t sample_count, uint8_t channels, uint32_t sampling_rate, void* user_data)
@@ -199,7 +199,7 @@ namespace JTOX {
         Q_UNUSED(av);
         ToxCoreAV* jToxAV = (ToxCoreAV*) user_data;
 
-        // TODO
+        jToxAV->onAudioFrameReceived(friend_number, pcm, sample_count, channels, sampling_rate);
     }
 
 }

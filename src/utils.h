@@ -58,7 +58,8 @@ namespace JTOX {
         static const QString handleToxAVNewError(TOXAV_ERR_NEW error);
         static const QString handleToxAVAnswerError(TOXAV_ERR_ANSWER error);
         static const QString handleToxAVControlError(TOXAV_ERR_CALL_CONTROL error);
-        static const QString handleTOXAVCallError(TOXAV_ERR_CALL error);
+        static const QString handleToxAVCallError(TOXAV_ERR_CALL error);
+        static const QString handleToxAVSendError(TOXAV_ERR_SEND_FRAME error);
     };
 
     void register_signals();

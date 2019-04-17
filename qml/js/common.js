@@ -29,7 +29,8 @@ var EventType = {
 };
 
 function isMessage(et) {
-    return [EventType.MessageIn, EventType.MessageInUnread, EventType.MessageOut, EventType.MessageOutPending, EventType.MessageOutOffline].indexOf(et) >= 0;
+    return [EventType.MessageIn, EventType.MessageInUnread, EventType.MessageOut,
+            EventType.MessageOutPending, EventType.MessageOutOffline].indexOf(et) >= 0;
 }
 
 function isCall(et) {

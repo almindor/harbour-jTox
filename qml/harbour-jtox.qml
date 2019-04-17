@@ -84,6 +84,7 @@ ApplicationWindow
     Connections {
         target: toxcoreav
         onGlobalCallStateChanged: mce.setCallState(state)
+        onErrorOccurred: banner("x-nemo.messaging.error", error, "error", [error], appWindow.applicationActive)
     }
 
     Connections {

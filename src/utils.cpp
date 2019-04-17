@@ -321,15 +321,32 @@ namespace JTOX {
         return fatal("Unknown error");
     }
 
-    const QString Utils::handleTOXAVCallError(TOXAV_ERR_CALL error)
+    const QString Utils::handleToxAVCallError(TOXAV_ERR_CALL error)
     {
         switch ( error ) {
             case TOXAV_ERR_CALL_FRIEND_NOT_CONNECTED: return bail("[A/V] Friend not connected", true);
             case TOXAV_ERR_CALL_FRIEND_NOT_FOUND: return bail("[A/V] Friend not found", true);
             case TOXAV_ERR_CALL_FRIEND_ALREADY_IN_CALL: return bail("[A/V] Friend already in call", true);
             case TOXAV_ERR_CALL_MALLOC: return bail("[A/V] Memory allocation error", true);
+            case TOXAV_ERR_CALL_INVALID_BIT_RATE: return bail("[A/V] Invalid bitrate", true);
             case TOXAV_ERR_CALL_SYNC: return bail("[A/V] Synchronization error", true);
             case TOXAV_ERR_CALL_OK: return QString();
+        }
+
+        return fatal("Unknown error");
+    }
+
+    const QString Utils::handleToxAVSendError(TOXAV_ERR_SEND_FRAME error)
+    {
+        switch (error) {
+            case TOXAV_ERR_SEND_FRAME_FRIEND_NOT_FOUND: return fatal("[A/V] Friend not found");
+            case TOXAV_ERR_SEND_FRAME_FRIEND_NOT_IN_CALL: return fatal("[A/V] Friend not in call");
+            case TOXAV_ERR_SEND_FRAME_INVALID: return bail("[A/V] Frame invalid", true);
+            case TOXAV_ERR_SEND_FRAME_NULL: return bail("[A/V] Frame null", true);
+            case TOXAV_ERR_SEND_FRAME_PAYLOAD_TYPE_DISABLED: return bail("[A/V] Payload type disabled", true);
+            case TOXAV_ERR_SEND_FRAME_RTP_FAILED: return bail("[A/V] RTP failed", true);
+            case TOXAV_ERR_SEND_FRAME_SYNC: return bail("[A/V] Synchronization error", true);
+            case TOXAV_ERR_SEND_FRAME_OK: return QString();
         }
 
         return fatal("Unknown error");
