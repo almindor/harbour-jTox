@@ -239,8 +239,10 @@ namespace JTOX {
             emit globalCallStateChanged(fGlobalCallState);
 
             if (fGlobalCallState == csActive) {
+                fActiveCallFriendID = friend_id;
                 startAudio();
             } else {
+                fActiveCallFriendID = -1;
                 stopAudio();
             }
         }
@@ -292,17 +294,32 @@ namespace JTOX {
 
     void ToxCoreAV::sendNextAudioFrame(quint32 friend_id)
     {
-        const QByteArray micData = fAudioInputPipe->readAll();
-        const qint16* pcm = (qint16*) micData.constData();
-        quint32 count = (quint32) micData.size() / 2;
+        // we're sending frames of sampled data in chunks of 20ms worth given the sampling rate
+        // sampling rate * sampling time (ms) * channels / 1000
+        constexpr int BYTES_REQUIRED = 48 * 20 * 2; // TODO: unhardcore sampling rate and channels, keep 20ms as optimal
+        constexpr quint32 SAMPLE_COUNT = BYTES_REQUIRED / 2 / 2; // total bytes in frame / channels / sample_byte_size (16 bit)
 
-        TOXAV_ERR_SEND_FRAME error;
-        // TODO: unhardcode channels and sampling rate
-        toxav_audio_send_frame(fToxAV, friend_id, pcm, count, 2, 48000, &error);
+        if (fAudioInput.bytesReady() < BYTES_REQUIRED) { // next time
+            return;
+        }
 
-        const QString errorStr = Utils::handleToxAVSendError(error);
-        if (!errorStr.isEmpty()) {
-            emit errorOccurred(errorStr);
+        while (fAudioInput.bytesReady() >= BYTES_REQUIRED) {
+            const QByteArray micData = fAudioInputPipe->read(BYTES_REQUIRED);
+            if (micData.isEmpty()) {
+                qWarning() << "Unexpected error read on audio input";
+                return;
+            }
+
+            const qint16* pcm = (qint16*) micData.constData();
+
+            TOXAV_ERR_SEND_FRAME error;
+            // TODO: unhardcode channels and sampling rate
+            toxav_audio_send_frame(fToxAV, friend_id, pcm, SAMPLE_COUNT, 2, 48000, &error);
+
+            const QString errorStr = Utils::handleToxAVSendError(error);
+            if (!errorStr.isEmpty()) {
+                qWarning() << errorStr;
+            }
         }
     }
 
@@ -310,10 +327,12 @@ namespace JTOX {
     {
         QAudioFormat result;
 
+        // constants
         result.setCodec("audio/pcm");
         result.setSampleType(QAudioFormat::SignedInt);
-        result.setChannelCount(2); // TODO: this needs to be set according to frame data for incoming!
         result.setSampleSize(16);
+        // variables
+        result.setChannelCount(2); // TODO: this needs to be set according to frame data for incoming!
         result.setSampleRate(48000);
 
         QAudioDeviceInfo info(QAudioDeviceInfo::defaultOutputDevice());
