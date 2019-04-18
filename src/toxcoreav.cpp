@@ -235,18 +235,18 @@ namespace JTOX {
         MCECallState maxState = getMaxGlobalState();
 
         if (maxState != fGlobalCallState) {
-            fGlobalCallState = maxState;
-            emit globalCallStateChanged(fGlobalCallState);
-
-            if (fGlobalCallState == csActive) {
-                startAudio();
-            } else {
+            if (maxState == csActive) {
+                startAudio(friend_id);
+            } else if (fGlobalCallState == csActive) {
                 stopAudio();
             }
+
+            fGlobalCallState = maxState;
+            emit globalCallStateChanged(fGlobalCallState);
         }
     }
 
-    void ToxCoreAV::startAudio()
+    void ToxCoreAV::startAudio(quint32 friend_id)
     {
         if (fAudioInputPipe != nullptr) {
             Utils::fatal("Audio input double open");
@@ -258,6 +258,7 @@ namespace JTOX {
 
         qDebug() << "Starting audio!\n";
 
+        fActiveCallFriendID = friend_id;
         fAudioInputPipe = fAudioInput.start();
         if (fAudioInput.error() != QAudio::NoError) {
             fAudioInputPipe = nullptr;
@@ -283,6 +284,8 @@ namespace JTOX {
 
         qDebug() << "Stopping audio!\n";
 
+        fActiveCallFriendID = -1;
+
         fAudioInput.stop(); // closes fAudioInputPipe
         fAudioOutput.stop(); // closes fAudioOutputPipe
 
@@ -292,17 +295,35 @@ namespace JTOX {
 
     void ToxCoreAV::sendNextAudioFrame(quint32 friend_id)
     {
-        const QByteArray micData = fAudioInputPipe->readAll();
-        const qint16* pcm = (qint16*) micData.constData();
-        quint32 count = (quint32) micData.size() / 2;
+        // we're sending frames of sampled data in chunks of 20ms worth given the sampling rate
+        // sampling rate * sampling time (ms) * channels / 1000
+        constexpr int BYTES_REQUIRED = 48 * 20 * 2; // TODO: unhardcore sampling rate and channels, keep 20ms as optimal
+        constexpr quint32 SAMPLE_COUNT = BYTES_REQUIRED / 2 / 2; // total bytes in frame / channels / sample_byte_size (16 bit)
 
-        TOXAV_ERR_SEND_FRAME error;
-        // TODO: unhardcode channels and sampling rate
-        toxav_audio_send_frame(fToxAV, friend_id, pcm, count, 2, 48000, &error);
+        if (fAudioInput.bytesReady() < BYTES_REQUIRED) { // next time
+            return;
+        }
 
-        const QString errorStr = Utils::handleToxAVSendError(error);
-        if (!errorStr.isEmpty()) {
-            emit errorOccurred(errorStr);
+        int iteration = 0;
+        while (fAudioInput.bytesReady() >= BYTES_REQUIRED) {
+            const QByteArray micData = fAudioInputPipe->read(BYTES_REQUIRED);
+            if (micData.isEmpty() || micData.size() != BYTES_REQUIRED) {
+                qWarning() << "Unexpected empty read on audio input iter: " << iteration;
+                return;
+            }
+
+            const qint16* pcm = (qint16*) micData.constData();
+
+            TOXAV_ERR_SEND_FRAME error;
+            // TODO: unhardcode channels and sampling rate
+            toxav_audio_send_frame(fToxAV, friend_id, pcm, SAMPLE_COUNT, 2, 48000, &error);
+
+            const QString errorStr = Utils::handleToxAVSendError(error);
+            if (!errorStr.isEmpty()) {
+                qWarning() << errorStr;
+                return;
+            }
+            iteration++;
         }
     }
 

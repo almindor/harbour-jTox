@@ -61,7 +61,7 @@ namespace JTOX {
         void initCallbacks();
         MCECallState getMaxGlobalState() const;
         void handleGlobalCallState(quint32 friend_id, MCECallState proposedState);
-        void startAudio();
+        void startAudio(quint32 friend_id);
         void stopAudio();
         void sendNextAudioFrame(quint32 friend_id);
         void run() override;

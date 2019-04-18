@@ -16,8 +16,8 @@ QT += sql
 QT += multimedia
 
 CONFIG += sailfishapp
-CONFIG(debug,debug|release){ TOX_PATH = extra/i486 }
-# CONFIG(debug,debug|release){ TOX_PATH = extra/armv7hl }
+# CONFIG(debug,debug|release){ TOX_PATH = extra/i486 }
+CONFIG(debug,debug|release){ TOX_PATH = extra/armv7hl }
 CONFIG(release,debug|release){ TOX_PATH = extra/armv7hl }
 
 QMAKE_LFLAGS += -Wl,-lc -Wl,-lz
@@ -40,8 +40,7 @@ SOURCES += \
     src/harbour-jtox.cpp \
     src/dirmodel.cpp \
     src/avatarprovider.cpp \
-    src/toxcoreav.cpp \
-    src/call.cpp
+    src/toxcoreav.cpp
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \
@@ -103,8 +102,7 @@ HEADERS += \
     src/dbdata.h \
     src/dirmodel.h \
     src/avatarprovider.h \
-    src/toxcoreav.h \
-    src/call.h
+    src/toxcoreav.h
 
 DISTFILES += \
     qml/pages/About.qml \
