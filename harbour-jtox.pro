@@ -16,8 +16,8 @@ QT += sql
 QT += multimedia
 
 CONFIG += sailfishapp
-CONFIG(debug,debug|release){ TOX_PATH = extra/i486 }
-# CONFIG(debug,debug|release){ TOX_PATH = extra/armv7hl }
+#CONFIG(debug,debug|release){ TOX_PATH = extra/i486 }
+CONFIG(debug,debug|release){ TOX_PATH = extra/armv7hl }
 CONFIG(release,debug|release){ TOX_PATH = extra/armv7hl }
 
 QMAKE_LFLAGS += -Wl,-lc -Wl,-lz

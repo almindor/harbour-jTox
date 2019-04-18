@@ -4,72 +4,70 @@
 
 namespace JTOX {
 
-    Call::Call(ToxAV* toxAV, quint32 friend_id) :
-        fToxAV(toxAV),
-        fFriendID(friend_id),
+    Call::Call() : QObject(0),
+        fToxAV(nullptr),
+        fFriendID(-1),
         fAudioInput(nullptr), fAudioOutput(nullptr),
-        fAudioInputPipe(nullptr), fAudioOutputPipe(nullptr),
-        fQuit(false)
+        fAudioInputPipe(nullptr), fAudioOutputPipe(nullptr)
     {
-
+        connect(this, &Call::initAudioOutput, this, &Call::startAudioOutput);
     }
 
-    bool Call::init()
+    bool Call::init(ToxAV* toxAV, quint32 friend_id)
     {
+        if (toxAV == nullptr) {
+            qWarning() << "Attempt to init Call with null toxAV";
+            return false;
+        }
+
+        fToxAV = toxAV;
+        fFriendID = friend_id;
+
         if (!startAudioInput()) {
             return false;
         }
-        // output is started with incoming frame data
-        start();
 
         return true;
     }
 
     void Call::finish()
     {
-        fQuit = true;
-
-        if (!wait(2000)) {
-            qWarning() << "Audio input processing thread cleanup failed";
-            terminate();
-        }
-
         stopAudioInput();
         stopAudioOutput();
     }
 
-    bool Call::handleIncomingFrame(const qint16* pcm, size_t sample_count, quint8 channels, quint32 sampling_rate)
+    bool Call::isRunning() const
     {
-        startAudioOutput(channels, sampling_rate);
+        return fAudioInput != nullptr || fAudioOutput != nullptr;
+    }
 
-        if (fAudioOutputPipe == nullptr) {
-            qWarning() << "Audio output not intialized";
-            return false;
-        }
+    bool Call::handleIncomingFrame(const QByteArray& data, quint8 channels, quint32 sampling_rate)
+    {
+//        if (fAudioOutputPipe == nullptr) {
+//            emit initAudioOutput(channels, sampling_rate);
+//            return false; // need to init first, ignore the data until we're done there (should be milliseconds loss)
+//        }
 
-        qint64 byteSize = sample_count * channels * 2;
-        qint64 totalWritten = 0;
+//        qint64 byteSize = data.size();
+//        qint64 totalWritten = 0;
 
-        while (totalWritten < byteSize) {
-            qint64 written = fAudioOutputPipe->write((char*) pcm, byteSize); // in bytes
+//        while (totalWritten < byteSize) {
+//            qint64 written = fAudioOutputPipe->write(data);
 
-            if (written < 0) {
-                qWarning() << "Error writing to audio output: " << fAudioInputPipe->errorString();
-                return false;
-            }
+//            if (written < 0) {
+//                qWarning() << "Error writing to audio output: " << fAudioInputPipe->errorString();
+//                return false;
+//            }
 
-            totalWritten += written;
-        }
+//            totalWritten += written;
+//        }
 
         return true;
     }
 
-    void Call::run()
+    quint32 Call::friendID() const
     {
-        while (!fQuit) {
-            sendNextAudioFrame();
-            msleep(20); // Opus optimal
-        }
+        return fFriendID;
     }
 
     bool Call::sendNextAudioFrame()
@@ -109,6 +107,7 @@ namespace JTOX {
     bool Call::startAudioInput()
     {
         if (fAudioInput != nullptr && fAudioInputPipe != nullptr) {
+            qWarning() << "Audio input already initialized?";
             return false; // we're done
         }
 
@@ -117,7 +116,12 @@ namespace JTOX {
         int samplingRate = 48000;
 
         fAudioInput = new QAudioInput(defaultAudioFormat(channels, samplingRate));
+
+        connect(fAudioInput, &QAudioInput::notify, this, &Call::sendNextAudioFrame);
+
+        fAudioInput->setNotifyInterval(200); // opus standard for voice
         fAudioInputPipe = fAudioInput->start();
+        fAudioInput->resume();
 
         return true;
     }
@@ -135,29 +139,31 @@ namespace JTOX {
         fAudioInput = nullptr;
     }
 
-    bool Call::startAudioOutput(int channels, int samplingRate)
+    void Call::startAudioOutput(quint8 channels, quint32 samplingRate)
     {
         if (fAudioOutput != nullptr && fAudioOutputPipe != nullptr) {
-            return false; // we're done
+            return; // we're done
         }
+
+        qDebug() << "Starting audio output channels: " << channels << " samplingRate: " << samplingRate;
 
         fAudioOutput = new QAudioOutput(defaultAudioFormat(channels, samplingRate));
         fAudioOutputPipe = fAudioOutput->start();
 
-        return true;
+        return;
     }
 
     void Call::stopAudioOutput()
     {
-        if (fAudioInput == nullptr) {
+        if (fAudioOutput == nullptr) {
             return;
         }
 
-        fAudioInput->stop();
-        delete fAudioInput;
+        fAudioOutput->stop();
+        delete fAudioOutput;
 
-        fAudioInputPipe = nullptr;
-        fAudioInput = nullptr;
+        fAudioOutput = nullptr;
+        fAudioOutputPipe = nullptr;
     }
 
     const QAudioFormat Call::defaultAudioFormat(int channels, int samplingRate) const

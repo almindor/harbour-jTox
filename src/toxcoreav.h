@@ -2,6 +2,7 @@
 #define TOXAV_H
 
 #include "toxcore.h"
+#include "call.h"
 #include <tox/tox.h>
 #include <tox/toxav.h>
 #include <QThread>
@@ -52,21 +53,14 @@ namespace JTOX {
         ToxAV* fToxAV;
         CallStateMap fCallStateMap;
         MCECallState fGlobalCallState;
-        QAudioInput fAudioInput;
-        QAudioOutput fAudioOutput;
-        QIODevice* fAudioInputPipe;
-        QIODevice* fAudioOutputPipe;
-        qint64 fActiveCallFriendID; // used also for thread termination
+        Call fCall; // running call singleton TODO: move into callstatemap for multiple simultanious calls support
+        bool fActive;
 
         void initCallbacks();
         MCECallState getMaxGlobalState() const;
         void handleGlobalCallState(quint32 friend_id, MCECallState proposedState);
-        void startAudio();
-        void stopAudio();
-        void sendNextAudioFrame(quint32 friend_id);
-        void run() override;
 
-        static const QAudioFormat defaultAudioFormat();
+        void run() override;
     };
 
 }
