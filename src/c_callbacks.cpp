@@ -17,6 +17,7 @@
 
 #include "toxcore.h"
 #include "toxcoreav.h"
+#include "workerav.h"
 #include "utils.h"
 #include <QObject>
 #include <QString>
@@ -197,9 +198,9 @@ namespace JTOX {
     void c_toxav_audio_receive_frame_cb(ToxAV* av, uint32_t friend_number, const int16_t* pcm, size_t sample_count, uint8_t channels, uint32_t sampling_rate, void* user_data)
     {
         Q_UNUSED(av);
-        ToxCoreAV* jToxAV = (ToxCoreAV*) user_data;
+        WorkerToxAVIterator* worker = (WorkerToxAVIterator*) user_data;
 
-        jToxAV->onAudioFrameReceived(friend_number, pcm, sample_count, channels, sampling_rate);
+        worker->onAudioFrameReceived(friend_number, pcm, sample_count, channels, sampling_rate);
     }
 
 }

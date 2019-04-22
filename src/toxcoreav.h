@@ -2,6 +2,7 @@
 #define TOXAV_H
 
 #include "toxcore.h"
+#include "workerav.h"
 #include <tox/tox.h>
 #include <tox/toxav.h>
 #include <QThread>
@@ -23,7 +24,7 @@ namespace JTOX {
 
     typedef QMap<quint32, MCECallState> CallStateMap;
 
-    class ToxCoreAV: public QThread
+    class ToxCoreAV: public QObject
     {
         Q_OBJECT
         Q_PROPERTY(int globalCallState READ getMaxGlobalState NOTIFY globalCallStateChanged)
@@ -33,7 +34,6 @@ namespace JTOX {
 
         void onIncomingCall(quint32 friend_id, bool audio, bool video);
         void onCallStateChanged(quint32 friend_id, quint32 state);
-        void onAudioFrameReceived(quint32 friend_id, const qint16* pcm, size_t sample_count, quint8 channels, quint32 sampling_rate);
 
         Q_INVOKABLE bool answerIncomingCall(quint32 friend_id, quint32 audio_bitrate = DEFAULT_BITRATE);
         Q_INVOKABLE bool endCall(quint32 friend_id);
@@ -47,26 +47,24 @@ namespace JTOX {
         void incomingCall(quint32 friend_id, bool audio, bool video) const;
         void callStateChanged(quint32 friend_id, quint32 tav_state) const;
         void globalCallStateChanged(quint32 state) const; // MCE mapped states
+        // worker signals
+        void avIteratorStart(void* toxAV) const;
+        void avIteratorStop() const;
+        void startAudio(void* toxAV, quint32 friend_id) const;
+        void stopAudio() const;
     private:
         ToxCore& fToxCore;
         ToxAV* fToxAV;
         CallStateMap fCallStateMap;
         MCECallState fGlobalCallState;
-        QAudioInput fAudioInput;
-        QAudioOutput fAudioOutput;
-        QIODevice* fAudioInputPipe;
-        QIODevice* fAudioOutputPipe;
-        qint64 fActiveCallFriendID; // used also for thread termination
+        QThread fThreads[3]; // worker threads
+        WorkerToxAVIterator fIteratorWorker;
+        WorkerAudioInput fAudioInputWorker;
+        WorkerAudioOutput fAudioOutputWorker;
 
         void initCallbacks();
         MCECallState getMaxGlobalState() const;
         void handleGlobalCallState(quint32 friend_id, MCECallState proposedState);
-        void startAudio(quint32 friend_id);
-        void stopAudio();
-        void sendNextAudioFrame(quint32 friend_id);
-        void run() override;
-
-        static const QAudioFormat defaultAudioFormat();
     };
 
 }

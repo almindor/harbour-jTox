@@ -5,15 +5,28 @@
 
 namespace JTOX {
 
-    ToxCoreAV::ToxCoreAV(ToxCore& toxCore): QThread(0),
+    ToxCoreAV::ToxCoreAV(ToxCore& toxCore): QObject(0),
         fToxCore(toxCore), fToxAV(nullptr),
         fCallStateMap(),
-        fGlobalCallState(csNone),
-        fAudioInput(ToxCoreAV::defaultAudioFormat()),
-        fAudioOutput(ToxCoreAV::defaultAudioFormat()),
-        fAudioInputPipe(nullptr), fAudioOutputPipe(nullptr),
-        fActiveCallFriendID(-1)
+        fGlobalCallState(csNone)
     {
+        // move workers to their respective threads
+        fIteratorWorker.moveToThread(&fThreads[0]);
+        fAudioInputWorker.moveToThread(&fThreads[1]);
+        fAudioOutputWorker.moveToThread(&fThreads[2]);
+
+        // connect worker signals and slots as needed
+        connect(&fIteratorWorker, &WorkerToxAVIterator::audioFrameReceived, &fAudioOutputWorker, &WorkerAudioOutput::onAudioFrameReceived);
+        connect(this, &ToxCoreAV::startAudio, &fIteratorWorker, &WorkerToxAVIterator::start);
+        connect(this, &ToxCoreAV::stopAudio, &fIteratorWorker, &WorkerToxAVIterator::stop, Qt::BlockingQueuedConnection); // needs to wait for it
+        connect(this, &ToxCoreAV::startAudio, &fAudioInputWorker, &WorkerAudioInput::start);
+        connect(this, &ToxCoreAV::stopAudio, &fAudioInputWorker, &WorkerAudioInput::stop, Qt::BlockingQueuedConnection); // needs to wait for it
+        connect(this, &ToxCoreAV::startAudio, &fAudioOutputWorker, &WorkerAudioOutput::start);
+        connect(this, &ToxCoreAV::stopAudio, &fAudioOutputWorker, &WorkerAudioOutput::stop, Qt::BlockingQueuedConnection); // needs to wait for it
+
+        for (int i = 0; i < 3; i++) {
+            fThreads[i].start();
+        }
     }
 
     ToxCoreAV::~ToxCoreAV()
@@ -50,31 +63,6 @@ namespace JTOX {
 
         handleGlobalCallState(friend_id, state); // in call or finished/error/none
         emit callStateChanged(friend_id, state);
-    }
-
-    void ToxCoreAV::onAudioFrameReceived(quint32 friend_id, const qint16* pcm, size_t sample_count, quint8 channels, quint32 sampling_rate)
-    {
-        Q_UNUSED(sampling_rate);
-
-        if (fAudioOutputPipe == nullptr) {
-            emit errorOccurred("Audio output not intialized");
-            endCall(friend_id); // prevents spamming this error
-            return;
-        }
-
-        qint64 byteSize = sample_count * channels * 2;
-        qint64 totalWritten = 0;
-
-        while (totalWritten < byteSize) {
-            qint64 written = fAudioOutputPipe->write((char*) pcm, byteSize); // in bytes
-
-            if (written < 0) {
-                qWarning() << "Error writing to audio output: " << fAudioInputPipe->errorString();
-                return;
-            }
-
-            totalWritten += written;
-        }
     }
 
     bool ToxCoreAV::answerIncomingCall(quint32 friend_id, quint32 audio_bitrate)
@@ -161,8 +149,7 @@ namespace JTOX {
         Utils::handleToxAVNewError(error);
 
         initCallbacks();
-        fActiveCallFriendID = -1; // keep thread running, but out of call
-        start();
+        emit avIteratorStart(fToxAV);
     }
 
     void ToxCoreAV::beforeToxKill()
@@ -171,33 +158,10 @@ namespace JTOX {
             return;
         }
 
-        fActiveCallFriendID = -2; // stop thread
-        if (!wait(DEFAULT_OOC_DELAY * 2)) { // allow 2x max delay
-            qWarning() << "Audio processing thread failed to finish\n";
-            terminate();
-            wait();
-        }
+        emit avIteratorStop();
 
         toxav_kill(fToxAV);
         fToxAV = nullptr;
-    }
-
-    void ToxCoreAV::run()
-    {
-        if (fToxAV == nullptr) {
-            qWarning() << "toxav_iterate called with null toxav\n";
-            return;
-        }
-
-        while (fActiveCallFriendID > -2) {
-            toxav_iterate(fToxAV);
-
-            if (fActiveCallFriendID >= 0) {
-                sendNextAudioFrame(fActiveCallFriendID);
-            }
-
-            QThread::msleep(toxav_iteration_interval(fToxAV));
-        }
     }
 
     void ToxCoreAV::initCallbacks()
@@ -205,7 +169,8 @@ namespace JTOX {
         toxav_callback_call(fToxAV, c_toxav_call_cb, this);
         toxav_callback_call_state(fToxAV, c_toxav_call_state_cb, this);
         toxav_callback_audio_bit_rate(fToxAV, c_toxav_audio_bit_rate_cb, this);
-        toxav_callback_audio_receive_frame(fToxAV, c_toxav_audio_receive_frame_cb, this);
+        // toxav_callback_audio_receive_frame(fToxAV, c_toxav_audio_receive_frame_cb, this);
+        toxav_callback_audio_receive_frame(fToxAV, c_toxav_audio_receive_frame_cb, &fIteratorWorker); // make sure to call callback in same object/thread
     }
 
     MCECallState ToxCoreAV::getMaxGlobalState() const
@@ -236,113 +201,14 @@ namespace JTOX {
 
         if (maxState != fGlobalCallState) {
             if (maxState == csActive) {
-                startAudio(friend_id);
+                emit startAudio(fToxAV, friend_id);
             } else if (fGlobalCallState == csActive) {
-                stopAudio();
+                emit stopAudio();
             }
 
             fGlobalCallState = maxState;
             emit globalCallStateChanged(fGlobalCallState);
         }
-    }
-
-    void ToxCoreAV::startAudio(quint32 friend_id)
-    {
-        if (fAudioInputPipe != nullptr) {
-            Utils::fatal("Audio input double open");
-        }
-
-        if (fAudioOutputPipe != nullptr) {
-            Utils::fatal("Audio output double open");
-        }
-
-        qDebug() << "Starting audio!\n";
-
-        fActiveCallFriendID = friend_id;
-        fAudioInputPipe = fAudioInput.start();
-        if (fAudioInput.error() != QAudio::NoError) {
-            fAudioInputPipe = nullptr;
-            return;
-            emit errorOccurred("Error opening audio input");
-        }
-
-        fAudioOutputPipe = fAudioOutput.start();
-        if (fAudioOutput.error() != QAudio::NoError) {
-            fAudioOutputPipe = nullptr;
-            return;
-            emit errorOccurred("Error opening audio output");
-        }
-
-    }
-
-    void ToxCoreAV::stopAudio()
-    {
-
-        if (fAudioOutputPipe == nullptr || fAudioInputPipe == nullptr) {
-            return; // probably ringing -> none
-        }
-
-        qDebug() << "Stopping audio!\n";
-
-        fActiveCallFriendID = -1;
-
-        fAudioInput.stop(); // closes fAudioInputPipe
-        fAudioOutput.stop(); // closes fAudioOutputPipe
-
-        fAudioInputPipe = nullptr;
-        fAudioOutputPipe = nullptr;
-    }
-
-    void ToxCoreAV::sendNextAudioFrame(quint32 friend_id)
-    {
-        // we're sending frames of sampled data in chunks of 20ms worth given the sampling rate
-        // sampling rate * sampling time (ms) * channels / 1000
-        constexpr int BYTES_REQUIRED = 48 * 20 * 2; // TODO: unhardcore sampling rate and channels, keep 20ms as optimal
-        constexpr quint32 SAMPLE_COUNT = BYTES_REQUIRED / 2 / 2; // total bytes in frame / channels / sample_byte_size (16 bit)
-
-        if (fAudioInput.bytesReady() < BYTES_REQUIRED) { // next time
-            return;
-        }
-
-        int iteration = 0;
-        while (fAudioInput.bytesReady() >= BYTES_REQUIRED) {
-            const QByteArray micData = fAudioInputPipe->read(BYTES_REQUIRED);
-            if (micData.isEmpty() || micData.size() != BYTES_REQUIRED) {
-                qWarning() << "Unexpected empty read on audio input iter: " << iteration;
-                return;
-            }
-
-            const qint16* pcm = (qint16*) micData.constData();
-
-            TOXAV_ERR_SEND_FRAME error;
-            // TODO: unhardcode channels and sampling rate
-            toxav_audio_send_frame(fToxAV, friend_id, pcm, SAMPLE_COUNT, 2, 48000, &error);
-
-            const QString errorStr = Utils::handleToxAVSendError(error);
-            if (!errorStr.isEmpty()) {
-                qWarning() << errorStr;
-                return;
-            }
-            iteration++;
-        }
-    }
-
-    const QAudioFormat ToxCoreAV::defaultAudioFormat()
-    {
-        QAudioFormat result;
-
-        result.setCodec("audio/pcm");
-        result.setSampleType(QAudioFormat::SignedInt);
-        result.setChannelCount(2); // TODO: this needs to be set according to frame data for incoming!
-        result.setSampleSize(16);
-        result.setSampleRate(48000);
-
-        QAudioDeviceInfo info(QAudioDeviceInfo::defaultOutputDevice());
-        if (!info.isFormatSupported(result)) {
-            qWarning() << "Raw audio format not supported by backend, cannot play audio.";
-        }
-
-        return result;
     }
 
 }

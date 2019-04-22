@@ -40,7 +40,8 @@ SOURCES += \
     src/harbour-jtox.cpp \
     src/dirmodel.cpp \
     src/avatarprovider.cpp \
-    src/toxcoreav.cpp
+    src/toxcoreav.cpp \
+    src/workerav.cpp
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \
@@ -102,7 +103,8 @@ HEADERS += \
     src/dbdata.h \
     src/dirmodel.h \
     src/avatarprovider.h \
-    src/toxcoreav.h
+    src/toxcoreav.h \
+    src/workerav.h
 
 DISTFILES += \
     qml/pages/About.qml \

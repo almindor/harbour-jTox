@@ -37,6 +37,10 @@
 #include "dirmodel.h"
 #include "utils.h"
 
+//// we're passing
+//Q_DECLARE_OPAQUE_POINTER(ToxAV*)
+//Q_DECLARE_METATYPE(ToxAV*)
+
 using namespace JTOX;
 
 int main(int argc, char *argv[])
@@ -47,6 +51,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
+//    qRegisterMetaType<ToxAV*>();
     register_signals();
 
     QGuiApplication *app = SailfishApp::application(argc, argv);
