@@ -133,36 +133,41 @@ namespace JTOX {
         }
         // we're sending frames of sampled data in chunks of 20ms worth given the sampling rate
         // sampling rate * sampling time (ms) * channels / 1000
-        constexpr int FRAME_TIME = 20; // 20 ms
+        constexpr int FRAME_TIME = 20; // 20 ms opus golden standard
+        constexpr int MAX_FRAMES = 2; // 40 ms seems to be max, toxav docs say 60 ms but that errors out for me
         const QAudioFormat format = fAudioInput->format();
-        int bytesRequired = format.sampleRate() * format.channelCount() * FRAME_TIME / 1000;
-        quint32 sampleCount = bytesRequired / format.channelCount() / 2; // total bytes in frame / channels / sample_byte_size (16 bit)
+        int frameBytes = format.sampleRate() * format.channelCount() * FRAME_TIME / 1000;
+        quint32 sampleCount = frameBytes / format.channelCount() / 2; // total bytes in frame / channels / sample_byte_size (16 bit)
 
-        if (fAudioInput->bytesReady() < bytesRequired) { // next time
+        if (fAudioInput->bytesReady() < frameBytes) { // next time
             return;
         }
 
-        quint64 written = 0;
-        int iteration = 0;
-        while (fAudioInput->bytesReady() >= bytesRequired) {
-            const QByteArray micData = fPipe->read(bytesRequired);
-            if (micData.isEmpty() || micData.size() != bytesRequired) {
-                qWarning() << "Unexpected empty read on audio input iter: " << iteration;
-                return;
-            }
+        int framesReady = fAudioInput->bytesReady() / frameBytes;
+        int bytesAvailable = frameBytes * framesReady;
 
-            const qint16* pcm = (qint16*) micData.constData();
+        const QByteArray micData = fPipe->read(bytesAvailable);
+        if (micData.isEmpty() || micData.size() != bytesAvailable) {
+            qWarning() << "Unexpected low/empty read on audio input: " << micData.size();
+            return;
+        }
+
+        const qint16* pcm = (qint16*) micData.constData();
+
+        while (framesReady > 0) {
+            int frames = framesReady > MAX_FRAMES ? MAX_FRAMES : framesReady;
 
             TOXAV_ERR_SEND_FRAME error;
-            toxav_audio_send_frame(fToxAV, fFriendID, pcm, sampleCount, format.channelCount(), format.sampleRate(), &error);
+            toxav_audio_send_frame(fToxAV, fFriendID, pcm, sampleCount * frames, format.channelCount(), format.sampleRate(), &error);
 
             const QString errorStr = Utils::handleToxAVSendError(error);
             if (!errorStr.isEmpty()) {
                 qWarning() << errorStr;
                 return;
             }
-            written += micData.size();
-            iteration++;
+
+            pcm += (sampleCount * frames); // move on
+            framesReady -= frames; // we sent this many frames, subtract from ready ones
         }
     }
 
@@ -171,6 +176,11 @@ namespace JTOX {
         Q_UNUSED(friend_id);
 
         fAudioInput = new QAudioInput(WorkerAV::makeAudioFormat(channels, samplingRate));
+
+        // we're not using this internal thread/signalling scheme because it has daddy issues
+//        connect(fAudioInput, &QAudioInput::notify, this, &WorkerAudioInput::iterate);
+//        fAudioInput->setNotifyInterval(20); // opus default 20ms for voip
+
         fPipe = fAudioInput->start();
         if (fAudioInput->error() != QAudio::NoError) {
             fPipe = nullptr;
@@ -188,8 +198,6 @@ namespace JTOX {
         fPipe = nullptr;
     }
 
-
-
     WorkerAudioInput::WorkerAudioInput() : WorkerAV()
     {
 
@@ -200,7 +208,7 @@ namespace JTOX {
         WorkerAV::start(toxAV, friend_id); // set variables
 
         startPipe(friend_id, 1, 24000);
-        WorkerIterator::start(20);
+        WorkerIterator::start(15); // QAudioInput has thrading daddy issues so we read from it in this thread manually
     }
 
     //---------------------- WorkerAudioOutput -------------------------//
@@ -221,6 +229,7 @@ namespace JTOX {
             qWarning() << "Error opening audio output"; // TODO: proper error handling
         }
 
+        qDebug() << "Started audio output with buffer size: " << fAudioOutput->bufferSize();
         return fPipe;
     }
 
@@ -261,6 +270,10 @@ namespace JTOX {
             if (written < 0) {
                 qWarning() << "Error writing to audio output: " << fPipe->errorString(); // TODO: proper error handling
                 return;
+            }
+
+            if (written == 0) {
+                return; // TODO: buffer full I suppose, need to investigate handling this better
             }
 
             totalWritten += written;

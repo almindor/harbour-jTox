@@ -16,9 +16,9 @@ namespace JTOX {
         fAudioOutputWorker.moveToThread(&fThreads[2]);
 
         // connect worker signals and slots as needed
-        connect(&fIteratorWorker, &WorkerToxAVIterator::audioFrameReceived, &fAudioOutputWorker, &WorkerAudioOutput::onAudioFrameReceived);
-        connect(this, &ToxCoreAV::startAudio, &fIteratorWorker, &WorkerToxAVIterator::start);
-        connect(this, &ToxCoreAV::stopAudio, &fIteratorWorker, &WorkerToxAVIterator::stop, Qt::BlockingQueuedConnection); // needs to wait for it
+        connect(&fIteratorWorker, &WorkerToxAVIterator::audioFrameReceived, &fAudioOutputWorker, &WorkerAudioOutput::onAudioFrameReceived, Qt::QueuedConnection);
+        connect(this, &ToxCoreAV::avIteratorStart, &fIteratorWorker, &WorkerToxAVIterator::start);
+        connect(this, &ToxCoreAV::avIteratorStop, &fIteratorWorker, &WorkerToxAVIterator::stop, Qt::BlockingQueuedConnection); // needs to wait for it
         connect(this, &ToxCoreAV::startAudio, &fAudioInputWorker, &WorkerAudioInput::start);
         connect(this, &ToxCoreAV::stopAudio, &fAudioInputWorker, &WorkerAudioInput::stop, Qt::BlockingQueuedConnection); // needs to wait for it
         connect(this, &ToxCoreAV::startAudio, &fAudioOutputWorker, &WorkerAudioOutput::start);
@@ -34,6 +34,10 @@ namespace JTOX {
         // stack deconstructs our object before ToxCore thus we never get beforeToxKill() in case of app shutdown
         // handle this case from destructor here
         beforeToxKill();
+
+        for (int i = 0; i < 3; i++) {
+            fThreads[i].quit();
+        }
     }
 
     void ToxCoreAV::onIncomingCall(quint32 friend_id, bool audio, bool video)
