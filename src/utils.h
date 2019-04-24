@@ -21,7 +21,6 @@
 #include <QList>
 #include <QString>
 #include <QByteArray>
-#include <stdint.h>
 #include <tox/tox.h>
 #include <tox/toxav.h>
 #include <QException>

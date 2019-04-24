@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../js/common.js" as Common
 
 ListItem {
     id: mainItem
@@ -36,7 +37,7 @@ ListItem {
 
         MenuItem {
             text: qsTr("Call")
-            onClicked: gotoDetails(Qt.resolvedUrl("../pages/Messages.qml"), Qt.resolvedUrl("../pages/Calls.qml"), true)
+            onClicked: Common.jumpToCall(appWindow, pageStack, eventmodel, friend_id, null, PageStackAction.Immediate)
         }
 
         MenuItem {

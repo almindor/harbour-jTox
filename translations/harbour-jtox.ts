@@ -308,27 +308,27 @@
 <context>
     <name>FriendItem</name>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="33"/>
+        <location filename="../qml/components/FriendItem.qml" line="34"/>
         <source>Messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="38"/>
+        <location filename="../qml/components/FriendItem.qml" line="39"/>
         <source>Call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="43"/>
+        <location filename="../qml/components/FriendItem.qml" line="44"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="44"/>
+        <location filename="../qml/components/FriendItem.qml" line="45"/>
         <source>Removing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="50"/>
+        <location filename="../qml/components/FriendItem.qml" line="51"/>
         <source>Details</source>
         <translation type="unfinished"></translation>
     </message>
@@ -648,32 +648,32 @@
 <context>
     <name>common</name>
     <message>
-        <location filename="../qml/js/common.js" line="64"/>
+        <location filename="../qml/js/common.js" line="85"/>
         <source>Incoming call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="66"/>
+        <location filename="../qml/js/common.js" line="87"/>
         <source>Outgoing call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="67"/>
+        <location filename="../qml/js/common.js" line="88"/>
         <source>Missed call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="68"/>
+        <location filename="../qml/js/common.js" line="89"/>
         <source>Unanswered call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="70"/>
+        <location filename="../qml/js/common.js" line="91"/>
         <source>Finished call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="73"/>
+        <location filename="../qml/js/common.js" line="94"/>
         <source>Unknown call state</source>
         <translation type="unfinished"></translation>
     </message>
@@ -681,52 +681,52 @@
 <context>
     <name>harbour-jtox</name>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="76"/>
+        <location filename="../qml/harbour-jtox.qml" line="78"/>
         <source>New friend request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="77"/>
+        <location filename="../qml/harbour-jtox.qml" line="79"/>
         <source>Account Imported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="78"/>
+        <location filename="../qml/harbour-jtox.qml" line="80"/>
         <source>Account Exported: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="79"/>
+        <location filename="../qml/harbour-jtox.qml" line="81"/>
         <source>New account created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="80"/>
+        <location filename="../qml/harbour-jtox.qml" line="82"/>
         <source>Chat history wiped</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="98"/>
+        <location filename="../qml/harbour-jtox.qml" line="100"/>
         <source>Message from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="99"/>
+        <location filename="../qml/harbour-jtox.qml" line="101"/>
         <source>Transfer from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="100"/>
+        <location filename="../qml/harbour-jtox.qml" line="102"/>
         <source>File transfer complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="109"/>
+        <location filename="../qml/harbour-jtox.qml" line="111"/>
         <source>Registered on </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="110"/>
+        <location filename="../qml/harbour-jtox.qml" line="112"/>
         <source>Removed from </source>
         <translation type="unfinished"></translation>
     </message>

@@ -339,8 +339,8 @@ namespace JTOX {
     const QString Utils::handleToxAVSendError(TOXAV_ERR_SEND_FRAME error)
     {
         switch (error) {
-            case TOXAV_ERR_SEND_FRAME_FRIEND_NOT_FOUND: return fatal("[A/V] Friend not found");
-            case TOXAV_ERR_SEND_FRAME_FRIEND_NOT_IN_CALL: return fatal("[A/V] Friend not in call");
+            case TOXAV_ERR_SEND_FRAME_FRIEND_NOT_FOUND: return bail("[A/V] Friend not found", true);
+            case TOXAV_ERR_SEND_FRAME_FRIEND_NOT_IN_CALL: return bail("[A/V] Friend not in call", true);
             case TOXAV_ERR_SEND_FRAME_INVALID: return bail("[A/V] Frame invalid", true);
             case TOXAV_ERR_SEND_FRAME_NULL: return bail("[A/V] Frame null", true);
             case TOXAV_ERR_SEND_FRAME_PAYLOAD_TYPE_DISABLED: return bail("[A/V] Payload type disabled", true);

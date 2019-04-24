@@ -28,6 +28,27 @@ var EventType = {
     CallOutFinished: 23
 };
 
+function jumpToCall(appWindow, pageStack, eventmodel, friend_id, friendIndex, animType) {
+    if ( !appWindow.applicationActive ) {
+        appWindow.activate()
+    }
+
+    // jump up to friends page
+    while ( pageStack.depth > 1 ) {
+        pageStack.pop(null, PageStackAction.Immediate)
+    }
+
+    if (friendIndex >= 0) {
+        friend_id = eventmodel.setFriendIndex(friendIndex)
+    }
+
+    appWindow.activeFriendID = friend_id
+    eventmodel.setFriend(friend_id)
+    pageStack.push("../pages/Messages.qml", { friend_id: appWindow.activeFriendID }, animType)
+    pageStack.pushAttached("../pages/Calls.qml", { friend: appWindow.activeFriendID }, animType)
+    pageStack.navigateForward(animType)
+}
+
 function isMessage(et) {
     return [EventType.MessageIn, EventType.MessageInUnread, EventType.MessageOut,
             EventType.MessageOutPending, EventType.MessageOutOffline].indexOf(et) >= 0;

@@ -27,13 +27,13 @@ Page {
     Rectangle {
         id: blank
 
-        visible: proximitySensor.reading.near && toxcoreav.globalCallState > 0
+        visible: toxcoreav.globalCallState > 0 && proximitySensor.reading.near
         anchors.fill: parent
         color: "black"
     }
 
     SilicaFlickable {
-        visible: !(proximitySensor.reading.near && toxcoreav.globalCallState > 0)
+        visible: !(toxcoreav.globalCallState > 0 && proximitySensor.reading.near)
         anchors.fill: parent
         contentWidth: parent.width
         contentHeight: parent.height - Theme.paddingLarge

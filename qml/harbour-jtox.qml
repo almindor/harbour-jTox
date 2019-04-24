@@ -21,6 +21,7 @@ import QtFeedback 5.0
 import Nemo.DBus 2.0
 import Nemo.Notifications 1.0
 import "pages"
+import "js/common.js" as Common
 
 ApplicationWindow
 {
@@ -95,7 +96,7 @@ ApplicationWindow
 
     Connections {
         target: eventmodel
-        onIncomingCall: dbus.call(friendIndex) // banner("m-incoming-call", qsTr("Call from") + " " + friendName, "call", [friendIndex], appWindow.applicationActive)
+        onIncomingCall: Common.jumpToCall(appWindow, pageStack, eventmodel, null, friendIndex, PageStackAction.Immediate)
         onMessageReceived: banner("x-nemo.messaging.im", qsTr("Message from") + " " + friendName, "message", [friendIndex], appWindow.applicationActive)
         onTransferReceived: banner("x-nemo.messaging.mms", qsTr("Transfer from") + " " + friendName, "message", [friendIndex], appWindow.applicationActive)
         onTransferComplete: banner("x-nemo.transfer.complete", qsTr("File transfer complete"), "message", [friendIndex], appWindow.applicationActive)
@@ -150,23 +151,6 @@ ApplicationWindow
 
             appWindow.activeFriendID = eventmodel.setFriendIndex(friendIndex)
             pageStack.push(Qt.resolvedUrl("pages/Messages.qml"), null, PageStackAction.Immediate)
-        }
-
-        function call(friendIndex) {
-            if ( !appWindow.applicationActive ) {
-                appWindow.activate()
-            }
-
-            // jump up to friends page
-            while ( pageStack.depth > 1 ) {
-                pageStack.pop(null, PageStackAction.Immediate)
-            }
-
-            appWindow.activeFriendID = eventmodel.setFriendIndex(friendIndex)
-            eventmodel.setFriend(appWindow.activeFriendID)
-            pageStack.push("pages/Messages.qml", { friend_id: appWindow.activeFriendID }, PageStackAction.Immediate)
-            pageStack.pushAttached("pages/Calls.qml", { friend: appWindow.activeFriendID }, PageStackAction.Immediate)
-            pageStack.navigateForward(PageStackAction.Immediate)
         }
     }
 
