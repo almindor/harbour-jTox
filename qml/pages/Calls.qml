@@ -17,12 +17,23 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import QtSensors 5.2
 import "../components"
 
 Page {
+    id: callsPage
     allowedOrientations: Orientation.Portrait
 
+    Rectangle {
+        id: blank
+
+        visible: proximitySensor.reading.near && toxcoreav.globalCallState > 0
+        anchors.fill: parent
+        color: "black"
+    }
+
     SilicaFlickable {
+        visible: !(proximitySensor.reading.near && toxcoreav.globalCallState > 0)
         anchors.fill: parent
         contentWidth: parent.width
         contentHeight: parent.height - Theme.paddingLarge
@@ -81,6 +92,11 @@ Page {
             anchors {
                 centerIn: parent
             }
+        }
+
+        ProximitySensor {
+            id: proximitySensor
+            active: toxcoreav.globalCallState > 0 // ringing or in call
         }
     }
 }

@@ -17,7 +17,6 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import QtSensors 5.2
 import QtFeedback 5.0
 import Nemo.DBus 2.0
 import Nemo.Notifications 1.0
@@ -47,30 +46,31 @@ ApplicationWindow
         repeat: true
     }
 
-    DBusInterface {
-        id: mce
+    // TODO: re-enable once audio sink switch is done and mce actually works
+//    DBusInterface {
+//        id: mce
 
-        bus: DBus.SystemBus
-        service: 'com.nokia.mce'
-        iface: 'com.nokia.mce.request'
-        path: '/com/nokia/mce/request'
+//        bus: DBus.SystemBus
+//        service: 'com.nokia.mce'
+//        iface: 'com.nokia.mce.request'
+//        path: '/com/nokia/mce/request'
 
-        function setCallState(state) {
-            var strState = 'none'
-            switch (state) {
-                case 0: strState = 'none'; break;
-                case 1: strState = 'ringing'; break;
-                case 2: strState = 'active'; break;
-                default: console.error('Unknown MCE state from ToxCoreAV'); break;
-            }
+//        function setCallState(state) {
+//            var strState = 'none'
+//            switch (state) {
+//                case 0: strState = 'none'; break;
+//                case 1: strState = 'ringing'; break;
+//                case 2: strState = 'active'; break;
+//                default: console.error('Unknown MCE state from ToxCoreAV'); break;
+//            }
 
-            // Telephony.audioMode = 'earpiece'
-            console.log('setting mce call state: ' + strState)
-            mce.call('req_call_state_change', [strState, 'normal'],
-                     function(result) { console.log('call completed with:', result) },
-                     function(error, message) { console.error('call failed', error, 'message:', message) })
-        }
-    }
+//            // Telephony.audioMode = 'earpiece'
+//            console.log('setting mce call state: ' + strState)
+//            mce.call('req_call_state_change', [strState, 'normal'],
+//                     function(result) { console.log('call completed with:', result) },
+//                     function(error, message) { console.error('call failed', error, 'message:', message) })
+//        }
+//    }
 
     Connections {
         target: toxcore
@@ -84,7 +84,7 @@ ApplicationWindow
 
     Connections {
         target: toxcoreav
-        onGlobalCallStateChanged: mce.setCallState(state)
+//        onGlobalCallStateChanged: mce.setCallState(state)
         onErrorOccurred: banner("x-nemo.messaging.error", error, "error", [error], appWindow.applicationActive)
     }
 

@@ -259,22 +259,22 @@
 <context>
     <name>Calls</name>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="57"/>
+        <location filename="../qml/pages/Calls.qml" line="68"/>
         <source>Answer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="70"/>
+        <location filename="../qml/pages/Calls.qml" line="81"/>
         <source>Reject</source>
         <translation type="unfinished">Rechazar</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="51"/>
+        <location filename="../qml/pages/Calls.qml" line="62"/>
         <source>Call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="70"/>
+        <location filename="../qml/pages/Calls.qml" line="81"/>
         <source>End Call</source>
         <translation type="unfinished"></translation>
     </message>
@@ -681,52 +681,52 @@
 <context>
     <name>harbour-jtox</name>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="77"/>
+        <location filename="../qml/harbour-jtox.qml" line="76"/>
         <source>New friend request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="78"/>
+        <location filename="../qml/harbour-jtox.qml" line="77"/>
         <source>Account Imported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="79"/>
+        <location filename="../qml/harbour-jtox.qml" line="78"/>
         <source>Account Exported: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="80"/>
+        <location filename="../qml/harbour-jtox.qml" line="79"/>
         <source>New account created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="81"/>
+        <location filename="../qml/harbour-jtox.qml" line="80"/>
         <source>Chat history wiped</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="99"/>
+        <location filename="../qml/harbour-jtox.qml" line="98"/>
         <source>Message from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="100"/>
+        <location filename="../qml/harbour-jtox.qml" line="99"/>
         <source>Transfer from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="101"/>
+        <location filename="../qml/harbour-jtox.qml" line="100"/>
         <source>File transfer complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="110"/>
+        <location filename="../qml/harbour-jtox.qml" line="109"/>
         <source>Registered on </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="111"/>
+        <location filename="../qml/harbour-jtox.qml" line="110"/>
         <source>Removed from </source>
         <translation type="unfinished"></translation>
     </message>
