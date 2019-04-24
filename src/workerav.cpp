@@ -2,6 +2,8 @@
 #include "utils.h"
 #include <QDebug>
 
+#include <QThread>
+
 namespace JTOX {
 
     //------------------------WorkerIterator---------------------------//
@@ -68,6 +70,7 @@ namespace JTOX {
 
     void WorkerToxAVIterator::start(void* toxAV)
     {
+        qDebug() << "WorkerToxAVIterator threadID: " << QThread::currentThreadId();
         fToxAV = (ToxAV*) toxAV;
         WorkerIterator::start(toxav_iteration_interval(fToxAV));
     }
@@ -134,7 +137,6 @@ namespace JTOX {
         // we're sending frames of sampled data in chunks of 20ms worth given the sampling rate
         // sampling rate * sampling time (ms) * channels / 1000
         constexpr int FRAME_TIME = 20; // 20 ms opus golden standard
-        constexpr int MAX_FRAMES = 2; // 40 ms seems to be max, toxav docs say 60 ms but that errors out for me
         const QAudioFormat format = fAudioInput->format();
         int frameBytes = format.sampleRate() * format.channelCount() * FRAME_TIME / 1000;
         quint32 sampleCount = frameBytes / format.channelCount() / 2; // total bytes in frame / channels / sample_byte_size (16 bit)
@@ -155,19 +157,17 @@ namespace JTOX {
         const qint16* pcm = (qint16*) micData.constData();
 
         while (framesReady > 0) {
-            int frames = framesReady > MAX_FRAMES ? MAX_FRAMES : framesReady;
-
             TOXAV_ERR_SEND_FRAME error;
-            toxav_audio_send_frame(fToxAV, fFriendID, pcm, sampleCount * frames, format.channelCount(), format.sampleRate(), &error);
+            toxav_audio_send_frame(fToxAV, fFriendID, pcm, sampleCount, format.channelCount(), format.sampleRate(), &error);
 
             const QString errorStr = Utils::handleToxAVSendError(error);
             if (!errorStr.isEmpty()) {
-                qWarning() << errorStr;
+                qWarning() << errorStr; // TODO: proper error handling
                 return;
             }
 
-            pcm += (sampleCount * frames); // move on
-            framesReady -= frames; // we sent this many frames, subtract from ready ones
+            pcm += sampleCount; // next frame data
+            framesReady -= 1;
         }
     }
 
@@ -222,7 +222,14 @@ namespace JTOX {
     {
         Q_UNUSED(friend_id);
 
+        if (fAudioOutput != nullptr) {
+           qWarning() << "Existing audio output found"; // TODO: proper error handling
+        }
+
+        qWarning() << "Pre AO!";
         fAudioOutput = new QAudioOutput(WorkerAV::makeAudioFormat(channels, samplingRate));
+        qWarning() << "Post AO!";
+
         fPipe = fAudioOutput->start();
         if (fAudioOutput->error() != QAudio::NoError) {
             fPipe = nullptr;
@@ -243,6 +250,8 @@ namespace JTOX {
 
     void WorkerAudioOutput::start(void* toxAV, quint32 friend_id)
     {
+        qDebug() << "WorkerAudioOutput threadID: " << QThread::currentThreadId();
+
         WorkerAV::start(toxAV, friend_id); // set variables
 
         // NOTHING! we're waiting for signal from AV iterator worker to push the data to output in this thread
@@ -258,6 +267,7 @@ namespace JTOX {
     {
         if (fPipe == nullptr) { // first frame, init pipe as needed
             qDebug() << "Starting audio output";
+            qDebug() << "onAudioFrameReceived threadID: " << QThread::currentThreadId();
             fPipe = startPipe(friend_id, channels, sampling_rate);
         }
 

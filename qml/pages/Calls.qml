@@ -44,18 +44,33 @@ Page {
         }
 
         PullDownMenu {
-            visible: toxcoreav.globalCallState === 1 // ringing
+            visible: toxcoreav.globalCallState < 2 // not in call
+
             MenuItem {
+                visible: toxcoreav.globalCallState === 0 // none
+                text: qsTr("Call")
+                onClicked: toxcoreav.callFriend(appWindow.activeFriendID)
+            }
+
+            MenuItem {
+                visible: toxcoreav.globalCallState === 1 // ringing
                 text: qsTr("Answer")
                 onClicked: toxcoreav.answerIncomingCall(appWindow.activeFriendID)
             }
         }
 
         PushUpMenu {
-            visible: toxcoreav.globalCallState === 1 // ringing
+            visible: toxcoreav.globalCallState > 0 // ringing or in call
 
             MenuItem {
+                visible: toxcoreav.globalCallState === 1 // ringing
                 text: qsTr("Reject")
+                onClicked: toxcoreav.endCall(appWindow.activeFriendID)
+            }
+
+            MenuItem {
+                visible: toxcoreav.globalCallState === 2 // in call
+                text: qsTr("End Call")
                 onClicked: toxcoreav.endCall(appWindow.activeFriendID)
             }
         }
@@ -68,28 +83,6 @@ Page {
 
             anchors {
                 centerIn: parent
-            }
-        }
-
-        Button {
-            visible: toxcoreav.globalCallState === 0 // none
-            text: qsTr("Call")
-            onClicked: toxcoreav.callFriend(appWindow.activeFriendID)
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                bottom: parent.bottom
-                bottomMargin: Theme.paddingLarge
-            }
-        }
-
-        Button {
-            visible: toxcoreav.globalCallState > 0 // ringing or calling
-            text: qsTr("End Call")
-            onClicked: toxcoreav.endCall(appWindow.activeFriendID)
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                bottom: parent.bottom
-                bottomMargin: Theme.paddingLarge
             }
         }
     }

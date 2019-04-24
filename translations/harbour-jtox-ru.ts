@@ -259,22 +259,22 @@
 <context>
     <name>Calls</name>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="49"/>
+        <location filename="../qml/pages/Calls.qml" line="57"/>
         <source>Answer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="58"/>
+        <location filename="../qml/pages/Calls.qml" line="67"/>
         <source>Reject</source>
         <translation type="unfinished">Отклонить</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="76"/>
+        <location filename="../qml/pages/Calls.qml" line="51"/>
         <source>Call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="87"/>
+        <location filename="../qml/pages/Calls.qml" line="73"/>
         <source>End Call</source>
         <translation type="unfinished"></translation>
     </message>
