@@ -18,13 +18,10 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtSensors 5.2
+import QtFeedback 5.0
 import Nemo.DBus 2.0
 import Nemo.Notifications 1.0
 import "pages"
-
-// debug
-// import QtMultimedia 5.6
-// import Sailfish.Telephony 1.0
 
 ApplicationWindow
 {
@@ -36,15 +33,19 @@ ApplicationWindow
     _defaultPageOrientations: Orientation.Portrait
     onApplicationActiveChanged: toxcore.setApplicationActive(applicationActive);
 
-//    MediaPlayer {
-//        source: "file:///home/nemo/test.wav"
-//        audioRole: MediaPlayer.VoiceCommunicationRole
-//        autoPlay: true
-//    }
-//    ProximitySensor {
-//        active: true // TODO: only in call!
-//        onReadingChanged: console.log('NEar: ' + reading.near)
-//    }
+    HapticsEffect {
+        id: vibrate
+        duration: 1000
+        intensity: 1.0
+    }
+
+    Timer {
+        id: ringer
+        onTriggered: vibrate.start()
+        interval: 2000
+        running: toxcoreav.callIsIncoming && toxcoreav.globalCallState === 1 // incoming and ringing
+        repeat: true
+    }
 
     DBusInterface {
         id: mce

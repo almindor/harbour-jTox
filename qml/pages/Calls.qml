@@ -44,7 +44,7 @@ Page {
         }
 
         PullDownMenu {
-            visible: toxcoreav.globalCallState < 2 // not in call
+            visible: toxcoreav.globalCallState < 2
 
             MenuItem {
                 visible: toxcoreav.globalCallState === 0 // none
@@ -53,24 +53,21 @@ Page {
             }
 
             MenuItem {
-                visible: toxcoreav.globalCallState === 1 // ringing
+                visible: toxcoreav.globalCallState === 1 && toxcoreav.callIsIncoming // ringing
                 text: qsTr("Answer")
                 onClicked: toxcoreav.answerIncomingCall(appWindow.activeFriendID)
             }
         }
 
         PushUpMenu {
+            backgroundColor: "red"
+            highlightColor: "red"
+
             visible: toxcoreav.globalCallState > 0 // ringing or in call
 
             MenuItem {
-                visible: toxcoreav.globalCallState === 1 // ringing
-                text: qsTr("Reject")
-                onClicked: toxcoreav.endCall(appWindow.activeFriendID)
-            }
-
-            MenuItem {
-                visible: toxcoreav.globalCallState === 2 // in call
-                text: qsTr("End Call")
+                color: "red"
+                text: toxcoreav.globalCallState === 1 && toxcoreav.callIsIncoming ? qsTr("Reject") : qsTr("End Call")
                 onClicked: toxcoreav.endCall(appWindow.activeFriendID)
             }
         }

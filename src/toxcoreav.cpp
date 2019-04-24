@@ -8,7 +8,8 @@ namespace JTOX {
     ToxCoreAV::ToxCoreAV(ToxCore& toxCore): QObject(0),
         fToxCore(toxCore), fToxAV(nullptr),
         fCallStateMap(),
-        fGlobalCallState(csNone)
+        fGlobalCallState(csNone),
+        fLastCallIsIncoming(false)
     {
         // move workers to their respective threads
         fIteratorWorker.moveToThread(&fThreads[0]);
@@ -43,6 +44,8 @@ namespace JTOX {
     void ToxCoreAV::onIncomingCall(quint32 friend_id, bool audio, bool video)
     {
         qDebug() << "Incoming call!\n";
+        fLastCallIsIncoming = true;
+
         TOXAV_ERR_CALL_CONTROL error;
 
         // disable video right away until we support it
@@ -173,7 +176,6 @@ namespace JTOX {
         toxav_callback_call(fToxAV, c_toxav_call_cb, this);
         toxav_callback_call_state(fToxAV, c_toxav_call_state_cb, this);
         toxav_callback_audio_bit_rate(fToxAV, c_toxav_audio_bit_rate_cb, this);
-        // toxav_callback_audio_receive_frame(fToxAV, c_toxav_audio_receive_frame_cb, this);
         toxav_callback_audio_receive_frame(fToxAV, c_toxav_audio_receive_frame_cb, &fIteratorWorker); // make sure to call callback in same object/thread
     }
 
@@ -193,6 +195,11 @@ namespace JTOX {
         return maxState;
     }
 
+    bool ToxCoreAV::getCallIsIncoming() const
+    {
+        return fLastCallIsIncoming;
+    }
+
     void ToxCoreAV::handleGlobalCallState(quint32 friend_id, MCECallState proposedState)
     {
         if (proposedState == csNone) {
@@ -208,6 +215,11 @@ namespace JTOX {
                 emit startAudio(fToxAV, friend_id);
             } else if (fGlobalCallState == csActive) {
                 emit stopAudio();
+            }
+
+            if (maxState == csNone) {
+                qDebug() << "Reseting incoming call to false";
+                fLastCallIsIncoming = false; // reset
             }
 
             fGlobalCallState = maxState;

@@ -28,6 +28,7 @@ namespace JTOX {
     {
         Q_OBJECT
         Q_PROPERTY(int globalCallState READ getMaxGlobalState NOTIFY globalCallStateChanged)
+        Q_PROPERTY(bool callIsIncoming READ getCallIsIncoming NOTIFY globalCallStateChanged)
     public:
         explicit ToxCoreAV(ToxCore& toxCore);
         virtual ~ToxCoreAV();
@@ -61,9 +62,11 @@ namespace JTOX {
         WorkerToxAVIterator fIteratorWorker;
         WorkerAudioInput fAudioInputWorker;
         WorkerAudioOutput fAudioOutputWorker;
+        bool fLastCallIsIncoming;
 
         void initCallbacks();
         MCECallState getMaxGlobalState() const;
+        bool getCallIsIncoming() const;
         void handleGlobalCallState(quint32 friend_id, MCECallState proposedState);
     };
 
