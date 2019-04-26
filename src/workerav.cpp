@@ -202,7 +202,8 @@ namespace JTOX {
         fPipe = nullptr;
     }
 
-    WorkerAudioInput::WorkerAudioInput() : WorkerAV()
+    WorkerAudioInput::WorkerAudioInput() : WorkerAV(),
+        fAudioInput(nullptr)
     {
 
     }

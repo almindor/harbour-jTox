@@ -22,7 +22,7 @@ Column {
             width: mainColumn.width - callIcon.width - Theme.paddingSmall
             text: Common.msgForCall(event_type, duration)
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            font.strikeout: Common.isCallRejected(event_type)
+            font.italic: Common.isCallRejected(event_type)
             font.pixelSize: Theme.fontSizeSmall
             font.bold: true
             horizontalAlignment: alignmentForEvent(event_type)

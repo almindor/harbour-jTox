@@ -35,7 +35,7 @@ function jumpToCall(appWindow, pageStack, eventmodel, friend_id, friendIndex, an
 
     // jump up to friends page
     while ( pageStack.depth > 1 ) {
-        pageStack.pop(null, PageStackAction.Immediate)
+        pageStack.pop(null, animType)
     }
 
     if (friendIndex >= 0) {
