@@ -318,17 +318,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="44"/>
+        <location filename="../qml/components/FriendItem.qml" line="47"/>
         <source>Remove</source>
         <translation>Ta bort</translation>
     </message>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="45"/>
+        <location filename="../qml/components/FriendItem.qml" line="48"/>
         <source>Removing</source>
         <translation>Tar bort</translation>
     </message>
     <message>
-        <location filename="../qml/components/FriendItem.qml" line="51"/>
+        <location filename="../qml/components/FriendItem.qml" line="54"/>
         <source>Details</source>
         <translation>Detaljerat</translation>
     </message>

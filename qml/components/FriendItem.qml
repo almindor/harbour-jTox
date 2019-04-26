@@ -37,7 +37,10 @@ ListItem {
 
         MenuItem {
             text: qsTr("Call")
-            onClicked: Common.jumpToCall(appWindow, pageStack, eventmodel, friend_id, null, PageStackAction.Immediate)
+            onClicked: {
+                toxcoreav.callFriend(friend_id)
+                Common.jumpToCall(appWindow, pageStack, eventmodel, friend_id, null, PageStackAction.Immediate)
+            }
         }
 
         MenuItem {

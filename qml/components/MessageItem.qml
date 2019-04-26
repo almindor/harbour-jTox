@@ -27,7 +27,7 @@ ListItem {
             text: qsTr("Call")
             visible: Common.isCall(event_type)
             onClicked: {
-                // TODO: make the call
+                toxcoreav.callFriend(eventmodel.friendID)
                 pageStack.navigateForward(PageStackAction.Animated)
             }
         }

@@ -143,7 +143,7 @@ Page {
             MenuItem {
                 text: qsTr("Call")
                 onClicked: {
-                    // TODO: start call
+                    toxcoreav.callFriend(eventmodel.friendID)
                     pageStack.navigateForward(PageStackAction.Animated)
                 }
             }
