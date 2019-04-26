@@ -60,7 +60,7 @@ namespace JTOX {
     const QString bail(const QString& error, bool soft)
     {
         if ( soft ) {
-            qWarning() << "FATAL ERROR: " << error.toUtf8().data() << "\n";
+            qWarning() << "FATAL ERROR: " << error.toUtf8().data();
         } else {
             print_backtrace();
             qFatal("FATAL ERROR: %s\n", error.toUtf8().data());

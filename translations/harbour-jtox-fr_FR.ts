@@ -553,6 +553,14 @@
         <source>Finished call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rejected call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Declined call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>harbour-jtox</name>

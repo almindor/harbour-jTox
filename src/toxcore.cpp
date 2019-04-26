@@ -251,7 +251,7 @@ namespace JTOX {
 
     Tox* ToxCore::tox() {
         if ( fTox == NULL ) {
-            qDebug() << "Tox instance not initialized yet\n";
+            qDebug() << "Tox instance not initialized yet";
             emit errorOccurred("Tox instance not initialized yet");
         }
 
@@ -366,10 +366,10 @@ namespace JTOX {
     }
 
     bool ToxCore::getBusy() const {
-        /*qDebug() << "Nodes running: " << ( fNodesRequest != NULL && fNodesRequest->isRunning() ) << "\n";
-        qDebug() << "fBootstrapper running: " << fBootstrapper.fWorking << "\n";
-        qDebug() << "fPasswordValidator running: " << fPasswordValidator.fWorking << "\n";
-        qDebug() << "fInitializer running: " << fInitializer.fWorking << "\n";*/
+        /*qDebug() << "Nodes running: " << ( fNodesRequest != NULL && fNodesRequest->isRunning() );
+        qDebug() << "fBootstrapper running: " << fBootstrapper.fWorking ;
+        qDebug() << "fPasswordValidator running: " << fPasswordValidator.fWorking ;
+        qDebug() << "fInitializer running: " << fInitializer.fWorking ;*/
 
         return (( fNodesRequest != NULL && fNodesRequest->isRunning() ) ||
                   fBootstrapper.fWorking ||

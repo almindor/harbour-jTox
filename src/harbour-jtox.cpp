@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 {
     int result = 0;
     if ( sodium_init() < 0 ) {
-        qDebug() << "Error on sodium init\n";
+        qDebug() << "Error on sodium init";
         return -1;
     }
 

@@ -120,7 +120,7 @@ namespace JTOX {
         fEventUnviewedCountQuery.bindValue(":event_type", etMessageInUnread);
 
         if ( !fEventUnviewedCountQuery.exec() ) {
-            qDebug() << fEventUnviewedCountQuery.executedQuery() << "\n";
+            qDebug() << fEventUnviewedCountQuery.executedQuery();
             Utils::fatal("Error on unviewed count query exec: " + fEventUnviewedCountQuery.lastError().text());
         }
 

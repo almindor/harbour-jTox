@@ -25,7 +25,9 @@ var EventType = {
     CallInPending: 20,
     CallOutPending: 21,
     CallInFinished: 22,
-    CallOutFinished: 23
+    CallOutFinished: 23,
+    CallInMissed: 24,
+    CallOutMissed: 25
 };
 
 function jumpToCall(appWindow, pageStack, eventmodel, friend_id, friendIndex, animType) {
@@ -58,7 +60,8 @@ function isCall(et) {
     return [EventType.CallInPending, EventType.CallOutPending,
             EventType.CallInAccepted, EventType.CallOutAccepted,
             EventType.CallInRejected, EventType.CallOutRejected,
-            EventType.CallInFinished, EventType.CallOutFinished,].indexOf(et) >= 0;
+            EventType.CallInFinished, EventType.CallOutFinished,
+            EventType.CallInMissed, EventType.CallOutMissed].indexOf(et) >= 0;
 }
 
 function isCallPending(et) {
@@ -66,7 +69,8 @@ function isCallPending(et) {
 }
 
 function isCallRejected(et) {
-    return [EventType.CallInRejected, EventType.CallOutRejected].indexOf(et) >= 0;
+    return [EventType.CallInRejected, EventType.CallOutRejected,
+            EventType.CallInMissed, EventType.CallOutMissed].indexOf(et) >= 0;
 }
 
 function toTimeStr(msSinceEpoch) {
@@ -85,8 +89,10 @@ function msgForCall(et, duration) {
         case EventType.CallInAccepted: return qsTr('Incoming call')
         case EventType.CallOutPending:
         case EventType.CallOutAccepted: return qsTr('Outgoing call')
-        case EventType.CallInRejected: return qsTr('Missed call')
-        case EventType.CallOutRejected: return qsTr('Unanswered call')
+        case EventType.CallInRejected: return qsTr('Rejected call')
+        case EventType.CallOutRejected: return qsTr('Declined call')
+        case EventType.CallInMissed: return qsTr('Missed call')
+        case EventType.CallOutMissed: return qsTr('Unanswered call')
         case EventType.CallInFinished:
         case EventType.CallOutFinished: return qsTr('Finished call') + ' (' + toTimeStr(duration) + ')'
     }
@@ -132,7 +138,7 @@ function isEventIncoming(et) {
             EventType.FileTransferInPaused, EventType.FileTransferInCanceled,
             EventType.FileTransferInRunning, EventType.FileTransferInDone,
             EventType.CallInPending, EventType.CallInAccepted, EventType.CallInRejected,
-            EventType.CallInFinished].indexOf(et) >= 0;
+            EventType.CallInFinished, EventType.CallInMissed].indexOf(et) >= 0;
 }
 
 function isEventOutgoing(et) {
@@ -140,7 +146,7 @@ function isEventOutgoing(et) {
             EventType.FileTransferOut, EventType.FileTransferOutPaused,
             EventType.FileTransferOutCanceled, EventType.FileTransferOutRunning, EventType.FileTransferOutDone,
             EventType.CallOutPending, EventType.CallOutAccepted, EventType.CallOutRejected,
-            EventType.CallOutFinished].indexOf(et) >= 0;
+            EventType.CallOutFinished, EventType.CallOutMissed].indexOf(et) >= 0;
 }
 
 function isMessagePending(et) {

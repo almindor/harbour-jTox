@@ -27,7 +27,7 @@ namespace JTOX {
             TOX_ERR_GET_SALT saltError;
             tox_get_salt((uint8_t*) data.data(), (uint8_t*) salt.data(), &saltError);
             if ( saltError != TOX_ERR_GET_SALT_OK ) {
-                qDebug() << "Unable to get salt from data\n";
+                qDebug() << "Unable to get salt from data";
                 Utils::fatal("Unable to get salt from data");
             }
         }
@@ -38,7 +38,7 @@ namespace JTOX {
         fKey = tox_pass_key_derive_with_salt(passRaw, passSize, (uint8_t*) salt.data(), &error);
 
         if ( error != TOX_ERR_KEY_DERIVATION_OK ) {
-            qDebug() << "Unable to derive key\n";
+            qDebug() << "Unable to derive key";
             Utils::fatal("Unable to derive key");
         }
     }

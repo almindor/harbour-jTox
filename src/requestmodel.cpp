@@ -110,7 +110,7 @@ namespace JTOX {
             return; // not ours
         }
 
-        qDebug() << "Error from toxme: " << error << "\n";
+        qDebug() << "Error from toxme: " << error ;
     }
 
     void RequestModel::refresh()

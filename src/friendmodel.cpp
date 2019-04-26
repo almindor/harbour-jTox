@@ -343,7 +343,7 @@ namespace JTOX {
             case TOX_ERR_FRIEND_DELETE_OK: return true;
         }
 
-        qDebug() << "Not supposed to be here\n";
+        qDebug() << "Not supposed to be here";
         return false;
     }
 

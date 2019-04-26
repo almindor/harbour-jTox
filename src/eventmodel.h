@@ -58,7 +58,7 @@ namespace JTOX {
     public slots:
         void onOutgoingCall(quint32 friend_id);
         void onIncomingCall(quint32 friend_id, bool audio, bool video);
-        void onCallStateChanged(quint32 friend_id, quint32 state);
+        void onCallStateChanged(quint32 friend_id, quint32 state, bool local);
     private slots:
         void onMessageDelivered(quint32 friendID, quint32 sendID);
         void onMessageReceived(quint32 friend_id, TOX_MESSAGE_TYPE type, const QString& message);

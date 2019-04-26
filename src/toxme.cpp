@@ -153,7 +153,7 @@ namespace JTOX {
             case TOXME_ERROR_RATE_LIMIT: return "Client is publishing IDs too fast.";
         }
 
-        qDebug() << "Shouldn't be here\n";
+        qDebug() << "Shouldn't be here";
         return "Unknown TOXME error!";
     }
 
@@ -206,7 +206,7 @@ namespace JTOX {
 
     void Toxme::httpRequestDone(QNetworkReply *reply) {
         if ( reply == NULL ) {
-            qDebug() << "Undefined reply\n";
+            qDebug() << "Undefined reply";
             return;
         }
 
@@ -248,7 +248,7 @@ namespace JTOX {
         }
 
         if ( !parsed ) {
-            qDebug() << "HTTP Response parse error: " << parseError.errorString() << "\n";
+            qDebug() << "HTTP Response parse error: " << parseError.errorString();
             emit requestError("HTTP Response parse error: " + parseError.errorString(), userInfo, requestID);
             return;
         }
@@ -256,7 +256,7 @@ namespace JTOX {
         // check memorabilia and action
         int action = reply->property("action").toInt();
         if ( !checkMemorabilia(reply, resObj) ) {
-            qDebug() << "Memorabilia mismatch!\n";
+            qDebug() << "Memorabilia mismatch!";
         }
 
         // check error code
@@ -289,7 +289,7 @@ namespace JTOX {
         unsigned long long sigmem_size = sigMemArr.size();
 
         if (crypto_sign_open(memorabilia, &mem_size, signed_memorabilia, sigmem_size, (uint8_t*) pubKeyBin().data()) != 0) {
-            //qDebug() << "M: " << memStr << " SM: " << sigMemStr << " pubKey: " << fPublicKey <<"\n";
+            //qDebug() << "M: " << memStr << " SM: " << sigMemStr << " pubKey: " << fPublicKey <<"";
             return false;
         }*/
 

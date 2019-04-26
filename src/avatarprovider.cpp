@@ -141,7 +141,7 @@ namespace JTOX {
         quint64 transferID = Utils::transferID(friend_id, file_number);
 
         if ( fAvatars.value(transferID).equals(hash) || fDBData.checkAvatar(friend_id, hash) || file_size > ToxCore::MAX_AVATAR_DATA_SIZE ) {
-            qDebug() << "existing avatar or file too big\n";
+            qDebug() << "existing avatar or file too big";
             op = TOX_FILE_CONTROL_CANCEL; // no need, we have this one or it's too big
         } else {
             fAvatars[transferID].init(hash);
@@ -151,7 +151,7 @@ namespace JTOX {
 
         const QString strError = Utils::handleFileControlError(ctrl_error, true);
         if ( !strError.isEmpty() ) { // don't fail on avatar requests, just log
-            qDebug() << "Unable to resume/cancel avatar download: " << strError << "\n";
+            qDebug() << "Unable to resume/cancel avatar download: " << strError << "";
             return;
         }
     }

@@ -29,7 +29,7 @@ namespace JTOX {
 
     void c_connection_status_cb(Tox *tox, TOX_CONNECTION connection_status, void *user_data)
     {
-        //qDebug() << "c_connection_status_cb\n";
+        //qDebug() << "c_connection_status_cb";
         Q_UNUSED(tox);
         Q_UNUSED(connection_status);
         ToxCore* jTox = (ToxCore*) user_data;
@@ -39,7 +39,7 @@ namespace JTOX {
     void c_friend_request_cb(Tox *tox, const uint8_t *public_key, const uint8_t *message,
                              size_t length, void *user_data)
     {
-        //qDebug() << "c_friend_request_cb\n";
+        //qDebug() << "c_friend_request_cb";
         Q_UNUSED(tox);
         ToxCore* jTox = (ToxCore*) user_data;
         QString msg;
@@ -55,7 +55,7 @@ namespace JTOX {
     void c_friend_message_cb(Tox *tox, uint32_t friend_number, TOX_MESSAGE_TYPE type, const uint8_t *message,
                              size_t length, void *user_data)
     {
-        //qDebug() << "c_friend_message_cb\n";
+        //qDebug() << "c_friend_message_cb";
         Q_UNUSED(tox);
         ToxCore* jTox = (ToxCore*) user_data;
 
@@ -64,7 +64,7 @@ namespace JTOX {
 
     void c_friend_connection_status_cb(Tox *tox, uint32_t friend_number, TOX_CONNECTION connection_status,
                                        void *user_data) {
-        //qDebug() << "c_friend_connection_status_cb\n";
+        //qDebug() << "c_friend_connection_status_cb";
         Q_UNUSED(tox);
         ToxCore* jTox = (ToxCore*) user_data;
 
@@ -72,7 +72,7 @@ namespace JTOX {
     }
 
     void c_friend_name_cb(Tox *tox, uint32_t friend_number, const uint8_t *name, size_t length, void *user_data) {
-        //qDebug() << "c_friend_name_cb\n";
+        //qDebug() << "c_friend_name_cb";
         Q_UNUSED(tox);
         ToxCore* jTox = (ToxCore*) user_data;
 
@@ -80,7 +80,7 @@ namespace JTOX {
     }
 
     void c_friend_status_cb(Tox *tox, uint32_t friend_number, TOX_USER_STATUS status, void *user_data) {
-        //qDebug() << "c_friend_status_cb\n";
+        //qDebug() << "c_friend_status_cb";
         Q_UNUSED(tox);
         ToxCore* jTox = (ToxCore*) user_data;
 
@@ -89,7 +89,7 @@ namespace JTOX {
 
     void c_friend_status_message_cb(Tox *tox, uint32_t friend_number, const uint8_t *message, size_t length,
             void *user_data) {
-        //qDebug() << "c_friend_status_message_cb\n";
+        //qDebug() << "c_friend_status_message_cb";
         Q_UNUSED(tox);
         ToxCore* jTox = (ToxCore*) user_data;
 
@@ -97,7 +97,7 @@ namespace JTOX {
     }
 
     void c_friend_typing_cb(Tox *tox, uint32_t friend_number, bool is_typing, void *user_data) {
-        //qDebug() << "c_friend_typing_cb\n";
+        //qDebug() << "c_friend_typing_cb";
         Q_UNUSED(tox);
         ToxCore* jTox = (ToxCore*) user_data;
 
@@ -105,7 +105,7 @@ namespace JTOX {
     }
 
     void c_friend_read_receipt_cb(Tox *tox, uint32_t friend_number, uint32_t message_id, void *user_data) {
-        //qDebug() << "c_friend_read_receipt_cb\n";
+        //qDebug() << "c_friend_read_receipt_cb";
         Q_UNUSED(tox);
         ToxCore* jTox = (ToxCore*) user_data;
 
@@ -139,7 +139,7 @@ namespace JTOX {
                 TOX_ERR_FILE_CONTROL ctrl_error;
                 tox_file_control(tox, friend_number, file_number, TOX_FILE_CONTROL_CANCEL, &ctrl_error);
                 if ( ctrl_error != TOX_ERR_FILE_CONTROL_OK ) {
-                    qDebug() << "Error canceling avatar request: " << ctrl_error << "\n";
+                    qDebug() << "Error canceling avatar request: " << ctrl_error ;
                 }
                 return;
             }
@@ -192,7 +192,7 @@ namespace JTOX {
         Q_UNUSED(av);
         ToxCoreAV* jToxAV = (ToxCoreAV*) user_data;
 
-        qDebug() << "c_toxav_audio_bit_rate_cb\n";
+        qDebug() << "c_toxav_audio_bit_rate_cb";
     }
 
     void c_toxav_audio_receive_frame_cb(ToxAV* av, uint32_t friend_number, const int16_t* pcm, size_t sample_count, uint8_t channels, uint32_t sampling_rate, void* user_data)

@@ -18,7 +18,7 @@ namespace JTOX {
         etMessageOutPending = 3,
         etMessageIn = 4,
         etMessageOutOffline = 5, // pending to be sent
-        etCallOutRejected = 6,
+        etCallOutRejected = 6, // call went in, we rejected it
         etCallOutAccepted = 7,
         etCallInRejected = 8,
         etCallInAccepted = 9,
@@ -35,7 +35,9 @@ namespace JTOX {
         etCallInPending = 20,
         etCallOutPending = 21,
         etCallInFinished = 22,
-        etCallOutFinished = 23
+        etCallOutFinished = 23,
+        etCallInMissed = 24, // call went in and we missed it (other side shut it down)
+        etCallOutMissed = 25 // call went out and they missed it (we shut it down)
     };
 
     enum EventRole

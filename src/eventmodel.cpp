@@ -342,7 +342,7 @@ namespace JTOX {
 
     void EventModel::onOutgoingCall(quint32 friend_id)
     {
-        qDebug() << "[EventModel] onOutgoingCall(" << friend_id << ")\n";
+        qDebug() << "[EventModel] onOutgoingCall(" << friend_id << ")";
 
         Event event(-1, friend_id, QDateTime(), etCallOutPending, QString(), -1);
         fDBData.insertEvent(event);
@@ -356,7 +356,7 @@ namespace JTOX {
 
     void EventModel::onIncomingCall(quint32 friend_id, bool audio, bool video)
     {
-        qDebug() << "[EventModel] onIncomingCall(" << friend_id << "," << audio << "," << video << ")\n";
+        qDebug() << "[EventModel] onIncomingCall(" << friend_id << "," << audio << "," << video << ")";
 
         Event event(-1, friend_id, QDateTime(), etCallInPending, QString(), -1);
         fDBData.insertEvent(event);
@@ -370,9 +370,9 @@ namespace JTOX {
         emit incomingCall(fFriendModel.getListIndexForFriendID(friend_id), fFriendModel.getFriendByID(friend_id).name(), audio, video);
     }
 
-    void EventModel::onCallStateChanged(quint32 friend_id, quint32 state)
+    void EventModel::onCallStateChanged(quint32 friend_id, quint32 state, bool local)
     {
-        qDebug() << "[EventModel] onCallStateChanged(" << friend_id << "," << state << ")\n";
+        qDebug() << "[EventModel] onCallStateChanged(" << friend_id << "," << state << ", " << local << ")";
 
         Event event;
         // try incoming first
@@ -381,7 +381,7 @@ namespace JTOX {
             return;
         }
 
-        bool callIsIncoming = event.type() == etCallInAccepted || event.type() == etCallInPending || event.type() == etCallInRejected;
+        bool callIsIncoming = event.type() == etCallInAccepted || event.type() == etCallInPending || event.type() == etCallInRejected || event.type() == etCallInMissed;
         bool callIsOngoing = event.type() == etCallInAccepted || event.type() == etCallOutAccepted;
 
         EventType newState;
@@ -389,14 +389,18 @@ namespace JTOX {
         switch (state) {
             case csNone: {
                 if (callIsIncoming) {
-                    if (callIsOngoing) { // ongoing -> none == finished
-                        newState = etCallInFinished;
-                    } else {
+                    if (callIsOngoing) {
+                        newState = etCallInFinished; // ongoing -> none == finished
+                    } else if (local) {
                         newState = etCallInRejected; // ringing -> none = rejected
+                    } else {
+                        newState = etCallInMissed; // they hang up, we missed it
                     }
-                } else {
-                    if (callIsOngoing) { // ongoing -> none == finished
-                        newState = etCallOutFinished;
+                } else { // outgoing call
+                    if (callIsOngoing) {
+                        newState = etCallOutFinished; // ongoing -> none == finished
+                    } else if (local) {
+                        newState = etCallOutMissed; // missed them, since we hung up
                     } else {
                         newState = etCallOutRejected; // ringing -> none = rejected
                     }
@@ -501,7 +505,7 @@ namespace JTOX {
                     fList.removeAt(index);
                     endRemoveRows();
                     emit eventError(tr("Removed invalid pending message"));
-                    qDebug() << "removed invalid pending msg\n";
+                    qDebug() << "removed invalid pending msg";
                 }
                 continue;
             }

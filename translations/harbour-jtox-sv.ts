@@ -435,22 +435,22 @@
         <translation>Kan inte skicka tomt meddelande</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="503"/>
+        <location filename="../src/eventmodel.cpp" line="507"/>
         <source>Removed invalid pending message</source>
         <translation>Tog bort ogiltigt väntande meddelande</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="654"/>
+        <location filename="../src/eventmodel.cpp" line="658"/>
         <source>Transfer canceled by sender</source>
         <translation>Överföring avbruten av avsändaren</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="654"/>
+        <location filename="../src/eventmodel.cpp" line="658"/>
         <source>Transfer canceled by receiver</source>
         <translation>Överföring avbruten av mottagaren</translation>
     </message>
     <message>
-        <location filename="../src/eventmodel.cpp" line="797"/>
+        <location filename="../src/eventmodel.cpp" line="801"/>
         <source>Unable to find file for transfer</source>
         <translation>Kunde inte hitta filen för överföring</translation>
     </message>
@@ -648,32 +648,42 @@
 <context>
     <name>common</name>
     <message>
-        <location filename="../qml/js/common.js" line="85"/>
+        <location filename="../qml/js/common.js" line="89"/>
         <source>Incoming call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="87"/>
+        <location filename="../qml/js/common.js" line="91"/>
         <source>Outgoing call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="88"/>
-        <source>Missed call</source>
+        <location filename="../qml/js/common.js" line="92"/>
+        <source>Rejected call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="89"/>
-        <source>Unanswered call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/js/common.js" line="91"/>
-        <source>Finished call</source>
+        <location filename="../qml/js/common.js" line="93"/>
+        <source>Declined call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/js/common.js" line="94"/>
+        <source>Missed call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/js/common.js" line="95"/>
+        <source>Unanswered call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/js/common.js" line="97"/>
+        <source>Finished call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/js/common.js" line="100"/>
         <source>Unknown call state</source>
         <translation type="unfinished"></translation>
     </message>

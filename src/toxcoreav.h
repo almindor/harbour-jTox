@@ -46,7 +46,7 @@ namespace JTOX {
         void errorOccurred(const QString& error) const;
         void outgoingCall(quint32 friend_id) const;
         void incomingCall(quint32 friend_id, bool audio, bool video) const;
-        void callStateChanged(quint32 friend_id, quint32 tav_state) const;
+        void callStateChanged(quint32 friend_id, quint32 tav_state, bool local) const;
         void globalCallStateChanged(quint32 state) const; // MCE mapped states
         // worker signals
         void avIteratorStart(void* toxAV) const;

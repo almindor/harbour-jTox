@@ -46,7 +46,7 @@ namespace JTOX {
 
     void ToxCoreAV::onIncomingCall(quint32 friend_id, bool audio, bool video)
     {
-        qDebug() << "Incoming call!\n";
+        qDebug() << "Incoming call!";
         fLastCallIsIncoming = true;
 
         TOXAV_ERR_CALL_CONTROL error;
@@ -72,7 +72,7 @@ namespace JTOX {
         MCECallState state = tav_state > 2 ? csActive : csNone;
 
         handleGlobalCallState(friend_id, state); // in call or finished/error/none
-        emit callStateChanged(friend_id, state);
+        emit callStateChanged(friend_id, state, false);
     }
 
     bool ToxCoreAV::answerIncomingCall(quint32 friend_id, quint32 audio_bitrate)
@@ -91,7 +91,7 @@ namespace JTOX {
         }
 
         handleGlobalCallState(friend_id, result ? csActive : csNone);
-        callStateChanged(friend_id, result ? csActive : csNone);
+        emit callStateChanged(friend_id, result ? csActive : csNone, true);
 
         return result;
     }
@@ -116,7 +116,7 @@ namespace JTOX {
 
         if (result) {
             handleGlobalCallState(friend_id, csNone);
-            emit callStateChanged(friend_id, csNone);
+            emit callStateChanged(friend_id, csNone, true);
         }
 
         return result;
@@ -141,7 +141,7 @@ namespace JTOX {
         if (result) {
             emit outgoingCall(friend_id);
             handleGlobalCallState(friend_id, csRinging);
-            emit callStateChanged(friend_id, csRinging);
+            emit callStateChanged(friend_id, csRinging, true);
         }
 
         return result;
