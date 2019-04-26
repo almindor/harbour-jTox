@@ -217,7 +217,7 @@ namespace JTOX {
         fTox(NULL),
         fBootstrapper(), fInitializer(encryptSave), fPasswordValidator(encryptSave),
         fNodesRequest(NULL), fIterationTimer(), fPasswordValid(false), fInitialized(false),
-        fActiveTransfers()
+        fActiveTransfers(), fAppClosing(false)
     {
         connect(&fNetManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpRequestDone(QNetworkReply*)));
         connect(&fBootstrapper, &Bootstrapper::resultReady, this, &ToxCore::bootstrappingDone);
@@ -243,6 +243,7 @@ namespace JTOX {
             return;
         }
 
+        fAppClosing = true;
         awayRestore(); // restore away status so we don't override if killed while in bg mode
         save();
         killTox();
@@ -762,7 +763,7 @@ namespace JTOX {
         }
 
         fAwayStatus = getStatus();
-        if ( fAwayStatus > 0 && fAwayStatus != 2 ) { // start timer only if we're not offline or away already
+        if ( fAwayStatus > 0 && fAwayStatus != 2 && !fAppClosing ) { // start timer only if we're not offline or away already and NOT closing
             fAwayTimer.start(); // TODO: probably source of the "Starting timer on getting killed warning"
         }
     }

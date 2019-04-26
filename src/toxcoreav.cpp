@@ -33,12 +33,14 @@ namespace JTOX {
     ToxCoreAV::~ToxCoreAV()
     {
         qDebug() << "~ToxCoreAV()";
-        // stack deconstructs our object before ToxCore thus we never get beforeToxKill() in case of app shutdown
-        // handle this case from destructor here
+        // should be called by App::lastWindowsClosed() signal but in case it got missed somehow make sure to cleanup in order
         beforeToxKill();
 
         for (int i = 0; i < 3; i++) {
             fThreads[i].quit();
+            if (!fThreads[i].wait(2000)) {
+                qWarning() << "Thread misbehaving on quit";
+            }
         }
     }
 

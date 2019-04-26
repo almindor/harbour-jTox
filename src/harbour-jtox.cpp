@@ -68,6 +68,8 @@ int main(int argc, char *argv[])
     EventModel eventModel(toxCore, friendModel, dbData);
     RequestModel requestModel(toxCore, toxme, friendModel, dbData);
 
+    // APP -> ToxCore and others for cleanup
+    QObject::connect(app, &QGuiApplication::lastWindowClosed, &toxCoreAV, &ToxCoreAV::beforeToxKill, Qt::DirectConnection); // cleanup before we go destructors!
     // ToxCore -> ToxCoreAV needs to make sure init/kill are followed up properly
     QObject::connect(&toxCore, &ToxCore::clientReset, &toxCoreAV, &ToxCoreAV::onToxInitDone, Qt::DirectConnection); // Ensure we setup AV when tox* is done
     QObject::connect(&toxCore, &ToxCore::beforeToxKill, &toxCoreAV, &ToxCoreAV::beforeToxKill, Qt::DirectConnection); // Ensure we clean up BEFORE toxcore continues the kill

@@ -205,6 +205,7 @@ namespace JTOX {
         QMap<quint64, bool> fActiveTransfers;
         QByteArray fProfileAvatarData;
         QMap<quint32, quint32> fActiveAvatarTransfers; // friend_id -> file_number
+        bool fAppClosing;
 
         quint32 getMajorVersion() const;
         quint32 getMinorVersion() const;
