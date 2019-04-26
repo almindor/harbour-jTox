@@ -11,7 +11,7 @@ namespace JTOX {
     void WorkerIterator::initTimer()
     {
         if (fTimer == nullptr) {
-            fTimer = new QTimer();
+            fTimer = new QTimer(this);
             connect(fTimer, &QTimer::timeout, this, &WorkerIterator::iterate);
         }
     }
@@ -21,23 +21,18 @@ namespace JTOX {
     {
     }
 
-    WorkerIterator::~WorkerIterator()
-    {
-        if (fTimer != nullptr) {
-            fTimer->stop();
-            delete fTimer;
-            fTimer = nullptr;
-        }
-    }
-
     void WorkerIterator::start(int interval)
     {
+        qDebug() << "WorkerIterator::start() @" << QThread::currentThreadId();
+
         initTimer();
         fTimer->start(interval);
     }
 
     void WorkerIterator::stop()
     {
+        qDebug() << "WorkerIterator::stop() @" << QThread::currentThreadId();
+
         if (fTimer != nullptr) { // stop before start or not-used timer
             fTimer->stop();
         }
@@ -70,13 +65,14 @@ namespace JTOX {
 
     void WorkerToxAVIterator::start(void* toxAV)
     {
-        qDebug() << "WorkerToxAVIterator threadID: " << QThread::currentThreadId();
+        qDebug() << "WorkerToxAVIterator::start @" << QThread::currentThreadId();
         fToxAV = (ToxAV*) toxAV;
         WorkerIterator::start(toxav_iteration_interval(fToxAV));
     }
 
     void WorkerToxAVIterator::stop()
     {
+        qDebug() << "WorkerToxAVIterator::stop() @" << QThread::currentThreadId();
         WorkerIterator::stop();
         fToxAV = nullptr;
     }
@@ -115,6 +111,8 @@ namespace JTOX {
 
     void WorkerAV::start(void* toxAV, quint32 friend_id)
     {
+        qDebug() << "WorkerAV::start() @" << QThread::currentThreadId();
+
         // don't start iterating here, some children don't need to
         fToxAV = (ToxAV*) toxAV;
         fFriendID = friend_id;
@@ -122,8 +120,10 @@ namespace JTOX {
 
     void WorkerAV::stop()
     {
-        stopPipe(); // stop audio gracefully first
-        WorkerIterator::stop();
+        qDebug() << "WorkerAV::stop() @" << QThread::currentThreadId();
+
+        WorkerIterator::stop(); // make sure no iterate gets called first
+        stopPipe(); // stop audio gracefully
     }
 
     //---------------------- WorkerAudioInput -------------------------//
@@ -192,6 +192,10 @@ namespace JTOX {
 
     void WorkerAudioInput::stopPipe()
     {
+        if (fAudioInput == nullptr) {
+            return;
+        }
+
         fAudioInput->stop();
         delete fAudioInput;
         fAudioInput = nullptr;
@@ -205,6 +209,8 @@ namespace JTOX {
 
     void WorkerAudioInput::start(void* toxAV, quint32 friend_id)
     {
+        qDebug() << "WorkerAudioInput::start() @" << QThread::currentThreadId();
+
         WorkerAV::start(toxAV, friend_id); // set variables
 
         startPipe(friend_id, 1, 24000);
@@ -242,6 +248,10 @@ namespace JTOX {
 
     void WorkerAudioOutput::stopPipe()
     {
+        if (fAudioOutput == nullptr) {
+            return;
+        }
+
         fAudioOutput->stop();
         delete fAudioOutput;
         fAudioOutput = nullptr;

@@ -21,7 +21,6 @@ namespace JTOX {
         void initTimer();
     public:
         explicit WorkerIterator();
-        virtual ~WorkerIterator();
     public slots:
         virtual void start(int interval);
         virtual void stop();

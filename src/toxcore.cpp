@@ -763,7 +763,7 @@ namespace JTOX {
 
         fAwayStatus = getStatus();
         if ( fAwayStatus > 0 && fAwayStatus != 2 ) { // start timer only if we're not offline or away already
-            fAwayTimer.start();
+            fAwayTimer.start(); // TODO: probably source of the "Starting timer on getting killed warning"
         }
     }
 
@@ -842,7 +842,6 @@ namespace JTOX {
             Utils::fatal("Killtox called when not initialized");
         }
 
-        qDebug() << "emiting beforeToxKill\n";
         emit beforeToxKill(); // make sure toxAV has a chance to cleanup first
 
         fInitialized = false;

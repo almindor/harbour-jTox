@@ -32,6 +32,7 @@ namespace JTOX {
 
     ToxCoreAV::~ToxCoreAV()
     {
+        qDebug() << "~ToxCoreAV()";
         // stack deconstructs our object before ToxCore thus we never get beforeToxKill() in case of app shutdown
         // handle this case from destructor here
         beforeToxKill();
@@ -99,6 +100,9 @@ namespace JTOX {
             Utils::fatal("ToxAV not initialized");
         }
 
+        // make sure there's no sending or receiving running after we call control
+        emit stopAudio();
+
         TOXAV_ERR_CALL_CONTROL error;
         bool result = toxav_call_control(fToxAV, friend_id, TOXAV_CALL_CONTROL_CANCEL, &error);
 
@@ -165,6 +169,9 @@ namespace JTOX {
             return;
         }
 
+        qDebug() << "beforeToxKill()";
+
+        emit stopAudio();
         emit avIteratorStop();
 
         toxav_kill(fToxAV);
