@@ -14,7 +14,6 @@ ListItem {
     function gotoDetails(page, attached, gotoAttached) {
         appWindow.activeFriendID = friend_id
         eventmodel.setFriend(friend_id)
-        // TODO: make the call
         var transitionType = gotoAttached ? PageStackAction.Immediate : PageStackAction.Animated
         pageStack.push(page, { friend_id: friend_id }, transitionType)
         if (attached) {

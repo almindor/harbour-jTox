@@ -764,7 +764,7 @@ namespace JTOX {
 
         fAwayStatus = getStatus();
         if ( fAwayStatus > 0 && fAwayStatus != 2 && !fAppClosing ) { // start timer only if we're not offline or away already and NOT closing
-            fAwayTimer.start(); // TODO: probably source of the "Starting timer on getting killed warning"
+            fAwayTimer.start();
         }
     }
 
