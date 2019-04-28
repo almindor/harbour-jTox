@@ -63,7 +63,7 @@ namespace JTOX {
             }
         }
 
-        handleGlobalCallState(friend_id, csRinging);
+        handleGlobalCallState(friend_id, csRinging, false);
         emit incomingCall(friend_id, audio, video);
     }
 
@@ -71,8 +71,7 @@ namespace JTOX {
     {
         MCECallState state = tav_state > 2 ? csActive : csNone;
 
-        handleGlobalCallState(friend_id, state); // in call or finished/error/none
-        emit callStateChanged(friend_id, state, false);
+        handleGlobalCallState(friend_id, state, false); // in call or finished/error/none
     }
 
     bool ToxCoreAV::answerIncomingCall(quint32 friend_id, quint32 audio_bitrate)
@@ -90,8 +89,7 @@ namespace JTOX {
             return false;
         }
 
-        handleGlobalCallState(friend_id, result ? csActive : csNone);
-        emit callStateChanged(friend_id, result ? csActive : csNone, true);
+        handleGlobalCallState(friend_id, result ? csActive : csNone, true);
 
         return result;
     }
@@ -115,8 +113,7 @@ namespace JTOX {
         }
 
         if (result) {
-            handleGlobalCallState(friend_id, csNone);
-            emit callStateChanged(friend_id, csNone, true);
+            handleGlobalCallState(friend_id, csNone, true);
         }
 
         return result;
@@ -140,8 +137,7 @@ namespace JTOX {
 
         if (result) {
             emit outgoingCall(friend_id);
-            handleGlobalCallState(friend_id, csRinging);
-            emit callStateChanged(friend_id, csRinging, true);
+            handleGlobalCallState(friend_id, csRinging, true);
         }
 
         return result;
@@ -209,7 +205,7 @@ namespace JTOX {
         return fLastCallIsIncoming;
     }
 
-    void ToxCoreAV::handleGlobalCallState(quint32 friend_id, MCECallState proposedState)
+    void ToxCoreAV::handleGlobalCallState(quint32 friend_id, MCECallState proposedState, bool local)
     {
         if (proposedState == csNone) {
             fCallStateMap.remove(friend_id); // clean up
@@ -227,13 +223,18 @@ namespace JTOX {
             }
 
             if (maxState == csNone) {
-                qDebug() << "Reseting incoming call to false";
+                if (!fLastCallIsIncoming && !local) {
+                    emit calledBusy();
+                }
+
                 fLastCallIsIncoming = false; // reset
             }
 
             fGlobalCallState = maxState;
             emit globalCallStateChanged(fGlobalCallState);
         }
+
+        emit callStateChanged(friend_id, proposedState, local);
     }
 
 }

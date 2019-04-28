@@ -18,6 +18,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtFeedback 5.0
+import QtMultimedia 5.6
 import Nemo.DBus 2.0
 import Nemo.Notifications 1.0
 import "pages"
@@ -33,17 +34,46 @@ ApplicationWindow
     _defaultPageOrientations: Orientation.Portrait
     onApplicationActiveChanged: toxcore.setApplicationActive(applicationActive);
 
+    // plays when someone is calling us and we didn't pick up yet
+    MediaPlayer {
+        id: incomingTone
+        source: "file:///usr/share/sounds/jolla-ringtones/stereo/jolla-ringtone.ogg" // TODO: make configurable
+        loops: MediaPlayer.Infinite
+        audioRole: MediaPlayer.RingtoneRole // does nothing atm. but one can hope
+    }
+
+    // plays when we're calling someone and they didn't pick up yet (beep... beep...)
+    MediaPlayer {
+        id: outgoingTone
+        source: "sounds/calling.ogg"
+        loops: MediaPlayer.Infinite
+        audioRole: MediaPlayer.RingtoneRole // does nothing atm. but one can hope
+    }
+
+    // plays once when we get a reject from other side
+    MediaPlayer {
+        id: busyTone
+        source: "sounds/busy.ogg"
+        loops: 1
+        audioRole: MediaPlayer.RingtoneRole // does nothing atm. but one can hope
+    }
+
     HapticsEffect {
         id: vibrate
-        duration: 1000
+        duration: 750
         intensity: 1.0
     }
 
     Timer {
-        id: ringer
         onTriggered: vibrate.start()
-        interval: 2000
+        interval: 1500
         running: toxcoreav.callIsIncoming && toxcoreav.globalCallState === 1 // incoming and ringing
+        onRunningChanged: {
+            if (running) {
+                vibrate.start()
+            }
+        }
+
         repeat: true
     }
 
@@ -84,8 +114,24 @@ ApplicationWindow
     }
 
     Connections {
+        id: avConns
         target: toxcoreav
-//        onGlobalCallStateChanged: mce.setCallState(state)
+        onCalledBusy: busyTone.play()
+        onGlobalCallStateChanged: { // mce.setCallState(state) // TODO: fix when Jolla finally tells us how to switch sinks
+            if (state !== 1) {
+                incomingTone.stop()
+                incomingTone.seek(0)
+                outgoingTone.stop()
+                outgoingTone.seek(0)
+                return
+            }
+
+            if (toxcoreav.callIsIncoming) {
+                incomingTone.play()
+            } else {
+                outgoingTone.play()
+            }
+        }
         onErrorOccurred: banner("x-nemo.messaging.error", error, "error", [error], appWindow.applicationActive)
     }
 

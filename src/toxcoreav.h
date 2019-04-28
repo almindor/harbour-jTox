@@ -48,6 +48,7 @@ namespace JTOX {
         void incomingCall(quint32 friend_id, bool audio, bool video) const;
         void callStateChanged(quint32 friend_id, quint32 tav_state, bool local) const;
         void globalCallStateChanged(quint32 state) const; // MCE mapped states
+        void calledBusy() const; // when other side cuts us off
         // worker signals
         void avIteratorStart(void* toxAV) const;
         void avIteratorStop() const;
@@ -67,7 +68,7 @@ namespace JTOX {
         void initCallbacks();
         MCECallState getMaxGlobalState() const;
         bool getCallIsIncoming() const;
-        void handleGlobalCallState(quint32 friend_id, MCECallState proposedState);
+        void handleGlobalCallState(quint32 friend_id, MCECallState proposedState, bool local);
     };
 
 }
