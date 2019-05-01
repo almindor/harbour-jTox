@@ -84,14 +84,35 @@ Page {
             }
         }
 
-        Avatar {
-            source_id: appWindow.activeFriendID
-            width: parent.width / 2
-            height: width
-            placeholder: ""
+        Column {
+            spacing: Theme.paddingLarge
+            y: parent.height / 3.0
+            anchors.left: parent.left
+            anchors.right: parent.right
 
-            anchors {
-                centerIn: parent
+            Text {
+                function statusText(status, incoming) {
+                    switch (status) {
+                    case 1: return incoming ? qsTr("Incoming Call", "call state") : qsTr("Outgoing Call", "call state")
+                    case 2: return qsTr("Ongoing Call", "call state")
+                    }
+
+                    return qsTr("Unknown", "call state")
+                }
+
+                visible: toxcoreav.globalCallState > 0
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: Theme.highlightColor
+                text: statusText(toxcoreav.globalCallState, toxcoreav.callIsIncoming)
+                font.pixelSize: Theme.fontSizeExtraLarge
+            }
+
+            Avatar {
+                anchors.horizontalCenter: parent.horizontalCenter
+                source_id: appWindow.activeFriendID
+                width: parent.width / 2
+                height: width
+                placeholder: ""
             }
         }
 

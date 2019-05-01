@@ -224,6 +224,18 @@
         <source>Answer</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Incoming Call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outgoing Call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ongoing Call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
