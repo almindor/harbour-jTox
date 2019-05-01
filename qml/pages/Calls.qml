@@ -17,13 +17,14 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import QtSensors 5.2
+ import QtSensors 5.2
 import "../components"
 
 Page {
     id: callsPage
     allowedOrientations: Orientation.Portrait
 
+    // TODO: remove when Jolla tells us how to set sinks right for MCE to do this
     Rectangle {
         id: blank
 
@@ -33,7 +34,7 @@ Page {
     }
 
     SilicaFlickable {
-        visible: !(toxcoreav.globalCallState > 0 && proximitySensor.reading.near)
+        visible: !(toxcoreav.globalCallState > 0 && proximitySensor.reading.near) // TODO: remove when Jolla tells us how to set sinks right for MCE to do this
         anchors.fill: parent
         contentWidth: parent.width
         contentHeight: parent.height - Theme.paddingLarge
@@ -94,6 +95,7 @@ Page {
             }
         }
 
+        // TODO: remove when Jolla tells us how to set sinks right for MCE to do this
         ProximitySensor {
             id: proximitySensor
             active: toxcoreav.globalCallState > 0 // ringing or in call

@@ -648,42 +648,42 @@
 <context>
     <name>common</name>
     <message>
-        <location filename="../qml/js/common.js" line="89"/>
+        <location filename="../qml/js/common.js" line="94"/>
         <source>Incoming call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="91"/>
+        <location filename="../qml/js/common.js" line="96"/>
         <source>Outgoing call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="92"/>
+        <location filename="../qml/js/common.js" line="97"/>
         <source>Rejected call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="93"/>
+        <location filename="../qml/js/common.js" line="98"/>
         <source>Declined call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="94"/>
+        <location filename="../qml/js/common.js" line="99"/>
         <source>Missed call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="95"/>
+        <location filename="../qml/js/common.js" line="100"/>
         <source>Unanswered call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="97"/>
+        <location filename="../qml/js/common.js" line="102"/>
         <source>Finished call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/js/common.js" line="100"/>
+        <location filename="../qml/js/common.js" line="105"/>
         <source>Unknown call state</source>
         <translation type="unfinished"></translation>
     </message>
@@ -716,27 +716,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="146"/>
+        <location filename="../qml/harbour-jtox.qml" line="151"/>
         <source>Message from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="147"/>
+        <location filename="../qml/harbour-jtox.qml" line="152"/>
         <source>Transfer from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="148"/>
+        <location filename="../qml/harbour-jtox.qml" line="153"/>
         <source>File transfer complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="157"/>
+        <location filename="../qml/harbour-jtox.qml" line="162"/>
         <source>Registered on </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="158"/>
+        <location filename="../qml/harbour-jtox.qml" line="163"/>
         <source>Removed from </source>
         <translation type="unfinished"></translation>
     </message>

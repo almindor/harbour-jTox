@@ -37,9 +37,11 @@
 #include "dirmodel.h"
 #include "utils.h"
 
-//// we're passing
-//Q_DECLARE_OPAQUE_POINTER(ToxAV*)
-//Q_DECLARE_METATYPE(ToxAV*)
+// DEBUG
+#include "pa/context.h"
+#include "pa/sinkportmodel.h"
+
+Q_DECLARE_METATYPE(PA::SinkInfo)
 
 using namespace JTOX;
 
@@ -51,7 +53,14 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-//    qRegisterMetaType<ToxAV*>();
+    PA::Context context;
+    PA::SinkPortModel sinkPortModel;
+
+    qRegisterMetaType<PA::SinkInfo>();
+
+    QObject::connect(&context, &PA::Context::infoReady, &sinkPortModel, &PA::SinkPortModel::onInfoReady, Qt::QueuedConnection);
+    context.connectToServer();
+
     register_signals();
 
     QGuiApplication *app = SailfishApp::application(argc, argv);
@@ -89,6 +98,7 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty("requestmodel", &requestModel);
     view->rootContext()->setContextProperty("dirmodel", &dirModel);
     view->rootContext()->setContextProperty("avatarProvider", avatarProvider);
+    view->rootContext()->setContextProperty("sinkPortModel", &sinkPortModel);
     view->engine()->addImageProvider("avatarProvider", avatarProvider); // freed internally by Qt5!
 
     view->setSource(SailfishApp::pathTo(qml));

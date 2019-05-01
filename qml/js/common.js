@@ -28,7 +28,12 @@ var EventType = {
     CallOutFinished: 23,
     CallInMissed: 24,
     CallOutMissed: 25
-};
+}
+
+var AudioPorts = {
+    Earpiece: 0,
+    Speaker: 1
+}
 
 function jumpToCall(appWindow, pageStack, eventmodel, friend_id, friendIndex, animType) {
     if ( !appWindow.applicationActive ) {

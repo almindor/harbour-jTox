@@ -77,31 +77,30 @@ ApplicationWindow
         repeat: true
     }
 
-    // TODO: re-enable once audio sink switch is done and mce actually works
-//    DBusInterface {
-//        id: mce
+    DBusInterface {
+        id: mce
 
-//        bus: DBus.SystemBus
-//        service: 'com.nokia.mce'
-//        iface: 'com.nokia.mce.request'
-//        path: '/com/nokia/mce/request'
+        bus: DBus.SystemBus
+        service: 'com.nokia.mce'
+        iface: 'com.nokia.mce.request'
+        path: '/com/nokia/mce/request'
 
-//        function setCallState(state) {
-//            var strState = 'none'
-//            switch (state) {
-//                case 0: strState = 'none'; break;
-//                case 1: strState = 'ringing'; break;
-//                case 2: strState = 'active'; break;
-//                default: console.error('Unknown MCE state from ToxCoreAV'); break;
-//            }
+        function setCallState(state) {
+            var strState = 'none'
+            switch (state) {
+                case 0: strState = 'none'; break;
+                case 1: strState = 'ringing'; break;
+                case 2: strState = 'active'; break;
+                default: console.error('Unknown MCE state from ToxCoreAV'); break;
+            }
 
-//            // Telephony.audioMode = 'earpiece'
-//            console.log('setting mce call state: ' + strState)
-//            mce.call('req_call_state_change', [strState, 'normal'],
-//                     function(result) { console.log('call completed with:', result) },
-//                     function(error, message) { console.error('call failed', error, 'message:', message) })
-//        }
-//    }
+            // Telephony.audioMode = 'earpiece'
+            console.log('setting mce call state: ' + strState)
+            mce.call('req_call_state_change', [strState, 'normal'],
+                     function(result) { console.log('call completed with:', result) },
+                     function(error, message) { console.error('call failed', error, 'message:', message) })
+        }
+    }
 
     Connections {
         target: toxcore
@@ -117,7 +116,11 @@ ApplicationWindow
         id: avConns
         target: toxcoreav
         onCalledBusy: busyTone.play()
-        onGlobalCallStateChanged: { // mce.setCallState(state) // TODO: fix when Jolla finally tells us how to switch sinks
+        onGlobalCallStateChanged: {
+            var port = state === 2 ? Common.AudioPorts.Earpiece : Common.AudioPorts.Speaker // TODO: make sure to not lock out bluetooth, jack and usb outputs
+            sinkPortModel.selectPort(port) // TODO: fix when Jolla finally tells us how to get voicecall sink setup right
+            mce.setCallState(state) // TODO: currently succeeds but doesn't work with this sink/setup on the MCE side (ignored proximity)
+
             if (state !== 1) {
                 incomingTone.stop()
                 incomingTone.seek(0)

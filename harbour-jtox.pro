@@ -15,7 +15,9 @@ TARGET = harbour-jtox
 QT += sql
 QT += multimedia
 
+CONFIG += link_pkgconfig
 CONFIG += sailfishapp
+
 # CONFIG(debug,debug|release){ TOX_PATH = extra/i486 }
 CONFIG(debug,debug|release){ TOX_PATH = extra/armv7hl }
 CONFIG(release,debug|release){ TOX_PATH = extra/armv7hl }
@@ -23,6 +25,11 @@ CONFIG(release,debug|release){ TOX_PATH = extra/armv7hl }
 QMAKE_LFLAGS += -Wl,-lc -Wl,-lz
 
 INCLUDEPATH += $$TOX_PATH/include
+
+# needed for qtCreator to see non-QT (pkg-config) headers
+INCLUDEPATH += /usr/include
+
+PKGCONFIG += libpulse
 
 SOURCES += \
     src/c_callbacks.cpp \
@@ -41,7 +48,9 @@ SOURCES += \
     src/dirmodel.cpp \
     src/avatarprovider.cpp \
     src/toxcoreav.cpp \
-    src/workerav.cpp
+    src/workerav.cpp \
+    src/pa/context.cpp \
+    src/pa/sinkportmodel.cpp
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \
@@ -104,7 +113,9 @@ HEADERS += \
     src/dirmodel.h \
     src/avatarprovider.h \
     src/toxcoreav.h \
-    src/workerav.h
+    src/workerav.h \
+    src/pa/context.h \
+    src/pa/sinkportmodel.h
 
 DISTFILES += \
     qml/pages/About.qml \
