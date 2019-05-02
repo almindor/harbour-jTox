@@ -216,11 +216,17 @@ namespace JTOX {
         MCECallState maxState = getMaxGlobalState();
 
         if (maxState != fGlobalCallState) {
-            if (maxState == csActive) {
+            if (maxState == csActive) { // start of call
                 emit startAudio(fToxAV, friend_id);
-            } else if (fGlobalCallState == csActive) {
+            } else if (fGlobalCallState == csActive) { // end of call
                 emit stopAudio();
             }
+
+//            if (maxState > csNone) { // going into ringing or in call
+//                emit avIteratorStart(fToxAV);
+//            } else { // stopping ringing or off call
+//                emit avIteratorStop();
+//            }
 
             if (maxState == csNone) {
                 if (!fLastCallIsIncoming && !local) {

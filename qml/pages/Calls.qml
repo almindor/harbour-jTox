@@ -97,10 +97,9 @@ Page {
                     case 2: return qsTr("Ongoing Call", "call state")
                     }
 
-                    return qsTr("Unknown", "call state")
+                    return "";
                 }
 
-                visible: toxcoreav.globalCallState > 0
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: Theme.highlightColor
                 text: statusText(toxcoreav.globalCallState, toxcoreav.callIsIncoming)

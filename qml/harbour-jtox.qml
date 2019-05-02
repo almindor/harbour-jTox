@@ -39,7 +39,7 @@ ApplicationWindow
         id: incomingTone
         source: "file:///usr/share/sounds/jolla-ringtones/stereo/jolla-ringtone.ogg" // TODO: make configurable
         loops: MediaPlayer.Infinite
-        audioRole: MediaPlayer.RingtoneRole // does nothing atm. but one can hope
+        // audioRole: MediaPlayer.RingtoneRole // does nothing atm. but one can hope
     }
 
     // plays when we're calling someone and they didn't pick up yet (beep... beep...)
@@ -47,7 +47,7 @@ ApplicationWindow
         id: outgoingTone
         source: "sounds/calling.ogg"
         loops: MediaPlayer.Infinite
-        audioRole: MediaPlayer.RingtoneRole // does nothing atm. but one can hope
+        // audioRole: MediaPlayer.RingtoneRole // does nothing atm. but one can hope
     }
 
     // plays once when we get a reject from other side
@@ -55,7 +55,7 @@ ApplicationWindow
         id: busyTone
         source: "sounds/busy.ogg"
         loops: 1
-        audioRole: MediaPlayer.RingtoneRole // does nothing atm. but one can hope
+        // audioRole: MediaPlayer.RingtoneRole // does nothing atm. but one can hope
     }
 
     HapticsEffect {
@@ -95,10 +95,13 @@ ApplicationWindow
             }
 
             // Telephony.audioMode = 'earpiece'
-            console.log('setting mce call state: ' + strState)
             mce.call('req_call_state_change', [strState, 'normal'],
-                     function(result) { console.log('call completed with:', result) },
-                     function(error, message) { console.error('call failed', error, 'message:', message) })
+                     function(result) {
+                         console.log('mce call state set:', strState, 'result:', result)
+                     },
+                     function(error, message) {
+                         console.error('mce call state set to:', strState, 'failed error:', error, 'message:', message)
+                     })
         }
     }
 
@@ -117,21 +120,29 @@ ApplicationWindow
         target: toxcoreav
         onCalledBusy: busyTone.play()
         onGlobalCallStateChanged: {
+            // make sure to use earpiece when in call or when we're calling and it's ringing on their end
             var port = state === 2 ? Common.AudioPorts.Earpiece : Common.AudioPorts.Speaker // TODO: make sure to not lock out bluetooth, jack and usb outputs
+            if (state === 1 && !toxcoreav.callIsIncoming) { // outgoing ringing on their side
+                port = Common.AudioPorts.Earpiece;
+            }
+
             sinkPortModel.selectPort(port) // TODO: fix when Jolla finally tells us how to get voicecall sink setup right
             mce.setCallState(state) // TODO: currently succeeds but doesn't work with this sink/setup on the MCE side (ignored proximity)
 
             if (state !== 1) {
+                console.error('Stopping ringtones')
                 incomingTone.stop()
-                incomingTone.seek(0)
                 outgoingTone.stop()
+                incomingTone.seek(0)
                 outgoingTone.seek(0)
                 return
             }
 
             if (toxcoreav.callIsIncoming) {
+                incomingTone.seek(0)
                 incomingTone.play()
             } else {
+                outgoingTone.seek(0)
                 outgoingTone.play()
             }
         }

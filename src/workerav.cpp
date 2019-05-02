@@ -23,6 +23,10 @@ namespace JTOX {
 
     void WorkerIterator::start(int interval)
     {
+        if (fTimer != nullptr && fTimer->isActive()) {
+            return;
+        }
+
         qDebug() << "WorkerIterator::start() @" << QThread::currentThreadId();
 
         initTimer();
@@ -65,6 +69,10 @@ namespace JTOX {
 
     void WorkerToxAVIterator::start(void* toxAV)
     {
+        if (fTimer != nullptr && fTimer->isActive()) {
+            return;
+        }
+
         qDebug() << "WorkerToxAVIterator::start @" << QThread::currentThreadId();
         fToxAV = (ToxAV*) toxAV;
         WorkerIterator::start(toxav_iteration_interval(fToxAV));

@@ -226,14 +226,17 @@
     </message>
     <message>
         <source>Incoming Call</source>
+        <comment>call state</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Outgoing Call</source>
+        <comment>call state</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ongoing Call</source>
+        <comment>call state</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
