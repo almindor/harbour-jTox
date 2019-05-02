@@ -734,27 +734,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="164"/>
+        <location filename="../qml/harbour-jtox.qml" line="160"/>
         <source>Message from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="165"/>
+        <location filename="../qml/harbour-jtox.qml" line="161"/>
         <source>Transfer from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="166"/>
+        <location filename="../qml/harbour-jtox.qml" line="162"/>
         <source>File transfer complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="175"/>
+        <location filename="../qml/harbour-jtox.qml" line="171"/>
         <source>Registered on </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="176"/>
+        <location filename="../qml/harbour-jtox.qml" line="172"/>
         <source>Removed from </source>
         <translation type="unfinished"></translation>
     </message>

@@ -59,7 +59,7 @@ namespace JTOX {
         ToxAV* fToxAV;
         CallStateMap fCallStateMap;
         MCECallState fGlobalCallState;
-        QThread fThreads[3]; // worker threads
+        QThread fThreads[2]; // worker threads for AV iterator and audio input sending
         WorkerToxAVIterator fIteratorWorker;
         WorkerAudioInput fAudioInputWorker;
         WorkerAudioOutput fAudioOutputWorker;

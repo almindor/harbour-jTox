@@ -14,7 +14,8 @@ namespace JTOX {
         // move workers to their respective threads
         fIteratorWorker.moveToThread(&fThreads[0]);
         fAudioInputWorker.moveToThread(&fThreads[1]);
-        fAudioOutputWorker.moveToThread(&fThreads[2]);
+        // fAudioOutputWorker is just a data pipe and can live in main thread, also QAudioOutput seems to be fixed to main thread on SFOS for some reason
+        // otherwise you get Cannot create children for a parent that is in a different thread. related to ResourcePolicyPlugin
 
         // connect worker signals and slots as needed
         connect(&fIteratorWorker, &WorkerToxAVIterator::audioFrameReceived, &fAudioOutputWorker, &WorkerAudioOutput::onAudioFrameReceived, Qt::QueuedConnection);
@@ -23,9 +24,9 @@ namespace JTOX {
         connect(this, &ToxCoreAV::startAudio, &fAudioInputWorker, &WorkerAudioInput::start);
         connect(this, &ToxCoreAV::stopAudio, &fAudioInputWorker, &WorkerAudioInput::stop, Qt::BlockingQueuedConnection); // needs to wait for it
         connect(this, &ToxCoreAV::startAudio, &fAudioOutputWorker, &WorkerAudioOutput::start);
-        connect(this, &ToxCoreAV::stopAudio, &fAudioOutputWorker, &WorkerAudioOutput::stop, Qt::BlockingQueuedConnection); // needs to wait for it
+        connect(this, &ToxCoreAV::stopAudio, &fAudioOutputWorker, &WorkerAudioOutput::stop); // same thread
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             fThreads[i].start();
         }
     }
@@ -36,7 +37,7 @@ namespace JTOX {
         // should be called by App::lastWindowsClosed() signal but in case it got missed somehow make sure to cleanup in order
         beforeToxKill();
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             fThreads[i].quit();
             if (!fThreads[i].wait(2000)) {
                 qWarning() << "Thread misbehaving on quit";
