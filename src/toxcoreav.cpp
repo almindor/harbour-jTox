@@ -19,6 +19,7 @@ namespace JTOX {
 
         // connect worker signals and slots as needed
         connect(&fIteratorWorker, &WorkerToxAVIterator::audioFrameReceived, &fAudioOutputWorker, &WorkerAudioOutput::onAudioFrameReceived, Qt::QueuedConnection);
+        connect(this, &ToxCoreAV::avIteratorIntervalOverride, &fIteratorWorker, &WorkerToxAVIterator::onIntervalOverride, Qt::QueuedConnection); // thread safety
         connect(this, &ToxCoreAV::avIteratorStart, &fIteratorWorker, &WorkerToxAVIterator::start);
         connect(this, &ToxCoreAV::avIteratorStop, &fIteratorWorker, &WorkerToxAVIterator::stop, Qt::BlockingQueuedConnection); // needs to wait for it
         connect(this, &ToxCoreAV::startAudio, &fAudioInputWorker, &WorkerAudioInput::start);
@@ -175,6 +176,15 @@ namespace JTOX {
 
         toxav_kill(fToxAV);
         fToxAV = nullptr;
+    }
+
+    void ToxCoreAV::setApplicationActive(bool active)
+    {
+        if (!active && fGlobalCallState > csNone) {
+            return; // make sure to not go into inactive when ringing or in call
+        }
+
+        emit avIteratorIntervalOverride(active ? -1 : 30000);
     }
 
     void ToxCoreAV::initCallbacks()

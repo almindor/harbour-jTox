@@ -52,7 +52,8 @@ namespace JTOX {
         }
 
         toxav_iterate(fToxAV);
-        fTimer->setInterval(toxav_iteration_interval(fToxAV));
+        int interval = fIntervalOverride > 0 ? fIntervalOverride : toxav_iteration_interval(fToxAV);
+        fTimer->setInterval(interval);
     }
 
     WorkerToxAVIterator::WorkerToxAVIterator() : WorkerIterator()
@@ -85,9 +86,17 @@ namespace JTOX {
         fToxAV = nullptr;
     }
 
+    void WorkerToxAVIterator::onIntervalOverride(int interval)
+    {
+        qDebug() << "AV Iteration override set to" << interval;
+        fIntervalOverride = interval;
+
+        if (fTimer != nullptr) {
+            iterate(); // force a cycle right here to ensure there's at least 1 call done
+        }
+    }
 
     //--------------------------- WorkerAV -----------------------------//
-
 
     WorkerAV::WorkerAV() : WorkerIterator(),
         fToxAV(nullptr),

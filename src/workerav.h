@@ -30,6 +30,7 @@ namespace JTOX {
     {
         Q_OBJECT
         ToxAV* fToxAV;
+        int fIntervalOverride{-1};
 
         virtual void iterate() override;
     signals:
@@ -43,6 +44,7 @@ namespace JTOX {
     public slots:
         virtual void start(void* toxAV);
         virtual void stop() override;
+        void onIntervalOverride(int interval);
     };
 
     class WorkerAV : public WorkerIterator

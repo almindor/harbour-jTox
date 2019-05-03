@@ -32,7 +32,10 @@ ApplicationWindow
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: Orientation.Portrait
     _defaultPageOrientations: Orientation.Portrait
-    onApplicationActiveChanged: toxcore.setApplicationActive(applicationActive);
+    onApplicationActiveChanged: {
+        toxcore.setApplicationActive(applicationActive);
+        toxcoreav.setApplicationActive(applicationActive);
+    }
 
     // plays when someone is calling us and we didn't pick up yet
     MediaPlayer {

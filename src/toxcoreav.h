@@ -39,6 +39,7 @@ namespace JTOX {
         Q_INVOKABLE bool answerIncomingCall(quint32 friend_id, quint32 audio_bitrate = DEFAULT_BITRATE);
         Q_INVOKABLE bool endCall(quint32 friend_id);
         Q_INVOKABLE bool callFriend(quint32 friend_id, quint32 audio_bitrate = DEFAULT_BITRATE);
+        Q_INVOKABLE void setApplicationActive(bool active);
     public slots:
         void onToxInitDone();
         void beforeToxKill();
@@ -49,6 +50,7 @@ namespace JTOX {
         void callStateChanged(quint32 friend_id, quint32 tav_state, bool local) const;
         void globalCallStateChanged(quint32 state) const; // MCE mapped states
         void calledBusy() const; // when other side cuts us off
+        void avIteratorIntervalOverride(int interval) const;
         // worker signals
         void avIteratorStart(void* toxAV) const;
         void avIteratorStop() const;
