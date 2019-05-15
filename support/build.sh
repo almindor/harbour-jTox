@@ -17,7 +17,7 @@ else
     exit 2
 fi
 
-SFVER="3.0.2.8"
+SFVER="3.0.3.9"
 SODIUMVER="1.0.17"
 TOXCOREVER="0.2.9"
 VPXVER="1.8.0"
