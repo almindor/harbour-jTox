@@ -3,39 +3,6 @@
 
 namespace PA {
 
-    //---------------------- SinkInfo ------------------------//=
-
-    SinkInfo::SinkInfo() :
-        fName(), fIndex(-1), fPorts()
-    {
-
-    }
-
-    SinkInfo::SinkInfo(const pa_sink_info* source)
-    {
-        fName = source->name;
-        fIndex = source->index;
-
-        for (quint32 i = 0; i < source->n_ports; i++) {
-            fPorts.append(source->ports[i]->name);
-        }
-    }
-
-    quint32 SinkInfo::index() const
-    {
-        return fIndex;
-    }
-
-    QString SinkInfo::name() const
-    {
-        return fName;
-    }
-
-    QStringList SinkInfo::ports() const
-    {
-        return fPorts;
-    }
-
     //---------------------- MainLoop ------------------------//
 
     void MainLoop::run()
@@ -119,11 +86,11 @@ namespace PA {
 
     void Context::checkInfoReady() const
     {
-        if (fPrimaryCardInfo == nullptr || fPrimarySinkInfo == nullptr) {
+        if (fPrimaryCardName.isEmpty() || fPrimarySinkName.isEmpty()) {
             return;
         }
 
-        emit infoReady(fContext, SinkInfo(fPrimarySinkInfo));
+        emit infoReady(fContext, fPrimaryCardName, fPrimarySinkName);
     }
 
     Context::Context(QObject *parent) : QObject(parent),
@@ -174,11 +141,11 @@ namespace PA {
             return; // not real
         }
 
-        if (fPrimaryCardInfo != nullptr) {
+        if (!fPrimaryCardName.isEmpty()) {
             qWarning() << "duplicit card found" << name;
         }
 
-        fPrimaryCardInfo = info;
+        fPrimaryCardName = QString::fromLocal8Bit(info->name);
         qDebug() << "Found primary audio card" << name;
         checkInfoReady();
     }
@@ -191,11 +158,11 @@ namespace PA {
             return; // not real
         }
 
-        if (fPrimarySinkInfo != nullptr) {
+        if (!fPrimarySinkName.isEmpty()) {
             qWarning() << "duplicit sink found" << name;
         }
 
-        fPrimarySinkInfo = info;
+        fPrimarySinkName = QString::fromLocal8Bit(info->name);
         qDebug() << "Found primary sink" << name;
         checkInfoReady();
     }

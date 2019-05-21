@@ -21,6 +21,7 @@ import QtFeedback 5.0
 import QtMultimedia 5.6
 import Nemo.DBus 2.0
 import Nemo.Notifications 1.0
+import Nemo.Ngf 1.0
 import "pages"
 import "js/common.js" as Common
 
@@ -37,20 +38,25 @@ ApplicationWindow
         toxcoreav.setApplicationActive(applicationActive);
     }
 
-    // plays when someone is calling us and we didn't pick up yet
-    MediaPlayer {
+    NonGraphicalFeedback {
         id: incomingTone
-        source: "file:///usr/share/sounds/jolla-ringtones/stereo/jolla-ringtone.ogg" // TODO: make configurable
-        loops: MediaPlayer.Infinite
-        // audioRole: MediaPlayer.RingtoneRole // does nothing atm. but one can hope
+        event: "voip_ringtone"
     }
+
+    // plays when someone is calling us and we didn't pick up yet
+//    MediaPlayer {
+//        id: incomingTone
+//        source: "file:///usr/share/sounds/jolla-ringtones/stereo/jolla-ringtone.ogg" // TODO: make configurable
+//        loops: MediaPlayer.Infinite
+//        audioRole: MediaPlayer.RingtoneRole
+//    }
 
     // plays when we're calling someone and they didn't pick up yet (beep... beep...)
     MediaPlayer {
         id: outgoingTone
         source: "sounds/calling.ogg"
         loops: MediaPlayer.Infinite
-        // audioRole: MediaPlayer.RingtoneRole // does nothing atm. but one can hope
+        audioRole: MediaPlayer.RingtoneRole
     }
 
     // plays once when we get a reject from other side
@@ -58,27 +64,27 @@ ApplicationWindow
         id: busyTone
         source: "sounds/busy.ogg"
         loops: 1
-        // audioRole: MediaPlayer.RingtoneRole // does nothing atm. but one can hope
+        audioRole: MediaPlayer.RingtoneRole
     }
 
-    HapticsEffect {
-        id: vibrate
-        duration: 750
-        intensity: 1.0
-    }
+//    HapticsEffect {
+//        id: vibrate
+//        duration: 750
+//        intensity: 1.0
+//    }
 
-    Timer {
-        onTriggered: vibrate.start()
-        interval: 1500
-        running: toxcoreav.callIsIncoming && toxcoreav.globalCallState === 1 // incoming and ringing
-        onRunningChanged: {
-            if (running) {
-                vibrate.start()
-            }
-        }
+//    Timer {
+//        onTriggered: vibrate.start()
+//        interval: 1500
+//        running: toxcoreav.callIsIncoming && toxcoreav.globalCallState === 1 // incoming and ringing
+//        onRunningChanged: {
+//            if (running) {
+//                vibrate.start()
+//            }
+//        }
 
-        repeat: true
-    }
+//        repeat: true
+//    }
 
     DBusInterface {
         id: mce
@@ -108,6 +114,42 @@ ApplicationWindow
         }
     }
 
+    DBusInterface {
+        id: routes
+
+        bus: DBus.SystemBus
+        service: 'org.nemomobile.Route.Manager'
+        iface: 'org.nemomobile.Route.Manager'
+        path: '/org/nemomobile/Route/Manager'
+
+        signalsEnabled: true
+
+        function audioRouteChanged(device, deviceType) {
+            console.log('[AR] AudioRouteChanged', device, deviceType)
+            features()
+        }
+
+        function audioFeatureChanged(name, allowed, enabled) {
+            console.log('[AR] AudioFeatureChanged', name, allowed, enabled)
+        }
+
+        function features() {
+            console.log("[AR] Listing features")
+            typedCall('GetAll',
+                      [],
+                      function(result) { console.log('[AR] GetAll completed with:', result) },
+                      function(error, message) { console.log('[AR] GetAll failed', error, 'message:', message) })
+        }
+
+        function enableSpeaker() {
+            console.log("[AR] Enabling speaker")
+            typedCall('Enable',
+                      { 'type': 's', 'value': 'speaker' },
+                      function(result) { console.log('[AR] Enable completed with:', result) },
+                      function(error, message) { console.log('[AR] Enable failed', error, 'message:', message) })
+        }
+    }
+
     Connections {
         target: toxcore
         onFriendRequest: banner("x-nemo.messaging.authorizationrequest", qsTr("New friend request"), "friend", appWindow.applicationActive)
@@ -124,25 +166,26 @@ ApplicationWindow
         onCalledBusy: busyTone.play()
         onGlobalCallStateChanged: {
             // make sure to use earpiece when in call or when we're calling and it's ringing on their end
+            var profile = state === 2 ? 'voicecall' : 'default'; // set card profile accordingly
             var port = state === 2 ? Common.AudioPorts.Earpiece : Common.AudioPorts.Speaker // TODO: make sure to not lock out bluetooth, jack and usb outputs
             if (state === 1 && !toxcoreav.callIsIncoming) { // outgoing ringing on their side
                 port = Common.AudioPorts.Earpiece;
             }
 
-            sinkPortModel.selectPort(port) // TODO: fix when Jolla finally tells us how to get voicecall sink setup right
-            mce.setCallState(state) // TODO: currently succeeds but doesn't work with this sink/setup on the MCE side (ignored proximity)
+//            sinkPortModel.selectProfile(profile)
+//            sinkPortModel.selectPort(port) // TODO: fix when Jolla finally tells us how to get voicecall sink setup right
+//            audioRouter.setAudioRoute(port)
+            mce.setCallState(state) // TODO: set works but mce refuses to display-off, use when audio/sink/mce situation is fixed (jusa!!!)
 
             if (state !== 1) {
                 console.error('Stopping ringtones')
                 incomingTone.stop()
                 outgoingTone.stop()
-                incomingTone.seek(0)
                 outgoingTone.seek(0)
                 return
             }
 
             if (toxcoreav.callIsIncoming) {
-                incomingTone.seek(0)
                 incomingTone.play()
             } else {
                 outgoingTone.seek(0)

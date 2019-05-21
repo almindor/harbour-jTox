@@ -5,54 +5,50 @@ namespace PA {
 
     // -------------------- C callbacks -----------------------/
 
-    void c_pa_context_success_cb_t(pa_context *c, int success, void *userdata) {
+    void c_pa_context_set_sink_port_cb_t(pa_context *c, int success, void *userdata) {
         Q_UNUSED(c);
         SinkPortModel* model = (SinkPortModel*) userdata;
 
-        model->contextCallResult(success);
+        model->setSinkPortResult(success);
+    }
+
+    void c_pa_context_select_profile_cb_t(pa_context *c, int success, void *userdata) {
+        Q_UNUSED(c);
+        SinkPortModel* model = (SinkPortModel*) userdata;
+
+        model->selectProfileResult(success);
     }
 
     // -------------------- SinkPortModel -----------------------/
 
     void SinkPortModel::selectPort(const QString& name)
     {
-        qDebug() << "Selecting port" << name << "on sink" << fSinkInfo.name();
-        pa_context_set_sink_port_by_name(fContext, fSinkInfo.name().toLocal8Bit().constData(), name.toLocal8Bit().constData(), &c_pa_context_success_cb_t, this);
+        qDebug() << "[PA] Selecting port" << name << "on sink" << fSinkName;
+        pa_context_set_sink_port_by_name(fContext, fSinkName.toLocal8Bit().constData(), name.toLocal8Bit().constData(), &c_pa_context_set_sink_port_cb_t, this);
     }
 
-    SinkPortModel::SinkPortModel() : QAbstractListModel(nullptr),
-        fSinkInfo()
+    void SinkPortModel::selectProfile(const QString& name)
     {
+        qDebug() << "[PA] Selecting profile" << name << "on card" << fCardName;
 
+        pa_context_set_card_profile_by_name(fContext, fCardName.toLocal8Bit().constData(), name.toLocal8Bit().constData(), &c_pa_context_select_profile_cb_t, this);
     }
 
-    int SinkPortModel::rowCount(const QModelIndex& parent) const
+    SinkPortModel::SinkPortModel() : QObject(nullptr),
+        fCardName(), fSinkName()
     {
-        Q_UNUSED(parent);
 
-        if (!ready()) {
-            return 0;
-        }
-
-        return fSinkInfo.ports().count();
-    }
-
-    QVariant SinkPortModel::data(const QModelIndex& index, int role) const
-    {
-        Q_UNUSED(role);
-
-        return fSinkInfo.ports().at(index.row());
     }
 
     bool SinkPortModel::ready() const
     {
-        return !fSinkInfo.name().isEmpty();
+        return !fCardName.isEmpty() && !fSinkName.isEmpty();
     }
 
     void SinkPortModel::selectPort(int port)
     {
         if (!ready()) {
-            qWarning() << "PA not ready yet";
+            qWarning() << "[PA] not ready yet";
             return;
         }
 
@@ -61,24 +57,27 @@ namespace PA {
             case apSpeaker: return selectPort("output-speaker");
         }
 
-        qWarning() << "Unknown port requested";
+        qWarning() << "[PA] Unknown port requested";
     }
 
-    void SinkPortModel::onInfoReady(void* context, const SinkInfo& info)
+    void SinkPortModel::onInfoReady(void* context, const QString& cardName, const QString& sinkName)
     {
-        beginResetModel();
-
         fContext = (pa_context*) context;
-        fSinkInfo = info;
+        fCardName = cardName;
+        fSinkName = sinkName;
 
-        endResetModel();
-
+        selectProfile("default"); // default on start
         selectPort(apSpeaker); // default on start
     }
 
-    void SinkPortModel::contextCallResult(int result)
+    void SinkPortModel::selectProfileResult(int result)
     {
-        qWarning() << "Context call result" << result;
+        qWarning() << "[PA] select profile result" << result;
+    }
+
+    void SinkPortModel::setSinkPortResult(int result)
+    {
+        qWarning() << "[PA] set sink port result" << result;
     }
 
 }

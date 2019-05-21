@@ -27,16 +27,12 @@ namespace JTOX {
             return;
         }
 
-        qDebug() << "WorkerIterator::start() @" << QThread::currentThreadId();
-
         initTimer();
         fTimer->start(interval);
     }
 
     void WorkerIterator::stop()
     {
-        qDebug() << "WorkerIterator::stop() @" << QThread::currentThreadId();
-
         if (fTimer != nullptr) { // stop before start or not-used timer
             fTimer->stop();
         }
@@ -71,12 +67,16 @@ namespace JTOX {
     void WorkerToxAVIterator::start(void* toxAV)
     {
         if (fTimer != nullptr && fTimer->isActive()) {
+            if (fToxAV == nullptr) {
+                qWarning() << "Empty toxAV on start";
+            }
             return;
         }
 
         qDebug() << "WorkerToxAVIterator::start @" << QThread::currentThreadId();
         fToxAV = (ToxAV*) toxAV;
         WorkerIterator::start(toxav_iteration_interval(fToxAV));
+        iterate(); // ensure we have at least 1 iteration on start
     }
 
     void WorkerToxAVIterator::stop()
@@ -91,7 +91,7 @@ namespace JTOX {
         qDebug() << "AV Iteration override set to" << interval;
         fIntervalOverride = interval;
 
-        if (fTimer != nullptr) {
+        if (fTimer != nullptr && fToxAV != nullptr) {
             iterate(); // force a cycle right here to ensure there's at least 1 call done
         }
     }
@@ -128,8 +128,6 @@ namespace JTOX {
 
     void WorkerAV::start(void* toxAV, quint32 friend_id)
     {
-        qDebug() << "WorkerAV::start() @" << QThread::currentThreadId();
-
         // don't start iterating here, some children don't need to
         fToxAV = (ToxAV*) toxAV;
         fFriendID = friend_id;
@@ -137,8 +135,6 @@ namespace JTOX {
 
     void WorkerAV::stop()
     {
-        qDebug() << "WorkerAV::stop() @" << QThread::currentThreadId();
-
         WorkerIterator::stop(); // make sure no iterate gets called first
         stopPipe(); // stop audio gracefully
     }
@@ -217,6 +213,8 @@ namespace JTOX {
         delete fAudioInput;
         fAudioInput = nullptr;
         fPipe = nullptr;
+
+        qDebug() << "Stopped audio input";
     }
 
     WorkerAudioInput::WorkerAudioInput() : WorkerAV(),
@@ -237,6 +235,11 @@ namespace JTOX {
 
     //---------------------- WorkerAudioOutput -------------------------//
 
+    bool WorkerAudioOutput::needsRefresh(quint8 channels, quint32 samplingRate) const
+    {
+        return ((quint32) fAudioOutput->format().channelCount()) != channels || ((quint32) fAudioOutput->format().sampleRate() != samplingRate);
+    }
+
     void WorkerAudioOutput::iterate()
     {
         qWarning() << "Iterate called on audio output!";
@@ -244,6 +247,8 @@ namespace JTOX {
 
     QIODevice* WorkerAudioOutput::startPipe(quint32 friend_id, quint8 channels, quint32 samplingRate)
     {
+        qDebug() << "Starting audio output";
+
         Q_UNUSED(friend_id);
 
         if (fAudioOutput != nullptr) {
@@ -274,6 +279,7 @@ namespace JTOX {
         delete fAudioOutput;
         fAudioOutput = nullptr;
         fPipe = nullptr;
+        qDebug() << "Stopped audio output";
     }
 
     void WorkerAudioOutput::start(void* toxAV, quint32 friend_id)
@@ -291,12 +297,29 @@ namespace JTOX {
 
     }
 
+    void WorkerAudioOutput::startCall()
+    {
+        fCallEnded = false;
+    }
+
+    void WorkerAudioOutput::endCall()
+    {
+        fCallEnded = true;
+    }
+
     void WorkerAudioOutput::onAudioFrameReceived(quint32 friend_id, const QByteArray& data, quint8 channels, quint32 sampling_rate)
     {
+        if (fCallEnded) {
+            return;
+        }
+
         if (fPipe == nullptr) { // first frame, init pipe as needed
             qDebug() << "Starting audio output";
-            qDebug() << "onAudioFrameReceived threadID: " << QThread::currentThreadId();
-            fPipe = startPipe(friend_id, channels, sampling_rate);
+            startPipe(friend_id, channels, sampling_rate);
+        } else if (needsRefresh(channels, sampling_rate)) {
+            qWarning()  << "Audio setup changed between frames, reseting pipe";
+            stopPipe();
+            startPipe(friend_id, channels, sampling_rate);
         }
 
         qint64 byteSize = data.size();

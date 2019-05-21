@@ -23,9 +23,9 @@ Be sure to log into the engine as **mersdk** user not as root.
 Change this to the SailfishOS version required, also in **support/build.sh**
 `export SFVER='3.0.3.9'`
 
-`sb2 -t SailfishOS-$SFVER-armv7hl -m sdk-install -R zypper install gcc gcc-c++ autoconf automake make libtool nasm pulseaudio-devel`
+`sb2 -t SailfishOS-$SFVER-armv7hl -m sdk-install -R zypper install gcc gcc-c++ autoconf automake make libtool nasm`
 
-`sb2 -t "SailfishOS-$SFVER-i486" -m sdk-install -R zypper install gcc gcc-c++ autoconf automake make libtool yasm pulseaudio-devel`
+`sb2 -t "SailfishOS-$SFVER-i486" -m sdk-install -R zypper install gcc gcc-c++ autoconf automake make libtool yasm`
 
 ### Building the required libraries
 

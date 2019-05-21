@@ -37,11 +37,9 @@
 #include "dirmodel.h"
 #include "utils.h"
 
-// DEBUG
-#include "pa/context.h"
-#include "pa/sinkportmodel.h"
-
-Q_DECLARE_METATYPE(PA::SinkInfo)
+//#include "pa/context.h"
+//#include "pa/sinkportmodel.h"
+#include "audiorouter.h"
 
 using namespace JTOX;
 
@@ -53,19 +51,24 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    PA::Context context;
-    PA::SinkPortModel sinkPortModel;
-
-    qRegisterMetaType<PA::SinkInfo>();
-
-    QObject::connect(&context, &PA::Context::infoReady, &sinkPortModel, &PA::SinkPortModel::onInfoReady, Qt::QueuedConnection);
-    context.connectToServer();
-
     register_signals();
+
+    qputenv("NEMO_RESOURCE_CLASS_OVERRIDE", "call");
 
     QGuiApplication *app = SailfishApp::application(argc, argv);
     QQuickView *view = SailfishApp::createView();
 
+    // pulseaudio
+//    PA::Context context;
+//    PA::SinkPortModel sinkPortModel;
+
+//    QObject::connect(&context, &PA::Context::infoReady, &sinkPortModel, &PA::SinkPortModel::onInfoReady, Qt::QueuedConnection);
+//    context.connectToServer();
+
+    // audio routing
+//    AudioRouter audioRouter;
+
+    // jTox stuff
     DirModel dirModel;
     EncryptSave encryptSave;
     DBData dbData(encryptSave);
@@ -97,8 +100,10 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty("toxme", &toxme);
     view->rootContext()->setContextProperty("requestmodel", &requestModel);
     view->rootContext()->setContextProperty("dirmodel", &dirModel);
+//    view->rootContext()->setContextProperty("audioRouter", &audioRouter);
     view->rootContext()->setContextProperty("avatarProvider", avatarProvider);
-    view->rootContext()->setContextProperty("sinkPortModel", &sinkPortModel);
+
+//    view->rootContext()->setContextProperty("sinkPortModel", &sinkPortModel);
     view->engine()->addImageProvider("avatarProvider", avatarProvider); // freed internally by Qt5!
 
     view->setSource(SailfishApp::pathTo(qml));

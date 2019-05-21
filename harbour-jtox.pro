@@ -30,6 +30,7 @@ INCLUDEPATH += $$TOX_PATH/include
 INCLUDEPATH += /usr/include
 
 PKGCONFIG += libpulse
+PKGCONFIG += libresourceqt5
 
 SOURCES += \
     src/c_callbacks.cpp \
@@ -50,7 +51,8 @@ SOURCES += \
     src/toxcoreav.cpp \
     src/workerav.cpp \
     src/pa/context.cpp \
-    src/pa/sinkportmodel.cpp
+    src/pa/sinkportmodel.cpp \
+    src/audiorouter.cpp
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \
@@ -115,7 +117,8 @@ HEADERS += \
     src/toxcoreav.h \
     src/workerav.h \
     src/pa/context.h \
-    src/pa/sinkportmodel.h
+    src/pa/sinkportmodel.h \
+    src/audiorouter.h
 
 DISTFILES += \
     qml/pages/About.qml \

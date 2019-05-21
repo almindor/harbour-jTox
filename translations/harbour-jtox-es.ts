@@ -259,40 +259,40 @@
 <context>
     <name>Calls</name>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="69"/>
+        <location filename="../qml/pages/Calls.qml" line="77"/>
         <source>Answer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="82"/>
+        <location filename="../qml/pages/Calls.qml" line="92"/>
         <source>Reject</source>
         <translation type="unfinished">Rechazar</translation>
     </message>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="96"/>
+        <location filename="../qml/pages/Calls.qml" line="106"/>
         <source>Incoming Call</source>
         <comment>call state</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="96"/>
+        <location filename="../qml/pages/Calls.qml" line="106"/>
         <source>Outgoing Call</source>
         <comment>call state</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="97"/>
+        <location filename="../qml/pages/Calls.qml" line="107"/>
         <source>Ongoing Call</source>
         <comment>call state</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="63"/>
+        <location filename="../qml/pages/Calls.qml" line="71"/>
         <source>Call</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/Calls.qml" line="82"/>
+        <location filename="../qml/pages/Calls.qml" line="92"/>
         <source>End Call</source>
         <translation type="unfinished"></translation>
     </message>
@@ -709,52 +709,52 @@
 <context>
     <name>harbour-jtox</name>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="113"/>
+        <location filename="../qml/harbour-jtox.qml" line="155"/>
         <source>New friend request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="114"/>
+        <location filename="../qml/harbour-jtox.qml" line="156"/>
         <source>Account Imported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="115"/>
+        <location filename="../qml/harbour-jtox.qml" line="157"/>
         <source>Account Exported: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="116"/>
+        <location filename="../qml/harbour-jtox.qml" line="158"/>
         <source>New account created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="117"/>
+        <location filename="../qml/harbour-jtox.qml" line="159"/>
         <source>Chat history wiped</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="163"/>
+        <location filename="../qml/harbour-jtox.qml" line="206"/>
         <source>Message from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="164"/>
+        <location filename="../qml/harbour-jtox.qml" line="207"/>
         <source>Transfer from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="165"/>
+        <location filename="../qml/harbour-jtox.qml" line="208"/>
         <source>File transfer complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="174"/>
+        <location filename="../qml/harbour-jtox.qml" line="217"/>
         <source>Registered on </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-jtox.qml" line="175"/>
+        <location filename="../qml/harbour-jtox.qml" line="218"/>
         <source>Removed from </source>
         <translation type="unfinished"></translation>
     </message>

@@ -20,7 +20,7 @@ namespace JTOX {
         // connect worker signals and slots as needed
         connect(&fIteratorWorker, &WorkerToxAVIterator::audioFrameReceived, &fAudioOutputWorker, &WorkerAudioOutput::onAudioFrameReceived, Qt::QueuedConnection);
         connect(this, &ToxCoreAV::avIteratorIntervalOverride, &fIteratorWorker, &WorkerToxAVIterator::onIntervalOverride, Qt::QueuedConnection); // thread safety
-        connect(this, &ToxCoreAV::avIteratorStart, &fIteratorWorker, &WorkerToxAVIterator::start);
+        connect(this, &ToxCoreAV::avIteratorStart, &fIteratorWorker, &WorkerToxAVIterator::start, Qt::BlockingQueuedConnection); // ensure we get an iteration
         connect(this, &ToxCoreAV::avIteratorStop, &fIteratorWorker, &WorkerToxAVIterator::stop, Qt::BlockingQueuedConnection); // needs to wait for it
         connect(this, &ToxCoreAV::startAudio, &fAudioInputWorker, &WorkerAudioInput::start);
         connect(this, &ToxCoreAV::stopAudio, &fAudioInputWorker, &WorkerAudioInput::stop, Qt::BlockingQueuedConnection); // needs to wait for it
@@ -102,9 +102,6 @@ namespace JTOX {
             Utils::fatal("ToxAV not initialized");
         }
 
-        // make sure there's no sending or receiving running after we call control
-        emit stopAudio();
-
         TOXAV_ERR_CALL_CONTROL error;
         bool result = toxav_call_control(fToxAV, friend_id, TOXAV_CALL_CONTROL_CANCEL, &error);
 
@@ -171,8 +168,8 @@ namespace JTOX {
 
         qDebug() << "beforeToxKill()";
 
-        emit stopAudio();
         emit avIteratorStop();
+        emit stopAudio();
 
         toxav_kill(fToxAV);
         fToxAV = nullptr;
@@ -228,8 +225,10 @@ namespace JTOX {
 
         if (maxState != fGlobalCallState) {
             if (maxState == csActive) { // start of call
+                fAudioOutputWorker.startCall();
                 emit startAudio(fToxAV, friend_id);
             } else if (fGlobalCallState == csActive) { // end of call
+                fAudioOutputWorker.endCall();
                 emit stopAudio();
             }
 

@@ -17,24 +17,30 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
- import QtSensors 5.2
+//import QtSensors 5.2
 import "../components"
 
 Page {
     id: callsPage
     allowedOrientations: Orientation.Portrait
+//    backNavigation: !(proximitySensor.active && proximitySensor.reading.near)     // TODO: remove when Jolla tells us how to set sinks right for MCE to do this
 
-    // TODO: remove when Jolla tells us how to set sinks right for MCE to do this
-    Rectangle {
-        id: blank
+//    // TODO: remove when Jolla tells us how to set sinks right for MCE to do this
+//    Rectangle {
+//        id: blanker
+//        color: "black"
+//        anchors.fill: parent
+//        z: 932490823
+//        visible: proximitySensor.reading.near && toxcoreav.globalCallState > 1
+//    }
 
-        visible: toxcoreav.globalCallState > 0 && proximitySensor.reading.near
-        anchors.fill: parent
-        color: "black"
-    }
+//    // TODO: remove when Jolla tells us how to set sinks right for MCE to do this
+//    ProximitySensor {
+//        id: proximitySensor
+//        active: (toxcoreav.globalCallState > 1) || (!toxcoreav.callIsIncoming && toxcoreav.globalCallState === 1) // in call or outgoing ringing
+//    }
 
     SilicaFlickable {
-        visible: !(toxcoreav.globalCallState > 0 && proximitySensor.reading.near) // TODO: remove when Jolla tells us how to set sinks right for MCE to do this
         anchors.fill: parent
         contentWidth: parent.width
         contentHeight: parent.height - Theme.paddingLarge
@@ -56,6 +62,8 @@ Page {
         }
 
         PullDownMenu {
+//            enabled: !(proximitySensor.active && proximitySensor.reading.near)     // TODO: remove when Jolla tells us how to set sinks right for MCE to do this
+
             visible: toxcoreav.globalCallState < 2
 
             MenuItem {
@@ -72,6 +80,8 @@ Page {
         }
 
         PushUpMenu {
+//            enabled: !(proximitySensor.active && proximitySensor.reading.near)     // TODO: remove when Jolla tells us how to set sinks right for MCE to do this
+
             backgroundColor: "red"
             highlightColor: "red"
 
@@ -113,12 +123,6 @@ Page {
                 height: width
                 placeholder: ""
             }
-        }
-
-        // TODO: remove when Jolla tells us how to set sinks right for MCE to do this
-        ProximitySensor {
-            id: proximitySensor
-            active: toxcoreav.globalCallState > 0 // ringing or in call
         }
     }
 }

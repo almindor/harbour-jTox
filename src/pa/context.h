@@ -10,20 +10,6 @@
 
 namespace PA {
 
-    class SinkInfo
-    {
-        QString fName;
-        quint32 fIndex;
-        QStringList fPorts;
-    public:
-        explicit SinkInfo();
-        explicit SinkInfo(const pa_sink_info* source);
-
-        quint32 index() const;
-        QString name() const;
-        QStringList ports() const;
-    };
-
     class MainLoop : public QThread
     {
         Q_OBJECT
@@ -45,8 +31,8 @@ namespace PA {
 
         MainLoop fMainLoop;
         pa_context* fContext;
-        const pa_card_info* fPrimaryCardInfo{nullptr};
-        const pa_sink_info* fPrimarySinkInfo{nullptr};
+        QString fPrimaryCardName;
+        QString fPrimarySinkName;
 
         void onContextReady();
         void checkInfoReady() const;
@@ -57,7 +43,7 @@ namespace PA {
         void connectToServer(const QString& path = QString());
     signals:
         void errorOccurred(const QString& error) const;
-        void infoReady(void* context, const SinkInfo& info) const; // use void* to avoid having to register stuff
+        void infoReady(void* context, const QString& cardName, const QString& sinkName) const;
     public slots:
         void onStateChanged(pa_context_state_t state);
         void onCardInfo(const pa_card_info* info);

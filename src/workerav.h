@@ -85,12 +85,18 @@ namespace JTOX {
     {
         Q_OBJECT
         QAudioOutput* fAudioOutput;
+        bool fCallEnded{false};
+
+        bool needsRefresh(quint8 channels, quint32 samplingRate) const;
     protected:
         virtual void iterate() override;
         virtual QIODevice* startPipe(quint32 friend_id, quint8 channels, quint32 samplingRate) override;
         virtual void stopPipe() override;
     public:
         explicit WorkerAudioOutput();
+
+        void startCall();
+        void endCall();
     public slots:
         virtual void start(void* toxAV, quint32 friend_id) override;
         // signalled from main toxAV iterator worker
