@@ -67,24 +67,24 @@ ApplicationWindow
         audioRole: MediaPlayer.RingtoneRole
     }
 
-//    HapticsEffect {
-//        id: vibrate
-//        duration: 750
-//        intensity: 1.0
-//    }
+    HapticsEffect {
+        id: vibrate
+        duration: 750
+        intensity: 1.0
+    }
 
-//    Timer {
-//        onTriggered: vibrate.start()
-//        interval: 1500
-//        running: toxcoreav.callIsIncoming && toxcoreav.globalCallState === 1 // incoming and ringing
-//        onRunningChanged: {
-//            if (running) {
-//                vibrate.start()
-//            }
-//        }
+    Timer {
+        onTriggered: vibrate.start()
+        interval: 1500
+        running: toxcoreav.callIsIncoming && toxcoreav.globalCallState === 1 // incoming and ringing
+        onRunningChanged: {
+            if (running) {
+                vibrate.start()
+            }
+        }
 
-//        repeat: true
-//    }
+        repeat: true
+    }
 
     DBusInterface {
         id: mce
