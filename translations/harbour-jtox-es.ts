@@ -261,40 +261,40 @@
     <message>
         <location filename="../qml/pages/Calls.qml" line="77"/>
         <source>Answer</source>
-        <translation type="unfinished"></translation>
+        <translation>Responder</translation>
     </message>
     <message>
         <location filename="../qml/pages/Calls.qml" line="92"/>
         <source>Reject</source>
-        <translation type="unfinished">Rechazar</translation>
+        <translation>Rechazar</translation>
     </message>
     <message>
         <location filename="../qml/pages/Calls.qml" line="106"/>
         <source>Incoming Call</source>
         <comment>call state</comment>
-        <translation type="unfinished"></translation>
+        <translation>Llamada entrante</translation>
     </message>
     <message>
         <location filename="../qml/pages/Calls.qml" line="106"/>
         <source>Outgoing Call</source>
         <comment>call state</comment>
-        <translation type="unfinished"></translation>
+        <translation>Llamada saliente</translation>
     </message>
     <message>
         <location filename="../qml/pages/Calls.qml" line="107"/>
         <source>Ongoing Call</source>
         <comment>call state</comment>
-        <translation type="unfinished"></translation>
+        <translation>Llamada saliente</translation>
     </message>
     <message>
         <location filename="../qml/pages/Calls.qml" line="71"/>
         <source>Call</source>
-        <translation type="unfinished"></translation>
+        <translation>Llamar</translation>
     </message>
     <message>
         <location filename="../qml/pages/Calls.qml" line="92"/>
         <source>End Call</source>
-        <translation type="unfinished"></translation>
+        <translation>Finalizar llamada</translation>
     </message>
 </context>
 <context>
@@ -328,12 +328,12 @@
     <message>
         <location filename="../qml/components/FriendItem.qml" line="33"/>
         <source>Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Mensajes</translation>
     </message>
     <message>
         <location filename="../qml/components/FriendItem.qml" line="38"/>
         <source>Call</source>
-        <translation type="unfinished"></translation>
+        <translation>Llamar</translation>
     </message>
     <message>
         <location filename="../qml/components/FriendItem.qml" line="46"/>
@@ -581,7 +581,7 @@
     <message>
         <location filename="../qml/pages/Messages.qml" line="144"/>
         <source>Call</source>
-        <translation type="unfinished"></translation>
+        <translation>Llamar</translation>
     </message>
 </context>
 <context>
@@ -668,42 +668,42 @@
     <message>
         <location filename="../qml/js/common.js" line="94"/>
         <source>Incoming call</source>
-        <translation type="unfinished"></translation>
+        <translation>Llamada entrante</translation>
     </message>
     <message>
         <location filename="../qml/js/common.js" line="96"/>
         <source>Outgoing call</source>
-        <translation type="unfinished"></translation>
+        <translation>Llamada saliente</translation>
     </message>
     <message>
         <location filename="../qml/js/common.js" line="97"/>
         <source>Rejected call</source>
-        <translation type="unfinished"></translation>
+        <translation>Llamada rechazada</translation>
     </message>
     <message>
         <location filename="../qml/js/common.js" line="98"/>
         <source>Declined call</source>
-        <translation type="unfinished"></translation>
+        <translation>Llamada declinada</translation>
     </message>
     <message>
         <location filename="../qml/js/common.js" line="99"/>
         <source>Missed call</source>
-        <translation type="unfinished"></translation>
+        <translation>Llamada perdida</translation>
     </message>
     <message>
         <location filename="../qml/js/common.js" line="100"/>
         <source>Unanswered call</source>
-        <translation type="unfinished"></translation>
+        <translation>Llamada no contestada</translation>
     </message>
     <message>
         <location filename="../qml/js/common.js" line="102"/>
         <source>Finished call</source>
-        <translation type="unfinished"></translation>
+        <translation>Llamada terminada</translation>
     </message>
     <message>
         <location filename="../qml/js/common.js" line="105"/>
         <source>Unknown call state</source>
-        <translation type="unfinished"></translation>
+        <translation>Llamada desconocida</translation>
     </message>
 </context>
 <context>
@@ -711,52 +711,52 @@
     <message>
         <location filename="../qml/harbour-jtox.qml" line="155"/>
         <source>New friend request</source>
-        <translation type="unfinished"></translation>
+        <translation>Nueva solicitud de amistad</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="156"/>
         <source>Account Imported</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuenta importada</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="157"/>
         <source>Account Exported: </source>
-        <translation type="unfinished"></translation>
+        <translation>Cuenta exportada: </translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="158"/>
         <source>New account created</source>
-        <translation type="unfinished"></translation>
+        <translation>Nueva cuenta creada</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="159"/>
         <source>Chat history wiped</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar historial de charla</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="206"/>
         <source>Message from</source>
-        <translation type="unfinished"></translation>
+        <translation>Mensaje desde</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="207"/>
         <source>Transfer from</source>
-        <translation type="unfinished"></translation>
+        <translation>Transferir desde</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="208"/>
         <source>File transfer complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Transferencia completada</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="217"/>
         <source>Registered on </source>
-        <translation type="unfinished"></translation>
+        <translation>Registrado en</translation>
     </message>
     <message>
         <location filename="../qml/harbour-jtox.qml" line="218"/>
         <source>Removed from </source>
-        <translation type="unfinished"></translation>
+        <translation>Quitado desde </translation>
     </message>
 </context>
 </TS>
