@@ -50,7 +50,7 @@ Page {
                 wrapMode: Text.WordWrap
                 color: Theme.primaryColor
                 font.bold: true
-                text: qsTr("jTox") + " v1.3.3 " + qsTr("by Aleš Katona.")
+                text: qsTr("jTox") + " v1.4.0 " + qsTr("by Aleš Katona.")
             }
 
             Label {

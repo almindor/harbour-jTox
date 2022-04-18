@@ -49,6 +49,9 @@ int main(int argc, char *argv[])
     register_signals();
 
     QGuiApplication *app = SailfishApp::application(argc, argv);
+    app->setOrganizationName(QStringLiteral("ltd.bitsmart"));
+    app->setApplicationName(QStringLiteral("jTox"));
+
     QQuickView *view = SailfishApp::createView();
 
     DirModel dirModel;
