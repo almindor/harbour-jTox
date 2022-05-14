@@ -18,8 +18,6 @@ CONFIG += sailfishapp
 
 TOX_PATH = extra/$$(JTOX_ARCH)
 
-# !isEmpty(TOX_PATH): TOX_PATH = extra/aarch64
-
 QMAKE_LFLAGS += -Wl,-lc -Wl,-lz
 
 INCLUDEPATH += $$TOX_PATH/include
