@@ -23,6 +23,7 @@ namespace JTOX {
 
         switch ( userVersion() ) {
             case 0: createTables(); upgradeToV1(); // empty or unversioned (1.2.0-)
+            [[fallthrough]]; // expected
             case 1: upgradeToV2();
         }
         prepareQueries();

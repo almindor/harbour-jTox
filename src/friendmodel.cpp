@@ -303,7 +303,7 @@ namespace JTOX {
     void FriendModel::setOfflineName(const QString& name)
     {
         if (fActiveFriendIndex < 0 || fActiveFriendIndex >= fList.size()) {
-            Utils::fatal("Active friend index out of bounds: " + fActiveFriendIndex);
+            Utils::fatal("Active friend index out of bounds: " + QString::number(fActiveFriendIndex));
         }
 
         fList[fActiveFriendIndex].setOfflineName(name);
@@ -339,7 +339,7 @@ namespace JTOX {
     bool FriendModel::handleFriendDeleteError(TOX_ERR_FRIEND_DELETE error) const
     {
         switch ( error ) {
-            case TOX_ERR_FRIEND_DELETE_FRIEND_NOT_FOUND: Utils::fatal("Friend not found");
+            case TOX_ERR_FRIEND_DELETE_FRIEND_NOT_FOUND: return Utils::fatal("Friend not found") == "never";
             case TOX_ERR_FRIEND_DELETE_OK: return true;
         }
 
