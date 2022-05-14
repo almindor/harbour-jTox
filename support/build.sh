@@ -12,15 +12,17 @@ if [ "$1" == "i486" ]; then
     TARGET_COMPILER="x86-linux-gcc"
 elif [ "$1" == "armv7hl" ]; then
     TARGET_COMPILER="armv7-linux-gcc"
+elif [ "$1" == "aarch64" ]; then
+    TARGET_COMPILER="arm64-linux-gcc"
 else
     echo "Invalid target"
     exit 2
 fi
 
-SFVER="3.2.0.12"
+SFVER="4.4.0.58"
 SODIUMVER="1.0.18"
-TOXCOREVER="0.2.10"
-VPXVER="1.8.1"
+TOXCOREVER="0.2.18"
+VPXVER="1.11.0"
 OPUSVER="1.3.1"
 THREADS="8"
 TARGET="$SFVER-$1"
@@ -30,7 +32,7 @@ FAKEDIR="$TOXDIR/$TARGET"
 SODIUMDIR="$TOXDIR/libsodium"
 SODIUMSRC="https://github.com/jedisct1/libsodium/archive/$SODIUMVER.tar.gz"
 
-TOXCORESRC="https://github.com/TokTok/c-toxcore/archive/v$TOXCOREVER.tar.gz"
+TOXCORESRC="https://github.com/TokTok/c-toxcore/releases/download/v$TOXCOREVER/c-toxcore-$TOXCOREVER.tar.gz"
 TOXCOREDIR="$TOXDIR/c-toxcore"
 
 VPXSRC="https://github.com/webmproject/libvpx/archive/v$VPXVER.tar.gz"
@@ -121,4 +123,3 @@ echo "OK"
 echo -en "Installing toxcore to $TARGET.. \t\t"
 sb2 -t SailfishOS-$TARGET -m sdk-build make install &> "$TOXDIR/output.log"
 echo "OK"
-
