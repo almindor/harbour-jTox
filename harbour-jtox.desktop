@@ -5,7 +5,6 @@ Icon=harbour-jtox
 Exec=harbour-jtox
 Name=jTox
 
-
 [X-Sailjail]
 Permissions=Internet;Audio;Microphone;Pictures
 OrganizationName=ltd.bitsmart

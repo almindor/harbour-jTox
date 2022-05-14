@@ -54,6 +54,7 @@ Once in a new directory, say run the script `./build.sh` with target architectur
 
     `./build.sh i486`
     `./build.sh armv7hl`
+    `./build.sh aarch64`
 
 It will download latest versions of `libsodium` and `c-toxcore` libraries from github and build them. Once done the resulting libraries are in the `libs` folder while the include files are in the `include` folder of the fake root directory for given architecture e.g. `i486/usr/lib`.
 
