@@ -2,3 +2,4 @@
 *.pro.user*
 extra/armv7hl
 extra/i486
+extra/aarch64
