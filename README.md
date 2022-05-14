@@ -61,3 +61,9 @@ It will download latest versions of `libsodium` and `c-toxcore` libraries from g
 You then need to copy over the required files to `extra` so your resulting structure in the project should be `extra/i486/...` and `extra/armv7hl/...`
 
 Bin subdirectory is not required and neither are any non `.a` files in the lib directory.
+
+### Configuring SailfishSDK
+
+In order to select the right library architecture you need to define `JTOX_ARCH` env var inside the project kit settings in SailfishSDK. Add the values `i486`, `armv7hl` and `aarch64` to each of the env var tables for each project and configuration (debug, profile, release).
+
+You need to also whitelist `JTOX_ARCH` inside the SailfishOS/general section of settings to make sure it reaches the build engine.
