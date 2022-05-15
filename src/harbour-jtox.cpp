@@ -21,6 +21,8 @@
 
 #include <sailfishapp.h>
 #include <QGuiApplication>
+#include <QSettings>
+#include <QStandardPaths>
 #include <QQuickView>
 #include <QQmlContext>
 #include <QString>
@@ -38,9 +40,12 @@
 
 using namespace JTOX;
 
+void migrateSettings();
+
 int main(int argc, char *argv[])
 {
     int result = 0;
+
     if ( sodium_init() < 0 ) {
         qDebug() << "Error on sodium init\n";
         return -1;
@@ -51,6 +56,7 @@ int main(int argc, char *argv[])
     QGuiApplication *app = SailfishApp::application(argc, argv);
     app->setOrganizationName(QStringLiteral("ltd.bitsmart"));
     app->setApplicationName(QStringLiteral("jTox"));
+    migrateSettings(); // sailjail migration
 
     QQuickView *view = SailfishApp::createView();
 
@@ -85,4 +91,22 @@ int main(int argc, char *argv[])
     delete app;
 
     return result;
+}
+
+void migrateSettings()
+{
+    // The new location of config file
+    QSettings settings;
+
+    if (settings.contains("migrated"))
+        return;
+
+    QSettings oldSettings(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/harbour-jtox/harbour-jtox.conf", QSettings::NativeFormat);
+    qDebug() << "migrating settings from: " << oldSettings.fileName() << " to: " << settings.fileName() << "\n";
+
+    for (const QString& key : oldSettings.allKeys()) {
+        settings.setValue(key, oldSettings.value(key));
+    }
+
+    settings.setValue("migrated", "true");
 }
