@@ -6,6 +6,6 @@ Exec=harbour-jtox
 Name=jTox
 
 [X-Sailjail]
-Permissions=Internet;Audio;Microphone;Pictures;Documents
+Permissions=Internet;Audio;Pictures;Documents
 OrganizationName=ltd.bitsmart
 ApplicationName=jTox
