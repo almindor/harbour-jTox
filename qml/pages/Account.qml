@@ -19,7 +19,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
  import Sailfish.Pickers 1.0
 import "../components"
-import org.nemomobile.configuration 1.0
+import Nemo.Configuration 1.0
 
 Page {
     id: page
